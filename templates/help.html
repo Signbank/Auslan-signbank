@@ -1,0 +1,193 @@
+{# Parameters #}
+{# username (string) #}
+{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
+{# title (string #}
+{#   The title of the page, appears in horizontal span above content. #}
+
+{% extends "alternatelayout2.html" %}
+
+{% block sideuppercontent %}
+      <img src="{% auslan_static_prefix %}img/help.jpg" width="229" height="191" alt="" border="0"><br>
+{% endblock %}
+
+{% block sidelowercontent %}
+{% endblock %}
+
+{% block pagecontent %}
+      <ul class="asbTOC">
+        <li class="asbTOC"><a href="#Help01">What do I need to know before I start?</a></li>	
+        <li class="asbTOC"><a href="#Help04">What can I do?</a></li>
+        <li class="asbTOC"><a href="#Help05">How do I navigate around the site?</a></li>
+        <li class="asbTOC"><a href="#Help06">Why is there no matching sign for my English word?</a></li>
+	    <li class="asbTOC"><a href="#Help07">Why does Signbank sometimes give me the 'wrong' sign for my word?</a></li>
+        <li class="asbTOC"><a href="#Help03">Why do I need to register?</a></li>  
+        <li class="asbTOC"><a href="#Help02">How do I register?</a></li>
+        <li class="asbTOC"><a href="#Cookies">Does Signbank use Cookies?</a></li>
+        <li class="asbTOC"><a href="#video">How do I leave a video comment?</a></li>
+      </ul>
+
+      <h2>What do I need to know before I start?<a name="Help01"></a></h2>
+      <p class="asbBodyText">
+        The Auslan sign bank uses a variety of web technolgies, such as: cookies, 
+        Macromedia Flash and Javascript. Please read the System Requirements
+        below and make sure that you are using a compatible web browser and you have the 
+        required version of Macromedia Flash.
+      </p>
+
+      <h2>What browser should I use?<a name="Help01a"></a></h2>
+      <p class="asbBodyText">
+        The Auslan Signbank site has been tested and confirmed to work with the 
+        following web browsers:
+      </p>
+      <ul class="asbBodyText">
+        <li>Microsoft Internet Explorer 5.0 and greater (Windows and Mac OSX)</li>
+        <li>Netscape 7.1 and greater (Windows)</li>
+        <li>Mozilla Firefox (Windows and Mac OSX)</li>
+        <li>Safari (Mac OSX)</li>
+      </ul>
+      
+      <p class="asbBodyText">
+        The site may work on other browsers - but we do not guarantee compatibility. 
+        If you are experiencing problems and you do not have one of the web browsers 
+        above, we recommend that you download Mozilla Firefox from <a href="http://www.mozilla.org">www.mozilla.org</a>.
+      </p>
+      
+      <h2>What version of Flash do I require?<a name="Help01c"></a></h2>
+      <p class="asbBodyText">
+        In order to view sign "videos" on the site, you will need to have the 
+        Macromedia Flash Player plug-in installed on your computer. The videos require 
+        Flash Player 7 or greater. To verify what version of Flash is installed with 
+        your browser, you can go to <a href="http://www.macromedia.com/go/getflashplayer">www.macromedia.com/go/getflashplayer</a>.
+      </p>
+      
+      <h2>What screen resolution works best?<a name="Help01d"></a></h2>
+      <p class="asbBodyText">
+        The Auslan Signbank displays best on screen resolutions of 800 by 600 or 
+        higher. Please consider increasing your screen resolution if it is lower than 
+        800x600 so that our content will fit within the width of your screen.
+      </p>  
+      
+
+      
+      <h2>What can I do?<a name="Help04"></a></h2>
+      <ul class="asbListBulleted">
+        <li>Search for a sign by typing in an English word</li>
+        <li>view and practice fingerspelling</li>
+        <li>view number signs</li>
+        <li>give feedback on existing signs</li>
+        <li>report missing signs</li>
+        <li>view the feedback of various groups of people</li>
+      </ul>
+
+      <p>Feedback viewing according to groups is only possible if more
+      than certain number of responses have been received about a particular sign,
+      otherwise percentages are misleading.</p>
+
+      <h2>How do I navigate around the site?<a name="Help05"></a></h2>
+      <p class="asbBodyText">
+        You click on the tabs at the top of this page for each of the main 
+        functions. You can also click on 
+        <img src="{% auslan_static_prefix %}img/button_prev_small.gif" align="top" width="48" height="13"> 
+        and <img src="{% auslan_static_prefix %}img/button_next_small.gif" align="top" width="48" height="13"> 
+        button when you are searching for a sign if there is more than one 
+        sign that matches the English word. You can provide feedback about any sign 
+        using the link below the sign video.   If other users have provided
+        feedback on a sign there will also be a link to allow you to view a summary
+        of this feedback.  
+      </p>
+
+      <h2>Why is there no matching sign for my English word?<a name="Help06">&nbsp;</a></h2>
+      <ul class="asbListBulleted">
+	<li>
+          Did you spell the word correctly? Check your spelling. Hint: use the 
+          simple form of a word when looking for a sign (e.g., 'car' not 'cars'; 
+          'walk' not 'walked'; 'go' not 'went').
+        </li>
+	
+        <li>
+          The word might not be in Signbank for the sign you are thinking 
+          of. Try another word with a similar meaning (e.g, try 'crazy' instead 
+          of 'lunatic'). Hint: if you think a word should be added to the 
+          meaning of a sign select '<span class="asbHelpQuotedLink">Provide 
+          feedback about this sign</span>' and tell Signbank.
+        </li>
+	
+        <li>
+          The sign might be missing from Signbank. Use the 'feedback' tab to 
+          report the missing sign.
+        </li>
+	
+        <li>
+          The sign might be a new sign that only you or a small group of people 
+          know or use. Use the 'feedback' tab to tell Signbank, and everyone 
+          else, about your new sign. 
+        </li>
+      </ul>
+
+      <h2>Why does Signbank sometimes give me the 'wrong' sign for my word?<a name="Help07"></a></h2>
+      <p class="asbBodyText">
+        Maybe there is more than one Auslan sign for the word you typed 
+        in. If <img src="{% auslan_static_prefix %}img/button_next_small.gif" align="top" width="48" height="13">
+        appears above the sign definition that means there are more Auslan signs 
+        to view for that word. Click on the button to see the other sign 
+        or signs. If you think there is really a mistake, click on 
+        '<span class="asbHelpQuotedLink">Provide feedback about this sign</span>' 
+        and tell Signbank.
+      </p>
+
+      
+      <h2>Why do I need to register?<a name="Help03"></a></h2>
+      <p class="asbBodyText">
+        You need to register to provide feedback or report missing signs. 
+        We need you to register in order to know who you are (e.g., a deaf 
+        person or a hearing person) and where you come from (e.g., Australia 
+        or overseas) so we can group your feedback. That way when you view 
+        user feedback on Signbank you will be able to clearly see the opinions 
+        of Australian deaf people compared to other groups of people. After 
+        all, it is our language. Our opinion matters!
+      </p>
+      
+      
+      <h2>How do I register?<a name="Help02"></a></h2>
+      <p class="asbBodyText">
+        You only need to register for Signbank if you want to provide feedback
+        on a sign or the site in general, or provide details of a missing sign.
+        When you click on a feedback link, you will be prompted to login or
+        register a new account.  
+      </p>
+      
+      <h2><a name="video">How do I leave a video comment?</a></h2>
+      <p class="asbBodyText">
+      You can upload a short video in each of the feedback forms if you 
+      would rather sign your comment instead of typing or filling out
+      the form. This will be particularly useful if you are telling us about
+      a missing sign.  To upload a video, first record your video on your
+      own computer, save it in a common format (eg. AVI on Windows or 
+      Quicktime on Macintosh) and upload it using the special field in 
+      the feedback form.  Your videos will be made available to the 
+      site administrators but will not be viewable by the general public.      
+      </p>
+      
+      <p>Any movie recording software can be used to record your video. For
+      example, 
+      <a href="http://www.arborbits.com/icamshare/">
+      iCamShare</a> for the Macintosh provides a simple interface. On Windows
+      you can often use the tools that are provided with your webcam, eg. 
+      Logitech provide a set of programs for recording videos etc. </p>
+      
+      
+      
+      <h2>Does Signbank use Cookies?<a name="Cookies"></a></h2>
+      <p class="asbBodyText">
+        Your web browser must be configured to accept cookies from the Auslan site
+        to allow you to login and provide comments.   The cookie identifies
+        you to the site once you are logged in and is deleted once 
+        you close your browser. 
+      </p>
+
+      
+
+      <p class="asbBodyText">
+        <a href="#top">back to top<br></a>
+      </p>
+{% endblock %}

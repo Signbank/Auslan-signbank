@@ -1,0 +1,139 @@
+{% extends "standardlayout.html" %}
+
+{% block script %}
+
+jQuery(document).ready(function(){
+	$(".comment .head").append("<button>Show</button>").click(function() {
+		$(this).next().toggle();
+	}).next().hide();
+});
+
+{% endblock %}
+
+
+{% block sideuppercontent %}
+    <img src="{% auslan_static_prefix %}img/teacher-and-children.jpg" width="227" height="190" alt="" border="0"><br>
+{% endblock %}
+
+{% block sidelowercontent %}
+    <p class="asbCFrameLeftText">
+    This page shows the feedback left by Auslan SignBank users.</p>
+    
+    <div class="asbCFrameLeftText">
+      <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
+    </div>
+{% endblock %}
+
+{% block pagecontent %}
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" height="0%" align="center">
+      <tr valign="top"> 
+        <td> 
+          <div class=normal align=left>
+    
+          <h3>General Feedback</h3>
+          <ul>
+          {% for fb in general %}
+            <li class="comment">
+            <div class="head">
+              {{fb.date|date:"d M Y"}}: 
+              {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
+            </div>
+            
+            <div class="commentbody">
+            {% if fb.video %}
+            
+             <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+                              width="192" height="144" id="FlowPlayer">
+                          <param name="allowScriptAccess" value="always" />
+                          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
+                          <param name="quality" value="high" />
+                          <param name="scale" value="noScale" />
+                          <param name="wmode" value="transparent" /> 
+                          <param name="flashvars"
+                                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ fb.video }}' }  ], 
+                                                autoPlay: true, 
+                                                autoBuffering: false, 
+                                                loop: false, 
+                                                autoRewind: true,   
+                                                hideControls: true}" 
+                          />
+                       </object>
+             
+             
+            {% endif %} 
+            
+            <p>{{fb.comment}}</p>
+            
+            </div>
+            </li>          
+          {% endfor %}
+          </ul>
+          
+          <h3>Sign Feedback</h3>
+          <ul>
+          {% for fb in signfb %}
+            <li class="comment">
+            <div class="head">
+              {{fb.date|date:"d M Y"}}: 
+              {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
+              on <a href="{{fb.translation.get_absolute_url}}">{{fb.translation}}</a> 
+            </div>
+            <div class="commentbody">
+            <p>{{fb.comment}}</p>     
+            <ul> 
+                <li>Auslan Sign: {{fb.get_isAuslan_display}}</li>
+                <li>Where Used: {{fb.get_whereused_display}}</li>
+                <li>Liked: {{fb.get_like_display}}</li>
+                <li>Used: {{fb.get_use_display}}</li>
+                <li>Use Suggested: {{fb.get_suggested_display}}</li>
+                <li>Correct: {{fb.get_correct_display}}</li>
+            </ul>
+            </div>
+            </li>
+          {% endfor %}
+          
+          </ul>
+          
+          <h3>Missing Sign Feedback</h3>
+          <ul>
+          {% for fb in missing %}
+            <li class="comment">
+            
+            <div class="head">
+               {{fb.date|date:"d M Y"}}: 
+               {{fb.user.first_name}} {{fb.user.last_name}} 
+               (<a href="mailto:{{fb.user.email}}">Email</a>)
+            </div>
+            <div class="commentbody">
+            {% if fb.video %}  
+            <div class="commentvideo">
+              <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+                      width="192" height="144" id="FlowPlayer">
+                  <param name="allowScriptAccess" value="always" />
+                  <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
+                  <param name="quality" value="high" />
+                  <param name="scale" value="noScale" />
+                  <param name="wmode" value="transparent" /> 
+                  <param name="flashvars"
+                        value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ fb.video.name }}' }  ], 
+                                        autoPlay: true, 
+                                        autoBuffering: false, 
+                                        loop: false, 
+                                        autoRewind: true,   
+                                        hideControls: true}" 
+                  />
+               </object>
+             </div>
+            {% endif %} 
+            <p>{{fb.comments}}</p>
+            </div>
+            
+            </li>          
+          {% endfor %}
+          </ul>
+          
+          </div>
+        </td>
+      </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,79 @@
+{# Parameters #}
+{# username (string) #}
+{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
+{# title (string #}
+{#   The title of the page, appears in horizontal span above content. #}
+{# wordcount (integer) #}
+{#   The number of words returned by the query. #}
+{# wordlist (word, id) #}
+{#   Fragment of word list, containing a maximum of 51 words. #}
+{# nextpage (integer) #}
+{#   Number of next page, zero if there is no next page #}
+{# prevpage (integer) #}
+{#   Number of previous page, zero if there is no previous page #}
+{# query (string) #}
+{#   Word (or word fragment) which was searched for #}
+
+{% extends "alternatelayout.html" %}
+
+ 
+
+{% block pagecontent %}
+
+                <img src="{% auslan_static_prefix %}img/fs_table_twohanded.jpg" width="470" height="387" alt="" border="0"><br>
+
+                <script language="JavaScript1.2">
+
+		  // Browserkit is needed by the javascript in this page
+  		  var browserKit = new BrowserKit(); 
+
+
+                  // STEP 1: Preload Tab Images
+                  var asb_fs_tabImages = asb_fs_preloadTabs("{% auslan_static_prefix %}img/");
+
+                  // STEP 2: Preload Finger-Spelling Alphabet Images
+                  // 2a) Place alphabets in an array, so we may pre-load more than one if 
+                  //     desired (current code below only loads one alphabet)
+                  var asb_fsAlphabets = new Array();
+
+                  // 2b) Preload images for current alphabet
+
+                  oTmp = asb_fsAlphabets[1] = new ASB_FSAlphabet(1, 32, "{% auslan_static_prefix %}img/", "asb_fs_handleAlphabetLoad", "asb_fs_handleAlphabetImageLoad");
+                  oTmp.addLetter("A", "th_a.jpg");
+                  oTmp.addLetter("B", "th_b.jpg");
+                  oTmp.addLetter("C", "th_c.jpg");
+                  oTmp.addLetter("D", "th_d.jpg");
+                  oTmp.addLetter("E", "th_e.jpg");
+                  oTmp.addLetter("F", "th_f.jpg");
+                  oTmp.addLetter("G", "th_g.jpg");
+                  oTmp.addLetter("H", "th_h0.jpg,th_h1.jpg,th_h2.jpg,th_h3.jpg,th_h4.jpg");
+                  oTmp.addLetter("I", "th_i.jpg");
+                  oTmp.addLetter("J", "th_j0.jpg,th_j1.jpg,th_j2.jpg");
+                  oTmp.addLetter("K", "th_k.jpg");
+                  oTmp.addLetter("L", "th_l.jpg");
+                  oTmp.addLetter("M", "th_m.jpg");
+                  oTmp.addLetter("N", "th_n.jpg");
+                  oTmp.addLetter("O", "th_o.jpg");
+                  oTmp.addLetter("P", "th_p.jpg");
+                  oTmp.addLetter("Q", "th_q.jpg");
+                  oTmp.addLetter("R", "th_r.jpg");
+                  oTmp.addLetter("S", "th_s.jpg");
+                  oTmp.addLetter("T", "th_t.jpg");
+                  oTmp.addLetter("U", "th_u.jpg");
+                  oTmp.addLetter("V", "th_v.jpg");
+                  oTmp.addLetter("W", "th_w.jpg");
+                  oTmp.addLetter("X", "th_x.jpg");
+                  oTmp.addLetter("Y", "th_y.jpg");
+                  oTmp.addLetter("Z", "th_z.jpg");
+
+                  // STEP 3: Instantiate an FSViewer object to play animations, and "connect" 
+                  //         it to an image on the page that will be used as a placeholder 
+                  //         for the animations.
+                  asb_fs_initViewer(asb_fsAlphabets[1], "{% auslan_static_prefix %}img/transition.jpg");
+
+                  // STEP 4: Build an array of words for the "practice" mode
+                  var asb_fs_aPracticeWords = asb_fs_GetPracticeWordList();
+                </script>
+{% endblock %}							
+
+
