@@ -1,181 +1,95 @@
-{# Parameters #}
-{# username (string) #}
-{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
-{# title (string) #}
-{#   The title of the page, appears in horizontal span above content. #}
-{# videofile (string) #}
-{#   The url of the video file for the definition. #}
-{# translation (object) #}
-{#   Translation objfect for the word being displayed. #}
-
 
 {% extends "baselayout.html" %}
 
 {% block content %}
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        
-        <td class="asbCFrameTopUpperRowCnr">
-         <img src="{% auslan_static_prefix %}img/border_ul.gif" width="10" height="30" alt="" border="0"><br>
-        </td>
-        <td class="asbCFrameTopUpperRow" width="449" nowrap>
-          {% ifequal viewname "words" %}
-          Signs used to express the word "{{ translation.translation }}"
-          {% else %} 
-          {% ifequal viewname "feedback" %}
-          Sign Feedback
-          {% else %}
-          Gloss view for {{gloss.idgloss}} ({{gloss.sn}}) 
-          {% endifequal %}
-          {% endifequal %}&nbsp;
-        </td>
-        <td class="asbCFrameTopUpperRow" valign="top" width="220" style="padding-top:0px; padding-bottom:0px;" align="right" nowrap>
-          <table border="0" cellspacing="0" cellpadding="0" style="height:29px;">
-            <td class="asbCFrameCellAnotherWordLeft" nowrap>
-              <a href="{% url dictionary.views.search %}" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('btNewLookup','','{% auslan_static_prefix %}img/button_magnify_select.gif',1)">
-              <img src="{% auslan_static_prefix %}img/button_magnify.gif" width="27" height="25" alt="" border="0" name="btNewLookup" id="btNewLookup"></a>
-            </td>
-            <td class="asbCFrameCellAnotherWordRight" nowrap>
-              <a href="{% url dictionary.views.search %}" class="asbBtnAnotherWord" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('btNewLookup','','{% auslan_static_prefix %}img/button_magnify_select.gif',1)">Look up another word</a>
-            </td>
-          </table>
-        </td>
-        <td class="asbCFrameTopUpperRow" width="100%">
-         <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br>
-        </td>
-      </tr>
-    </table>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        <td class="asbCFrameBorder"><img src="{% auslan_static_prefix %}img/obj_null.gif" width="141" height="1"><br></td>
-        <td class="asbCFrameBorder" width="100%"><img src="{% auslan_static_prefix %}img/obj_null.gif" width="100" height="1"><br></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="asbCFrameTopLowerRowCombinedLeft" nowrap>
-        {% block signcount %}
-        Sign 3 of 123
-        {% endblock %}
-        </td>
-        
-        <td class="asbCFrameTopLowerRowCombinedRight" nowrap>
-         {% block prevnext %} 
-         Previous/Next sign links
-         {% endblock %} 
-        </td>
-        
-      </tr>
-    </table>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        <td valign="top">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="asbCFrameLeftUpperBlockSearch" align="center">
-                <table border="0" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="asbSignPreview">
-                      <div id="asbSignVideoContainer" class="asbVideoContainer">
-                      
-                      {% block video %}
-                      <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-                              width="192" height="144" id="FlowPlayer">
-                          <param name="allowScriptAccess" value="always" />
-                          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-                          <param name="quality" value="high" />
-                          <param name="scale" value="noScale" />
-                          <param name="wmode" value="transparent" /> 
-                          <param name="flashvars"
-                                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
-                                                autoPlay: true, 
-                                                autoBuffering: false, 
-                                                loop: false, 
-                                                autoRewind: true,   
-                                                hideControls: true}" 
-                          />
-                       </object>
-                       {% endblock %}
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="videoReplayMessage">
-                      <p>Click on image to replay</p>
-                    </td>
-                  </tr>
+<div id="signinfo">
 
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td class="asbCFrameLeftLowerBlock">
-                <div class="asbCFrameLeftHeading">Keywords associated with this sign</div>
-                <div class="asbCFrameLeftText">
-                {% block associated_keywords %} 
-                  <li><b>baby</b></li>
-                  <li>cradle</li>
-                  <li>infant</li>
-                  <li>nurse</li>
-                {% endblock %} 
-                </div>
-              </td>
-            </tr>	
-            <tr>
-              <td class="asbCFrameLeftMidBlock" style="border-top:1px solid;" >
-              {% block states %} 
-              Table of state usage images.
-              {% endblock %}
-          </td>
-        </tr>
-        <tr>
-          <td class="asbCFrameLeftLowerBlock">          
-          {% ifequal viewname "feedback" %}
-            <div class="asbCFrameLeftText">
+{% ifequal viewname "words" %}
+    <h2>Signs used to express the word <em>{{ translation.translation }}</em> {{translation.gloss.sn}}</h2>
+{% else %} 
+    {% ifequal viewname "feedback" %}
+        Sign Feedback
+    {% else %}
+        Gloss view for {{gloss.idgloss}} ({{gloss.sn}}) 
+    {% endifequal %}
+{% endifequal %}
 
-                <li><a href="/dictionary/words/{{ translation.translation}}-{{n}}.html">
-                Return to Sign Detail</a></li>
+<div id="signcount">
+{% block signcount %}
+    Sign 3 of 123
+{% endblock %} 
+</div>
+      
+<div id="signnav">  
+{% block prevnext %} 
+    Previous/Next sign links
+{% endblock %}
+</div>
+</div>
 
+<div id="definitionblock">
+<div id="videocontainer">              
+{% block video %}
+<object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+      width="320" height="240" id="FlowPlayer">
+  <param name="allowScriptAccess" value="always" />
+  <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
+  <param name="quality" value="high" />
+  <param name="scale" value="noScale" />
+  <param name="wmode" value="transparent" /> 
+  <param name="flashvars"
+    {# modified here to use the big test video - should be {{videofile}} #}
+        value="config={ playList: [ { url: '{% auslan_media_prefix %}video/bigtest.flv' }  ], 
+                        autoPlay: true, 
+                        autoBuffering: false, 
+                        loop: false, 
+                        autoRewind: true,   
+                        hideControls: true}" 
+  />
+</object>
+{% endblock %}
+</div>
 
-              <p>Please complete the questions 
-              opposite and then click 'Submit' to provide feedback on the sign shown above.</p>
+<div id="definition">
+   <div id="keywords"> 
+      {% block associated_keywords %} 
+      {% endblock %}
+   </div>
+   {% block definition %}
+   
+   <p>DEFINITION CONTENT</p>
+   
+   {% endblock %}          
+</div>
+</div>
 
-              </div>
+ <div id="states">      
+    {% block states %} 
+      Table of state usage images.
+    {% endblock %}
+ </div> 
+{% ifequal viewname "feedback" %}
+  <div>
 
-          {% else %}
+      <li><a href="/dictionary/words/{{ translation.translation}}-{{n}}.html">
+      Return to Sign Detail</a></li>
+
+    <p>Please complete the questions 
+    opposite and then click 'Submit' to provide feedback on the sign shown above.</p>
+
+    </div>
+
+{% else %}
+
+  <ul>
+      <li><a href="/dictionary/feedback/{{ translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+      <li><a href="/dictionary/viewfeedback/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
+  </ul>
+{% endifequal %}  
+ </div>
           
-            <div class="asbCFrameLeftHeading">Provide Feedback</div>
-            <div class="asbCFrameLeftText">
-                <li><a href="/dictionary/feedback/{{ translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
-                <li><a href="/dictionary/viewfeedback/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
-            </div>
-          {% endifequal %}  
-            
-          </td>
-        </tr>
-        <tr><td><img src="{% auslan_static_prefix %}img/border_lm.gif" width="229" height="10" alt="" border="0"><br></td></tr>
-        <tr>
-          <td style="padding-top:10px;">
-            <img src="{% auslan_static_prefix %}img/logo_institute.gif" width="216" height="39" alt="" border="0">
-            <p class="asbCopyright">&copy; RIDBC 2004. All rights reserved.</p>
-          </td>
-        </tr>
-        <tr><td><img src="asset/com/CORE/img/obj_null.gif" width="1" height="232"><br></td></tr>
-      </table>
-    </td>
-    <td valign="top" width="100%"> 
-    
-{% block definition %}
 
-<p>DEFINITION CONTENT</p>
-
-{% endblock %}          
- 
-    </td>			
-  </tr>
-</table>
+  
 
 {% endblock %}

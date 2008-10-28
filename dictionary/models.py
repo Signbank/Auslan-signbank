@@ -368,6 +368,15 @@ class Gloss(models.Model):
     
     StemSN = models.IntegerField(null=True, blank=True) 
 
+    def next_dictionary_gloss(self):
+        """Find the next gloss in dictionary order"""
+        return Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True).order_by('sn')[0]
+ 
+    
+    def prev_dictionary_gloss(self):
+        """Find the previous gloss in dictionary order"""
+        return Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True).order_by('-sn')[0]
+        
 
     def get_absolute_url(self):
         return "/dictionary/gloss/%s.html" % self.idgloss

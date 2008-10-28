@@ -49,7 +49,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+ 
     )
+ 
+
 
 TEMPLATE_TAGS = ('auslan.dictionary.templatetags.prefixes', )
 
@@ -70,7 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'auslan.dictionary',
     'auslan.feedback',
-    'auslan.registration',
+    'auslan.registration', 
 )
 
 ROOT_URLCONF = 'auslan.urls'
