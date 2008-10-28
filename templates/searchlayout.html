@@ -1,102 +1,15 @@
-{# Parameters #}
-{# username (string) #}
-{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
-{# title (string #}
-{#   The title of the page, appears in horizontal span above content. #}
-
 {% extends "baselayout.html" %}
 
 {% block content %}
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        <td class="asbCFrameTopUpperRowCnr">
-          <img src="{% auslan_static_prefix %}img/border_ul.gif" width="10" height="30" alt="" border="0"><br>
-        </td>
-        <td class="asbCFrameTopUpperRow" width="100%" nowrap>Search by English Word</td>
-      </tr>
-    </table>
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        
-        <td valign="top">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr><td class="asbCFrameTopLowerRowLeft" nowrap>Type an English Word</td></tr>
-            
-            
-              <tr>
-                <td class="asbCFrameLeftUpperBlockSearch">
-                
-                 <form id="frmSearch" name="frmSearch" method="get" action="{% url auslan.dictionary.views.search %}">
-                  <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
-                    <tr><td><input type="Text" name="query" value="{{ query }}" maxlength="50" class="asbLeftInputField"></td></tr>
-                    <tr><td align="right" style="padding-top:2px;">
-                      <a href="javascript:document.forms['frmSearch'].submit();"  onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('btSearch','','{% auslan_static_prefix %}img/button_search_select.gif',1)">
-                      <img src="{% auslan_static_prefix %}img/button_search.gif" width="56" height="18" alt="" border="0" name="btSearch" id="btSearch"></a><br>
-                    </td></tr>
-                  </table> 
-                  <p class="asbCFrameLeftText">
-                    Type in the first few letters of the English 
-                    word you want to search for, then click on the 
-                    English word in the match list opposite.
-                  </p>
-                 </form>
-                  
-                </td>
-              </tr>
-            
-            
-            <tr>
-              <td class="asbCFrameLeftLowerBlock">
-                <div class="asbCFrameLeftHeading">Related Information</div>
-                <div class="asbCFrameLeftText">
-                  <li><a href="/fingerspellingtwohanded.html">Fingerspell a word</a></li>
-                  <li><a href="/numbersigns.html">View number signs</a></li>
-                </div>
-                <div class="asbCFrameLeftText">
-                  <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
-                </div>
-              </td>
-            </tr>
-            <tr><td><img src="{% auslan_static_prefix %}img/border_lm.gif" width="229" height="10" alt="" border="0"><br></td></tr>
-            <tr>
-              <td style="padding-top:10px;">
-                <img src="{% auslan_static_prefix %}img/logo_institute.gif" width="216" height="39" alt="" border="0">
-                <p class="asbCopyright">&copy; RIDBC 2004. All rights reserved.</p>
-              </td>
-            </tr>
-            <tr><td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="232"><br></td></tr>
-          </table>
-        </td>
-        <td valign="top" width="100%">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          
-            <tr>
-
-            <td class="asbCFrameTopLowerRowRight" nowrap>
-             {% ifnotequal query '' %}           
-               English words matching "{{ query }}"
-             {% else %} 
-               &nbsp;
-             {% endifnotequal %}       
-            </td>
-
-            </tr>
-              <tr>
-                <td class="asbBodyCell">
+{% ifnotequal query '' %}           
+  <h2>English words matching "{{ query }}"</h2>
+{% endifnotequal %}       
 
 {% block pagecontent %}
 
 <p>SEARCH CONTENT</p>
 
-{% endblock %}
-                 </td>
-               </tr>
-             </table>
-           </td>			
-         </tr>
-      </table>
+{% endblock %} 
 
 {% endblock %}

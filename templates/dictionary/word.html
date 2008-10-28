@@ -20,20 +20,11 @@
 
 {# not the feedback view, show the definition #}
 
-
-       <table width="450" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td class="asbCFrameTopLowerExtraRow">Sign Definition</td>
-        </tr>
-        
-	<tr>
-	  <td class="asbBodyCell">
- 
- 
+  <h2>Sign Definition</h2>
  
  {% if definitions.noun %}
  
- <h2>As a Noun</h2>
+ <h3>As a Noun</h3>
  
   <ol>
   {% for def in definitions.noun %}
@@ -43,7 +34,7 @@
   {% endif %}
   
   {% if definitions.verb %} 
-  <h2>As a Verb or Adjective</h2> 
+  <h3>As a Verb or Adjective</h3> 
   <ol>
   {% for def in definitions.verb %}
   <li> {{ def }}</li>
@@ -53,7 +44,7 @@
   
   
   {% if definitions.interact %} 
-  <h2>Interactive</h2> 
+  <h3>Interactive</h3> 
   <ol>
   {% for def in definitions.interact %}
   <li> {{ def }}</li>
@@ -62,7 +53,7 @@
   {% endif %}
   
   {% if definitions.deictic %} 
-  <h2>As Deictic</h2> 
+  <h3>As Deictic</h3> 
   <ol>
   {% for def in definitions.deictic %}
   <li> {{ def }}</li>
@@ -72,7 +63,7 @@
   
   
   {% if definitions.modifier %} 
-  <h2>As Modifier</h2> 
+  <h3>As Modifier</h3> 
   <ol>
   {% for def in definitions.modifier %}
   <li> {{ def }}</li>
@@ -82,7 +73,7 @@
 
   
   {% if definitions.question %} 
-  <h2>As Question</h2> 
+  <h3>As Question</h3> 
   <ol>
   {% for def in definitions.question %}
   <li> {{ def }}</li>
@@ -91,18 +82,14 @@
   {% endif %}
   
   {% if definitions.augment %} 
-  <h2>Augmented Meaning</h2> 
+  <h3>Augmented Meaning</h3> 
   <ol>
   {% for def in definitions.augment %}
   <li> {{ def }}</li>
   {% endfor %} 
   </ol>
   {% endif %}
-  
-            </td>
-        </tr>
-      </table>   
-      
+   
       
       {% if not gloss.inWeb %}
       <p>This gloss is not included in the web version of the dictionary.</p>
@@ -194,10 +181,6 @@
            
           </fieldset>     
            </form>
-           
-
-           
-           
          {% endif %}
          
       </ul>
@@ -213,29 +196,23 @@
 
 
 {% block prevnext %}
-  {% ifequal viewname "words" %} 
+
   
+  <a href="/dictionary/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html">&lt;Previous Sign</a>
+
+  {% ifequal viewname "words" %}   
   {% if prev %}
-  <a href="{{translation.translation}}-{{prev}}.html">
-  <img id="btSignNext" name="btSignNext" src="{% auslan_static_prefix %}img/button_sign_previous.gif" width="72" height="18" alt="previous sign" border="0">
-  </a>
-  {% else %} 
-  <img src="{% auslan_static_prefix %}img/obj_null.gif" width="72" height="18" alt="" border="0">
+  <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
   {% endif %} 
   
   {% if next %}
-  <a href="{{translation.translation}}-{{next}}.html">
-  <img src="{% auslan_static_prefix %}img/button_sign_next.gif" width="72" height="18" alt="next sign" border="0"> 
-  </a>
-  {% else %} 
-  <img src="{% auslan_static_prefix %}img/obj_null.gif" width="72" height="18" alt="" border="0">
+  <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
   {% endif %}
-  
-  {% else %}
    
-   &nbsp;
-  
   {% endifequal %}
+  
+  <a href="/dictionary/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html">Next Sign&gt;</a>
+
 {% endblock %}
 
 {% block signcount %}
@@ -247,27 +224,26 @@ Sign {{n}} of {{ total }}
 {% endblock %}
 
 {% block associated_keywords %}
-
-
-<ul>
+<p><strong>Keywords:</strong>
 {% for kwd in allkwds %}
-  <li>
-  {% ifequal translation.translation kwd.translation %}
-  <b>{{ kwd.translation }}</b>
-  {% else %}
-  {{ kwd.translation }}
-  {% endifequal %}
-  </li>
-{% endfor %}
-</ul>
 
+  {% ifequal translation.translation kwd.translation %}
+  <b>{{ kwd.translation }},</b>
+  {% else %}
+  {{ kwd.translation }},
+  {% endifequal %}
+{% endfor %}
+</p>
 {% endblock %}
 
 
 {% block states %}      
+    <img src="{% auslan_static_prefix %}img/australia_regions.png" alt="States">
+    <!--
+
      {% if gloss.auslextf %}
      
-<div class="asbCFrameLeftHeading">Sign Distribution: All States</div>
+<div>Sign Distribution: All States</div>
 <div id="states">
     <img src="{% auslan_static_prefix %}img/state_ql.gif" width="25" height="29" alt="Queensland">
     <img src="{% auslan_static_prefix %}img/state_nsw.gif" width="25" height="29" alt="New South Wales">
@@ -324,5 +300,7 @@ Sign {{n}} of {{ total }}
     {% endif %} {# gloss.sthtf #}
     {% endif %} {# gloss.nthtf #}
     {% endif %} {# gloss.austlex #}
-{% endblock %}
+-->
+    
+    {% endblock %}
 

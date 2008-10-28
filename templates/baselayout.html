@@ -1,42 +1,18 @@
-{# Base Layout #}
-{# Root template used by virtually all pages on the site. Contains head defs, and html tags. #}
-
-{# ---- BLOCKS ---- #}
-{# content #}
-{#   The page content, displayed under the banner and menu tabs. #}
-{# scripts #}
-{#   Javascript blocks placed in the HEAD of the page #}
-
-
-{# ---- INCLUDES ---- #}
-{# menu #}
-{#   Highest level tab menu, contains links to all major site features. #}
-{# submenu #}
-{#   Menu containing links to minor features within currently selected site area. #}
-
-{# ---- PARAMETERS ---- #}
-{# menuid (integer) #}
-{#   The id of the level-I menu (which group of pages is being viewed) #}
-{# submenuid (integer) #}
-{#   The id of the submenu page being viewed. #}
-
-{% load prefixes %}
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.
-dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
     <title>Auslan - Signbank</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <link rel="stylesheet" href="{% auslan_static_prefix %}css/core.css" type="text/css"> 
     <link rel="stylesheet" href="{% auslan_static_prefix %}css/auslan.css" type="text/css">
 
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/browserkit.js"></script>
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/abscore.js"></script> 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>   
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>    
     <script type="text/javascript">
       <!--
       
+      
+$(document).ready(function(){  
+});
       {% block script %}
       // more scripts go here
       {% endblock %}
@@ -45,7 +21,7 @@ dtd">
       
     </script>
     <!-- google analytics code --> 
-    
+    <!--
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -55,26 +31,40 @@ var pageTracker = _gat._getTracker("UA-3928964-1");
 pageTracker._initData();
 pageTracker._trackPageview();
 </script> 
+-->
   </head>
 
-  <body bgcolor="#FFFFFF" text="#385400" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td background="{% auslan_static_prefix %}img/bg_top.gif">
-                 <img src="{% auslan_static_prefix %}img/logo_sign-bank.gif" width="249" height="50"><br>
-               </td>
-            </tr>
-            <tr>
-              <td>
-              {% include "menu.html" %}            
-              {% include "submenu.html" %}
-              </td>  
-            </tr>
-          </table>
+  <body>
+      
+    <div id="header">
+       <h1>Auslan - Signbank</h1>
+       <form id="frmSearch" name="frmSearch" method="get" action="{% url auslan.dictionary.views.search %}">
+          <input type="Text" name="query" value="{{ query }}" maxlength="50" class="asbLeftInputField">
+          <a href="javascript:document.forms['frmSearch'].submit();">Search</a>         
+       </form> 
+    </div>
+         
+    <div id="navigation"> 
+ <a href="/">Home</a> | <a href="/dictionary/">Search</a> | <a href="/about/history/">About</a>
+    </div>
     
+    <div id="content"> 
     {% block content %}
     <p>PAGE CONTENT</p>
     {% endblock %}
+    </div>
 
+    
+    <div id="footer"> 
+     
+          <div id="copyright">
+           <!-- <img src="{% auslan_static_prefix %}img/logo_institute.gif" width="216" height="39" alt="" border="0">
+           -->
+             &copy; RIDBC 2004. All rights reserved.
+          </div>
+    
+    </div>
+    
+    
   </body>
 </html>
