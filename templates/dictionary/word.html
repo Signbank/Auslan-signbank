@@ -1,0 +1,328 @@
+{% extends "definitionlayout.html" %}
+
+{% block pagetitle %}Auslan: {{ translation.translation }} {{ n }} {% endblock %}
+  
+   
+{% block definition %}
+
+ {% ifequal viewname "feedback" %}
+ 
+ {% include "feedback/signfeedback.html" %}
+
+ 
+ {% else %} 
+ {% ifequal viewname 'viewfeedback' %}
+
+ {% include "feedback/viewsignfeedback.html" %}
+
+ {% else %}
+ 
+
+{# not the feedback view, show the definition #}
+
+
+       <table width="450" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="asbCFrameTopLowerExtraRow">Sign Definition</td>
+        </tr>
+        
+	<tr>
+	  <td class="asbBodyCell">
+ 
+ 
+ 
+ {% if definitions.noun %}
+ 
+ <h2>As a Noun</h2>
+ 
+  <ol>
+  {% for def in definitions.noun %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+  {% if definitions.verb %} 
+  <h2>As a Verb or Adjective</h2> 
+  <ol>
+  {% for def in definitions.verb %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+  
+  {% if definitions.interact %} 
+  <h2>Interactive</h2> 
+  <ol>
+  {% for def in definitions.interact %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+  {% if definitions.deictic %} 
+  <h2>As Deictic</h2> 
+  <ol>
+  {% for def in definitions.deictic %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+  
+  {% if definitions.modifier %} 
+  <h2>As Modifier</h2> 
+  <ol>
+  {% for def in definitions.modifier %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+
+  
+  {% if definitions.question %} 
+  <h2>As Question</h2> 
+  <ol>
+  {% for def in definitions.question %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+  {% if definitions.augment %} 
+  <h2>Augmented Meaning</h2> 
+  <ol>
+  {% for def in definitions.augment %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %}
+  
+            </td>
+        </tr>
+      </table>   
+      
+      
+      {% if not gloss.inWeb %}
+      <p>This gloss is not included in the web version of the dictionary.</p>
+      {% endif %}
+  
+      {% if user.is_authenticated and user.is_staff %}
+      <h2>Staff</h2>
+      
+        {% if definitions.popexplain %} 
+        
+  <h2>Popular Explanation</h2> 
+  <ol>
+  {% for def in definitions.popexplain %}
+  <li> {{ def }}</li>
+  {% endfor %} 
+  </ol>
+  {% endif %} 
+  
+  {% if gloss.queries %}
+  <h2>Notes</h2>
+  <ol>
+  <li>{{gloss.queries }}</li>
+  </ol>
+  {% endif %}
+      
+      
+      {% if feedback %}
+      
+      <h3>Feedback Received</h3>
+      
+      <table border='1'>
+      <tr>
+        <th>User</th>
+        <th>Date</th>
+        <th>Auslan Sign</th>
+        <th>Where Used</th>
+        <th>Liked</th>
+        <th>Used</th>
+        <th>Use Suggested</th>
+        <th>Correct</th>
+      </tr>
+
+      {% for row in feedback %}
+      
+      <tr>
+        <td>{{row.user}}</td>
+        <td>{{row.date}}</td>
+        <td>{{row.get_isAuslan_display}}</td>
+        <td>{{row.get_whereused_display}}</td>
+        <td>{{row.get_like_display}}</td>
+        <td>{{row.get_use_display}}</td>
+        <td>{{row.get_suggested_display}}</td>
+        <td>{{row.get_correct_display}}</td>
+      </tr>
+      
+      {% endfor %}
+
+      </table>
+      
+      
+      {% endif %} 
+      
+      
+      <ul>
+        <li><a href="/admin/dictionary/gloss/{{gloss.id}}">Edit the 
+            gloss <em>'{{ gloss.idgloss}}'</em></a></li>
+        <li>
+          <a href="javascript:window.open('/dictionary/update/video/{{gloss.id}}','', 'width=500,height=300,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+        </li>
+      </ul>
+      
+        {%if update_form %}
+           <form action="/dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+           
+           <fieldset class="glossupdate">
+           <legend>Quick Updates</legend>
+         {# update form for this gloss #}
+           <p>
+            Include in the Web dictionary? {{ update_form.inWeb }}
+             {{ update_form.glossid }}
+             {{ update_form.keyword }}
+             {{ update_form.n }}
+           </p>
+           <p>Include in Medical Signbank? {{ update_form.inMedLex }}</p>
+
+           <p>
+             <input type="submit" value="Update"/>
+           </p>
+           
+          </fieldset>     
+           </form>
+           
+
+           
+           
+         {% endif %}
+         
+      </ul>
+      
+      {% endif %}
+     
+      
+   {% endifequal %}
+
+      
+  {% endifequal %}
+{% endblock %}
+
+
+{% block prevnext %}
+  {% ifequal viewname "words" %} 
+  
+  {% if prev %}
+  <a href="{{translation.translation}}-{{prev}}.html">
+  <img id="btSignNext" name="btSignNext" src="{% auslan_static_prefix %}img/button_sign_previous.gif" width="72" height="18" alt="previous sign" border="0">
+  </a>
+  {% else %} 
+  <img src="{% auslan_static_prefix %}img/obj_null.gif" width="72" height="18" alt="" border="0">
+  {% endif %} 
+  
+  {% if next %}
+  <a href="{{translation.translation}}-{{next}}.html">
+  <img src="{% auslan_static_prefix %}img/button_sign_next.gif" width="72" height="18" alt="next sign" border="0"> 
+  </a>
+  {% else %} 
+  <img src="{% auslan_static_prefix %}img/obj_null.gif" width="72" height="18" alt="" border="0">
+  {% endif %}
+  
+  {% else %}
+   
+   &nbsp;
+  
+  {% endifequal %}
+{% endblock %}
+
+{% block signcount %}
+{% ifequal viewname "words" %}
+Sign {{n}} of {{ total }}
+{% else %}
+&nbsp;
+{% endifequal %}
+{% endblock %}
+
+{% block associated_keywords %}
+
+
+<ul>
+{% for kwd in allkwds %}
+  <li>
+  {% ifequal translation.translation kwd.translation %}
+  <b>{{ kwd.translation }}</b>
+  {% else %}
+  {{ kwd.translation }}
+  {% endifequal %}
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+
+{% block states %}      
+     {% if gloss.auslextf %}
+     
+<div class="asbCFrameLeftHeading">Sign Distribution: All States</div>
+<div id="states">
+    <img src="{% auslan_static_prefix %}img/state_ql.gif" width="25" height="29" alt="Queensland">
+    <img src="{% auslan_static_prefix %}img/state_nsw.gif" width="25" height="29" alt="New South Wales">
+    <img src="{% auslan_static_prefix %}img/state_vic.gif" width="25" height="29" alt="Victoria">
+    <img src="{% auslan_static_prefix %}img/state_wa.gif" width="25" height="29" alt="Western Australia">
+    <img src="{% auslan_static_prefix %}img/state_sa.gif" width="25" height="29" alt="South Australia">
+    <img src="{% auslan_static_prefix %}img/state_nt.gif" width="25" height="29" alt="Northern Territory">
+    <img src="{% auslan_static_prefix %}img/state_act.gif" width="25" height="29" alt="Australian Capital Territory">
+    <img src="{% auslan_static_prefix %}img/state_tas.gif" width="25" height="29" alt="Tasmania">
+</div>
+    {% else %}
+    
+    {% if gloss.nthtf %}
+    {# northern dialect = NSW, ACT, QLD #}
+<div class="asbCFrameLeftHeading">Sign Distribution: </div>
+<div id="states">
+    <img src="{% auslan_static_prefix %}img/state_ql.gif" width="25" height="29" alt="Queensland">
+    <img src="{% auslan_static_prefix %}img/state_nsw.gif" width="25" height="29" alt="New South Wales">
+    <img src="{% auslan_static_prefix %}img/state_vic_not.gif" width="25" height="29" alt="Victoria">
+    <img src="{% auslan_static_prefix %}img/state_wa_not.gif" width="25" height="29" alt="Western Australia">
+    <img src="{% auslan_static_prefix %}img/state_sa_not.gif" width="25" height="29" alt="South Australia">
+    <img src="{% auslan_static_prefix %}img/state_nt_not.gif" width="25" height="29" alt="Northern Territory">
+    <img src="{% auslan_static_prefix %}img/state_act.gif" width="25" height="29" alt="Australian Capital Territory">
+    <img src="{% auslan_static_prefix %}img/state_tas_not.gif" width="25" height="29" alt="Tasmania">
+</div>    
+    {% else %}
+    
+    {% if gloss.sthtf %}
+    {# southern dialect = VIC, WA, TAS, SA, NT #}
+<div class="asbCFrameLeftHeading">Sign Distribution: </div>
+<div id="states">
+    <img src="{% auslan_static_prefix %}img/state_ql_not.gif" width="25" height="29" alt="Queensland">
+    <img src="{% auslan_static_prefix %}img/state_nsw_not.gif" width="25" height="29" alt="New South Wales">
+    <img src="{% auslan_static_prefix %}img/state_vic.gif" width="25" height="29" alt="Victoria">
+    <img src="{% auslan_static_prefix %}img/state_wa.gif" width="25" height="29" alt="Western Australia">
+    <img src="{% auslan_static_prefix %}img/state_sa.gif" width="25" height="29" alt="South Australia">
+    <img src="{% auslan_static_prefix %}img/state_nt.gif" width="25" height="29" alt="Northern Territory">
+    <img src="{% auslan_static_prefix %}img/state_act_not.gif" width="25" height="29" alt="Australian Capital Territory">
+    <img src="{% auslan_static_prefix %}img/state_tas.gif" width="25" height="29" alt="Tasmania">
+</div>   
+    {% else %}
+    {# individual states turned on #}
+<div class="asbCFrameLeftHeading">Sign Distribution: </div>
+<div id="states">
+    <img src="{% auslan_static_prefix %}img/state_ql{% if not gloss.qldtf %}_not{% endif %}.gif" width="25" height="29" alt="Queensland">
+    <img src="{% auslan_static_prefix %}img/state_nsw{% if not gloss.nswtf %}_not{% endif %}.gif" width="25" height="29" alt="New South Wales">
+    <img src="{% auslan_static_prefix %}img/state_vic{% if not gloss.victf %}_not{% endif %}.gif" width="25" height="29" alt="Victoria">
+    <img src="{% auslan_static_prefix %}img/state_wa{% if not gloss.watf %}_not{% endif %}.gif" width="25" height="29" alt="Western Australia">
+    <img src="{% auslan_static_prefix %}img/state_sa{% if not gloss.satf %}_not{% endif %}.gif" width="25" height="29" alt="South Australia">
+    <img src="{% auslan_static_prefix %}img/state_nt_not.gif" width="25" height="29" alt="Northern Territory">
+    <img src="{% auslan_static_prefix %}img/state_act_not.gif" width="25" height="29" alt="Australian Capital Territory">
+    <img src="{% auslan_static_prefix %}img/state_tas{% if not gloss.tastf %}_not{% endif %}.gif" width="25" height="29" alt="Tasmania">
+</div>    
+    {% endif %} {# gloss.sthtf #}
+    {% endif %} {# gloss.nthtf #}
+    {% endif %} {# gloss.austlex #}
+{% endblock %}
+

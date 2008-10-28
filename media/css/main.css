@@ -1,0 +1,138 @@
+/****************************************************************
+*
+* Main menu 
+*
+****************************************************************/
+
+/*set all: t r b l */
+
+a.menu
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a.menuselect
+{
+    color: #587400;
+    text-decoration: none;
+}
+
+
+td.menu
+{
+    padding: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+    background-color: #beb564;
+
+    border-width: 1px 0 2px 0;
+    border-style: solid;
+    border-color: #1e2d01;
+}
+
+ul.menuMain
+{
+    display: inline;
+    padding: 0;
+
+    font-family: "Arial";
+    font-weight: bold;
+    color: #ffffff;
+}
+
+ul.menuAux
+{
+    display: inline;    
+    padding: 0;
+
+    font-family: "Arial";
+    font-weight: bold;
+    color: #ffffff;
+   
+    background-color:#808080;
+}
+
+p.menu
+{
+    display: inline;
+}
+
+li.menu 
+{
+    font-size: 10pt;
+
+    display: inline;     
+
+    padding: 3px 8px 4px 8px;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #aba349 #aea554 0 #cec574;    
+}
+
+li.menuselect
+{
+    font-size: 10pt;
+
+    display: inline;     
+
+    background-color: #ffe2ad;
+    padding: 3px 8px 4px 8px;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #dbc68a #dbc68a 0 #ebd69a;    
+}
+
+li.menu:hover
+{
+    background-color: #cec574;
+    border-color: #bbb359 #beb564 0 #cec574;    
+}
+
+/****************************************************************
+*
+* Forms 
+*
+****************************************************************/
+
+div.formcomponent
+{
+    margin-bottom: 2em;
+}
+
+div.formcomponent > label
+{
+    font-size:8pt;
+    font-weight:bold;  
+    display:block;
+    margin-bottom: 5px;
+}
+
+div.formcomponent > ul.errorlist
+{
+    background-color: #ffffff;
+    font-weight:bold;
+    color: #ff0000;
+}
+
+div.formcomponent > img.formguide
+{
+    display:block;
+    margin-bottom: 5px;
+}
+
+div.formcomponent > img.guidebutton
+{
+    /*float:right;*/
+}
+
+div.formbuttons > input.submit
+{
+    float:left;
+}
+
+div.formbuttons > input.reset
+{
+    float:right;
+}

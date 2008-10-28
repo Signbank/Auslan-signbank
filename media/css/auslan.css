@@ -1,0 +1,395 @@
+html > body {
+   margin: 0px;
+   padding: 0px;   
+   font-family: verdana,helvetica,sans-serif;
+   font-size: 10pt; 
+   color: #385400;
+}
+
+#header {
+   margin: 0px;
+}
+
+#banner {
+   width: 100%;
+   border: 0px;
+   background-color: #A4C95A;   
+   margin: 0px;
+}
+
+#mainbody {
+    margin-left: 1px; 
+    width: 100%;
+}
+
+/* h1 is the main page title, in the top coloured bar below the menus */
+#mainbody h1#main {
+    font-size: 11pt; 
+    padding: 4px 0px 4px 10px;
+    margin: 0px;
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: #D6DAB2;
+    width: 100%;
+}
+
+/* h2 is the subtitle below the main title */
+#mainbody h2#subtitle {
+    font-size: small;
+    padding: 4px 0px 4px 10px;
+    padding-left: 10px;
+    margin: 0px;
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: #FFE28D;
+    width: 100%;
+}
+
+#leftcolumn {
+    float: left;
+    width: 225px;
+}
+
+#leftcolumnblock {
+    width: 215px;
+    background-color: #FFE28D;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: black;
+    padding-left: 10px;
+}
+
+#leftcolcontent {
+    font-size: smaller;
+}
+
+#leftcolimage {
+    margin-left: -10px;
+    width: 225px;
+    
+}
+
+#leftcolsponsor { 
+    width: 225px;
+    padding-top: 1em;
+}
+
+#copyright {
+    padding-left: 10px;
+    font-size: 8pt;
+}
+
+#content {
+    float: left;
+    width: 600px;
+    margin-left: 1em;
+    
+}
+
+ 
+/****************************************************************
+*
+* Main menu 
+*
+****************************************************************/
+
+.menuMain a.menu
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.menuMain a.menuselect
+{
+    color: #587400;
+    text-decoration: none;
+}
+
+.menuMain {
+   font-family: arial, sans-serif;
+   width: 100%; 
+   height: 2em;
+   margin: 0px;
+   background-color: #BEB564;
+   font-weight: bold;
+   font-size: 10pt;
+   color: #ffffff;
+    
+   padding: 0px;
+
+   border-width: 1px 0px 2px 0px;
+   border-style: solid;
+   border-color: black;
+ 
+}
+
+.menuMain li
+{
+    display: block;
+    float: left;
+    padding: 3px 8px 4px 8px;
+    margin: 0px; 
+    border-right: 1px solid #cec574;
+}
+
+.menuMain li.menuRight
+{
+    float: right;
+    border-left: 1px solid #cec574;
+    border-right: 0px;
+}
+.menuMain li.menuselect
+{ 
+    background-color: #ffe2ad;
+}
+
+li.menu:hover
+{
+    background-color: #cec574;
+    border-color: #bbb359 #beb564 #fff #cec574;    
+}
+
+
+
+
+/****************
+* Submenu
+******************/
+
+#submenu {
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    padding: 0em 0em 2em 0em;
+    margin: 0px;
+}
+
+#submenu li {
+    display: block;
+    float: left;
+}
+
+#submenu li.selected a {
+    text-decoration: underline;
+}
+#submenu li.selected a:hover {
+    color: black;   
+}
+
+#submenu a {
+    padding: 0.5em 0.5em 0.5em 0.5em;   
+    text-decoration: none;
+    color: black;
+}
+
+#submenu a:hover {
+    color: #bbb359;
+}
+
+
+
+/****************************************************************
+*
+* Forms 
+*
+****************************************************************/
+
+div.formcomponent
+{
+    margin-bottom: 2em;
+}
+
+div.formcomponent > label
+{
+    font-size:8pt;
+    font-weight:bold;  
+    display:block;
+    margin-bottom: 5px;
+}
+
+div.formcomponent > ul.errorlist
+{
+    background-color: #ffffff;
+    font-weight:bold;
+    color: #ff0000;
+}
+
+div.formcomponent > img.formguide
+{
+    display:block;
+    margin-bottom: 5px;
+}
+
+div.formcomponent > img.guidebutton
+{
+    /*float:right;*/
+}
+
+div.formbuttons > input.submit
+{
+    float:left;
+}
+
+div.formbuttons > input.reset
+{
+    float:right;
+}
+  
+  
+/* states display */
+    
+#states {
+    background-color: black;
+    padding: 0px;
+    height: 31px;
+    width: 209px;
+}
+
+#states img {
+    padding: 0px;
+    margin: 0px;
+    margin-right: -5px;
+    border: 1px solid black;
+}
+
+/* feedback */
+
+.feedbackQuestion {
+    font-weight: bold;
+}
+
+#signfeedback ul li {
+    list-style-type: none;
+}
+
+.errorlist {
+    background-color: red;   
+    font-weight: bold;
+    color: white;
+    font-size: large;
+}
+
+/* styles for registration form  */
+
+#registrationform  ul li {
+    list-style-type: none;
+}
+
+/* styles for login form */
+/*
+#385400 - dark green
+#6FA600 - light green
+#355001 - dark green
+#D6DAB2 - almost grey
+#FFE28D - beige
+#FFFCCC - pink
+#BEB564 - khaki
+*/
+
+#loginforms fieldset
+{
+border: 1px solid #781351;
+width: 30em;
+}
+
+#loginforms legend
+{
+color: #fff;
+background: #355001;
+border: 1px solid #781351;
+padding: 2px 6px;
+}
+
+#loginforms #signin {
+    background-color:  #BEB564  ;  
+    margin-bottom: 1em;
+}
+
+input.boxed {
+    border: 1px solid #355001;
+}
+
+#loginforms #signin #gobutton {
+    border: none;
+}
+
+#loginforms #register {
+    background-color:   #FFE28D;
+    margin-bottom: 1em;
+}
+
+#loginforms fieldset p {
+    margin-bottom: 0pt;
+}
+
+#loginforms #lostpw {
+   margin-bottom: 1em;
+}
+
+
+
+/* front page splash image and links */
+#splash {
+    background-color: #ffe590; /* #c1b563;     */
+    margin: 5px;
+}
+
+#splashimages td {
+    border-right: 1px solid black;    
+    border-top: 1px solid black; 
+    
+     background-color: #c1b563;  
+}
+
+#splashimages td.curved {
+    border-top: 0px;
+    border-left: 0px;  
+}
+
+#splashlinks {
+     background-color: #c1b563;    
+}   
+
+#splashlinks td {
+    text-align: center;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    border-right: 1px solid black;   
+    border-bottom: 1px solid black; 
+    border-left: 0px solid black;
+     
+}
+#splashlinks td.first {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#splashlinks td span {
+    vertical-align: middle; 
+}
+
+#splashlinks td img {
+    vertical-align: middle; 
+}
+
+
+#splashlinks a:link, #splashlinks a:visited {
+    font-size: larger;
+    color: #fff;
+    text-decoration: none; 
+}
+
+#splashlinks a:hover {
+   
+}
+
+#splashlinks img {
+    border: 0px;
+    margin: auto;
+}
+
+fieldset.glossupdate {
+   width: 200px;   
+}
+
