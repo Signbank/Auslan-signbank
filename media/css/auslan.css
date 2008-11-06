@@ -28,12 +28,11 @@ h1, h2, h3 {
 }
 
 #navigation {
-   margin: 0px;  
-   background-color: #FFCCFF;
-   height: 2em;
+   margin-bottom: 50px;
 }
 
 #content {
+   
    margin: 0px; 
    padding-left: 1em;
    padding-right: 1em;
@@ -80,8 +79,7 @@ h1, h2, h3 {
  
 #keywords {
    background-color: #CCFFAA;
-   margin-left: -1em;
-   height: 2em;
+   margin-left: -1em; 
    padding-left: 1em;
 }
 
