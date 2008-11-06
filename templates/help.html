@@ -4,16 +4,9 @@
 {# title (string #}
 {#   The title of the page, appears in horizontal span above content. #}
 
-{% extends "alternatelayout2.html" %}
+{% extends "baselayout.html" %}
 
-{% block sideuppercontent %}
-      <img src="{% auslan_static_prefix %}img/help.jpg" width="229" height="191" alt="" border="0"><br>
-{% endblock %}
-
-{% block sidelowercontent %}
-{% endblock %}
-
-{% block pagecontent %}
+{% block content %}
       <ul class="asbTOC">
         <li class="asbTOC"><a href="#Help01">What do I need to know before I start?</a></li>	
         <li class="asbTOC"><a href="#Help04">What can I do?</a></li>

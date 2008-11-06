@@ -6,7 +6,7 @@
 <div id="signinfo">
 
 {% ifequal viewname "words" %}
-    <h2>Signs used to express the word <em>{{ translation.translation }}</em> {{translation.gloss.sn}}</h2>
+    <h2>Signs used to express the word <em>{{ translation.translation }}</em></h2>
 {% else %} 
     {% ifequal viewname "feedback" %}
         Sign Feedback
@@ -40,7 +40,7 @@
   <param name="wmode" value="transparent" /> 
   <param name="flashvars"
     {# modified here to use the big test video - should be {{videofile}} #}
-        value="config={ playList: [ { url: '{% auslan_media_prefix %}video/bigtest.flv' }  ], 
+        value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
                         autoPlay: true, 
                         autoBuffering: false, 
                         loop: false, 
@@ -68,7 +68,9 @@
     {% block states %} 
       Table of state usage images.
     {% endblock %}
- </div> 
+ </div>
+ 
+ 
 {% ifequal viewname "feedback" %}
   <div>
 

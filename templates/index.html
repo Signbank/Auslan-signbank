@@ -4,29 +4,8 @@
 {% extends "baselayout.html" %}
 
 {% block content %}
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td rowspan="2"><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-        
-        <td class="asbCFrameTopUpperRowCnr" rowspan="2">
-          <img src="{% auslan_static_prefix %}img/two-girls.jpg" width="229" height="209" alt="" border="0">
-        </td>
-        
-        <td class="asbPgeHomeTopBar" rowspan="2">
-          <img src="{% auslan_static_prefix %}img/obj_null.gif" width="20" height="1"><br>
-        </td>
-        
-        <td class="asbPgeHomeTopBarSplitTop" valign="top">
-          <img src="{% auslan_static_prefix %}img/opening-quote.gif" width="441" height="68" alt="" border="0"><br>
-        </td>
-        <td class="asbPgeHomeTopBar" rowspan="2" width="100%">
-          <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br>
-        </td>
-      </tr>
-      
-      <tr>
-        <td class="asbPgeHomeTopBarSplitBottom" valign="bottom" style="border-bottom: 1px solid #355001">				
-          
+
+
           {# table of images and buttons for front page #}
           <table id="splash" border="0" cellpadding="0" cellspacing="0" width="412">
             <tr id="splashimages">
@@ -40,88 +19,49 @@
               <td><a href="/numbersigns.html"><span>number signs</span> <img src="{% auslan_static_prefix %}img/button_go.gif"></a></td>
             </tr>
               
-          </table>	
-          </td>
-        </tr>
-      </table>
-      
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-            <td valign="top">
-              <table width="100%" border="0" cellspacing="0" cellpadding="0">
-
+          </table>
+          
+          
 {% if user.is_authenticated %}             
 
-                <tr>
-                  <td class="asbCFrameLeftLowerBlock">
-                    <div class="asbCFrameLeftHeading">
-                      Welcome back {{ user.first_name}} {{user.last_name}}!
-                    </div>
-                    <div class="asbCFrameLeftText">
-                      Remember, Auslan is a growing, dynamic language. 
-                      The more information you give Signbank, the 
-                      better it will be.
-                    </div>
-                    <div class="asbCFrameLeftText">
-                      <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
-                    </div>
-                  </td>
-                </tr>
+<p>
+  Welcome back {{ user.first_name}} {{user.last_name}}!
+</p>
+<p>
+  Remember, Auslan is a growing, dynamic language. 
+  The more information you give Signbank, the 
+  better it will be.
+
+</p>
 {% else %}
-                <tr>
-                  <td class="asbCFrameLeftLowerBlock">This is a new version of Auslan Signbank.
-                  You no longer need to register
-                  just to view signs. However, if you wish to submit feedback you will need to
-                  register. If you have registered under the earlier version of Signbank, you
-                  will need to re-register in order to submit feedback.</td>
-                </tr>
+<p>This is a new version of Auslan Signbank.
+You no longer need to register
+just to view signs. However, if you wish to submit feedback you will need to
+register. If you have registered under the earlier version of Signbank, you
+will need to re-register in order to submit feedback.</p>
 {% endif %}
 
-                <tr>
-                  <td><img src="{% auslan_static_prefix %}img/border_lm.gif" width="229" height="10" alt="" border="0"><br></td>
-                </tr>
-                <tr>
-                  <td style="padding-top:10px;">
-                    <img src="{% auslan_static_prefix %}img/logo_institute.gif" width="216" height="39" alt="" border="0">
-                    <p class="asbCopyright">&copy; RIDBC 2004. All rights reserved.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="232"><br></td>
-                </tr>
-              </table>
-            </td>
+<h1>Welcome to Auslan Signbank</h1>
 
-            <td valign="top" width="100%">
-              <table width="440" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td class="asbBodyCell">
-                    <h1>Welcome to Auslan Signbank</h1>
-
-                    <p class="asbBodyText">
-                      Signbank is an interactive dictionary of Auslan (Australian Sign Language). 
-                      Auslan is the language of the deaf community of Australia. Whoever you are; a 
-                      deaf person, deaf student, sign language interpreter, student of 
-                      Auslan, or a parent of a deaf child, we invite you all to explore our visual 
-                      language. Auslan is growing and changing all the time. By using Signbank and 
-                      providing feedback you can help share and build our language.
-                    </p>
-                    <a href="/feedback/"><img src="{% auslan_static_prefix %}img/suggest-banner.jpg" width="488" height="69" alt="" border="0" class="asbBanner"></a>
-                    <p class="asbBodyText" style="margin-top:5px; margin-bottom:10px;">
-                      <b>Tell us</b> if a sign needs fixing. Does it need a new meaning or keyword? 
-                      Is the way you make the sign described properly?
-                    </p>
-                    <p class="asbBodyText">
-                      <b>Tell us</b> if a sign you know is missing from the dictionary; What does it 
-                      mean? What does it look like? Deaf people, deaf students, interpreters and 
-                      teachers are creating and using new signs all the time. Tell us what they are! 
-                      Tell us if you like them or not! With Signbank you can.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>			
-          </tr>
-        </table>
+<p>
+  Signbank is an interactive dictionary of Auslan (Australian Sign Language). 
+  Auslan is the language of the deaf community of Australia. Whoever you are; a 
+  deaf person, deaf student, sign language interpreter, student of 
+  Auslan, or a parent of a deaf child, we invite you all to explore our visual 
+  language. Auslan is growing and changing all the time. By using Signbank and 
+  providing feedback you can help share and build our language.
+</p>
+<a href="/feedback/">
+  <img src="{% auslan_static_prefix %}img/suggest-banner.jpg" width="488" height="69" alt="" border="0" class="asbBanner"></a>
+<p>
+  <b>Tell us</b> if a sign needs fixing. Does it need a new meaning or keyword? 
+  Is the way you make the sign described properly?
+</p>
+<p>
+  <b>Tell us</b> if a sign you know is missing from the dictionary; What does it 
+  mean? What does it look like? Deaf people, deaf students, interpreters and 
+  teachers are creating and using new signs all the time. Tell us what they are! 
+  Tell us if you like them or not! With Signbank you can.
+</p>
+                  
 {% endblock %}

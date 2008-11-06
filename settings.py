@@ -132,7 +132,7 @@ else:
     DATABASE_PORT = '' 
     
     # Absolute path to the directory that holds media. 
-    MEDIA_ROOT = '/Users/steve/projects/auslan/media/'
+    MEDIA_ROOT = '/Users/steve/projects/auslan-newlayout/media/'
     # URL that handles the media served from MEDIA_ROOT. 
     MEDIA_URL = '/media/'
     

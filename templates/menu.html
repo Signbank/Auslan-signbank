@@ -1,28 +1,27 @@
-{# Menu #}
-{# Highest level tab menu, contains links to all major site features. #}
-
-{# ---- PARAMETERS ---- #}
-{# menuid (integer) #}
-{#   The id of the level-I menu (which group of pages is being viewed) #}
-{# submenuid (integer) #}
-{#   The id of the submenu page being viewed. #}
 
 
-
-      <ul class="menuMain">
-       <li class="menu{% ifequal menuid 1 %}select{% endifequal %}{% if flatpage %}select{% endif %}" title="Homepage"><a href="/" class="menu{% ifequal menuid 1 %}select{% endifequal %}{% if flatpage %}select{% endif %}">home</a></li>
-       <li class="menu{% ifequal menuid 2 %}select{% endifequal %}" title="Search signbank"><a href="/dictionary/search/" class="menu{% ifequal menuid 2 %}select{% endifequal %}">sign search</a></li>
-       <li class="menu{% ifequal menuid 3 %}select{% endifequal %}" title="Finger spelling"><a href="/fingerspellingtwohanded.html" class="menu{% ifequal menuid 3 %}select{% endifequal %}">fingerspelling</a></li>
-       <li class="menu{% ifequal menuid 4 %}select{% endifequal %}" title="Number signs"><a href="/numbersigns.html" class="menu{% ifequal menuid 4 %}select{% endifequal %}">numbersigns</a></li>
-       <li class="menu{% ifequal menuid 5 %}select{% endifequal %}" title="Feedback"><a href="/feedback/" class="menu{% ifequal menuid 5 %}select{% endifequal %}">feedback</a></li>
-       <li class="menu{% ifequal menuid 6 %}select{% endifequal %}" title="Help"><a href="/help.html" class="menu{% ifequal menuid 6 %}select{% endifequal %}">help</a></li>
+      <ul class="sf-menu">
+       <li title="Homepage"><a href="/">home</a>
+         <ul>
+            <li><a href="/about/history/">History</a></li>
+            <li><a href="/about/acknowledgements/">Acknowledgements</a></li>
+         </ul>
+       </li>
+       <li><a>fingerspelling</a>
+         <ul>
+           <li><a href="/fingerspellingonehanded.html">One Handed</a></li>
+           <li><a href="/fingerspellingtwohanded.html">Two Handed</a></li>
+         </ul>
+       <li><a href="/numbersigns/">numbersigns</a></li>
+       <li><a href="/feedback/">feedback</a></li>
+       <li><a href="/help.html">help</a></li>
        {% if user.is_staff %}
-       <li class="menu{% ifequal menuid 7 %}select{% endifequal %}" title="Administration"><a href="/admin/" class="menu{% ifequal menuid 7 %}select{% endifequal %}">admin</a></li>
-       <li class="menu{% ifequal menuid 8 %}select{% endifequal %}" title="View Feedback"><a href="/feedback/show.html" class="menu{% ifequal menuid 8 %}select{% endifequal %}">view feedback</a></li>
+       <li><a href="/admin/">admin</a></li>
+       <li><a href="/feedback/show.html">view feedback</a></li>
        {% endif %}
 
        {% if user.is_authenticated %}
-       <li class="menu menuRight" title="Log out"><a href="/logout.html" class="menu">logout</a></li>
-       <li class="menuRight">You are signed in as {{ user.first_name }} {{ user.last_name }}.</li>
+       <li><a href="/logout.html" class="menu">logout</a></li>
+       <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
        {% endif %}
       </ul>

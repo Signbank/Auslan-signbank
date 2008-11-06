@@ -1,12 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>Auslan - Signbank</title>
+    <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <link rel="stylesheet" href="{% auslan_static_prefix %}css/auslan.css" type="text/css">
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>    
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>
+    
+    
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
+    <script type="text/javascript">
+
+    // initialise plugins
+    jQuery(function(){
+            jQuery('ul.sf-menu').superfish();
+    });
+
+    </script>
+
+    
     <script type="text/javascript">
       <!--
       
@@ -45,7 +60,7 @@ pageTracker._trackPageview();
     </div>
          
     <div id="navigation"> 
- <a href="/">Home</a> | <a href="/dictionary/">Search</a> | <a href="/about/history/">About</a>
+ {% include "menu.html" %}
     </div>
     
     <div id="content"> 
