@@ -1,7 +1,5 @@
 # Django settings for auslan project.
 
-
-
 ADMINS = (
      ('Steve Cassidy', 'steve.cassidy@mq.edu.au'),
 )
@@ -40,7 +38,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+#    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'auslan.pages.middleware.PageFallbackMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -73,7 +72,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'auslan.dictionary',
     'auslan.feedback',
-    'auslan.registration', 
+    'auslan.registration',
+    'auslan.pages'
 )
 
 ROOT_URLCONF = 'auslan.urls'
@@ -153,6 +153,8 @@ else:
 
 # Location for comment videos relative to MEDIA_ROOT
 COMMENT_VIDEO_LOCATION = "comments/"
+# Location for videos associated with pages
+PAGES_VIDEO_LOCATION = 'pages/'
 # location for upload of videos relative to MEDIA_ROOT
 # videos are stored here prior to copying over to the main
 # storage location
