@@ -101,14 +101,14 @@ if production:
     # Absolute path to the directory that holds media. 
     MEDIA_ROOT = '/var/www-auslan-media/'
     # URL that handles the media served from MEDIA_ROOT. 
-    MEDIA_URL = 'http://media.stevecassidy.net/'
+    MEDIA_URL = '/media/'
     
     # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
     # trailing slash.
-    ADMIN_MEDIA_PREFIX = 'http://media.stevecassidy.net/djangomedia/'
+    ADMIN_MEDIA_PREFIX = '/djangomedia/'
     
     # Ditto for static files from the Auslan site (css, etc) with trailing slash 
-    AUSLAN_STATIC_PREFIX = "http://media.stevecassidy.net/media/"
+    AUSLAN_STATIC_PREFIX = "/media/"
     
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
