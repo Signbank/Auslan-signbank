@@ -108,7 +108,7 @@ if production:
     ADMIN_MEDIA_PREFIX = '/djangomedia/'
     
     # Ditto for static files from the Auslan site (css, etc) with trailing slash 
-    AUSLAN_STATIC_PREFIX = "/media/"
+    AUSLAN_STATIC_PREFIX = "/media/media-beta/"
     
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
