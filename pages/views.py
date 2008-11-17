@@ -1,4 +1,4 @@
-from auslan.pages.models import Page
+from auslan.pages.models import *
 from django.template import loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
@@ -27,11 +27,14 @@ def page(request, url):
     # - this won't work if we ever have more than one site here
     # which isn't planned
     f = get_object_or_404(Page, url__exact=url)
+    
+    
     # If registration is required for accessing this page, and the user isn't
     # logged in, redirect to the login page.
-    if f.registration_required and not request.user.is_authenticated():
-        from django.contrib.auth.views import redirect_to_login
-        return redirect_to_login(request.path)
+    if f.group_required:
+        if not request.user.is_authenticated() :
+            from django.contrib.auth.views import redirect_to_login
+            return redirect_to_login(request.path)
     
     # if there is a form var 'playlist' then generate a playlist
     # xml file instead of the page itself
@@ -52,6 +55,7 @@ def page(request, url):
 
     c = RequestContext(request, {
         'page': f,
+        'menu': menu(),
     })
     response = HttpResponse(t.render(c))
     populate_xheaders(request, response, Page, f.id)

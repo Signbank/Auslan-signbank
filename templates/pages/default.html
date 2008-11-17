@@ -4,6 +4,8 @@
   
 <script type="text/javascript" src="{% auslan_static_prefix %}/mediaplayer/swfobject.js"></script>
  
+ 
+{% if page.pagevideo_set.all %} 
 <div id="player">This text will be replaced</div>
 <script type="text/javascript">
 var so = new SWFObject('{% auslan_static_prefix %}/mediaplayer/player.swf','mpl','520','240','9');
@@ -11,6 +13,7 @@ so.addParam('allowscriptaccess','always');
 so.addParam('flashvars','&file={{page.url}}?playlist&playlist=right&playlistsize=200&controlbar=none&autostart=true');
 so.write('player');
 </script>
+{% endif %}
 
    {{ page.content }}
 

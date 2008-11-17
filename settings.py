@@ -38,7 +38,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-#    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'auslan.middleware.UserBasedExceptionMiddleware',
     'auslan.pages.middleware.PageFallbackMiddleware',
 )
 

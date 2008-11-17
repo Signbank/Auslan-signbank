@@ -47,11 +47,11 @@ admin.site.register(PageVideo, PageVideoAdmin)
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
     fieldsets = (
-        (None, {'fields': ('url', 'title', 'content', 'sites', 'parent')}),
-        (_('Advanced options'), {'classes': ('collapse',), 'fields': ('registration_required', 'template_name')}),
+        (None, {'fields': ('url', 'title', 'parent', 'publish', 'content' )}),
+        (_('Advanced options'), {'classes': ('collapse',), 'fields': ('group_required', 'template_name')}),
     )
     list_display = ('url', 'title')
-    list_filter = ('sites', 'registration_required')
+    list_filter = ('publish', 'group_required')
     search_fields = ('url', 'title')
     inlines = [PageVideoInline]
 
