@@ -1,27 +1,34 @@
 
 
-      <ul class="sf-menu">
-       <li title="Homepage"><a href="/">home</a>
-         <ul>
-            <li><a href="/about/history/">History</a></li>
-            <li><a href="/about/acknowledgements/">Acknowledgements</a></li>
-         </ul>
-       </li>
-       <li><a>fingerspelling</a>
-         <ul>
-           <li><a href="/fingerspellingonehanded.html">One Handed</a></li>
-           <li><a href="/fingerspellingtwohanded.html">Two Handed</a></li>
-         </ul>
-       <li><a href="/numbersigns/">numbersigns</a></li>
-       <li><a href="/feedback/">feedback</a></li>
-       <li><a href="/help.html">help</a></li>
-       {% if user.is_staff %}
-       <li><a href="/admin/">admin</a></li>
-       <li><a href="/feedback/show.html">view feedback</a></li>
-       {% endif %}
+<ul class="sf-menu">
+<li title="Homepage"><a href="/">home</a>
+   <ul>
+   {% for item in menu.home %}
+     <li><a href="{{item.url}}">{{item.title}}</a></li>
+   {% endfor %}
+   </ul>
+</li>
+<li><a>fingerspelling</a>
+  <ul>
+    <li><a href="/fingerspellingonehanded.html">One Handed</a></li>
+    <li><a href="/fingerspellingtwohanded.html">Two Handed</a></li>
+  </ul>
+<li><a href="/numbersigns/">numbersigns</a></li>
+<li><a href="/feedback/">feedback</a></li> 
+{% if user.is_staff %}
+<li><a href="/admin/">admin</a></li>
+<li><a href="/feedback/show.html">view feedback</a></li>
 
-       {% if user.is_authenticated %}
-       <li><a href="/logout.html" class="menu">logout</a></li>
-       <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
-       {% endif %}
-      </ul>
+{% for item in menu.toplevel %}
+  <li><a href="{{item.url}}">{{item.title}}</a></li>
+{% endfor %}
+
+
+
+{% endif %}
+
+{% if user.is_authenticated %}
+<li><a href="/logout.html" class="menu">logout</a></li>
+<!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
+{% endif %}
+</ul>

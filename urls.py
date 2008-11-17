@@ -9,10 +9,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     (r'^$', 'auslan.views.index'),
-    (r'^history.html', 'django.views.generic.simple.redirect_to',
-        {'url': '/about/history/'}),
-    (r'^acknowledgements.html', 'django.views.generic.simple.redirect_to',
-        {'url': '/about/acknowledgements/'}),
     
     (r'^dictionary/', include('auslan.dictionary.urls')),
     (r'^feedback/', include('auslan.feedback.urls')),
@@ -26,8 +22,6 @@ urlpatterns = patterns('',
     # static version of the page on the media server
     (r'^numbersigns.html', 'django.views.generic.simple.redirect_to', 
                            {'url': settings.AUSLAN_STATIC_PREFIX+"pages/numbersigns.html" }),
-    
-    (r'^help.html', 'auslan.views.help'),
 
     (r'^register.html', 'auslan.views.register'), 
     (r'^logout.html', 'django.contrib.auth.views.logout',

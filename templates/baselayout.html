@@ -53,7 +53,7 @@ pageTracker._trackPageview();
       
     <div id="header">
        <h1>Auslan - Signbank</h1>
-       <form id="frmSearch" name="frmSearch" method="get" action="{% url auslan.dictionary.views.search %}">
+       <form id="frmSearch" name="frmSearch" method="get" action="/dictionary/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50" class="asbLeftInputField">
           <a href="javascript:document.forms['frmSearch'].submit();">Search</a>         
        </form> 
