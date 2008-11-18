@@ -54,8 +54,7 @@ def page(request, url):
     f.content = mark_safe(f.content)
 
     c = RequestContext(request, {
-        'page': f,
-        'menu': menu(),
+        'page': f, 
     })
     response = HttpResponse(t.render(c))
     populate_xheaders(request, response, Page, f.id)

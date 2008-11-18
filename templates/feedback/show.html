@@ -1,4 +1,4 @@
-{% extends "standardlayout.html" %}
+{% extends "baselayout.html" %}
 
 {% block script %}
 
@@ -11,25 +11,8 @@ jQuery(document).ready(function(){
 {% endblock %}
 
 
-{% block sideuppercontent %}
-    <img src="{% auslan_static_prefix %}img/teacher-and-children.jpg" width="227" height="190" alt="" border="0"><br>
-{% endblock %}
+{% block content %}
 
-{% block sidelowercontent %}
-    <p class="asbCFrameLeftText">
-    This page shows the feedback left by Auslan SignBank users.</p>
-    
-    <div class="asbCFrameLeftText">
-      <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
-    </div>
-{% endblock %}
-
-{% block pagecontent %}
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" height="0%" align="center">
-      <tr valign="top"> 
-        <td> 
-          <div class=normal align=left>
-    
           <h3>General Feedback</h3>
           <ul>
           {% for fb in general %}
@@ -131,9 +114,5 @@ jQuery(document).ready(function(){
             </li>          
           {% endfor %}
           </ul>
-          
-          </div>
-        </td>
-      </tr>
-    </table>
+
 {% endblock %}
