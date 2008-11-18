@@ -94,14 +94,38 @@ h1, h2, h3 {
 }
 
 
-/* styles for navbar */
+/* styles for navbar (superfish) */
 
-.selected { font-weight: bold; }
-ul.navbar-one { background-color: #F4F379; margin-bottom: 0px;}
-ul.navbar-two { background-color: #F0F0F0; margin-bottom: 0px; margin-top: 0px;}
-ul.navbar-three { margin-top: 0px; }
+.sf-menu {
+	width:                  100%;
+        background-color:       #BDD2FF;
+	margin-bottom:		1em;
+}
+.sf-menu a {
+	border-left:		1px solid #fff;
+	border-top:		1px solid #CFDEFF;
+	padding: 		.75em 1em;
+	text-decoration:	none;
+}
+.sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
+	color:			#13a;
+}
+.sf-menu li {
+	background:		#BDD2FF;
+}
+.sf-menu li li {
+	background:		#AABDE6;
+}
+.sf-menu li li li {
+	background:		#9AAEDB;
+}
+.sf-menu li:hover, .sf-menu li.sfHover,
+.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
+	background:		#CFDEFF;
+	outline:		0;
+}
 
-ul.navbar-one LI { display: inline; margin-right: 5px; }
-ul.navbar-two LI { display: inline; margin-right: 5px; }
-ul.navbar-three LI { display: inline; margin-right: 5px; }
+
+
+
 

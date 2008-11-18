@@ -14,44 +14,23 @@
 {# query (string) #}
 {#   Word (or word fragment) which was searched for #}
 
-{% extends "searchlayout.html" %}
+{% extends "baselayout.html" %}
 
-{% block pagecontent %}
+{% block content %}
 
     {# if we have no search term, include a bit of prompt text #}
     {% ifequal query '' %}
-   <table width="488" border="0" cellspacing="0" cellpadding="0">
-      <tr><td width="165" align="center" height="32" background="{% auslan_static_prefix %}img/hintbox_bg.gif"><img src="{% auslan_static_prefix %}img/hintbox_um.gif" width="488" height="32"></td></tr>
-      <tr>
-        <td width="165" align="right" background="{% auslan_static_prefix %}img/hintbox_bg.gif" valign="top"> 
-          <table border="0" cellpadding="0" cellspacing="0" width="488">
-            <tr>
-              <td><img src="{% auslan_static_prefix %}img/obj_null.gif" width="42" height="1"></td>
-              <td class="asbBoxText" width="446">
+    <p>
                 Hello and welcome to the sign search section. 
                 Here you will find the most comprehensive database of words 
                 and their definitions existing on the web. Simply type a word 
                 or a letter into the field on the left side of the screen, press 
                 search and the corresponding sign will appear.
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="165" align="center" height="11">
-          <img src="{% auslan_static_prefix %}img/hintbox_lm.gif" width="488" height="11">
-        </td>
-      </tr>
-    </table>
+   </p>
      
     
     {% else %}
-    <table class="asbObjSRContainer" border="0" width="550" cellpadding="0" cellspacing="0">
-      <tr>
-        <td colspan="5"> 
-        <p class="absObjSRMatchCount">
+      <p>
         {% ifequal wordcount 0 %}
             No words matched your query.
         {% else %}
@@ -61,45 +40,32 @@
            There are {{ wordcount }} words that fully or partially match your query. Please select a word from the list below.
          {% endifequal %}
         {% endifequal %}
+      </p>
         
         {% if user.is_staff %}
         <p>Items marked * below are not in the web version of the dictionary and would not
         appear in a regular (non staff) search.</p>
         {% endif %}
         
-        </td>
-      </tr>
-      <tr>
-        <td class="asbObjSRColumn" valign="top" width="33%" nowrap>
-
+      <div id="searchresults">
+         <table width="90%">
+            <tr>
+               <td valign="top">
           {% for word in page.object_list %}
-            <p class="asbObjSRItem">
+            <p>
               <a href="/dictionary/words/{{ word.text }}-1.html">{{ word.text }}</a>
-              {% if not word.inWeb %}
-              *
-              {% endif %}  
+              {% if not word.inWeb %}*{% endif %}  
             </p>
 
-            {% ifequal forloop.counter 17 %} 
-            </td>
-            <td class="asbObjSRColumnDivider" valign="top">
-              <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br>
-            </td>
-            <td class="asbObjSRColumn" valign="top" width="33%" nowrap>
-            {% endifequal %}
-            
-            {% ifequal forloop.counter 34 %} 
-            </td>
-            <td class="asbObjSRColumnDivider" valign="top"><img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="1"><br></td>
-            <td class="asbObjSRColumn" valign="top" width="33%" nowrap>
-            {% endifequal %}
+            {% if forloop.counter|divisibleby:"10" %}
+            </td> 
+            <td valign="top">
+            {% endif %}
             
           {% endfor %}
-
-          
-        </td>
-      </tr>
-    </table>  
+           </td>
+          </tr>
+         </table>
    
           {% if page.has_next or page.has_previous %} 
           <p>Jump to results page: 

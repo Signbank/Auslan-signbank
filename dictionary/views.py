@@ -251,7 +251,7 @@ def search(request):
         term = ''
         words = []
         
-    paginator = Paginator(words, 17*3) 
+    paginator = Paginator(words, 50) 
     
 
     # display the keyword page if there's only one hit

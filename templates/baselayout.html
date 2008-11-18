@@ -9,16 +9,19 @@
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>
     
     
-    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">  
+      
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
     <script type="text/javascript">
 
     // initialise plugins
     jQuery(function(){
-            jQuery('ul.sf-menu').superfish();
+            jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({
+              pathLevels: 2,
+            }); 
     });
-
     </script>
 
     

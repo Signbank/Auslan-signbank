@@ -1,6 +1,6 @@
 
 
-{% extends "standardlayout.html" %}
+{% extends "baselayout.html" %}
 
 {% block script %}
 
@@ -39,27 +39,19 @@ $(document).ready(function(){
 })
 
 {% endblock %}
+ 
+ 
 
 
-{% block sideuppercontent %}
-    <img src="{% auslan_static_prefix %}img/reportmissing.jpg" width="227" height="190" alt="" border="0"><br>
-{% endblock %}
-
-{% block sidelowercontent %}
-    <p class="asbCFrameLeftText">Please fill out the required questions opposite and then
-    click 'Submit' to report a missing sign to the Auslan signbank.</p>
-    <p class="asbCFrameLeftText">If verified, the site will be updated 
-         to include the new sign.</p>
-    <div class="asbCFrameLeftText">
-    <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
-    </div>
-{% endblock %}
-
-{% block pagecontent %}
+{% block content %}
   {% if posted %}
      <p>Thank you for your feedback.</p>     
   {% else %}
    
+    <p>Please fill out the required questions opposite and then
+    click 'Submit' to report a missing sign to the Auslan signbank.</p>
+    <p>If verified, the site will be updated 
+         to include the new sign.</p>
 
 <form method="post" enctype="multipart/form-data" name="missingsign">
 

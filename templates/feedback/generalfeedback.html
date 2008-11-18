@@ -4,20 +4,12 @@
 {# title (string #}
 {#   The title of the page, appears in horizontal span above content. #}
 
-{% extends "standardlayout.html" %}
+{% extends "baselayout.html" %}
 
-{% block sideuppercontent %}
-      <img src="{% auslan_static_prefix %}img/generalfeedback.jpg" width="227" height="190" alt="" border="0"><br>
-{% endblock %}
+     
 
-{% block sidelowercontent %}
-      <p class="asbCFrameLeftText">Please enter any comments you may have about this site and click "submit" to send your feedback to us. We value your contributions and comments.</p>
-      <div class="asbCFrameLeftText">
-        <img src="{% auslan_static_prefix %}img/obj_null.gif" width="1" height="60">
-      </div>
-{% endblock %}
-
-{% block pagecontent %}
+{% block content %}
+ <p class="asbCFrameLeftText">Please enter any comments you may have about this site and click "submit" to send your feedback to us. We value your contributions and comments.</p>
 
 {% if valid %}
   <p>Thanks for your comment.</p>
