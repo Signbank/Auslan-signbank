@@ -38,3 +38,13 @@ class PageVideo(models.Model):
         return "Page Video: %s" % (self.title,)
     
     
+def copy_flatpages():
+    """Copy existing flatpages into Pages"""
+    
+    from django.contrib.flatpages.models import FlatPage
+    
+    for fp in FlatPage.objects.all():
+        p = Page(url=fp.url, title=fp.title, content=fp.content, publish=False)
+        p.save()
+        
+        

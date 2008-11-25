@@ -10,12 +10,12 @@ def menu(request):
     homes = Page.objects.filter(title="Home")
     if len(homes) >= 1:
         home = homes[0]
-        for page in Page.objects.filter(parent=home):
+        for page in Page.objects.filter(parent=home, publish=True):
             menu['home'].append({'url': page.url, 'title': page.title})
     else:
         home = None
     # find toplevel pages, with no parent
-    toplevel = Page.objects.filter(parent=None)
+    toplevel = Page.objects.filter(parent=None, publish=True)
     for page in toplevel:
         if page != home:
             menu['toplevel'].append({'url': page.url, 'title': page.title})

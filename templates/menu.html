@@ -8,23 +8,22 @@
    {% endfor %}
    </ul>
 </li>
-<li><a>fingerspelling</a>
+<li><a>reference</a>
   <ul>
-    <li><a href="/fingerspellingonehanded.html">One Handed</a></li>
-    <li><a href="/fingerspellingtwohanded.html">Two Handed</a></li>
+    <li><a href="/fingerspellingonehanded.html">Fingerspell One Handed</a></li>
+    <li><a href="/fingerspellingtwohanded.html">Fingerspell Two Handed</a></li>
+    <li><a href="/numbersigns/">Number Signs</a></li>
   </ul>
-<li><a href="/numbersigns/">numbersigns</a></li>
-<li><a href="/feedback/">feedback</a></li> 
-{% if user.is_staff %}
-<li><a href="/admin/">admin</a></li>
-<li><a href="/feedback/show.html">view feedback</a></li>
+<li><a href="/feedback/">feedback</a></li>
 
+{# add in the top level menu items from pages #}
 {% for item in menu.toplevel %}
   <li><a href="{{item.url}}">{{item.title}}</a></li>
 {% endfor %}
 
-
-
+{% if user.is_staff %}
+<li><a href="/admin/">admin</a></li>
+<li><a href="/feedback/show.html">view feedback</a></li>
 {% endif %}
 
 {% if user.is_authenticated %}

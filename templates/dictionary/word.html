@@ -22,105 +22,101 @@
 
   <h2>Sign Definition</h2>
  
- {% if definitions.noun %}
- 
- <h3>As a Noun</h3>
+{% if definitions.noun %} 
+  <h3>As a Noun</h3>
  
   <ol>
   {% for def in definitions.noun %}
-  <li> {{ def }}</li>
+    <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
   
-  {% if definitions.verb %} 
+{% if definitions.verb %} 
   <h3>As a Verb or Adjective</h3> 
   <ol>
   {% for def in definitions.verb %}
-  <li> {{ def }}</li>
+    <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
   
   
-  {% if definitions.interact %} 
+{% if definitions.interact %} 
   <h3>Interactive</h3> 
   <ol>
   {% for def in definitions.interact %}
-  <li> {{ def }}</li>
+      <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
   
-  {% if definitions.deictic %} 
+{% if definitions.deictic %} 
   <h3>As Deictic</h3> 
   <ol>
   {% for def in definitions.deictic %}
-  <li> {{ def }}</li>
+    <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
   
   
-  {% if definitions.modifier %} 
+{% if definitions.modifier %} 
   <h3>As Modifier</h3> 
   <ol>
   {% for def in definitions.modifier %}
-  <li> {{ def }}</li>
+      <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
 
   
-  {% if definitions.question %} 
+{% if definitions.question %} 
   <h3>As Question</h3> 
   <ol>
   {% for def in definitions.question %}
-  <li> {{ def }}</li>
+      <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
   
-  {% if definitions.augment %} 
+{% if definitions.augment %} 
   <h3>Augmented Meaning</h3> 
   <ol>
   {% for def in definitions.augment %}
-  <li> {{ def }}</li>
+      <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %}
+{% endif %}
    
-      
-      {% if not gloss.inWeb %}
+{% if not gloss.inWeb %}
       <p>This gloss is not included in the web version of the dictionary.</p>
-      {% endif %}
+{% endif %}
   
-      {% if user.is_authenticated and user.is_staff %}
+{% if user.is_authenticated and user.is_staff %}
       <h2>Staff</h2>
       
-        {% if definitions.popexplain %} 
-        
+{% if definitions.popexplain %} 
   <h2>Popular Explanation</h2> 
   <ol>
   {% for def in definitions.popexplain %}
-  <li> {{ def }}</li>
+      <li> {{ def }}</li>
   {% endfor %} 
   </ol>
-  {% endif %} 
+{% endif %} 
   
-  {% if gloss.queries %}
+{% if gloss.queries %}
   <h2>Notes</h2>
   <ol>
-  <li>{{gloss.queries }}</li>
+      <li>{{gloss.queries }}</li>
   </ol>
-  {% endif %}
+{% endif %}
       
       
-      {% if feedback %}
+{% if feedback %}      
+    <h3>Feedback Received</h3>
       
-      <h3>Feedback Received</h3>
-      
-      <table border='1'>
+    <table border='1'>
       <tr>
         <th>User</th>
         <th>Date</th>
@@ -147,10 +143,10 @@
       
       {% endfor %}
 
-      </table>
+    </table>
       
       
-      {% endif %} 
+{% endif %} 
       
       
       <ul>
@@ -197,7 +193,6 @@
 
 {% block prevnext %}
 
-  
   <a href="/dictionary/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html">&lt;Previous Sign</a>
 
   {% ifequal viewname "words" %}   
@@ -216,11 +211,7 @@
 {% endblock %}
 
 {% block signcount %}
-{% ifequal viewname "words" %}
-Sign {{n}} of {{ total }}
-{% else %}
-&nbsp;
-{% endifequal %}
+{% ifequal viewname "words" %}Sign {{n}} of {{ total }}{% endifequal %}
 {% endblock %}
 
 {% block associated_keywords %}

@@ -1,10 +1,6 @@
-{# Parameters #}
-{# username (string) #}
-{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
-{# title (string #}
-{#   The title of the page, appears in horizontal span above content. #}
 
-{% extends "standardlayout.html" %}
+
+{% extends "baselayout.html" %}
 
 {% block script %}
 // Currently copied from js/nsscript.js pending a better template structure
@@ -21,20 +17,6 @@ clips = [
  'ns_1g'         // 8
 ]
 
-// Configuration for the flowplayer instance, we add the video 
-// name to this and call setConfig to play a new video
-
-fpconfig = { videoFile: 'ns_1k.flv',
-           baseURL: 'http://media.stevecassidy.net/media/flash/',
-	   AllowScriptAccess: 'always',
-           autoPlay: true, 
-           autoBuffering: false, 
-           loop: false, 
-           autoRewind: true,   
-           hideControls: true,  
-           } 
-
-
 var currentNS = -1;
 
 function playNS(n) { 
@@ -49,79 +31,37 @@ function playNS(n) {
         currentNS = n
         img = document.getElementById(clips[n]);
         img.src = "{% auslan_static_prefix %}img/"+clips[n]+"_select.jpg";
-        
-        fp = document.getElementById("FlowPlayer");
-
-        fpconfig['videoFile'] = clips[n] + ".flv";
-        fp.setConfig(fpconfig);
-        fp.DoPlay();
+	
+	var player = document.getElementById('player');
+	console.log("{% auslan_static_prefix %}flash/"+clips[n]+".flv");	
+	player.sendEvent("LOAD", "{% auslan_static_prefix %}flash/"+clips[n]+".flv");
+	player.sendEvent("PLAY");
     }
 }
 
 {% endblock %}
+ 
 
+{% block content %}
 
-{% block subtitleleft %}
-   <span id="asbNsCaption">&nbsp;</span>
-{% endblock %}
-
-{% block subtitleright %}
-      Key
-{% endblock %}
-
-{% block sideuppercontent %}
-
-
-    <div align="center" class="asbCFrameLeftUpperBlockSearch" style="border:0px;">
-      <table border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td class="asbSignPreview">
-                <div id="asbSignVideoContainer" class="asbVideoContainer">
-                       
-                      <object type="application/x-shockwave-flash" 
-                              data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-                              width="192" height="144" id="FlowPlayer">
-                          <param name="AllowScriptAccess" value="always" />
-                          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayerLight.swf" />
-                          <param name="quality" value="high" />
-                          <param name="scale" value="noScale" />
-                          <param name="wmode" value="transparent" />  
-                          <param name="flashvars"
-                                value="config={ videoFile: 'ns_100.flv',
-                                                baseURL: 'http://media.stevecassidy.net/media/flash/', 
-                                                allowScriptAccess: 'always',
-                                                autoPlay: true, 
-                                                autoBuffering: false, 
-                                                loop: false, 
-                                                autoRewind: true,   
-                                                hideControls: true}" 
-                          />
-                       </object> 
-                      </div>
-
-          </td>
-        </tr>
-        <tr>
-          <td class="videoReplayMessage">
-            <p>Click on image to replay</p>
-          </td>
-        </tr>
-      </table>
-    </div>
-{% endblock %}
-
-{% block sidelowercontent %}
-      <p class="asbCFrameLeftText">
+<p class="asbCFrameLeftText">
         To view signs used to express numbers from ten to 
         one billion, click a play button 
         (<img src="{% auslan_static_prefix %}img/button_play.gif" width="17" height="13" alt="" align="middle" border="0">) 
         in the table at right. The corresponding video will 
         then play in the viewer above.
       </p>
-      <p>&nbsp;</p>
-{% endblock %}
-
-{% block pagecontent %}
+  
+<script type="text/javascript" src="{% auslan_static_prefix %}/mediaplayer/swfobject.js"></script>
+ 
+ 
+<div id="player">This text will be replaced</div>
+<script type="text/javascript">
+var so = new SWFObject('{% auslan_static_prefix %}/mediaplayer/player.swf','mpl','192','144','9');
+so.addParam('allowscriptaccess','always'); 
+so.addParam('flashvars','&controlbar=none&autostart=true');
+so.write('player');
+</script>
 
 
       <table width="470" border="0" cellspacing="0" cellpadding="0">
