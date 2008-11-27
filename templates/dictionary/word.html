@@ -193,8 +193,17 @@
 
 {% block prevnext %}
 
-  <a href="/dictionary/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html">&lt;Previous Sign</a>
 
+  {% ifequal flavour "medical" %}
+    {% if translation.gloss.prev_medical_gloss %}
+      <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html">&lt;Previous Medical Sign</a>
+    {% endif %}
+  {% else %}
+  {% if translation.gloss.prev_dictionary_gloss %}  
+    <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html">&lt;Previous Sign</a>
+  {% endif %}
+  {% endifequal %}
+  
   {% ifequal viewname "words" %}   
   {% if prev %}
   <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
@@ -206,8 +215,15 @@
    
   {% endifequal %}
   
-  <a href="/dictionary/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html">Next Sign&gt;</a>
-
+  {% ifequal flavour "medical" %}
+    {% if translation.gloss.next_medical_gloss %}
+      <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html">Next Medical Sign&gt;</a>
+    {% endif %}
+  {% else %}
+    {% if translation.gloss.next_dictionary_gloss %}
+      <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html">Next Sign&gt;</a>
+    {% endif %}
+  {% endifequal %}
 {% endblock %}
 
 {% block signcount %}

@@ -52,13 +52,13 @@ pageTracker._trackPageview();
 -->
   </head>
 
-  <body>
+  <body {% ifequal flavour "medical" %}class='medical'{% endifequal %}>
       
     <div id="header">
        <h1>Auslan - Signbank</h1>
-       <form id="frmSearch" name="frmSearch" method="get" action="/dictionary/search/">
-          <input type="Text" name="query" value="{{ query }}" maxlength="50" class="asbLeftInputField">
-          <a href="javascript:document.forms['frmSearch'].submit();">Search</a>         
+       <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
+          <input type="Text" name="query" value="{{ query }}" maxlength="50">
+          <a href="javascript:document.forms['frmSearch'].submit();">Search{% ifequal flavour "medical" %} MSB{% endifequal %}</a>        
        </form> 
     </div>
          

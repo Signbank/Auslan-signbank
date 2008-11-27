@@ -12,7 +12,7 @@ import os
 from auslan.dictionary.models import *
 from auslan.dictionary.forms import * 
  
-def update_gloss(request, glossid):
+def update_gloss(request, glossid, flavour='dictionary'):
     """View to update a gloss from the form displayed on the staff view"""
     
     if not request.user.has_perm('dictionary.change_gloss'):
@@ -55,7 +55,7 @@ def update_gloss(request, glossid):
                                },
                               context_instance=RequestContext(request))
 
-def update_video(request, glossid):
+def update_video(request, glossid, flavour='dictionary'):
     """View to update the video for a gloss from the form displayed on the staff view"""
     
     if not request.user.has_perm('dictionary.update_video'):

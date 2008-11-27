@@ -178,7 +178,7 @@ class Gloss(models.Model):
 
         
     def __str__(self):
-        return str(self.id)+"-"+self.idgloss
+        return str(self.sn)+"-"+self.idgloss
     
     idgloss = models.CharField(max_length=50)    
   
@@ -372,10 +372,25 @@ class Gloss(models.Model):
         """Find the next gloss in dictionary order"""
         return Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True).order_by('sn')[0]
  
-    
     def prev_dictionary_gloss(self):
         """Find the previous gloss in dictionary order"""
         return Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True).order_by('-sn')[0]
+     
+    def next_medical_gloss(self):
+        """Find the next gloss in dictionary order within the medical subset"""
+        all = Gloss.objects.filter(sn__gt=self.sn, InMedLex__exact=True).order_by('sn')
+        if len(all) > 0:
+            return all[0]
+        else:
+            return None
+    
+    def prev_medical_gloss(self):
+        """Find the previous gloss in dictionary order within the medical subset"""
+        all = Gloss.objects.filter(sn__lt=self.sn, InMedLex__exact=True).order_by('-sn')
+        if len(all) > 0:
+            return all[0]
+        else:
+            return None             
         
 
     def get_absolute_url(self):

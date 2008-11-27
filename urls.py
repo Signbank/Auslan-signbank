@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 
     (r'^$', 'auslan.views.index'),
     
-    (r'^dictionary/', include('auslan.dictionary.urls')),
+    (r'^(?P<flavour>dictionary|medical)/', include('auslan.dictionary.urls')),
     (r'^feedback/', include('auslan.feedback.urls')),
 
     (r'^fingerspellingtwohanded.html', 'auslan.views.fingerspellingtwohanded'),
