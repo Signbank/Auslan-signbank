@@ -11,7 +11,7 @@ from auslan.dictionary.models import *
 from auslan.dictionary.forms import * 
 from auslan.feedback.models import *
 
-def word(request, viewname, keyword, n):
+def word(request, viewname, keyword, n, flavour='dictionary'):
  
     """View of a single keyword that may have more than one sign"""
     
@@ -20,7 +20,10 @@ def word(request, viewname, keyword, n):
     word = get_object_or_404(Keyword, text=keyword)
     
     if request.user.is_authenticated() and request.user.is_staff:
-        alltrans = word.translation_set.all()
+        if flavour == 'medical':
+            alltrans = word.translation_set.filter(gloss__InMedLex__exact=True)
+        else:
+            alltrans = word.translation_set.all()
     else:
         alltrans = word.translation_set.filter(gloss__inWeb__exact=True)
     
@@ -91,7 +94,7 @@ def word(request, viewname, keyword, n):
             # return HttpResponseRedirect("/accounts/login/?next="+reverse('auslan.dictionary.views.word', args=[viewname, keyword, n]))
             # using reverse would be good here but the current implementation borks on 
             # the nested parens in the RE for this view
-            return HttpResponseRedirect("/accounts/login/?next=/dictionary/feedback/"+keyword+"-"+str(n)+".html")
+            return HttpResponseRedirect("/accounts/login/?next=/"+flavour+"/feedback/"+keyword+"-"+str(n)+".html")
     else:
         feedback_form = False
         
@@ -102,12 +105,13 @@ def word(request, viewname, keyword, n):
                 {'inWeb': trans.gloss.inWeb,
                  'inMedLex': trans.gloss.InMedLex,
                  'keyword': keyword,
-                 'n': n,
+                 'n': n, 
                   })
         
         
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
+                               'flavour': flavour,
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
@@ -126,14 +130,17 @@ def word(request, viewname, keyword, n):
                                context_instance=RequestContext(request))
     
     
-def viewfeedback(request, keyword, n):
+def viewfeedback(request, keyword, n, flavour='dictionary'):
     """View feedback currently collected for this keyword"""
 
     
     n = int(n)
     word = Keyword.objects.get(text=keyword)
     if request.user.is_authenticated() and request.user.is_staff:
-        alltrans = word.translation_set.all()
+        if flavour == 'medical':
+            alltrans = word.translation_set.filter(gloss__InMedLex__exact=True)
+        else:
+            alltrans = word.translation_set.all()
     else:
         alltrans = word.translation_set.filter(gloss__inWeb__exact=True)
     
@@ -182,12 +189,11 @@ def viewfeedback(request, keyword, n):
     
     
     
-def gloss(request, idgloss):
+def gloss(request, idgloss, flavour='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
 
     gloss = Gloss.objects.get(idgloss=idgloss) 
-    
     
     # and all the keywords associated with this sign
     allkwds = gloss.translation_set.all()
@@ -198,11 +204,18 @@ def gloss(request, idgloss):
         
     videourl = gloss.get_video_url()
  
+    if flavour == 'medical':
+        glosscount = Gloss.objects.filter(InMedLex__exact=True).count()
+        glossposn = Gloss.objects.filter(InMedLex__exact=True, sn__lt=gloss.sn).count()+1
+    else:
+        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1   
         
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
+                               'flavour': flavour,
                                'n': 1, 
                                'total': 1,
                                'prev': 1,
@@ -213,14 +226,18 @@ def gloss(request, idgloss):
                                'valid': True,
                                'feedback': None,
                                'gloss': gloss,
+                               'glosscount': glosscount,
+                               'glossposn': glossposn,
                                },
                                context_instance=RequestContext(request))
         
 
 from django.core.paginator import Paginator, InvalidPage
 
-def search(request):
-    """Handle keyword search form submission"""
+def search(request, flavour='dictionary'):
+    """Handle keyword search form submission
+    flavour is either 'dictionary' or 'medicalsignbank' and determines
+    which part of the dictionary is searched"""
     
     if request.GET.has_key('page'):
         page = int(request.GET['page'])
@@ -234,8 +251,12 @@ def search(request):
             term = term.encode("latin-1")
             
             if request.user.is_authenticated() and request.user.is_staff:
-                # staff get to see all the words
-                words = Keyword.objects.filter(text__istartswith=term)
+                # staff get to see all the words, but might be only medical
+                if flavour == 'medical':
+                    words = Keyword.objects.filter(text__istartswith=term, 
+                                                   translation__gloss__InMedLex__exact=True).distinct()
+                else:
+                    words = Keyword.objects.filter(text__istartswith=term)
             else:
                 # get only the keywords that are in the Web edition
                 words = Keyword.objects.filter(text__istartswith=term, 
@@ -256,7 +277,7 @@ def search(request):
 
     # display the keyword page if there's only one hit
     if len(words) == 1:
-        return HttpResponseRedirect('/dictionary/words/'+words[0].text+'-1.html' ) 
+        return HttpResponseRedirect('/'+flavour+'/words/'+words[0].text+'-1.html' ) 
         
 
     return render_to_response("dictionary/search_result.html",
@@ -264,6 +285,7 @@ def search(request):
                                'paginator' : paginator, 
                                'page' : paginator.page(page), 
                                'menuid' : 2,
+                               'flavour': flavour,
                                },
                               context_instance=RequestContext(request))
 

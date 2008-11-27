@@ -5,6 +5,10 @@ html > body {
    font-size: 10pt;  
 }
 
+body.medical {
+   background-color: #330000;
+}
+
 h1, h2, h3 {
    font-family: Arial Rounded MT Bold, Trebuchet, sans-serif;
 }
