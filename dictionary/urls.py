@@ -6,7 +6,7 @@ from auslan.dictionary.forms import *
 urlpatterns = patterns('',
     
     # index page is just the search page
-    (r'^$', 'auslan.dictionary.views.search'),
+    (r'^$', 'auslan.dictionary.views.index'),
 
     # we use the same view for a definition and for the feedback form on that
     # definition, the first component of the path is word or feedback in each case

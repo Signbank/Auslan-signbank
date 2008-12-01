@@ -10,8 +10,8 @@
 </li>
 <li><a>reference</a>
   <ul>
-    <li><a href="/fingerspellingonehanded.html">Fingerspell One Handed</a></li>
     <li><a href="/fingerspellingtwohanded.html">Fingerspell Two Handed</a></li>
+    <li><a href="/fingerspellingonehanded.html">Fingerspell One Handed</a></li>
     <li><a href="/numbersigns/">Number Signs</a></li>
   </ul>
 <li><a href="/feedback/">feedback</a></li>
@@ -22,6 +22,7 @@
 {% endfor %}
 
 {% if user.is_staff %}
+<li><a href="/medical/">medical</a></li>
 <li><a href="/admin/">admin</a></li>
 <li><a href="/feedback/show.html">view feedback</a></li>
 {% endif %}
