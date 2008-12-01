@@ -11,6 +11,18 @@ from auslan.dictionary.models import *
 from auslan.dictionary.forms import * 
 from auslan.feedback.models import *
 
+def index(request, flavour='dictionary'):
+    """Default view showing a browse/search entry
+    point to the dictionary"""
+    
+    
+    return render_to_response("dictionary/index.html",
+                              {'flavour': flavour,
+                               },
+                               context_instance=RequestContext(request))
+
+
+
 def word(request, viewname, keyword, n, flavour='dictionary'):
  
     """View of a single keyword that may have more than one sign"""
