@@ -2,9 +2,9 @@
 {# title (string #}
 {#   The title of the page, appears in horizontal span above content. #}
 
-{% extends "standardlayout.html" %}
+{% extends "baselayout.html" %}
 
-{% block pagecontent %}
+{% block content %}
 
 {% if form.has_errors %}
   <p>Your username and password didn't match. Please try again.</p>
