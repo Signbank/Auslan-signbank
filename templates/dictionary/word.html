@@ -193,7 +193,7 @@
 
 {% block prevnext %}
 
-
+   <div id="signs">
   {% ifequal flavour "medical" %}
     {% if translation.gloss.prev_medical_gloss %}
       <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html">&lt;Previous Medical Sign</a>
@@ -204,17 +204,6 @@
   {% endif %}
   {% endifequal %}
   
-  {% ifequal viewname "words" %}   
-  {% if prev %}
-  <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
-  {% endif %} 
-  
-  {% if next %}
-  <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
-  {% endif %}
-   
-  {% endifequal %}
-  
   {% ifequal flavour "medical" %}
     {% if translation.gloss.next_medical_gloss %}
       <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html">Next Medical Sign&gt;</a>
@@ -223,7 +212,23 @@
     {% if translation.gloss.next_dictionary_gloss %}
       <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html">Next Sign&gt;</a>
     {% endif %}
+  {% endifequal %}  
+  </div>
+  
+   <div id="matches">
+  {% ifequal viewname "words" %}   
+  {% if prev %}
+  <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
+  {% endif %} 
+  
+  {% if next %}
+  <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
+  {% endif %}
+   </div>
+   
   {% endifequal %}
+  
+
 {% endblock %}
 
 {% block signcount %}
@@ -245,7 +250,7 @@
 
 
 {% block states %}      
-    <img src="{% auslan_static_prefix %}img/australia_regions.png" alt="States">
+    <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States">
     <!--
 
      {% if gloss.auslextf %}

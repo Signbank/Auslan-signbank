@@ -3,24 +3,23 @@
   <head>
     <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <link rel="stylesheet" href="{% auslan_static_prefix %}css/auslan.css" type="text/css">
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script> 
     
-    
-    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">  
-      
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">        
+
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
+
     <script type="text/javascript">
 
     // initialise plugins
     jQuery(function(){
-            jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({
-              pathLevels: 2,
-            }); 
+            jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({pathLevels: 2});
+ 
     });
     </script>
 
@@ -53,7 +52,7 @@ pageTracker._trackPageview();
   </head>
 
   <body {% ifequal flavour "medical" %}class='medical'{% endifequal %}>
-      
+  
     <div id="header">
        <h1>Auslan - Signbank</h1>
        <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
@@ -61,28 +60,23 @@ pageTracker._trackPageview();
           <a href="javascript:document.forms['frmSearch'].submit();">Search{% ifequal flavour "medical" %} MSB{% endifequal %}</a>        
        </form> 
     </div>
-         
+
     <div id="navigation"> 
      {% include "menu.html" %}
-    </div>
-    
+    </div> 
     <div id="content"> 
     {% block content %}
     <p>PAGE CONTENT</p>
     {% endblock %}
-    </div>
-
-    
+    </div>    
     <div id="footer"> 
      
           <div id="copyright">
-           <!-- <img src="{% auslan_static_prefix %}img/logo_institute.gif" width="216" height="39" alt="" border="0">
-           -->
              &copy; RIDBC 2004. All rights reserved.
           </div>
     
     </div>
-    
-    
+     
+  
   </body>
 </html>
