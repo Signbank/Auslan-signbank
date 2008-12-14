@@ -1,13 +1,9 @@
 
 /*** adding the class sf-navbar in addition to sf-menu creates an all-horizontal nav-bar menu ***/
 .sf-navbar {
-	background:		#BDD2FF;
-	height:			2.5em;
-	padding-bottom:	2.5em;
 	position:		relative;
 }
 .sf-navbar li {
-	background:		#AABDE6;
 	position:		static;
 }
 .sf-navbar a {
@@ -17,7 +13,6 @@
 	width:			44em; /*IE6 soils itself without this*/
 }
 .sf-navbar li li {
-	background:		#BDD2FF;
 	position:		relative;
 }
 .sf-navbar li li ul {
@@ -34,26 +29,22 @@
 	border:			none;
 }
 .sf-navbar li.current {
-	background:		#BDD2FF;
 }
 .sf-navbar li:hover,
 .sf-navbar li.sfHover,
 .sf-navbar li li.current,
 .sf-navbar a:focus, .sf-navbar a:hover, .sf-navbar a:active {
-	background:		#BDD2FF;
 }
 .sf-navbar ul li:hover,
 .sf-navbar ul li.sfHover,
 ul.sf-navbar ul li:hover li,
 ul.sf-navbar ul li.sfHover li,
 .sf-navbar ul a:focus, .sf-navbar ul a:hover, .sf-navbar ul a:active {
-	background:		#D1DFFF;
 }
 ul.sf-navbar li li li:hover,
 ul.sf-navbar li li li.sfHover,
 .sf-navbar li li.current li.current,
 .sf-navbar ul li li a:focus, .sf-navbar ul li li a:hover, .sf-navbar ul li li a:active {
-	background:		#E6EEFF;
 }
 ul.sf-navbar .current ul,
 ul.sf-navbar ul li:hover ul,
