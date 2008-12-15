@@ -1,18 +1,18 @@
-@import "colour.css";
+@import "black.css";
 @import "fonts.css";
 
 /* layout */
 body {
    margin-left: auto;
    margin-right: auto;
-   width: 860px;
+   width: 847px;
    padding: 0px;
    background-color: #FFFFFF;
    margin-top: 0px; 
 }
 
 #header { 
-   padding: 0px;
+   padding: 0px; 
 }
 
 #header h1 {
