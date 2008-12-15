@@ -1,0 +1,139 @@
+
+/* colours */
+
+html {
+  background-color: #fff;
+  background-image: url(images/shadow-bg.png);
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+#content {
+  background-color: #FFF; 
+}
+
+body.medical {
+   background-color: #FCFC00;
+}
+
+#header {
+   background-color: #262729; 
+   background-repeat: repeat-x;
+   height: 92px;
+}
+ 
+#header h1 {
+    /* replace the header text with the banner image
+       move the text out of the way with padding */
+    background-image: url(images/banner-black.png);
+    background-repeat: no-repeat;
+}
+
+#header #frmSearch a:link {
+   color: #FFFFFF;
+   text-decoration: none;
+   font-variant: small-caps;
+}
+
+#navigation {
+   background-color:    #e3e3e3;
+   height:                 26px;
+   background-image: url(images/navbar-right.png);
+   background-position: right;
+   background-repeat: no-repeat;
+}
+
+/* superfish menu styling - background image is assumed 26px high */
+.sf-menu {
+ 
+}
+.sf-menu a {
+   text-decoration:        none; 
+}
+.sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
+   color:			#000;
+}
+/* top level menu entries */
+.sf-menu li {
+   border-right:	        1px solid #000; 
+   background-color:       #e3e3e3;
+}
+/* first level of dropdown menus */
+.sf-menu li li {
+}
+/* second level of dropdown menus */
+.sf-menu li li li {
+}
+.sf-menu li:hover, .sf-menu li.sfHover,
+.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active { 
+   outline:		0;
+   text-decoration: underline;
+}
+
+#footer {
+   background-color: #F0FFDF;   
+}
+
+/* style for the layout of word definitions */
+#signinfo {
+   background-color: #1B1D1F;
+   color: #FFF;
+}
+#signinfo h2 { 
+   font-size: small;
+   font-weight: normal;
+}
+
+#signcount { 
+   float: right;
+   padding-left: 1em;
+}
+
+#signnav {
+   background-color: #1B1D1F;
+   text-align: right;
+}
+#signnav a:link, #signnav a:visited {
+   color: #FFF;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+#videocontainer { 
+   background-color:  #1B1D1F; 
+}
+#videocontainer object {
+   margin-left: 6px;
+   margin-right: 6px;
+}
+#videoreplay {
+   font-weight: bold;
+   font-variant: small-caps;
+   color: #5C9ACB;
+   background-image: url(images/box_22.gif);
+   background-repeat: no-repeat;
+   /* these add up to the height and width of the bg image */
+   height: 37px;
+   padding-top: 5px;
+   width: 300px;
+   padding-right: 32px;
+
+}
+
+#keywords {  
+}
+
+#states { 
+}
+    
+#definition {
+   margin-left: 332px;
+   padding-left: 1em;
+   background-color: #FFF;
+}
+#definition h2 {
+   background-color: #E3E3E3;
+   color: #5C9ACB;
+}
+
+
