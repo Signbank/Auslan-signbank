@@ -192,7 +192,6 @@
 
 
 {% block prevnext %}
-
    <div id="signs">
   {% ifequal flavour "medical" %}
     {% if translation.gloss.prev_medical_gloss %}
@@ -224,11 +223,8 @@
   {% if next %}
   <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
   {% endif %}
-   </div>
-   
   {% endifequal %}
-  
-
+   </div>
 {% endblock %}
 
 {% block signcount %}
@@ -251,7 +247,7 @@
 
 {% block states %}      
     <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States">
-    <!--
+{% if 0 %}
 
      {% if gloss.auslextf %}
      
@@ -312,7 +308,6 @@
     {% endif %} {# gloss.sthtf #}
     {% endif %} {# gloss.nthtf #}
     {% endif %} {# gloss.austlex #}
--->
-    
+ {% endif %}
     {% endblock %}
 
