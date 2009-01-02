@@ -60,6 +60,36 @@ class Keyword(models.Model):
         
     class Admin:
         search_fields = ['text']
+        
+        
+        
+    def match_request(self, request, n, flavour='dictionary'):
+        """Find the translation matching a keyword request given an index 'n'
+        response depends on login status and whether we're searching the
+        medical dictionary.
+        Returns a tuple (translation, count) where count is the total number
+        of matches."""
+        
+        if request.user.is_authenticated() and request.user.is_staff:
+            if flavour == 'medical':
+                alltrans = self.translation_set.filter(gloss__InMedLex__exact=True)
+            else:
+                alltrans = self.translation_set.all()
+        else:
+            alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
+        
+        # if there are no translations, generate a 404
+        if len(alltrans) == 0:
+            raise Http404
+        
+        # take the nth translation if n is in range
+        # otherwise take the last
+        if n-1 < len(alltrans):
+            trans = alltrans[n-1]
+        else:
+            trans = alltrans[len(alltrans)-1]
+        
+        return (trans, len(alltrans))
     
     
 defn_role_choices = (('noun', 'Noun'),
