@@ -1,313 +1,253 @@
-{% extends "definitionlayout.html" %}
+{% extends "baselayout.html" %}
 
 {% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
-  
-   
-{% block definition %}
 
- {% ifequal viewname "feedback" %}
- 
- {% include "feedback/signfeedback.html" %}
+{% block content %}
 
- 
- {% else %} 
- {% ifequal viewname 'viewfeedback' %}
-
- {% include "feedback/viewsignfeedback.html" %}
-
- {% else %}
- 
-
-{# not the feedback view, show the definition #}
-
-  <h2>Sign Definition</h2>
- 
-{% if definitions.noun %} 
-  <h3>As a Noun</h3>
- 
-  <ol>
-  {% for def in definitions.noun %}
-    <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-  
-{% if definitions.verb %} 
-  <h3>As a Verb or Adjective</h3> 
-  <ol>
-  {% for def in definitions.verb %}
-    <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-  
-  
-{% if definitions.interact %} 
-  <h3>Interactive</h3> 
-  <ol>
-  {% for def in definitions.interact %}
-      <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-  
-{% if definitions.deictic %} 
-  <h3>As Deictic</h3> 
-  <ol>
-  {% for def in definitions.deictic %}
-    <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-  
-  
-{% if definitions.modifier %} 
-  <h3>As Modifier</h3> 
-  <ol>
-  {% for def in definitions.modifier %}
-      <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-
-  
-{% if definitions.question %} 
-  <h3>As Question</h3> 
-  <ol>
-  {% for def in definitions.question %}
-      <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-  
-{% if definitions.augment %} 
-  <h3>Augmented Meaning</h3> 
-  <ol>
-  {% for def in definitions.augment %}
-      <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %}
-   
-{% if not gloss.inWeb %}
-      <p>This gloss is not included in the web version of the dictionary.</p>
-{% endif %}
-  
-{% if user.is_authenticated and user.is_staff %}
-      <h2>Staff</h2>
-      
-{% if definitions.popexplain %} 
-  <h2>Popular Explanation</h2> 
-  <ol>
-  {% for def in definitions.popexplain %}
-      <li> {{ def }}</li>
-  {% endfor %} 
-  </ol>
-{% endif %} 
-  
-{% if gloss.queries %}
-  <h2>Notes</h2>
-  <ol>
-      <li>{{gloss.queries }}</li>
-  </ol>
-{% endif %}
-      
-      
-{% if feedback %}      
-    <h3>Feedback Received</h3>
-      
-    <table border='1'>
-      <tr>
-        <th>User</th>
-        <th>Date</th>
-        <th>Auslan Sign</th>
-        <th>Where Used</th>
-        <th>Liked</th>
-        <th>Used</th>
-        <th>Use Suggested</th>
-        <th>Correct</th>
-      </tr>
-
-      {% for row in feedback %}
-      
-      <tr>
-        <td>{{row.user}}</td>
-        <td>{{row.date}}</td>
-        <td>{{row.get_isAuslan_display}}</td>
-        <td>{{row.get_whereused_display}}</td>
-        <td>{{row.get_like_display}}</td>
-        <td>{{row.get_use_display}}</td>
-        <td>{{row.get_suggested_display}}</td>
-        <td>{{row.get_correct_display}}</td>
-      </tr>
-      
-      {% endfor %}
-
-    </table>
-      
-      
-{% endif %} 
-      
-      
-      <ul>
-        <li><a href="/admin/dictionary/gloss/{{gloss.id}}">Edit the 
-            gloss <em>'{{ gloss.idgloss}}'</em></a></li>
-        <li>
-          <a href="javascript:window.open('/dictionary/update/video/{{gloss.id}}','', 'width=500,height=300,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
-        </li>
-      </ul>
-      
-        {%if update_form %}
-           <form action="/dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
-           
-           <fieldset class="glossupdate">
-           <legend>Quick Updates</legend>
-         {# update form for this gloss #}
-           <p>
-            Include in the Web dictionary? {{ update_form.inWeb }}
-             {{ update_form.glossid }}
-             {{ update_form.keyword }}
-             {{ update_form.n }}
-           </p>
-           <p>Include in Medical Signbank? {{ update_form.inMedLex }}</p>
-
-           <p>
-             <input type="submit" value="Update"/>
-           </p>
-           
-          </fieldset>     
-           </form>
-         {% endif %}
-         
-      </ul>
-      
-      {% endif %}
-     
-      
-   {% endifequal %}
-
-      
-  {% endifequal %}
-{% endblock %}
-
-
-{% block prevnext %}
-   <div id="signs">
-  {% ifequal flavour "medical" %}
-    {% if translation.gloss.prev_medical_gloss %}
-      <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html">&lt;Previous Medical Sign</a>
-    {% endif %}
-  {% else %}
-  {% if translation.gloss.prev_dictionary_gloss %}  
-    <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html">&lt;Previous Sign</a>
-  {% endif %}
-  {% endifequal %}
-  
-  {% ifequal flavour "medical" %}
-    {% if translation.gloss.next_medical_gloss %}
-      <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html">Next Medical Sign&gt;</a>
-    {% endif %}
-  {% else %}
-    {% if translation.gloss.next_dictionary_gloss %}
-      <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html">Next Sign&gt;</a>
-    {% endif %}
-  {% endifequal %}  
-  </div>
-  
-   <div id="matches">
-  {% ifequal viewname "words" %}   
-  {% if prev %}
-  <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
-  {% endif %} 
-  
-  {% if next %}
-  <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
-  {% endif %}
-  {% endifequal %}
-   </div>
-{% endblock %}
-
-{% block signcount %}
-{% ifequal viewname "words" %}Match {{n}} of {{ total }}{% endifequal %}
-{% endblock %}
-
-{% block associated_keywords %}
-<p><strong>Keywords:</strong>
-{% for kwd in allkwds %}
-
-  {% ifequal translation.translation kwd.translation %}
-  <b>{{ kwd.translation }},</b>
-  {% else %}
-  {{ kwd.translation }},
-  {% endifequal %}
-{% endfor %}
-</p>
-{% endblock %}
-
-
-{% block states %}      
-    <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States">
-{% if 0 %}
-
-     {% if gloss.auslextf %}
-     
-<div>Sign Distribution: All States</div>
-<div id="states">
-    <img src="{% auslan_static_prefix %}img/state_ql.gif" width="25" height="29" alt="Queensland">
-    <img src="{% auslan_static_prefix %}img/state_nsw.gif" width="25" height="29" alt="New South Wales">
-    <img src="{% auslan_static_prefix %}img/state_vic.gif" width="25" height="29" alt="Victoria">
-    <img src="{% auslan_static_prefix %}img/state_wa.gif" width="25" height="29" alt="Western Australia">
-    <img src="{% auslan_static_prefix %}img/state_sa.gif" width="25" height="29" alt="South Australia">
-    <img src="{% auslan_static_prefix %}img/state_nt.gif" width="25" height="29" alt="Northern Territory">
-    <img src="{% auslan_static_prefix %}img/state_act.gif" width="25" height="29" alt="Australian Capital Territory">
-    <img src="{% auslan_static_prefix %}img/state_tas.gif" width="25" height="29" alt="Tasmania">
+<div id="signinfo">
+    <div id="signnav">  
+        <div id="signs">
+            <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
+                {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
+            {% ifequal flavour "medical" %}
+             {% if translation.gloss.prev_medical_gloss %}
+                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
+             {% endif %}
+            {% else %}
+            {% if translation.gloss.prev_dictionary_gloss %}  
+                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
+            {% endif %}
+            {% endifequal %}
+            
+            {% ifequal flavour "medical" %}
+             {% if translation.gloss.next_medical_gloss %}
+                <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
+             {% endif %}
+            {% else %}
+             {% if translation.gloss.next_dictionary_gloss %}
+                <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign&gt;</a>
+             {% endif %}
+            {% endifequal %}
+        </div>
+        
+        <div id="matches">
+            {% ifequal viewname "words" %}
+            <h2>Sign {{n}} of {{total}} matches for the word <em>{{ translation.translation }}</em></h2> 
+            {% if prev %}
+                <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
+            {% endif %} 
+            
+            {% if next %}
+                <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
+            {% endif %}
+            {% else %}
+                <a href="/{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a>
+            {% endifequal %}
+        </div>
+    </div>
 </div>
-    {% else %}
+
+<div id="definitionblock">
+    <div id="videocontainer">
+        <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+              width="320" height="240" id="FlowPlayer">
+          <param name="allowScriptAccess" value="always" />
+          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
+          <param name="quality" value="high" />
+          <param name="scale" value="noScale" />
+          <param name="wmode" value="transparent" /> 
+          <param name="flashvars"
+            {# modified here to use the big test video - should be {{videofile}} #}
+                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
+                                autoPlay: true, 
+                                autoBuffering: false, 
+                                loop: false, 
+                                autoRewind: true,   
+                                hideControls: true}" 
+          />
+        </object>
+        
+        <div id="videoreplay">
+           REPLAY
+        </div>
+    </div>
+    <div id="keywords"> 
+         <p><strong>Keywords:</strong>
+         {% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}
+           <b>{{ kwd.translation }},</b>
+           {% else %}
+           {{ kwd.translation }},
+           {% endifequal %}
+         {% endfor %}
+         </p>
+    </div>
+
+    <div id="definition">
+        <h2>Sign Definition</h2>
+ 
+        {% if definitions.noun %} 
+          <h3>As a Noun</h3>
+         
+          <ol>
+          {% for def in definitions.noun %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.verb %} 
+          <h3>As a Verb or Adjective</h3> 
+          <ol>
+          {% for def in definitions.verb %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.interact %} 
+          <h3>Interactive</h3> 
+          <ol>
+          {% for def in definitions.interact %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.deictic %} 
+          <h3>As Deictic</h3> 
+          <ol>
+          {% for def in definitions.deictic %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.modifier %} 
+          <h3>As Modifier</h3> 
+          <ol>
+          {% for def in definitions.modifier %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+        
+          
+        {% if definitions.question %} 
+          <h3>As Question</h3> 
+          <ol>
+          {% for def in definitions.question %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.augment %} 
+          <h3>Augmented Meaning</h3> 
+          <ol>
+          {% for def in definitions.augment %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+    </div>
+           
+    <div id="states">      
+        <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States"></img>
     
-    {% if gloss.nthtf %}
-    {# northern dialect = NSW, ACT, QLD #}
-<div class="asbCFrameLeftHeading">Sign Distribution: </div>
-<div id="states">
-    <img src="{% auslan_static_prefix %}img/state_ql.gif" width="25" height="29" alt="Queensland">
-    <img src="{% auslan_static_prefix %}img/state_nsw.gif" width="25" height="29" alt="New South Wales">
-    <img src="{% auslan_static_prefix %}img/state_vic_not.gif" width="25" height="29" alt="Victoria">
-    <img src="{% auslan_static_prefix %}img/state_wa_not.gif" width="25" height="29" alt="Western Australia">
-    <img src="{% auslan_static_prefix %}img/state_sa_not.gif" width="25" height="29" alt="South Australia">
-    <img src="{% auslan_static_prefix %}img/state_nt_not.gif" width="25" height="29" alt="Northern Territory">
-    <img src="{% auslan_static_prefix %}img/state_act.gif" width="25" height="29" alt="Australian Capital Territory">
-    <img src="{% auslan_static_prefix %}img/state_tas_not.gif" width="25" height="29" alt="Tasmania">
-</div>    
-    {% else %}
+         {% if gloss.auslextf %}
+         
+        <h2>Sign Distribution: All States</h2>
     
-    {% if gloss.sthtf %}
-    {# southern dialect = VIC, WA, TAS, SA, NT #}
-<div class="asbCFrameLeftHeading">Sign Distribution: </div>
-<div id="states">
-    <img src="{% auslan_static_prefix %}img/state_ql_not.gif" width="25" height="29" alt="Queensland">
-    <img src="{% auslan_static_prefix %}img/state_nsw_not.gif" width="25" height="29" alt="New South Wales">
-    <img src="{% auslan_static_prefix %}img/state_vic.gif" width="25" height="29" alt="Victoria">
-    <img src="{% auslan_static_prefix %}img/state_wa.gif" width="25" height="29" alt="Western Australia">
-    <img src="{% auslan_static_prefix %}img/state_sa.gif" width="25" height="29" alt="South Australia">
-    <img src="{% auslan_static_prefix %}img/state_nt.gif" width="25" height="29" alt="Northern Territory">
-    <img src="{% auslan_static_prefix %}img/state_act_not.gif" width="25" height="29" alt="Australian Capital Territory">
-    <img src="{% auslan_static_prefix %}img/state_tas.gif" width="25" height="29" alt="Tasmania">
-</div>   
-    {% else %}
-    {# individual states turned on #}
-<div class="asbCFrameLeftHeading">Sign Distribution: </div>
-<div id="states">
-    <img src="{% auslan_static_prefix %}img/state_ql{% if not gloss.qldtf %}_not{% endif %}.gif" width="25" height="29" alt="Queensland">
-    <img src="{% auslan_static_prefix %}img/state_nsw{% if not gloss.nswtf %}_not{% endif %}.gif" width="25" height="29" alt="New South Wales">
-    <img src="{% auslan_static_prefix %}img/state_vic{% if not gloss.victf %}_not{% endif %}.gif" width="25" height="29" alt="Victoria">
-    <img src="{% auslan_static_prefix %}img/state_wa{% if not gloss.watf %}_not{% endif %}.gif" width="25" height="29" alt="Western Australia">
-    <img src="{% auslan_static_prefix %}img/state_sa{% if not gloss.satf %}_not{% endif %}.gif" width="25" height="29" alt="South Australia">
-    <img src="{% auslan_static_prefix %}img/state_nt_not.gif" width="25" height="29" alt="Northern Territory">
-    <img src="{% auslan_static_prefix %}img/state_act_not.gif" width="25" height="29" alt="Australian Capital Territory">
-    <img src="{% auslan_static_prefix %}img/state_tas{% if not gloss.tastf %}_not{% endif %}.gif" width="25" height="29" alt="Tasmania">
-</div>    
-    {% endif %} {# gloss.sthtf #}
-    {% endif %} {# gloss.nthtf #}
-    {% endif %} {# gloss.austlex #}
- {% endif %}
-    {% endblock %}
+        {% else %}
+        
+        {% if gloss.nthtf %}
+        {# northern dialect = NSW, ACT, QLD #}
+        <h2>Sign Distribution: NSW, ACT, QLD</h2>
+        {% else %}
+        
+        {% if gloss.sthtf %}
+        {# southern dialect = VIC, WA, TAS, SA, NT #}
+        <h2>Sign Distribution: VIC, WA, TAS, SA, NT </h2>  
+        {% else %}
+        {# individual states turned on #}
+            <h2>Sign Distribution: </h2>
+            <p>
+            {% if gloss.qldtf %}Queensland{% endif %}
+            {% if gloss.nswtf %}NSW{% endif %} 
+            {% if gloss.victf %}Victoria{% endif %} 
+            {% if gloss.watf %}Western Australia{% endif %} 
+            {% if gloss.satf %}South Australia{% endif %} 
+            Northern Territory
+            Australian Capital Territory
+            {% if gloss.tastf %}Tasmania{% endif %} 
+            </p>    
+        {% endif %} {# gloss.sthtf #}
+        {% endif %} {# gloss.nthtf #}
+        {% endif %} {# gloss.austlex #}
+    </div>
+    <div id="feedback">
+        <ul>
+            <li><a href="/feedback/sign/{{ translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+            <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
+        </ul> 
+    </div>
+
+    {% if user.is_authenticated and user.is_staff %}
+    <div id="staffinfo">
+        
+        <h2>Staff</h2>
+        
+        {% if not gloss.inWeb %}
+          <p>This gloss is not included in the web version of the dictionary.</p>
+        {% endif %}
+                    
+        {% if definitions.popexplain %} 
+          <h2>Popular Explanation</h2> 
+          <ol>
+          {% for def in definitions.popexplain %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %} 
+      
+        {% if gloss.queries %}
+          <h2>Notes</h2>
+          <ol>
+              <li>{{gloss.queries}}</li>
+          </ol>
+        {% endif %}
+        <ul>
+          <li><a href="/admin/dictionary/gloss/{{gloss.id}}">Edit the 
+          gloss <em>'{{ gloss.idgloss}}'</em></a></li>
+          <li>
+            <a href="javascript:window.open('/dictionary/update/video/{{gloss.id}}','', 'width=500,height=300,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+          </li>
+        </ul>
+  
+        {%if update_form %}
+        <form action="/dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+       
+            <fieldset class="glossupdate">
+            <legend>Quick Updates</legend>
+              {# update form for this gloss #}
+                <p>
+                 Include in the Web dictionary? {{ update_form.inWeb }}
+                  {{ update_form.glossid }}
+                  {{ update_form.keyword }}
+                  {{ update_form.n }}
+                </p>
+                <p>Include in Medical Signbank? {{ update_form.inMedLex }}</p>
+                <p><input type="submit" value="Update"/></p>
+            </fieldset>     
+        </form>
+        {% endif %}
+    </div>
+    {% endif %}          
+</div>
+
+
+{% endblock %}
 

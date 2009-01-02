@@ -24,12 +24,11 @@
   {% endif %}
   </p>
 
-  
-  <p>Return to <a href="/dictionary/words/{{keyword}}-{{n}}.html">the gloss page</a></p>
+  <p>Return to <a href="{{referer}}">the gloss page</a></p>
   
 {% else %}
-<p>Errors in the update form: </p>
-{{update_form}}
+    <p>Errors in the update form: </p>
+    {{update_form}}
 {% endif %}
 
 

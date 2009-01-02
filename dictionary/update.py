@@ -19,10 +19,7 @@ def update_gloss(request, glossid, flavour='dictionary'):
         return HttpResponseForbidden("Gloss Update Not Allowed")    
     
     thisgloss = None
-    keyword = None
-    n = None
-    confirm_form = None
-    videofile = None
+    confirm_form = None 
     if request.method == "POST":
         update_form = GlossUpdateForm(request.POST, request.FILES)
         if update_form.is_valid():
@@ -41,17 +38,14 @@ def update_gloss(request, glossid, flavour='dictionary'):
                 thisgloss.InMedLex = False
                 
             thisgloss.save()
-            
-            keyword = clean['keyword']
-            n = clean['n']
+        
+        referer = request.META['HTTP_REFERER']
         
         return render_to_response("dictionary/update_result.html", 
                               {'update_form': update_form,
-                              'confirm_form': confirm_form,
+                               'confirm_form': confirm_form,
                                'gloss' : thisgloss,
-                               'keyword': keyword, 
-                               'n': n,
-                               'videofile': videofile
+                               'referer': referer, 
                                },
                               context_instance=RequestContext(request))
 

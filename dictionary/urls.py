@@ -12,9 +12,6 @@ urlpatterns = patterns('',
     # definition, the first component of the path is word or feedback in each case
     (r'^(?P<viewname>(words|feedback))/(?P<keyword>.+)-(?P<n>\d+).html$', 
             'auslan.dictionary.views.word'),
-    
-    (r'^viewfeedback/(?P<keyword>.+)-(?P<n>\d+).html$', 
-            'auslan.dictionary.views.viewfeedback'),
             
     # and and alternate view for direct display of a gloss
     (r'gloss/(?P<idgloss>.+).html$', 'auslan.dictionary.views.gloss'),

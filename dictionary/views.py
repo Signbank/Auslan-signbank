@@ -24,33 +24,13 @@ def index(request, flavour='dictionary'):
 
 
 def word(request, viewname, keyword, n, flavour='dictionary'):
- 
     """View of a single keyword that may have more than one sign"""
-    
+
     n = int(n)
-    
+
     word = get_object_or_404(Keyword, text=keyword)
-    
-    if request.user.is_authenticated() and request.user.is_staff:
-        if flavour == 'medical':
-            alltrans = word.translation_set.filter(gloss__InMedLex__exact=True)
-        else:
-            alltrans = word.translation_set.all()
-    else:
-        alltrans = word.translation_set.filter(gloss__inWeb__exact=True)
-    
-    # if there are no translations, return a 
-    # special error page
-    if len(alltrans) == 0:
-        raise Http404
-        
-    
-    # take the nth translation if n is in range
-    # otherwise take the last
-    if n-1 < len(alltrans):
-        trans = alltrans[n-1]
-    else:
-        trans = alltrans[len(alltrans)-1] 
+    # returns (matching translation, number of matches) 
+    (trans, total) =  word.match_request(request, n)
     
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
@@ -61,55 +41,23 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     else:
         prev = None
         
-    if n < len(alltrans):
+    if n < total:
         next = n+1
     else:
         next = None
         
-    
     videourl = trans.gloss.get_video_url()
     
     trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
     
-    # need to assert login for the feedback form
-    valid = False
-    if viewname == "feedback":
-        if request.user.is_authenticated():
- 
-            
-            if request.method == "POST":
-                feedback_form = SignFeedbackForm(request.POST)
-                
-                if feedback_form.is_valid():
-                    # get the clean (normalised) data from the feedback_form
-                    clean = feedback_form.cleaned_data
-                    # create a SignFeedback object to store the result in the db
-                    sfb = SignFeedback(
-                        isAuslan=clean['isAuslan'],
-                        whereused=clean['whereused'],
-                        like=clean['like'],
-                        use=clean['use'],
-                        suggested=clean['suggested'],
-                        correct=clean['correct'],
-                        kwnotbelong=clean['kwnotbelong'],
-                        comment=clean['comment'],
-                        user=request.user,
-                        translation_id = request.POST["translation_id"]
-                        )
-                    sfb.save()
-                    valid = True 
-            else:
-                feedback_form = SignFeedbackForm()
-        else:
-            # feedback requested but user is not logged in
-            # redirect to the login page
-            # return HttpResponseRedirect("/accounts/login/?next="+reverse('auslan.dictionary.views.word', args=[viewname, keyword, n]))
-            # using reverse would be good here but the current implementation borks on 
-            # the nested parens in the RE for this view
-            return HttpResponseRedirect("/accounts/login/?next=/"+flavour+"/feedback/"+keyword+"-"+str(n)+".html")
+    gloss = trans.gloss
+    if flavour == 'medical':
+        glosscount = Gloss.objects.filter(InMedLex__exact=True).count()
+        glossposn = Gloss.objects.filter(InMedLex__exact=True, sn__lt=gloss.sn).count()+1
     else:
-        feedback_form = False
-        
+        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1      
+            
     # the gloss update form for staff
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
@@ -120,86 +68,29 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                  'n': n, 
                   })
         
-        
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
+                               'viewname': 'words',
                                'flavour': flavour,
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
                                'n': n, 
-                               'total': len(alltrans),
+                               'total': total,
                                'prev': prev,
                                'next': next,
-                               'menuid': 2,
-                               'videofile': videourl,
-                               'viewname': viewname,
-                               'feedback_form': feedback_form,
+                               # lastmatch is a construction of the url for this word
+                               # view that we use to pass to gloss pages
+                               # could do with being a fn call to generate this name here and elsewhere
+                               'lastmatch': str(trans.translation)+"-"+str(n),
+                               'videofile': videourl,  
                                'update_form': update_form,
-                               'valid': valid,
-                               'feedback': trans.signfeedback_set.all()
+                               'gloss': gloss,
+                               'glosscount': glosscount,
+                               'glossposn': glossposn,
                                },
                                context_instance=RequestContext(request))
-    
-    
-def viewfeedback(request, keyword, n, flavour='dictionary'):
-    """View feedback currently collected for this keyword"""
-
-    
-    n = int(n)
-    word = Keyword.objects.get(text=keyword)
-    if request.user.is_authenticated() and request.user.is_staff:
-        if flavour == 'medical':
-            alltrans = word.translation_set.filter(gloss__InMedLex__exact=True)
-        else:
-            alltrans = word.translation_set.all()
-    else:
-        alltrans = word.translation_set.filter(gloss__inWeb__exact=True)
-    
-    # take the nth translation if n is in range
-    # otherwise take the last
-    if n-1 < len(alltrans):
-        trans = alltrans[n-1]
-    else:
-        trans = alltrans[len(alltrans)-1] 
-    
-    # and all the keywords associated with this sign
-    allkwds = trans.gloss.translation_set.all()
-    
-    # remember that n is one indexed
-    if n>1:
-        prev = n-1
-    else:
-        prev = None
-        
-    if n < len(alltrans):
-        next = n+1
-    else:
-        next = None
-        
-     
-    trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
-    
-    return render_to_response("dictionary/word.html",
-                              {'translation': trans,
-                               'definitions': trans.gloss.definitions(),
-                               'gloss': trans.gloss,
-                               'allkwds': allkwds,
-                               'n': n, 
-                               'total': len(alltrans),
-                               'prev': prev,
-                               'next': next,
-                               'menuid': 2,
-                               'videofile': trans.gloss.get_video_url(),
-                               'viewname': 'viewfeedback',
-                               'feedback_form': None,
-                               'update_form': None,
-                               'valid': True,
-                               'feedback': trans.signfeedback_set.all()
-                               },
-                               context_instance=RequestContext(request))
-    
-    
+  
     
 def gloss(request, idgloss, flavour='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
@@ -222,24 +113,34 @@ def gloss(request, idgloss, flavour='dictionary'):
     else:
         glosscount = Gloss.objects.filter(inWeb__exact=True).count()
         glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1   
+    
+    # the gloss update form for staff
+    update_form = None
+    if request.user.is_authenticated() and request.user.is_staff:
+        update_form = GlossUpdateForm(
+                {'inWeb': trans.gloss.inWeb,
+                 'inMedLex': trans.gloss.InMedLex
+                  })    
+    
+    # get the last match keyword if there is one passed along as a form variable
+    if request.GET.has_key('lastmatch'):
+        lastmatch = request.GET['lastmatch']
+    else:
+        lastmatch = None
         
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
                                'flavour': flavour,
-                               'n': 1, 
-                               'total': 1,
-                               'prev': 1,
-                               'next': 1,
-                               'menuid': 2,
+                               'lastmatch': lastmatch,
                                'videofile': videourl,
-                               'viewname': word, 
-                               'valid': True,
+                               'viewname': word,  
                                'feedback': None,
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
+                               'update_form': update_form,
                                },
                                context_instance=RequestContext(request))
         

@@ -2,11 +2,12 @@
 import os
 from models import *
 from django import forms
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Context, RequestContext, loader
 from django.conf import settings 
 from django.core.mail import send_mail
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required 
+from django.http import HttpResponse
 
 import time
 
@@ -127,9 +128,9 @@ def missingsign(request):
 def showfeedback(request):
     """View to list the feedback that's been left on the site"""
     
-    general = GeneralFeedback.objects.all()
-    missing = MissingSignFeedback.objects.all()
-    signfb = SignFeedback.objects.all()
+    general = GeneralFeedback.objects.filter(status='unread')
+    missing = MissingSignFeedback.objects.filter(status='unread')
+    signfb = SignFeedback.objects.filter(status__in=('unread', 'read'))
     
     return render_to_response("feedback/show.html",
                               {'general': general,    
@@ -138,3 +139,76 @@ def showfeedback(request):
                               }, 
                               context_instance=RequestContext(request))
     
+    
+    
+    
+# Feedback on individual signs
+@login_required
+def signfeedback(request, keyword, n):
+    """View or give feedback on a sign"""
+    
+    n = int(n)
+    word = get_object_or_404(Keyword, text=keyword)
+    
+    # returns (matching translation, number of matches) 
+    (trans, total) =  word.match_request(request, n)
+    
+    valid = False
+    
+    if request.method == "POST":
+        feedback_form = SignFeedbackForm(request.POST)
+        
+        if feedback_form.is_valid():
+            # get the clean (normalised) data from the feedback_form
+            clean = feedback_form.cleaned_data
+            # create a SignFeedback object to store the result in the db
+            sfb = SignFeedback(
+                isAuslan=clean['isAuslan'],
+                whereused=clean['whereused'],
+                like=clean['like'],
+                use=clean['use'],
+                suggested=clean['suggested'],
+                correct=clean['correct'],
+                kwnotbelong=clean['kwnotbelong'],
+                comment=clean['comment'],
+                user=request.user,
+                translation_id = request.POST["translation_id"]
+                )
+            sfb.save()
+            valid = True 
+    else:
+        feedback_form = SignFeedbackForm()
+        
+    return render_to_response("feedback/signfeedback.html",
+                              {'translation': trans,
+                               'n': n, 
+                               'total': total,   
+                               'feedback_form': feedback_form, 
+                               'valid': valid
+                               },
+                               context_instance=RequestContext(request))
+
+
+#--------------------
+#  deleting feedback
+#--------------------
+
+def delete(request, kind, id):
+    """Mark a feedback item as deleted, kind 'signfeedback', 'generalfeedback' or 'missingsign'"""
+    
+    if kind == 'sign':
+        kind = SignFeedback
+    elif kind == 'general':
+        kind = GeneralFeedback
+    elif kind == 'missingsign':
+        kind = MissingSignFeedback
+    else:
+        raise Http404
+    
+    item = get_object_or_404(kind, id=id)
+    # mark as deleted
+    item.status = 'deleted'
+    item.save()
+    return HttpResponse("deleted "+str(item), content_type='text/plain')
+
+
