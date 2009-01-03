@@ -83,21 +83,22 @@ body.medical {
    font-size: small;
    font-weight: normal;
 }
-
-#signcount { 
-   float: right;
-   padding-left: 1em;
-}
-
-#signnav {
-   background-color: #1B1D1F;
-   text-align: right;
-}
-#signnav a:link, #signnav a:visited {
+#signinfo a:link, #signinfo a:visited {
    color: #FFF;
    text-decoration: none;
-   font-weight: bold;
+   font-weight: normal;
 }
+#signs {
+   background-color: #1B1D1F;
+   text-align: left;
+   float: left;
+   width: 424px;  /* 847/2 */
+}
+
+#matches { 
+}
+
+
 
 #videocontainer { 
    background-color:  #1B1D1F; 

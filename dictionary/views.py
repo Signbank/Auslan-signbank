@@ -79,6 +79,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                'total': total,
                                'prev': prev,
                                'next': next,
+                               'matches': range(1, total+1),
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
