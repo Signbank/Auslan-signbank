@@ -75,19 +75,22 @@ body {
 }
 
 #signnav #matches {
-   height: 50px;
+   height: 50px; 
 }
 
 #definitionblock {
    
 }
 
-#videocontainer {
+#leftblock {
    float: left; 
    margin-left: 6px;
    margin-top: 0px;
 }
 
+#videocontainer {
+   width: auto;
+}
 #videoreplay {
    text-align: right;
 }
@@ -97,20 +100,17 @@ body {
    margin-left: -1em; 
    padding-left: 1em;
 }
-#definition {
-   border: 1px solid red;
+#definition { 
 }
 
 #states {
-   clear: both;
-   margin-left: 100px;
-   border: 1px solid blue;
+   text-align: center;
+   margin-left: auto;
+   margin-right: auto; 
 }
-#feedback {
-   border: 1px solid yellow;
+#feedback { 
 }
-#staffinfo {
-   border: 1px solid green;
+#staffinfo { 
 }
 
 

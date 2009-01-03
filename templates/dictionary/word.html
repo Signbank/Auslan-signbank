@@ -5,72 +5,121 @@
 {% block content %}
 
 <div id="signinfo">
-    <div id="signnav">  
-        <div id="signs">
-            <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
-                {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
-            {% ifequal flavour "medical" %}
-             {% if translation.gloss.prev_medical_gloss %}
-                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
-             {% endif %}
-            {% else %}
-            {% if translation.gloss.prev_dictionary_gloss %}  
-                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
-            {% endif %}
-            {% endifequal %}
-            
-            {% ifequal flavour "medical" %}
-             {% if translation.gloss.next_medical_gloss %}
-                <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
-             {% endif %}
-            {% else %}
-             {% if translation.gloss.next_dictionary_gloss %}
-                <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign&gt;</a>
-             {% endif %}
-            {% endifequal %}
-        </div>
+    <div id="signs">
+        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
+            {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
+        {% ifequal flavour "medical" %}
+         {% if translation.gloss.prev_medical_gloss %}
+            <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
+         {% endif %}
+        {% else %}
+        {% if translation.gloss.prev_dictionary_gloss %}  
+            <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
+        {% endif %}
+        {% endifequal %}
         
-        <div id="matches">
-            {% ifequal viewname "words" %}
-            <h2>Sign {{n}} of {{total}} matches for the word <em>{{ translation.translation }}</em></h2> 
-            {% if prev %}
-                <a href="{{translation.translation}}-{{prev}}.html">&lt;&lt;Previous Match</a> 
-            {% endif %} 
-            
-            {% if next %}
-                <a href="{{translation.translation}}-{{next}}.html">Next Match&gt;&gt;</a> 
-            {% endif %}
+        {% ifequal flavour "medical" %}
+         {% if translation.gloss.next_medical_gloss %}
+            <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
+         {% endif %}
+        {% else %}
+         {% if translation.gloss.next_dictionary_gloss %}
+            <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign&gt;</a>
+         {% endif %}
+        {% endifequal %}
+    </div>
+    
+    <div id="matches">
+        {% ifequal viewname "words" %}
+        <h2>Matches for the word <em>{{ translation.translation }}</em></h2>
+        <div>
+        {% for i in matches %}
+            {% ifequal i n %}
+            <strong>{{i}}</strong>
             {% else %}
-                <a href="/{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a>
+            <a href="{{translation.translation}}-{{i}}.html">{{i}}</a>
             {% endifequal %}
+        {% endfor %} 
         </div>
+        {% else %}
+            <h2><a href="/{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <div>&nbsp;</div>
+        {% endifequal %}
     </div>
 </div>
 
 <div id="definitionblock">
-    <div id="videocontainer">
-        <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-              width="320" height="240" id="FlowPlayer">
-          <param name="allowScriptAccess" value="always" />
-          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-          <param name="quality" value="high" />
-          <param name="scale" value="noScale" />
-          <param name="wmode" value="transparent" /> 
-          <param name="flashvars"
-            {# modified here to use the big test video - should be {{videofile}} #}
-                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
-                                autoPlay: true, 
-                                autoBuffering: false, 
-                                loop: false, 
-                                autoRewind: true,   
-                                hideControls: true}" 
-          />
-        </object>
-        
-        <div id="videoreplay">
-           REPLAY
+    <div id="leftblock">
+        <div id="videocontainer">
+            <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+                  width="320" height="240" id="FlowPlayer">
+              <param name="allowScriptAccess" value="always" />
+              <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
+              <param name="quality" value="high" />
+              <param name="scale" value="noScale" />
+              <param name="wmode" value="transparent" /> 
+              <param name="flashvars"
+                {# modified here to use the big test video - should be {{videofile}} #}
+                    value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
+                                    autoPlay: true, 
+                                    autoBuffering: false, 
+                                    loop: false, 
+                                    autoRewind: true,   
+                                    hideControls: true}" 
+              />
+            </object>
+            
+            <div id="videoreplay">
+               REPLAY
+            </div>
         </div>
+        
+        <div id="feedback">
+            <ul>
+                <li><a href="/feedback/sign/{{ translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
+            </ul> 
+        </div>
+        
+        <div id="states">      
+            <div>
+                <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States"></img>
+            </div>
+            
+             {% if gloss.auslextf %}
+             
+            <span>Sign Distribution: All States</span>
+        
+            {% else %}
+            
+            {% if gloss.nthtf %}
+            {# northern dialect = NSW, ACT, QLD #}
+            <span>Sign Distribution: NSW, ACT, QLD</span>
+            {% else %}
+            
+            {% if gloss.sthtf %}
+            {# southern dialect = VIC, WA, TAS, SA, NT #}
+            <span>Sign Distribution: VIC, WA, TAS, SA, NT </span>
+            {% else %}
+            {# individual states turned on #}
+                <span>Sign Distribution: </span>
+                <p>
+                {% if gloss.qldtf %}Queensland{% endif %}
+                {% if gloss.nswtf %}NSW{% endif %} 
+                {% if gloss.victf %}Victoria{% endif %} 
+                {% if gloss.watf %}Western Australia{% endif %} 
+                {% if gloss.satf %}South Australia{% endif %} 
+                Northern Territory
+                Australian Capital Territory
+                {% if gloss.tastf %}Tasmania{% endif %} 
+                </p>    
+            {% endif %} {# gloss.sthtf #}
+            {% endif %} {# gloss.nthtf #}
+            {% endif %} {# gloss.austlex #}
+        </div>
+
     </div>
+    
     <div id="keywords"> 
          <p><strong>Keywords:</strong>
          {% for kwd in allkwds %}
@@ -154,46 +203,7 @@
         {% endif %}
     </div>
            
-    <div id="states">      
-        <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States"></img>
-    
-         {% if gloss.auslextf %}
-         
-        <h2>Sign Distribution: All States</h2>
-    
-        {% else %}
-        
-        {% if gloss.nthtf %}
-        {# northern dialect = NSW, ACT, QLD #}
-        <h2>Sign Distribution: NSW, ACT, QLD</h2>
-        {% else %}
-        
-        {% if gloss.sthtf %}
-        {# southern dialect = VIC, WA, TAS, SA, NT #}
-        <h2>Sign Distribution: VIC, WA, TAS, SA, NT </h2>  
-        {% else %}
-        {# individual states turned on #}
-            <h2>Sign Distribution: </h2>
-            <p>
-            {% if gloss.qldtf %}Queensland{% endif %}
-            {% if gloss.nswtf %}NSW{% endif %} 
-            {% if gloss.victf %}Victoria{% endif %} 
-            {% if gloss.watf %}Western Australia{% endif %} 
-            {% if gloss.satf %}South Australia{% endif %} 
-            Northern Territory
-            Australian Capital Territory
-            {% if gloss.tastf %}Tasmania{% endif %} 
-            </p>    
-        {% endif %} {# gloss.sthtf #}
-        {% endif %} {# gloss.nthtf #}
-        {% endif %} {# gloss.austlex #}
-    </div>
-    <div id="feedback">
-        <ul>
-            <li><a href="/feedback/sign/{{ translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
-            <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
-        </ul> 
-    </div>
+
 
     {% if user.is_authenticated and user.is_staff %}
     <div id="staffinfo">
