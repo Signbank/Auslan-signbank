@@ -1,34 +1,44 @@
 
 
 <ul class="sf-menu sf-navbar">
-<li title="Homepage"><a href="/">home</a>
+<li title="Homepage"><a href="/">Home</a>
    <ul>
    {% for item in menu.home %}
      <li><a href="{{item.url}}">{{item.title}}</a></li>
    {% endfor %}
    </ul>
 </li>
-<li><a>reference</a>
+<li><a>Dictionary</a>
   <ul>
     <li><a href="/fingerspellingtwohanded.html">Fingerspell Two Handed</a></li>
     <li><a href="/fingerspellingonehanded.html">Fingerspell One Handed</a></li>
     <li><a href="/numbersigns/">Number Signs</a></li>
-  </ul>
-<li><a href="/feedback/">feedback</a></li>
+  </ul> 
 
 {# add in the top level menu items from pages #}
 {% for item in menu.toplevel %}
-  <li><a href="{{item.url}}">{{item.title}}</a></li>
+  <li><a href="{{item.url}}">{{item.title}}</a>
+  {% if item.children %}
+  <ul>
+  {% for subitem in item.children %}
+    <li><a href="{{subitem.url}}">{{subitem.title}}</a></li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+  </li>
 {% endfor %}
 
 {% if user.is_staff %}
-<li><a href="/medical/">medical</a></li>
-<li><a href="/admin/">admin</a></li>
-<li><a href="/feedback/show.html">view feedback</a></li>
+<li><a>Staff</a>
+<ul>
+<li><a href="/medical/">Medical</a></li>
+<li><a href="/admin/">Admin</a></li>
+<li><a href="/feedback/show.html">View Feedback</a></li>
+</ul>
 {% endif %}
 
 {% if user.is_authenticated %}
-<li><a href="/logout.html">logout</a></li>
+<li><a href="/logout.html">Logout</a></li>
 <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
 {% endif %}
 </ul>
