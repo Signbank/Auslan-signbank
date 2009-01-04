@@ -130,8 +130,22 @@ jQuery(document).ready(function(){
 	  />
        </object>
      </div>
-    {% endif %} 
-    <p>{{fb.comments}}</p>
+    {% endif %}
+     <dl>
+      <dt>Handform</dt><dd>{{fb.get_handform_display}}</dd>
+      <dt>Handshape</dt><dd>{{fb.get_handshape_display}}</dd>
+      <dt>Alternate Handshape</dt><dd>{{fb.get_althandshape_display}}</dd>
+      <dt>Location</dt><dd>{{fb.get_location_display}}</dd>
+      <dt>Relative Location</dt><dd>{{fb.get_relativelocation_display}}</dd>
+      <dt>Hand Body Contact</dt><dd>{{fb.get_handbodycontact_display}}</dd>
+      <dt>Hand Interaction</dt><dd>{{fb.get_handinteraction_display}}</dd>
+      <dt>Direction</dt><dd>{{fb.get_direction_display}}</dd>
+      <dt>Movement Type</dt><dd>{{fb.movementtype}}</dd>
+      <dt>Small Movement</dt><dd>{{fb.smallmovement}}</dd>
+      <dt>Repetition</dt><dd>{{fb.repetition}}</dd>
+      <dt>Meaning</dt><dd>{{fb.meaning}}</dd>
+      <dt>Comments</dt><dd>{{fb.comments}}</dd>
+     </dl>
     </div>
     
     </li>          
