@@ -3,10 +3,26 @@
 {% block script %}
 
 jQuery(document).ready(function(){
-	$(".showbutton").click(function() {
-		$(this).parent().find('.commentbody').toggle();
-	});
+	$(".showbutton").toggle(
+	    /* I don't understand why the button labels need to be transposed here */
+	    function(){ $(this).html("Hide"); $(this).parents(".head").next().show(); },
+	    function(){ $(this).html("Show"); $(this).parents(".head").next().hide(); }
+	);
 	$('.commentbody').hide();
+	
+	$('.delete').click(function() {
+	  parent = $(this).parents(".head");
+	  parts = parent.attr("id").split("-");
+	  kind = parts[0];
+	  id = parts[1];
+	  url = "/feedback/"+kind+"/delete/"+id;
+	  /* perform the deletion with a get request */
+	  $.get(url, function(data) {
+	     $(parent).parents("li").remove();
+	  })
+	})
+	
+	
 });
 
 {% endblock %}
@@ -18,11 +34,11 @@ jQuery(document).ready(function(){
   <ul>
   {% for fb in general %}
     <li class="comment">
-    <div class="head">
+    <div class="head" id="general-{{fb.id}}">
       {{fb.date|date:"d M Y"}}: 
       {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
       <button class="showbutton">Show</button>
-      <a href="/feedback/general/delete/{{fb.id}}">Delete</a>
+      <button class="delete">Delete</button> 
     </div>
     
     <div class="commentbody">
@@ -59,11 +75,12 @@ jQuery(document).ready(function(){
   <ul>
   {% for fb in signfb %}
     <li class="comment">
-    <div class="head">
+    <div class="head" id="sign-{{fb.id}}">
       {{fb.date|date:"d M Y"}}: 
       {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
       on <a href="{{fb.translation.get_absolute_url}}">{{fb.translation}}</a>
-      <a href="/feedback/sign/delete/{{fb.id}}">Delete</a>	
+      <button class="showbutton">Show</button>
+      <button class="delete">Delete</button> 
     </div>
     <div class="commentbody">
     <p>{{fb.comment}}</p>     
@@ -86,11 +103,12 @@ jQuery(document).ready(function(){
   {% for fb in missing %}
     <li class="comment">
     
-    <div class="head">
+    <div class="head" id="missingsign-{{fb.id}}">
        {{fb.date|date:"d M Y"}}: 
        {{fb.user.first_name}} {{fb.user.last_name}} 
        (<a href="mailto:{{fb.user.email}}">Email</a>)
-       <a href="/feedback/missingsign/delete/{{fb.id}}">Delete</a>
+      <button class="showbutton">Show</button>
+      <button class="delete">Delete</button> 
     </div>
     <div class="commentbody">
     {% if fb.video %}  
