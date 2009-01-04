@@ -121,33 +121,20 @@ body {
 
 .comment dl
 {
-width: 41.1em;
-margin: 2em 0;
-padding: 0;
-font-family: georgia, times, serif;
+   width: 41.1em;
+   margin: 2em 0;
+   padding: 0; 
 }
 
 .comment dt
 {
-width: 15em;
-float: left;
-margin: 0 0 0 0;
-padding: .5em;
-border-top: 1px solid #999;
-font-weight: bold;
+   font-weight: bold;
+   float: left;
+   width: 15em;
 }
-
-/* commented backslash hack for mac-ie5 \*/
-dt { clear: both; }
-/* end hack */
 
 .comment dd
 {
-float: left;
-width: 24em;
-margin: 0 0 0 0;
-padding: .5em;
-border-top: 1px solid #999;
 }
 
 

@@ -119,9 +119,9 @@ class SignFeedbackForm(forms.Form):
     
  
 handformChoices = (
-                    ('1', 'One handed'),
-                    ('2', 'Two handed (same shape for each hand)'),
-                    ('3', 'Two handed (diffent shapes for each hand)')
+                    (1, 'One handed'),
+                    (2, 'Two handed (same shape for each hand)'),
+                    (3, 'Two handed (diffent shapes for each hand)')
                     )
   
 handshapeChoices = (('0', 'None'),
