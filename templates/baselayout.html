@@ -4,6 +4,8 @@
     <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" title="black" type="text/css">
+    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/colour.css" title="red" type="text/css">
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script> 
@@ -18,9 +20,26 @@
 
     // initialise plugins
     jQuery(function(){
-            jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({pathLevels: 2});
- 
+      jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({pathLevels: 2});
+      /* http://www.kelvinluck.com/2006/05/switch-stylesheets-with-jquery/  */
+      $('.styleswitch').click(function()
+        {
+          switchStylestyle(this.getAttribute("rel"));
+          return false;
+        });
+      var c = readCookie('style');
+      if (c) switchStylestyle(c);
     });
+
+  function switchStylestyle(styleName)
+  {
+     $('link[@rel*=style][title]').each(
+          function(i){
+            this.disabled = true;
+            if (this.getAttribute('title') == styleName) this.disabled = false;
+          });
+      createCookie('style', styleName, 365);
+  }
     </script>
 
     
@@ -74,7 +93,10 @@ pageTracker._trackPageview();
           <div id="copyright">
              &copy; RIDBC 2004. All rights reserved.
           </div>
-    
+       <p>Change Style: <a href="#" rel="red" class="styleswitch">red</a> |
+	  <a href="#" rel="black" class="styleswitch">black</a> 
+       </p>
+
     </div>
      
   
