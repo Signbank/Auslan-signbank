@@ -1,18 +1,45 @@
 {% extends "baselayout.html" %}
 
+{% block jqueryready %}
+    config = {
+        plugins: { 
+                controls: null 
+        },
+        play: { opacity: 0 }
+    };
+    
+       
+    $('#player').hide();
+{% endblock %}
+
+{% block script %}
+    function play(url) {
+        $('#player').show('slow', function() {	
+            flowplayer("player", "{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.swf", config);
+            $f('player').play(url);
+        });
+    }
+
+    function replay() {
+        $f('player').play();
+    }
+{% endblock %}
+
+{% block bodyid %}id='pages'{% endblock %}
+
 {% block content %}
-  
-<script type="text/javascript" src="{% auslan_static_prefix %}/mediaplayer/swfobject.js"></script>
  
- 
-{% if page.pagevideo_set.all %} 
-<div id="player">This text will be replaced</div>
-<script type="text/javascript">
-var so = new SWFObject('{% auslan_static_prefix %}/mediaplayer/player.swf','mpl','520','240','9');
-so.addParam('allowscriptaccess','always'); 
-so.addParam('flashvars','&file={{page.url}}?playlist&playlist=right&playlistsize=200&controlbar=none&autostart=true');
-so.write('player');
-</script>
+{% if page.pagevideo_set.all %}
+
+    <div id="videocontainer">
+        <div id="player"></div>
+        <table>
+        {% for video in page.pagevideo_set.all %}
+            <tr><td><a href="#" onclick="play('{% auslan_media_prefix %}{{video.video}}')">{{video.title}}</a></td></tr>
+        {% endfor %}
+            <tr><td><a href="#" onclick="play('/media/video/13/1330.flv')">Test Sign</a></td></tr>
+        </table>
+    </div>
 {% endif %}
 
    {{ page.content }}

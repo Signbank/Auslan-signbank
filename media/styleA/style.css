@@ -91,6 +91,11 @@ body {
 #videocontainer {
    width: auto;
 }
+#videocontainer #player {
+   margin: auto;
+   width:320px;
+   height:240px;
+}
 #videoreplay {
    text-align: right;
 }
@@ -115,6 +120,30 @@ body {
 
 
 /* end of definition block content */
+
+/* styles for the pages app */
+
+#pages #videocontainer {
+   margin-left: auto;
+   margin-right: auto; 
+}
+
+#pages #videocontainer #player {
+   margin: auto;
+   width:320px;
+   height:240px;
+}
+
+#pages #videocontainer table {
+   width: 100%;
+   text-align: center;
+}
+
+#pages #videocontainer a:link, #pages #videocontainer a:visited {
+   color: white;
+}
+
+
 
 /* definition lists in feedback view */
 

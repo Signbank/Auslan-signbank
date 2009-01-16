@@ -2,6 +2,31 @@
 
 {% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
 
+
+{% block jqueryready %}
+    config = {
+        plugins: { 
+                controls: null 
+        },
+        play: { opacity: 0 },
+        clip: {
+            url: '{% auslan_media_prefix %}{{ videofile }}',
+            autoplay: true
+        }
+    };
+    flowplayer("player", "{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.swf", config);
+    
+{% endblock %}
+
+{% block script %}
+    function replay() {
+        $f('player').play();
+    }
+{% endblock %}
+
+
+
+
 {% block content %}
 
 <div id="signinfo">
@@ -51,25 +76,8 @@
 <div id="definitionblock">
     <div id="leftblock">
         <div id="videocontainer">
-            <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-                  width="320" height="240" id="FlowPlayer">
-              <param name="allowScriptAccess" value="always" />
-              <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-              <param name="quality" value="high" />
-              <param name="scale" value="noScale" />
-              <param name="wmode" value="transparent" /> 
-              <param name="flashvars"
-                {# modified here to use the big test video - should be {{videofile}} #}
-                    value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
-                                    autoPlay: true, 
-                                    autoBuffering: false, 
-                                    loop: false, 
-                                    autoRewind: true,   
-                                    hideControls: true}" 
-              />
-            </object>
-            
-            <div id="videoreplay">
+            <div id="player"></div>            
+            <div id="videoreplay" onclick="replay()">
                REPLAY
             </div>
         </div>
