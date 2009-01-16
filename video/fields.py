@@ -106,6 +106,8 @@ class VideoUploadToFLVField(forms.FileField):
                 
         ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-s", self.geometry, targetfile]
      
+        print ffmpeg
+        
         process =  Popen(ffmpeg, stdout=PIPE, stderr=PIPE)
         start = time.time()
         

@@ -16,6 +16,9 @@
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
 
+    <script type="text/javascript" src="{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.min.js"></script>
+
+
     <script type="text/javascript">
 
     // initialise plugins
@@ -27,8 +30,6 @@
           switchStylestyle(this.getAttribute("rel"));
           return false;
         });
-      var c = readCookie('style');
-      if (c) switchStylestyle(c);
     });
 
   function switchStylestyle(styleName)
@@ -38,7 +39,6 @@
             this.disabled = true;
             if (this.getAttribute('title') == styleName) this.disabled = false;
           });
-      createCookie('style', styleName, 365);
   }
     </script>
 
@@ -47,7 +47,11 @@
       <!--
       
       
-$(document).ready(function(){  
+$(document).ready(function(){
+  {% block jqueryready %}
+  
+  {% endblock %}
+  
 });
       {% block script %}
       // more scripts go here
@@ -69,8 +73,8 @@ pageTracker._trackPageview();
 </script> 
 -->
   </head>
-
-  <body {% ifequal flavour "medical" %}class='medical'{% endifequal %}>
+ 
+  <body {% block bodyid %}{% endblock %}>
   
     <div id="header">
        <h1>Auslan - Signbank</h1>
@@ -91,7 +95,7 @@ pageTracker._trackPageview();
     <div id="footer"> 
      
           <div id="copyright">
-             &copy; RIDBC 2004. All rights reserved.
+             &copy; 2009, Trevor Johnston, Macquarie University. All rights reserved.
           </div>
        <p>Change Style: <a href="#" rel="red" class="styleswitch">red</a> |
 	  <a href="#" rel="black" class="styleswitch">black</a> 
