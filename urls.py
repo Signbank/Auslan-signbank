@@ -13,16 +13,6 @@ urlpatterns = patterns('',
     (r'^(?P<flavour>dictionary|medical)/', include('auslan.dictionary.urls')),
     (r'^feedback/', include('auslan.feedback.urls')),
 
-    (r'^fingerspellingtwohanded.html', 'auslan.views.fingerspellingtwohanded'),
-    (r'^fingerspellingonehanded.html', 'auslan.views.fingerspellingonehanded'),
-    
-    
-    (r'^numbersigns/', 'auslan.views.numbersigns'),
-    # because of the flowplayer problem we redirect numbersigns to a 
-    # static version of the page on the media server
-    (r'^numbersigns.html', 'django.views.generic.simple.redirect_to', 
-                           {'url': settings.AUSLAN_STATIC_PREFIX+"pages/numbersigns.html" }),
-
     (r'^register.html', 'auslan.views.register'), 
     (r'^logout.html', 'django.contrib.auth.views.logout',
                        {'template_name': "index.html"}),

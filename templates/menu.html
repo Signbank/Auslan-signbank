@@ -1,22 +1,8 @@
 
 
 <ul class="sf-menu sf-navbar">
-<li title="Homepage"><a href="/">Home</a>
-   <ul>
-   {% for item in menu.home %}
-     <li><a href="{{item.url}}">{{item.title}}</a></li>
-   {% endfor %}
-   </ul>
-</li>
-<li><a>Dictionary</a>
-  <ul>
-    <li><a href="/fingerspellingtwohanded.html">Fingerspell Two Handed</a></li>
-    <li><a href="/fingerspellingonehanded.html">Fingerspell One Handed</a></li>
-    <li><a href="/numbersigns/">Number Signs</a></li>
-  </ul> 
-
 {# add in the top level menu items from pages #}
-{% for item in menu.toplevel %}
+{% for item in menu %}
   <li><a href="{{item.url}}">{{item.title}}</a>
   {% if item.children %}
   <ul>
