@@ -168,6 +168,18 @@ body {
 
 
 
+/* file attachment upload form etc */
+
+#attachmentform {
+   margin: auto;
+   width: 30em;
+}
+#attachmentform table {
+   margin: auto;
+}
+
+
+
 
 #footer { 
    background-color: #F0FFDF;   

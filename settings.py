@@ -74,7 +74,8 @@ INSTALLED_APPS = (
     'auslan.dictionary',
     'auslan.feedback',
     'auslan.registration',
-    'auslan.pages'
+    'auslan.pages',
+    'auslan.attachments',
 )
 
 ROOT_URLCONF = 'auslan.urls'
