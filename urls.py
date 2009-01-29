@@ -12,8 +12,9 @@ urlpatterns = patterns('',
     
     (r'^(?P<flavour>dictionary|medical)/', include('auslan.dictionary.urls')),
     (r'^feedback/', include('auslan.feedback.urls')),
+    (r'^attachments/', include('auslan.attachments.urls')),
 
-    (r'^register.html', 'auslan.views.register'), 
+    (r'^register.html', 'auslan.views.index'), 
     (r'^logout.html', 'django.contrib.auth.views.logout',
                        {'template_name': "index.html"}),
     

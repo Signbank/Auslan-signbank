@@ -36,12 +36,6 @@ def page(request, url):
             from django.contrib.auth.views import redirect_to_login
             return redirect_to_login(request.path)
     
-    # if there is a form var 'playlist' then generate a playlist
-    # xml file instead of the page itself
-    if request.GET.has_key('playlist'):
-        return render_to_response('pages/playlist.xml', {'page': f}, mimetype='application/xml')
-    
-    
     if f.template_name:
         t = loader.select_template((f.template_name, DEFAULT_TEMPLATE))
     else:
