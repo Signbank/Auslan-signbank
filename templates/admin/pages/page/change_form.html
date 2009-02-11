@@ -2,18 +2,22 @@
 {% load i18n admin_modify adminmedia %}
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="../../../jsi18n/"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="{% auslan_static_prefix %}wymeditor/skins/default/skin.css" />
+<script type="text/javascript" src="../../../jsi18n/"></script> 
 <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>
 <script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/jquery.wymeditor.pack.js"></script>
+<script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js"></script>
+<script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/plugins/resizable/jquery.wymeditor.resizable.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function() { 
     $("#id_content").wymeditor({
         updateSelector: "input:submit",
-        updateEvent:    "click",
-        postInit: function() {
-            //alert('OK');
+        updateEvent:    "click", 
+        skin: 'silver',
+        stylesheet: '{% auslan_static_prefix %}/css/textstyles.css',
+        postInit: function(wym) {
+
         }
     });
 
