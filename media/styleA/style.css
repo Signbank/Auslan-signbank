@@ -1,5 +1,7 @@
 
 @import "fonts.css";
+/* styles used in pages */
+@import "../css/textstyles.css";
 
 /* layout */
 body {
@@ -143,6 +145,24 @@ body {
    color: white;
 }
 
+/* text styles used by pages via the wymeditor styles */
+
+.floatright {
+   float: right;
+}
+
+.floatleft {
+   float: left;
+}
+
+.centre {
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.emphasised {
+   font-weight: bold;
+}
 
 
 /* definition lists in feedback view */
