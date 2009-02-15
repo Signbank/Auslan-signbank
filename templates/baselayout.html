@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
     <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" title="black" type="text/css">
-    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/colour.css" title="red" type="text/css">
+    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/blue.css" title="blue" type="text/css">
+    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" title="red2" type="text/css">
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script> 
@@ -78,6 +79,8 @@ pageTracker._trackPageview();
  
   <body {% block bodyid %}{% endblock %}>
   
+    <div id="leftcontentborder"></div>
+    <div id="rightcontentborder"></div>
     <div id="header">
        <h1>Auslan - Signbank</h1>
        <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
@@ -88,18 +91,25 @@ pageTracker._trackPageview();
 
     <div id="navigation"> 
      {% include "menu.html" %}
-    </div> 
-    <div id="content"> 
+    </div>
+    
+    
+
+    <div id="content">     
     {% block content %}
     <p>PAGE CONTENT</p>
     {% endblock %}
     </div>    
+
+    
+    
     <div id="footer"> 
      
           <div id="copyright">
              &copy; 2009, Trevor Johnston, Macquarie University. All rights reserved.
           </div>
-       <p>Change Style: <a href="#" rel="red" class="styleswitch">red</a> |
+       <p>Change Style: <a href="#" rel="red2" class="styleswitch">red</a> |
+          <a href="#" rel="blue" class="styleswitch">blue</a> |
 	  <a href="#" rel="black" class="styleswitch">black</a> 
        </p>
 
