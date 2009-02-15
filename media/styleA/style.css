@@ -24,10 +24,6 @@ body {
    height: 92px;
    margin: 0px;
 }
-/* debugging borders around boxes */
-#header, #navigation, #content, #footer {
-   xborder: 1px solid black;
-}
 
 #header #frmSearch {
    float: right;
@@ -37,23 +33,44 @@ body {
 }
 
 #navigation { 
-   height: 26px;
+   height: 30px;
 }
 
 .sf-menu {
    float:         	left;
    margin-bottom:       1em;
-   height:              26px;
+   height:              34px;
 }
 .sf-menu a {
    padding: 		   0.5em .75em 0em 1em; 
 }
 .sf-menu li { 
-   height: 26px;
+   height: 34px;
 }
 
 #content {
-   margin: 0px; 
+   margin: 0px;
+   padding-left: 1em;
+   padding-right: 1em;
+}
+
+/* Two border divs on the left and right
+  of the main column hold drop shadows */
+#leftcontentborder {
+   float: left;
+   width: 15px;
+   height: 740px;
+   background-repeat: no-repeat;  
+   background-color: #FFF;
+   margin-left: -15px;
+}
+
+#rightcontentborder {
+  width: 15px;
+  height: 740px;
+  background-repeat: no-repeat;
+  float: right;
+  margin-right: -15px;
 }
 
 
