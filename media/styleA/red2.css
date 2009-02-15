@@ -3,7 +3,7 @@
 
 html {
   background-color: #fff;
-  background-image: url(colours/black/black_02.gif);
+  background-image: url(colours/red2/red2_02.gif);
   background-repeat: repeat-x;
   background-position: top;
 }
@@ -13,11 +13,11 @@ html {
 }
 
 #leftcontentborder {
-  background-image: url(colours/black/black_03.gif);
+  background-image: url(colours/red2/red2_03.gif);
 }
 
 #rightcontentborder {
-  background-image: url(colours/black/black_05.gif);
+  background-image: url(colours/red2/red2_05.gif);
 }
 
 
@@ -26,7 +26,7 @@ body.medical {
 }
 
 #header {
-  background-image: url(colours/black/black_02.gif);
+  background-image: url(colours/red2/red2_02.gif);
   background-repeat: repeat-x;
   height: 92px;
 }
@@ -34,7 +34,7 @@ body.medical {
 #header h1 {
     /* replace the header text with the banner image
        move the text out of the way with padding */
-    background-image: url(colours/black/black_04.gif);
+    background-image: url(colours/red2/red2_04.gif);
     background-repeat: no-repeat;
 }
 
@@ -47,7 +47,7 @@ body.medical {
 #navigation {
    background-color:    #e3e3e3;
    height:                 34px;
-   background-image: url(colours/black/black_08.gif);
+   background-image: url(colours/red2/red2_08.gif);
    background-position: right;
    background-repeat: no-repeat;
 }
