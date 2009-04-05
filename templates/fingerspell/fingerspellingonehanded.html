@@ -6,58 +6,11 @@
 
 {% block content %}
 
-                <img src="{% auslan_static_prefix %}img/fs_table_onehanded.jpg" width="470" height="387" alt="" border="0"><br>
+img src="{% auslan_static_prefix %}img/fs_table_onehanded.jpg" width="470" height="387" alt="" border="0"><br>
 
-                <script language="JavaScript1.2">
-
-		  // Browserkit is needed by the javascript in this page
-  		  var browserKit = new BrowserKit(); 
+                <script language="javascript">
 
 
-                  // STEP 1: Preload Tab Images
-                  var asb_fs_tabImages = asb_fs_preloadTabs("{% auslan_static_prefix %}img/");
-
-                  // STEP 2: Preload Finger-Spelling Alphabet Images
-                  // 2a) Place alphabets in an array, so we may pre-load more than one if 
-                  //     desired (current code below only loads one alphabet)
-                  var asb_fsAlphabets = new Array();
-
-                  // 2b) Preload images for current alphabet
-                  oTmp = asb_fsAlphabets[2] = new ASB_FSAlphabet(2, 32, "{% auslan_static_prefix %}img/", "asb_fs_handleAlphabetLoad", "asb_fs_handleAlphabetImageLoad");
-                  oTmp.addLetter("A", "oh_a.jpg");
-                  oTmp.addLetter("B", "oh_b.jpg");
-                  oTmp.addLetter("C", "oh_c.jpg");
-                  oTmp.addLetter("D", "oh_d.jpg");
-                  oTmp.addLetter("E", "oh_e.jpg");
-                  oTmp.addLetter("F", "oh_f.jpg");
-                  oTmp.addLetter("G", "oh_g.jpg");
-                  oTmp.addLetter("H", "oh_h.jpg");
-                  oTmp.addLetter("I", "oh_i.jpg");
-                  oTmp.addLetter("J", "oh_j0.jpg,oh_j1.jpg,oh_j2.jpg,oh_j3.jpg");
-                  oTmp.addLetter("K", "oh_k.jpg");
-                  oTmp.addLetter("L", "oh_l.jpg");
-                  oTmp.addLetter("M", "oh_m.jpg");
-                  oTmp.addLetter("N", "oh_n.jpg");
-                  oTmp.addLetter("O", "oh_o.jpg");
-                  oTmp.addLetter("P", "oh_p.jpg");
-                  oTmp.addLetter("Q", "oh_q.jpg");
-                  oTmp.addLetter("R", "oh_r.jpg");
-                  oTmp.addLetter("S", "oh_s.jpg");
-                  oTmp.addLetter("T", "oh_t.jpg");
-                  oTmp.addLetter("U", "oh_u.jpg");
-                  oTmp.addLetter("V", "oh_v.jpg");
-                  oTmp.addLetter("W", "oh_w.jpg");
-                  oTmp.addLetter("X", "oh_x.jpg");
-                  oTmp.addLetter("Y", "oh_y.jpg");
-                  oTmp.addLetter("Z", "oh_z0.jpg,oh_z1.jpg,oh_z2.jpg,oh_z3.jpg");
-
-                  // STEP 3: Instantiate an FSViewer object to play animations, and "connect" 
-                  //         it to an image on the page that will be used as a placeholder 
-                  //         for the animations.
-                  asb_fs_initViewer(asb_fsAlphabets[2], "{% auslan_static_prefix %}img/transition.jpg");
-
-                  // STEP 4: Build an array of words for the "practice" mode
-                  var asb_fs_aPracticeWords = asb_fs_GetPracticeWordList();
                 </script>
 {% endblock %}							
 

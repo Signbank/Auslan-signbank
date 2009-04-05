@@ -16,8 +16,8 @@ class UploadFileForm(forms.Form):
 def handle_uploaded_file(request, fileobj):
     """Store the uploaded file"""
      
-    fullpath = os.path.join(settings.MEDIA_ROOT, settings.UPLOAD_ROOT, "attachments", fileobj.name)
-    relname = os.path.join(settings.UPLOAD_ROOT, "attachments", fileobj.name)
+    fullpath = os.path.join(settings.UPLOAD_ROOT, "attachments", fileobj.name)
+    relname =  os.path.join(settings.UPLOAD_URL, "attachments", fileobj.name)
     if not os.path.exists(os.path.dirname(fullpath)):
         os.makedirs(os.path.dirname(fullpath))
     

@@ -91,7 +91,6 @@ if production:
     DEBUG = False
     TEMPLATE_DEBUG = DEBUG
     EMAIL_HOST =  "localhost"
-    UPLOAD_ROOT = "/var/www-auslan-media/upload/"
     
     DATABASE_ENGINE = 'mysql'          
     DATABASE_NAME = 'auslan'          
@@ -123,8 +122,7 @@ if production:
 else:
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
-    EMAIL_HOST = "mail.optusnet.com.au"
-    UPLOAD_ROOT = "upload"
+    EMAIL_HOST = "mail.optusnet.com.au" 
     
     DATABASE_ENGINE = 'sqlite3'          
     DATABASE_NAME = 'auslan.db'          
@@ -152,6 +150,13 @@ else:
     )
 
     EMAIL_HOST = 'smtp.ics.mq.edu.au'
+
+
+# location and URL for uploaded files
+UPLOAD_ROOT = MEDIA_ROOT + "upload/" 
+UPLOAD_URL = MEDIA_URL + "upload/"
+
+
 
 # Location for comment videos relative to MEDIA_ROOT
 COMMENT_VIDEO_LOCATION = "comments/"
