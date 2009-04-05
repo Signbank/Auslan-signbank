@@ -1,0 +1,25 @@
+/* WYMeditor */
+
+
+/* PARA: Emphasised */
+.emphasised p  {
+    font-weight: bold;
+    /* font-weight: bold;
+       border: 1px solid red;
+    */
+}
+
+/* IMAGE: Float Right */
+.floatright img {
+    float: right;
+    /* float: right; */
+}
+
+
+/* IMAGE: Float Left */
+.floatleft img {
+    float: left;
+    /* float: left; */
+}
+
+/* /WYMeditor */
