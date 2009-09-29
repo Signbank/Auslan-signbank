@@ -36,7 +36,12 @@ def update_gloss(request, glossid, flavour='dictionary'):
                 thisgloss.InMedLex = clean['inMedLex']
             else:
                 thisgloss.InMedLex = False
-                
+            
+            if clean.has_key('healthtf'):
+                thisgloss.healthtf = clean['healthtf']
+            else:
+                thisgloss.healthtf = False
+            
             thisgloss.save()
         
         referer = request.META['HTTP_REFERER']

@@ -8,3 +8,8 @@ body {
 h1, h2, h3 {
    font-family: Arial Rounded MT Bold, Trebuchet, sans-serif;
 }
+
+#states span {
+   font-size: small;
+   color: #aaa;
+}

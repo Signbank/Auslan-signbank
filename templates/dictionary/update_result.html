@@ -18,11 +18,20 @@
 
   <p>
   {% if gloss.InMedLex %}
-  This gloss will now be included in Medical SignBank.
+  This gloss is now marked as a problematic medical sign.
   {% else %}
-  This gloss will now <strong>not</strong> be included in Medical SignBank. 
+  This gloss is now <strong>not</strong> marked as a problematic medical sign. 
   {% endif %}
   </p>
+
+  <p>
+  {% if gloss.healthtf %}
+  This gloss is now marked as being in the Health domain.
+  {% else %}
+  This gloss is now <strong>not</strong> marked as being in the Health domain. 
+  {% endif %}
+  </p>
+
 
   <p>Return to <a href="{{referer}}">the gloss page</a></p>
   

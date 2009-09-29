@@ -4,9 +4,12 @@
     <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" title="black" type="text/css">
-    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/blue.css" title="blue" type="text/css">
-    <link rel="alternate stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" title="red2" type="text/css">
+
+{% ifequal flavour "medical" %}
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" title="black" type="text/css">
+{% else %} 
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" type="text/css">
+{% endifequal %}
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script> 
@@ -85,7 +88,7 @@ pageTracker._trackPageview();
        <h1>Auslan - Signbank</h1>
        <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50">
-          <a href="javascript:document.forms['frmSearch'].submit();">Search{% ifequal flavour "medical" %} MSB{% endifequal %}</a>        
+          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search{% ifequal flavour "medical" %} MSB{% endifequal %}</a>        
        </form> 
     </div>
 

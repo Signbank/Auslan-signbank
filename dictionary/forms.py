@@ -9,6 +9,7 @@ class GlossUpdateForm(forms.Form):
     # fields used from the main update page
     inWeb = forms.BooleanField(required=False)
     inMedLex = forms.BooleanField(required=False)
+    healthtf = forms.BooleanField(required=False)
     keyword = forms.CharField(max_length=50, widget=forms.HiddenInput, required=False)
     n = forms.IntegerField(widget=forms.HiddenInput, required=False)
   

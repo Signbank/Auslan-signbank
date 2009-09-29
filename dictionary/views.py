@@ -120,7 +120,8 @@ def gloss(request, idgloss, flavour='dictionary'):
     if request.user.is_authenticated() and request.user.is_staff:
         update_form = GlossUpdateForm(
                 {'inWeb': trans.gloss.inWeb,
-                 'inMedLex': trans.gloss.InMedLex
+                 'inMedLex': trans.gloss.InMedLex,
+                 'healthtf': trans.gloss.healthtf,
                   })    
     
     # get the last match keyword if there is one passed along as a form variable
