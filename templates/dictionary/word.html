@@ -90,36 +90,40 @@
         </div>
         
         <div id="states">      
-            <div>
-                <img src="{% auslan_static_prefix %}styleA/images/australia.jpg" alt="States"></img>
-            </div>
             
              {% if gloss.auslextf %}
-             
+            <div>
+                <img src="{% auslan_static_prefix %}maps/allstates.gif" alt="States"></img>
+            </div>                     
             <span>Sign Distribution: All States</span>
-        
+
             {% else %}
             
             {% if gloss.nthtf %}
             {# northern dialect = NSW, ACT, QLD #}
+            <div>
+                <img src="{% auslan_static_prefix %}maps/nsw-act-qld.gif" alt="States"></img>
+            </div> 
             <span>Sign Distribution: NSW, ACT, QLD</span>
             {% else %}
             
             {% if gloss.sthtf %}
             {# southern dialect = VIC, WA, TAS, SA, NT #}
+            <div>
+                <img src="{% auslan_static_prefix %}maps/vic-wa-tas-sa-nt.gif" alt="States"></img>
+            </div> 
             <span>Sign Distribution: VIC, WA, TAS, SA, NT </span>
             {% else %}
             {# individual states turned on #}
+
                 <span>Sign Distribution: </span>
                 <p>
-                {% if gloss.qldtf %}Queensland{% endif %}
+                {% if gloss.qldtf %}QLD{% endif %}
                 {% if gloss.nswtf %}NSW{% endif %} 
-                {% if gloss.victf %}Victoria{% endif %} 
-                {% if gloss.watf %}Western Australia{% endif %} 
-                {% if gloss.satf %}South Australia{% endif %} 
-                Northern Territory
-                Australian Capital Territory
-                {% if gloss.tastf %}Tasmania{% endif %} 
+                {% if gloss.victf %}VIC{% endif %} 
+                {% if gloss.watf %}WA{% endif %} 
+                {% if gloss.satf %}SA{% endif %} 
+                {% if gloss.tastf %}TAS{% endif %} 
                 </p>    
             {% endif %} {# gloss.sthtf #}
             {% endif %} {# gloss.nthtf #}
@@ -257,7 +261,10 @@
                   {{ update_form.keyword }}
                   {{ update_form.n }}
                 </p>
-                <p>Include in Medical Signbank? {{ update_form.inMedLex }}</p>
+                <p>Problematic Medical Sign? {{ update_form.inMedLex }}</p>
+                
+                <p>Health Sign? {{ update_form.healthtf }}</p>
+                
                 <p><input type="submit" value="Update"/></p>
             </fieldset>     
         </form>

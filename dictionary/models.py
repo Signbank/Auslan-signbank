@@ -7,7 +7,7 @@ manageable.
 """
 
 from django.db import models
-from models_legacy import Sign
+#from models_legacy import Sign
 
 handedness_choices = (("One", "One"),("Two", "Two"), ("Double", "Double"))
 
@@ -216,176 +216,176 @@ class Gloss(models.Model):
         # the idgloss used in transcription, may be shared between many signs
 
     
-    alternate = models.BooleanField("Alternating", null=True, blank=True)
-    angcongtf = models.BooleanField("Anglican", null=True, blank=True)
-    animalstf = models.BooleanField(null=True, blank=True)
+    alternate = models.NullBooleanField("Alternating", null=True, blank=True)
+    angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
+    animalstf = models.NullBooleanField(null=True, blank=True)
 
     
-    arithmetictf = models.BooleanField(null=True, blank=True)
-    artstf = models.BooleanField(null=True, blank=True)
+    arithmetictf = models.NullBooleanField(null=True, blank=True)
+    artstf = models.NullBooleanField(null=True, blank=True)
     
     aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss
-    asloantf = models.BooleanField("ASL loan sign", null=True, blank=True)
-    asltf = models.BooleanField("ASL sign", null=True, blank=True)
+    asloantf = models.NullBooleanField("ASL loan sign", null=True, blank=True)
+    asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
-    auslextf = models.BooleanField("Auslan lexeme", null=True, blank=True)
-    begindirtf = models.BooleanField("Begin directional sign", null=True, blank=True)
+    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
+    begindirtf = models.NullBooleanField("Begin directional sign", null=True, blank=True)
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
-    blendtf = models.BooleanField("Blend", null=True, blank=True)
+    blendtf = models.NullBooleanField("Blend", null=True, blank=True)
     
-    bodyloctf = models.BooleanField("Body Locating sign", null=True, blank=True)
-    bodyprtstf = models.BooleanField(null=True, blank=True)
-    BookProb = models.BooleanField(null=True, blank=True)
+    bodyloctf = models.NullBooleanField("Body Locating sign", null=True, blank=True)
+    bodyprtstf = models.NullBooleanField(null=True, blank=True)
+    BookProb = models.NullBooleanField(null=True, blank=True)
     
     # loans from british sign language
     bslgloss = models.CharField("BSL gloss", max_length=50, blank=True) 
-    bslloantf = models.BooleanField("BSL loan sign", null=True, blank=True)
-    bsltf = models.BooleanField("BSL sign", null=True, blank=True)
+    bslloantf = models.NullBooleanField("BSL loan sign", null=True, blank=True)
+    bsltf = models.NullBooleanField("BSL sign", null=True, blank=True)
     
-    carstf = models.BooleanField(null=True, blank=True)
-    catholictf = models.BooleanField("Catholic Sign", null=True, blank=True)
-    cathschtf = models.BooleanField("Catholic School", null=True, blank=True) 
+    carstf = models.NullBooleanField(null=True, blank=True)
+    catholictf = models.NullBooleanField("Catholic Sign", null=True, blank=True)
+    cathschtf = models.NullBooleanField("Catholic School", null=True, blank=True) 
     
-    citiestf = models.BooleanField(null=True, blank=True)
-    clothingtf = models.BooleanField(null=True, blank=True)
-    colorstf = models.BooleanField(null=True, blank=True)
-    comp = models.BooleanField(null=True, blank=True) 
+    citiestf = models.NullBooleanField(null=True, blank=True)
+    clothingtf = models.NullBooleanField(null=True, blank=True)
+    colorstf = models.NullBooleanField(null=True, blank=True)
+    comp = models.NullBooleanField(null=True, blank=True) 
     compound = models.CharField("Compound of", max_length=100, blank=True) # This field type is a guess.
-    comptf = models.BooleanField("Compound", null=True, blank=True)
-    cookingtf = models.BooleanField(null=True, blank=True)
+    comptf = models.NullBooleanField("Compound", null=True, blank=True)
+    cookingtf = models.NullBooleanField(null=True, blank=True)
     CorrectionsAdditionsComments = models.TextField(null=True, blank=True) # This field type is a guess.
-    crudetf = models.BooleanField(null=True, blank=True)
-    daystf = models.BooleanField(null=True, blank=True)
-    deaftf = models.BooleanField(null=True, blank=True)
+    crudetf = models.NullBooleanField(null=True, blank=True)
+    daystf = models.NullBooleanField(null=True, blank=True)
+    deaftf = models.NullBooleanField(null=True, blank=True)
     
     
-    dirtf = models.BooleanField("Directional Sign", null=True, blank=True)
+    dirtf = models.NullBooleanField("Directional Sign", null=True, blank=True)
     
     
     handedness = models.CharField("Handedness", max_length=10, choices=handedness_choices, blank=True)  
     domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
-    domonly = models.BooleanField("Dominant hand only", null=True, blank=True) 
-    twohand = models.BooleanField("Two handed", null=True, blank=True) 
-    doublehnd = models.BooleanField("Double handed", null=True, blank=True) 
+    domonly = models.NullBooleanField("Dominant hand only", null=True, blank=True) 
+    twohand = models.NullBooleanField("Two handed", null=True, blank=True) 
+    doublehnd = models.NullBooleanField("Double handed", null=True, blank=True) 
     
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
     locsecond = models.IntegerField("Secondary Location", choices=secLocationChoices, null=True, blank=True) 
     
     
-    doubtlextf = models.BooleanField(null=True, blank=True)
-    drinkstf = models.BooleanField(null=True, blank=True)
-    eductf = models.BooleanField(null=True, blank=True)
-    enddirtf = models.BooleanField("End directional sign", null=True, blank=True)
+    doubtlextf = models.NullBooleanField(null=True, blank=True)
+    drinkstf = models.NullBooleanField(null=True, blank=True)
+    eductf = models.NullBooleanField(null=True, blank=True)
+    enddirtf = models.NullBooleanField("End directional sign", null=True, blank=True)
        
-    familytf = models.BooleanField(null=True, blank=True)
-    feeltf = models.BooleanField(null=True, blank=True)
-    fingersptf = models.BooleanField(null=True, blank=True)
-    foodstf = models.BooleanField(null=True, blank=True)
-    furntf = models.BooleanField(null=True, blank=True)
+    familytf = models.NullBooleanField(null=True, blank=True)
+    feeltf = models.NullBooleanField(null=True, blank=True)
+    fingersptf = models.NullBooleanField(null=True, blank=True)
+    foodstf = models.NullBooleanField(null=True, blank=True)
+    furntf = models.NullBooleanField(null=True, blank=True)
     general = models.TextField(null=True, blank=True)  
-    gensigntf = models.BooleanField(null=True, blank=True)
-    govtf = models.BooleanField(null=True, blank=True)
-    groomtf = models.BooleanField(null=True, blank=True)
+    gensigntf = models.NullBooleanField(null=True, blank=True)
+    govtf = models.NullBooleanField(null=True, blank=True)
+    groomtf = models.NullBooleanField(null=True, blank=True)
     
 
-    healthtf = models.BooleanField(null=True, blank=True) 
+    healthtf = models.NullBooleanField(null=True, blank=True) 
     
     
     # which versions of the dictionary should this gloss appear in
-    inCD = models.BooleanField("In the CDROM dictionary", null=True, blank=True) 
-    inWeb = models.BooleanField("In the Web dictionary", default=False)
-    InMainBook = models.BooleanField("In the main book", null=True, blank=True)
-    InSuppBook = models.BooleanField("In the supplementary book", null=True, blank=True)  
-    InMedLex = models.BooleanField("In Medical SignBank", null=True, default=False)  
-    isNew = models.BooleanField("Is this a proposed new sign?", null=True, default=False)
+    inCD = models.NullBooleanField("In the CDROM dictionary", null=True, blank=True) 
+    inWeb = models.NullBooleanField("In the Web dictionary", default=False)
+    InMainBook = models.NullBooleanField("In the main book", null=True, blank=True)
+    InSuppBook = models.NullBooleanField("In the supplementary book", null=True, blank=True)  
+    InMedLex = models.NullBooleanField("In Medical SignBank", null=True, default=False)  
+    isNew = models.NullBooleanField("Is this a proposed new sign?", null=True, default=False)
     
     inittext = models.CharField(max_length="50", blank=True) 
-    inittf = models.BooleanField(null=True, blank=True)
+    inittf = models.NullBooleanField(null=True, blank=True)
 
     
-    judgetf = models.BooleanField(null=True, blank=True)
-    jwtf = models.BooleanField("Jehova's Witness", null=True, blank=True)
-    langactstf = models.BooleanField(null=True, blank=True)
-    lawtf = models.BooleanField(null=True, blank=True)
-    locdirtf = models.BooleanField("Locational and directional", null=True, blank=True)
-    marginaltf = models.BooleanField(null=True, blank=True)
-    materialstf = models.BooleanField(null=True, blank=True)
-    metalgtf = models.BooleanField(null=True, blank=True) 
-    mindtf = models.BooleanField(null=True, blank=True) 
+    judgetf = models.NullBooleanField(null=True, blank=True)
+    jwtf = models.NullBooleanField("Jehova's Witness", null=True, blank=True)
+    langactstf = models.NullBooleanField(null=True, blank=True)
+    lawtf = models.NullBooleanField(null=True, blank=True)
+    locdirtf = models.NullBooleanField("Locational and directional", null=True, blank=True)
+    marginaltf = models.NullBooleanField(null=True, blank=True)
+    materialstf = models.NullBooleanField(null=True, blank=True)
+    metalgtf = models.NullBooleanField(null=True, blank=True) 
+    mindtf = models.NullBooleanField(null=True, blank=True) 
     
-    moneytf = models.BooleanField(null=True, blank=True)
+    moneytf = models.NullBooleanField(null=True, blank=True)
     morph = models.CharField("Morphemic Analysis", max_length=50, blank=True)  
     
-    naturetf = models.BooleanField(null=True, blank=True)
+    naturetf = models.NullBooleanField(null=True, blank=True)
     
-    NotBkDBOnly = models.BooleanField("Not in book, database only", null=True, blank=True) 
-    numbertf = models.BooleanField(null=True, blank=True)
-    obscuretf = models.BooleanField("Obscure", null=True, blank=True)
-    obsoletetf = models.BooleanField(null=True, blank=True)
-    onehand = models.BooleanField(null=True, blank=True)
-    opaquetf = models.BooleanField("Opaque", null=True, blank=True)
-    ordertf = models.BooleanField(null=True, blank=True)
-    orienttf = models.BooleanField("Orientating sign", null=True, blank=True)
-    otherreltf = models.BooleanField("Other Religion", null=True, blank=True)
+    NotBkDBOnly = models.NullBooleanField("Not in book, database only", null=True, blank=True) 
+    numbertf = models.NullBooleanField(null=True, blank=True)
+    obscuretf = models.NullBooleanField("Obscure", null=True, blank=True)
+    obsoletetf = models.NullBooleanField(null=True, blank=True)
+    onehand = models.NullBooleanField(null=True, blank=True)
+    opaquetf = models.NullBooleanField("Opaque", null=True, blank=True)
+    ordertf = models.NullBooleanField(null=True, blank=True)
+    orienttf = models.NullBooleanField("Orientating sign", null=True, blank=True)
+    otherreltf = models.NullBooleanField("Other Religion", null=True, blank=True)
     Palm_orientation = models.CharField(max_length=10, blank=True) # only used twice = Left
-    para = models.BooleanField("Parallel", null=True, blank=True) 
-    peopletf = models.BooleanField("People", null=True, blank=True)
-    physicalactstf = models.BooleanField("Physical acts", null=True, blank=True)
+    para = models.NullBooleanField("Parallel", null=True, blank=True) 
+    peopletf = models.NullBooleanField("People", null=True, blank=True)
+    physicalactstf = models.NullBooleanField("Physical acts", null=True, blank=True)
     
-    propernametf = models.BooleanField(null=True, blank=True)
+    propernametf = models.NullBooleanField(null=True, blank=True)
 
-    qualitytf = models.BooleanField("Qualities", null=True, blank=True)
-    quantitytf = models.BooleanField("Quantities", null=True, blank=True)
+    qualitytf = models.NullBooleanField("Qualities", null=True, blank=True)
+    quantitytf = models.NullBooleanField("Quantities", null=True, blank=True)
     queries = models.TextField(null=True, blank=True) # This field type is a guess.
     
-    questsigntf = models.BooleanField("Questions", null=True, blank=True)
-    recreationtf = models.BooleanField("Recreation", null=True, blank=True)
-    reglextf = models.BooleanField(null=True, blank=True)
-    religiontf = models.BooleanField("Religious Sign", null=True, blank=True)
-    restricttf = models.BooleanField("Restricted Lexeme", null=True, blank=True)
-    roomstf = models.BooleanField("Rooms", null=True, blank=True)
-    saluttf = models.BooleanField("Salutation", null=True, blank=True)
-    sedefinetf = models.TextField("Signed English definition available", null=True, blank=True)
+    questsigntf = models.NullBooleanField("Questions", null=True, blank=True)
+    recreationtf = models.NullBooleanField("Recreation", null=True, blank=True)
+    reglextf = models.NullBooleanField("Regional", null=True, blank=True)
+    religiontf = models.NullBooleanField("Religious Sign", null=True, blank=True)
+    restricttf = models.NullBooleanField("Restricted Lexeme", null=True, blank=True)
+    roomstf = models.NullBooleanField("Rooms", null=True, blank=True)
+    saluttf = models.NullBooleanField("Salutation", null=True, blank=True)
+    sedefinetf = models.TextField("Signed English definition available", null=True, blank=True)  # TODO: should be boolean
     segloss = models.CharField("Signed English gloss", max_length=50, blank=True) 
-    sensestf = models.BooleanField("Sensing", null=True, blank=True)
-    seonlytf = models.BooleanField("Signed English only sign", null=True, blank=True)
-    setf = models.BooleanField("Signed English", null=True, blank=True)
-    sextf = models.BooleanField("Sexuality", null=True, blank=True)
-    shapestf = models.BooleanField("Shapes", null=True, blank=True)
-    shoppingtf = models.BooleanField("Shopping", null=True, blank=True)
+    sensestf = models.NullBooleanField("Sensing", null=True, blank=True)
+    seonlytf = models.NullBooleanField("Signed English only sign", null=True, blank=True)
+    setf = models.NullBooleanField("Signed English", null=True, blank=True)
+    sextf = models.NullBooleanField("Sexuality", null=True, blank=True)
+    shapestf = models.NullBooleanField("Shapes", null=True, blank=True)
+    shoppingtf = models.NullBooleanField("Shopping", null=True, blank=True)
     SpecialCore = models.TextField(null=True, blank=True) # This field type is a guess.
-    sporttf = models.BooleanField("Sport", null=True, blank=True)
-    stateschtf = models.BooleanField("State School", null=True, blank=True)
-    sthtf = models.BooleanField("Southern Dialect", null=True, blank=True)
-    sym = models.BooleanField("Symetrical", null=True, blank=True) 
+    sporttf = models.NullBooleanField("Sport", null=True, blank=True)
+    stateschtf = models.NullBooleanField("State School", null=True, blank=True)
+    sthtf = models.NullBooleanField("Southern Dialect", null=True, blank=True)
+    sym = models.NullBooleanField("Symetrical", null=True, blank=True) 
     
     
-    techtf = models.BooleanField("Technical Lexeme", null=True, blank=True)
-    telecomtf = models.BooleanField("Telecommunications", null=True, blank=True)
-    timetf = models.BooleanField("Time", null=True, blank=True)
+    techtf = models.NullBooleanField("Technical Lexeme", null=True, blank=True)
+    telecomtf = models.NullBooleanField("Telecommunications", null=True, blank=True)
+    timetf = models.NullBooleanField("Time", null=True, blank=True)
     tjspeculate = models.TextField(null=True, blank=True) # This field type is a guess.
-    transltf = models.BooleanField("Translucent", null=True, blank=True)
-    transptf = models.BooleanField("Transparent", null=True, blank=True)
-    traveltf = models.BooleanField("Travel", null=True, blank=True)
-    utensilstf = models.BooleanField("Utensils", null=True, blank=True)
+    transltf = models.NullBooleanField("Translucent", null=True, blank=True)
+    transptf = models.NullBooleanField("Transparent", null=True, blank=True)
+    traveltf = models.NullBooleanField("Travel", null=True, blank=True)
+    utensilstf = models.NullBooleanField("Utensils", null=True, blank=True)
     
-    varlextf = models.BooleanField(null=True, blank=True)
+    varlextf = models.NullBooleanField(null=True, blank=True)
     
     #
     # usage of the sign in various states
     #
-    tastf = models.BooleanField("Tasmania", null=True, blank=True) # used in Tasmania    
-    victf = models.BooleanField("Victoria", null=True, blank=True) # used in Victoria
-    watf = models.BooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
-    satf = models.BooleanField("South Australia", null=True, blank=True)  # used in South Australia
-    qldtf = models.BooleanField("QLD", null=True, blank=True) # used in Queensland 
-    nswtf = models.BooleanField("NSW", null=True, blank=True) # used in NSW
-    nthtf = models.BooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
+    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania    
+    victf = models.NullBooleanField("Victoria", null=True, blank=True) # used in Victoria
+    watf = models.NullBooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
+    satf = models.NullBooleanField("South Australia", null=True, blank=True)  # used in South Australia
+    qldtf = models.NullBooleanField("Queensland", null=True, blank=True) # used in Queensland 
+    nswtf = models.NullBooleanField("NSW", null=True, blank=True) # used in NSW
+    nthtf = models.NullBooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
     
-    weathertf = models.BooleanField(null=True, blank=True)
-    worktf = models.BooleanField(null=True, blank=True)
+    weathertf = models.NullBooleanField(null=True, blank=True)
+    worktf = models.NullBooleanField(null=True, blank=True)
     
 
     
