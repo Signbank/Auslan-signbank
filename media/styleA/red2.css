@@ -173,3 +173,13 @@ body.medical {
 }
 
 
+#staffinfo {
+   margin-left: 340px; 
+   background-color: #FFF;
+}
+#staffinfo h2 {
+   background-color: #E3E3E3;
+   color: #5C9ACB;
+}
+
+
