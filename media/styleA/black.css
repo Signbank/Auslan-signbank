@@ -21,10 +21,6 @@ html {
 }
 
 
-body.medical {
-   background-color: #FCFC00;
-}
-
 #header {
   background-image: url(colours/black/black_02.gif);
   background-repeat: repeat-x;
