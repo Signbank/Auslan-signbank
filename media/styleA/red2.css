@@ -104,7 +104,28 @@ body.medical {
    width: 424px;  /* 847/2 */
 }
 
-#matches { 
+#matches .match {
+   border: 1px solid white;
+   margin-bottom: 2px;
+   padding: 1px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+#matches .current {
+  background: white;
+  color: black;
+}
+
+#signs .previous {
+  margin-left: 1em;
+  margin-right: 0px;
+  padding-right: 0.5em;
+  border-right: 1px solid white;
+}
+
+#signs .next {
+  padding-left: 0.5em;
 }
 
 
