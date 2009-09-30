@@ -134,7 +134,8 @@ body {
 }
 #feedback { 
 }
-#staffinfo { 
+#staffinfo #staffops {
+   width: 100%;
 }
 
 
