@@ -24,8 +24,8 @@ class RelationInline(admin.TabularInline):
 
 class GlossAdmin(admin.ModelAdmin):
     fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn', 'StemSN', )}, ),
-              ('Publication Status', {'fields': ('inCD', 'inWeb', 'InMainBook', 'InSuppBook', 'InMedLex', 
-                                                 'isNew', 'NotBkDBOnly', 'BookProb', ), 
+              ('Publication Status', {'fields': ('inWeb', 'InMedLex', 
+                                                 'isNew',  ), 
                                        'classes': ('collapse',)}, ), 
               ('Lexis & Register: Borrowing', {'fields': ('aslgloss', 'asloantf', 'asltf', 
                                                            'bslgloss', 'bslloantf', 'bsltf', ), 'classes': ('collapse',)}, ), 
@@ -58,7 +58,8 @@ class GlossAdmin(admin.ModelAdmin):
                                                'telecomtf', 'timetf', 'traveltf', 'utensilstf', 
                                                'weathertf', 'worktf', ), 'classes': ('collapse',)}, ), 
               ('Other', {'fields': ('general', 'comp', 'CorrectionsAdditionsComments', 'queries', 
-                                    'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ), 
+                                    'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
+              ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb',), 'classes': ('collapse',)}),
               )
     save_on_top = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
