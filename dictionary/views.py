@@ -65,7 +65,8 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                 {'inWeb': trans.gloss.inWeb,
                  'inMedLex': trans.gloss.InMedLex,
                  'keyword': keyword,
-                 'n': n, 
+                 'n': n,
+                 'healthtf': trans.gloss.healthtf,
                   })
         
     return render_to_response("dictionary/word.html",

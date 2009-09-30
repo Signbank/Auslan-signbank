@@ -35,21 +35,29 @@
             {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
         {% ifequal flavour "medical" %}
          {% if translation.gloss.prev_medical_gloss %}
-            <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
+            <span class="previous">
+                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
+            </span>
          {% endif %}
         {% else %}
         {% if translation.gloss.prev_dictionary_gloss %}  
-            <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
+            <span class="previous">
+                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
+            </span>
         {% endif %}
         {% endifequal %}
-        
+
         {% ifequal flavour "medical" %}
          {% if translation.gloss.next_medical_gloss %}
-            <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
+            <span class="next">
+              <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
+            </span>
          {% endif %}
         {% else %}
          {% if translation.gloss.next_dictionary_gloss %}
+           <span class="next">
             <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign&gt;</a>
+           </span>
          {% endif %}
         {% endifequal %}
     </div>
@@ -60,9 +68,9 @@
         <div>
         {% for i in matches %}
             {% ifequal i n %}
-            <strong>{{i}}</strong>
+            <span class='match current'>{{i}}</span>
             {% else %}
-            <a href="{{translation.translation}}-{{i}}.html">{{i}}</a>
+            <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
             {% endifequal %}
         {% endfor %} 
         </div>
@@ -85,7 +93,6 @@
         <div id="feedback">
             <ul>
                 <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
-                <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html">View feedback for this sign</a></li>
             </ul> 
         </div>
         
@@ -222,9 +229,17 @@
         
         <h2>Staff</h2>
         
-        {% if not gloss.inWeb %}
-          <p>This gloss is not included in the web version of the dictionary.</p>
-        {% endif %}
+        <table id="staffops">
+          <tr>
+            <td>Annotation ID Gloss:<br> <strong>{{gloss.annotation_idgloss}}</strong></td>
+            <td><a href="/admin/dictionary/gloss/{{gloss.id}}">Edit the 
+          gloss <em>'{{ gloss.idgloss}}'</em></a></td>
+          <td>
+            <a href="javascript:window.open('/dictionary/update/video/{{gloss.id}}','', 'width=500,height=300,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+          </td>
+          </tr>
+        </table>
+
                     
         {% if definitions.popexplain %} 
           <h2>Popular Explanation</h2> 
@@ -233,7 +248,13 @@
               <li> {{ def }}</li>
           {% endfor %} 
           </ol>
-        {% endif %} 
+        {% endif %}
+        
+        {% if gloss.general %}
+          <h2>As a General Sign</h2>
+          
+          <p>{{gloss.general}}</p>
+        {% endif %}
       
         {% if gloss.queries %}
           <h2>Notes</h2>
@@ -241,13 +262,6 @@
               <li>{{gloss.queries}}</li>
           </ol>
         {% endif %}
-        <ul>
-          <li><a href="/admin/dictionary/gloss/{{gloss.id}}">Edit the 
-          gloss <em>'{{ gloss.idgloss}}'</em></a></li>
-          <li>
-            <a href="javascript:window.open('/dictionary/update/video/{{gloss.id}}','', 'width=500,height=300,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
-          </li>
-        </ul>
   
         {%if update_form %}
         <form action="/dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">

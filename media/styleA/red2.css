@@ -34,7 +34,7 @@ body.medical {
 #header h1 {
     /* replace the header text with the banner image
        move the text out of the way with padding */
-    background-image: url(colours/red2/red2_04.gif);
+    background-image: url(colours/red2/medical-header.gif);
     background-repeat: no-repeat;
 }
 
