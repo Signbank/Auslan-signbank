@@ -27,6 +27,12 @@
 {% block bodyid %}id='pages'{% endblock %}
 
 {% block content %}
+
+{% if user.is_authenticated and user.is_staff %}
+<div id="editbutton">
+    <a href="/admin/pages/page/{{page.id}}/">[Edit]</a>
+</div>
+{% endif %}
  
 {% if page.pagevideo_set.all %}
 
