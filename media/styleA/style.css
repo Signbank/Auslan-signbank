@@ -163,6 +163,10 @@ body {
    color: white;
 }
 
+#pages #editbutton {
+   float: right;
+}
+
 /* text styles used by pages via the wymeditor styles */
 
 .floatright {
