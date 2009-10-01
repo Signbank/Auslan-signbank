@@ -28,7 +28,8 @@
 
 {% block content %}
 
-{% if user.is_authenticated and user.is_staff %}
+{# show the edit button if the user has permission to change pages #}
+{% if perms.pages.change %}
 <div id="editbutton">
     <a href="/admin/pages/page/{{page.id}}/">[Edit]</a>
 </div>
