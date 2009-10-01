@@ -29,6 +29,10 @@
         {% if user.is_staff %}
         <p>Items marked * below are not in the web version of the dictionary and would not
         appear in a regular (non staff) search.</p>
+        {% ifequal flavour "medical" %}
+        <p>In this medical sign bank search, signs are only shown where they are marked
+        as "Problematic Medical Signs".  For a view of all health related signs, please logout.</p>
+        {% endifequal %}
         {% endif %}
         
       <div id="searchresults">

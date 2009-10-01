@@ -174,9 +174,14 @@ def search(request, flavour='dictionary'):
                 else:
                     words = Keyword.objects.filter(text__istartswith=term)
             else:
-                # get only the keywords that are in the Web edition
-                words = Keyword.objects.filter(text__istartswith=term, 
-                                           translation__gloss__inWeb__exact=True).distinct()
+                # regular users see either everything or health only signs
+                if flavour == 'medical':
+                    words = Keyword.objects.filter(text__istartswith=term,
+                                                   translation__gloss__inWeb__exact=True,
+                                                   translation__gloss__healthtf__exact=True).distinct()
+                else:
+                    words = Keyword.objects.filter(text__istartswith=term, 
+                                                   translation__gloss__inWeb__exact=True).distinct()
 
         except:
             # if the encoding didn't work this is 
