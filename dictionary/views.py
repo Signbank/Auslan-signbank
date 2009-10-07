@@ -166,6 +166,14 @@ def search(request, flavour='dictionary'):
         try:
             term = term.encode("latin-1")
             
+            # check the submitted 'msb' checkbox and change the flavour
+            # as appropriate
+            if request.GET.has_key('msb'):
+                if request.GET['msb'] == "1":
+                    flavour = 'medical'
+            else:
+                flavour = 'dictionary'
+            
             if request.user.is_authenticated() and request.user.is_staff:
                 # staff get to see all the words, but might be only medical
                 if flavour == 'medical':

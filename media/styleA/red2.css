@@ -38,6 +38,11 @@ body.medical {
     background-repeat: no-repeat;
 }
 
+#header #frmSearch {
+   color: #FFFFFF; 
+   font-variant: small-caps;
+}
+
 #header #frmSearch a:link {
    color: #FFFFFF;
    text-decoration: none;

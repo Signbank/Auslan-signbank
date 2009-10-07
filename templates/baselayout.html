@@ -88,7 +88,8 @@ pageTracker._trackPageview();
        <h1>Auslan - Signbank</h1>
        <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50">
-          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search{% ifequal flavour "medical" %} MSB{% endifequal %}</a>        
+          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>
+          <br>Medical Signs only<input type="checkbox" name="msb" value="1" {% ifequal flavour "medical" %}checked='1'{% endifequal %}>      
        </form> 
     </div>
 
