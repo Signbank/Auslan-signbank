@@ -167,6 +167,21 @@ body {
    float: right;
 }
 
+
+#pages #mainlinks table {
+   width: 80%;
+   height: 10em;
+   margin: auto;
+}
+
+#pages #mainlinks td {
+   border: 1px solid black;
+   margin: 1em;
+   width: 10em;
+   text-align: center;
+}
+
+
 /* text styles used by pages via the wymeditor styles */
 
 .floatright {

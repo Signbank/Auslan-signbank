@@ -2,6 +2,9 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 import registration.forms
 
+from django.views.generic.simple import direct_to_template
+
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -18,8 +21,11 @@ urlpatterns = patterns('',
     (r'^logout.html', 'django.contrib.auth.views.logout',
                        {'template_name': "index.html"}),
     
+    
+    (r'^spell/twohanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingtwohanded.html'}),
+    
     # compatibility with old links - intercept and return 401
-    (r'^index.cfm', 'django.views.generic.simple.direct_to_template', {'template': 'compat.html',}),
+    (r'^index.cfm', direct_to_template, {'template': 'compat.html',}),
                        
    # (r'^accounts/login/', 'django.contrib.auth.views.login'),
         
