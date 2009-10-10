@@ -28,9 +28,14 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
 
     n = int(n)
 
+    if request.GET.has_key('feedbackmessage'):
+        feedbackmessage = request.GET['feedbackmessage']
+    else:
+        feedbackmessage = False
+
     word = get_object_or_404(Keyword, text=keyword)
     # returns (matching translation, number of matches) 
-    (trans, total) =  word.match_request(request, n)
+    (trans, total) =  word.match_request(request, n, flavour)
     
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
@@ -90,6 +95,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
+                               'feedbackmessage': feedbackmessage,
                                },
                                context_instance=RequestContext(request))
   
@@ -146,7 +152,7 @@ def gloss(request, idgloss, flavour='dictionary'):
                                'update_form': update_form,
                                },
                                context_instance=RequestContext(request))
-        
+
 
 from django.core.paginator import Paginator, InvalidPage
 
