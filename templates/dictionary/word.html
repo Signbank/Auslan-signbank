@@ -151,9 +151,9 @@
          <p><strong>Keywords:</strong>
          {% for kwd in allkwds %}
            {% ifequal translation.translation kwd.translation %}
-           <b>{{ kwd.translation }},</b>
+           <b>{{ kwd.translation }}</b>
            {% else %}
-           {{ kwd.translation }},
+           {{ kwd.translation }} 
            {% endifequal %}
          {% endfor %}
          </p>
