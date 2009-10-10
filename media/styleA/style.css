@@ -76,6 +76,17 @@ body {
 
 /* layout within the definition content block */
 
+#feedbackmessage { 
+   width: 40%;
+   position: absolute;
+   left: 50%;
+   margin-left: -20%;
+   border: 5px solid black;
+   text-align: center;
+   background: #FFF;
+   font-size: larger;
+}
+
 #signinfo {
    margin: 0px; 
 }
@@ -235,7 +246,12 @@ body {
    margin: auto;
 }
 
+/* general markup for error messages in forms */
 
+.errorlist {
+   color: red;
+   font-weight: bold;
+}
 
 
 #footer { 

@@ -7,7 +7,7 @@ from django.template import Context, RequestContext, loader
 from django.conf import settings 
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 import time
 
@@ -153,6 +153,12 @@ def signfeedback(request, keyword, n):
     # returns (matching translation, number of matches) 
     (trans, total) =  word.match_request(request, n)
     
+    # get the page to return to from the get request
+    if request.GET.has_key('return'):
+        sourcepage = request.GET['return']
+    else:
+        sourcepage = ""
+    
     valid = False
     
     if request.method == "POST":
@@ -175,7 +181,9 @@ def signfeedback(request, keyword, n):
                 translation_id = request.POST["translation_id"]
                 )
             sfb.save()
-            valid = True 
+            valid = True
+            # redirect to the original page
+            return HttpResponseRedirect(sourcepage+"?feedbackmessage='Thank you. Your feedback has been saved.")
     else:
         feedback_form = SignFeedbackForm()
         
@@ -184,7 +192,8 @@ def signfeedback(request, keyword, n):
                                'n': n, 
                                'total': total,   
                                'feedback_form': feedback_form, 
-                               'valid': valid
+                               'valid': valid,
+                               'sourcepage': sourcepage
                                },
                                context_instance=RequestContext(request))
 

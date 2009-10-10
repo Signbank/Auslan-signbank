@@ -1,3 +1,6 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
 <div class="asbBodyCell" style="width: 600px">
  {% if valid %} 
    <p>Thank's for your comments</p>
@@ -7,7 +10,8 @@
   Other questions are optional and may be filled out if necessary.</p>
   
 <form id="signfeedback" method="post">
-
+  <input type='hidden' name='sourcepage' value='{{sourcepage}}'>
+   
   <p class="feedbackQuestion">Is this sign an Auslan Sign? *</p>
 
   {% if feedback_form.isAuslan.errors %}<ul class="errorlist">{{ feedback_form.isAuslan.errors }}</ul>{% endif %}
@@ -63,3 +67,5 @@
 </form>
  {% endif %}
 </div>
+
+{% endblock %}
