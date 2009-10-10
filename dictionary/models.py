@@ -76,7 +76,10 @@ class Keyword(models.Model):
             else:
                 alltrans = self.translation_set.all()
         else:
-            alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
+            if flavour == 'medical':
+                alltrans = self.translation_set.filter(gloss__inWeb__exact=True, gloss__healthtf__exact=True)
+            else:
+                alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
         
         # if there are no translations, generate a 404
         if len(alltrans) == 0:
