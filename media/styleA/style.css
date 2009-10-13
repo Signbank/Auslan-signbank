@@ -33,19 +33,53 @@ body {
 }
 
 #navigation { 
-   height: 30px;
+  height: 54px;
 }
 
 .sf-menu {
    float:         	left;
    margin-bottom:       1em;
-   height:              34px;
+   width: 100%;
 }
 .sf-menu a {
    padding: 		   0.5em .75em 0em 1em; 
 }
-.sf-menu li { 
+.sf-menu ul {
+   height: 40px;
+}
+.sf-menu li {
+   height:  34px;
+   font-weight: normal; /* needed to override bold for .current below */
+}
+.sf-menu .current {
+   font-weight: bold;
+   background: #ccc;
+}
+
+
+.sf-menu .submenu {
+   height: 20px;
+   width: 100%
+}
+
+.sf-navbar li ul {
+   width: 847px;
    height: 34px;
+}
+
+
+.sf-menu li ul li { 
+   height: 34px;
+   
+}
+.sf-menu li ul li a {
+   height: inherit;
+}
+
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul {
+	left:	0;
+	top:	34px; /* match top ul list item height */ 
 }
 
 #content {
