@@ -3,22 +3,25 @@
   <head>
     <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
-
-{% ifequal flavour "medical" %}
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" title="black" type="text/css">
-{% else %} 
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" type="text/css">
-{% endifequal %}
 
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.2.3.min.js"></script>   
     <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.flashembed.js"></script> 
     
     <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">        
-
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish-navbar.css" />
+    
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
+    <!--
     <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
+    -->
+
+   <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
+{% ifequal flavour "medical" %}
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" title="black" type="text/css">
+{% else %} 
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" type="text/css">
+{% endifequal %}
 
     <script type="text/javascript" src="{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.min.js"></script>
 {% block extrahead %}
@@ -29,23 +32,8 @@
 
     // initialise plugins
     jQuery(function(){
-      jQuery('ul.sf-menu').supersubs({minWidth: 12, maxWidth: 32}).superfish({pathLevels: 2});
-      /* http://www.kelvinluck.com/2006/05/switch-stylesheets-with-jquery/  */
-      $('.styleswitch').click(function()
-        {
-          switchStylestyle(this.getAttribute("rel"));
-          return false;
-        });
+      jQuery('ul.sf-menu').superfish({pathLevels: 1, , dropShadows: false, pathClass: 'current'});
     });
-
-  function switchStylestyle(styleName)
-  {
-     $('link[@rel*=style][title]').each(
-          function(i){
-            this.disabled = true;
-            if (this.getAttribute('title') == styleName) this.disabled = false;
-          });
-  }
     </script>
 
     
