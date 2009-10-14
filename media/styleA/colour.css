@@ -1,29 +1,36 @@
 
-/* colours */
+/* main colour styles for pages, variants (black, red2) are in separate files
+   that import this */
 
 html {
-  background-color: #C52B3A;
+  background-color: #fff;
+  background-repeat: repeat-x;
+  background-position: top;
 }
 
 #content {
-  background-color: #FFF;
+  background-color: #FFF; 
 }
 
-body.medical {
-   background-color: #FCFC00;
+#leftcontentborder { 
 }
 
-#header {
-   background-color: #05649D;
-   background-image: url(images/auslan_03.gif);
-   background-repeat: repeat-x;
+#rightcontentborder { 
+}
+
+
+#header { 
+  background-repeat: repeat-x;
+  height: 92px;
 }
  
-#header h1 {
-    /* replace the header text with the banner image
-       move the text out of the way with padding */
-    background-image: url(images/bannerbg.gif);
+#header h1 { 
     background-repeat: no-repeat;
+}
+
+#header #frmSearch {
+   color: #FFFFFF; 
+   font-variant: small-caps;
 }
 
 #header #frmSearch a:link {
@@ -33,27 +40,26 @@ body.medical {
 }
 
 #navigation {
-   background-image:       url(images/auslan_13.gif);
-   background-repeat:      repeat-x;
-   height:                 26px;  
+   background-color:    #e3e3e3;
 }
 
 /* superfish menu styling - background image is assumed 26px high */
 .sf-menu {
- 
+   background-color:    #e3e3e3;
 }
 .sf-menu a {
-   text-decoration:        none;
-   font-variant:           small-caps;
+   text-decoration:        none; 
 }
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
-   color:			#fff;
+   color:			#000;
 }
 /* top level menu entries */
 .sf-menu li {
-   border-right:	        1px solid #000; 
-   background-image:       url(images/auslan_13.gif);
-   background-repeat:      repeat-x;
+   border-right:	   1px solid #000; 
+   background-color:       #e3e3e3;
+}
+.sf-menu li ul {   
+   background-color: #eee;
 }
 /* first level of dropdown menus */
 .sf-menu li li {
@@ -64,7 +70,7 @@ body.medical {
 .sf-menu li:hover, .sf-menu li.sfHover,
 .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active { 
    outline:		0;
-   text-decoration: underline;
+   text-decoration: underline; 
 }
 
 #footer {
@@ -75,6 +81,7 @@ body.medical {
 #signinfo {
    background-color: #1B1D1F;
    color: #FFF;
+   padding-bottom: 3px;
 }
 #signinfo h2 { 
    font-size: small;
@@ -92,18 +99,44 @@ body.medical {
    width: 424px;  /* 847/2 */
 }
 
-#matches { 
+#matches .match {
+   border: 1px solid white;
+   margin-bottom: 2px;
+   padding: 1px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+#matches .current {
+  background: white;
+  color: black;
+}
+
+#signs .previous {
+  margin-left: 1em;
+  margin-right: 0px;
+  padding-right: 0.5em;
+  border-right: 1px solid white;
+}
+
+#signs .next {
+  padding-left: 0.5em;
 }
 
 
-
 #videocontainer { 
-   background-color:  #1B1D1F; 
+   background-color:  #1B1D1F;
+   width: 332px;
 }
 #videocontainer object {
    margin-left: 6px;
    margin-right: 6px;
 }
+#videocontainer #player {
+   margin-left: 6px;
+   margin-right: 6px;
+}
+
 #videoreplay {
    font-weight: bold;
    font-variant: small-caps;
@@ -133,5 +166,16 @@ body.medical {
    background-color: #E3E3E3;
    color: #5C9ACB;
 }
+
+
+#staffinfo {
+   margin-left: 340px; 
+   background-color: #FFF;
+}
+#staffinfo h2 {
+   background-color: #E3E3E3;
+   color: #5C9ACB;
+}
+
 
 
