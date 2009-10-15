@@ -1,6 +1,16 @@
 
 {% extends "baselayout.html" %}
  
+{% block extrahead %}
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+{% endblock %}
+
+{% block jqueryready %}
+
+  $("#handimage").click( function() { display_letter("B"); });
+
+{% endblock %}
+
 
 {% block content %}
 

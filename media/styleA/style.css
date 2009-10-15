@@ -57,14 +57,13 @@ body {
 }
 
 
-.sf-menu .submenu {
-   height: 20px;
-   width: 100%
+.sf-menu .submenu  {
+   
 }
 
 .sf-navbar li ul {
-   width: 847px;
    height: 34px;
+   width: auto;
 }
 
 
