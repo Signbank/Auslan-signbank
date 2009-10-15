@@ -215,20 +215,38 @@ body {
    float: right;
 }
 
+/* table of links in the mainpage template */
 
 #pages #mainlinks table {
-   width: 80%;
-   height: 10em;
+  
    margin: auto;
 }
 
 #pages #mainlinks td {
-   border: 1px solid black;
-   margin: 1em;
-   width: 10em;
-   text-align: center;
+   text-align: center; 
+   border: none;
 }
 
+#pages #mainlinks a { 
+   color: #fff;
+   text-decoration: none;
+   font-size: large; 
+   width:  6em;
+   height: 6em;
+   display: block;
+}
+#pages #mainlinks a:hover {
+   color: #aaa; 
+}
+
+#pages #mainlinks a span { 
+   display: block;
+   padding-top: 2em;
+}
+
+#pages #mainlinks #signbanklink {
+   
+}
 
 /* text styles used by pages via the wymeditor styles */
 

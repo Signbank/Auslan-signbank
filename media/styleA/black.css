@@ -27,3 +27,8 @@ html {
    background-position: right;
    background-repeat: no-repeat;
 }
+
+#pages #mainlinks td {
+  
+  background-image: url(colours/black/black_02.gif);
+}
