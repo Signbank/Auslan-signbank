@@ -3,22 +3,131 @@
  
 {% block extrahead %}
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+    
+    <style type="text/css">
+    #hand {
+      float: left;
+    }
+    
+    #handimage {
+      position: relative;
+      height: 244px;
+      width:  292px;
+      background-color: #4b62ae;
+      border: 1px solid black;
+    }
+    /* images are 192x144 centre them in the above div */
+    #mainimg, #backimg {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      display: block;
+      margin: auto;
+    }
+    #mainimg {
+      z-index: 1;
+    }
+    #backimg {
+      z-image: 0;
+    }
+    #fstable td {
+      margin-right: -1em;
+    }
+    #fstable img {
+      width: 75px;
+    }
+    #fstable td div {
+      margin-top: -1.4em;
+      font-size: large;
+      color: #fff;
+      text-align: center;
+    }
+    </style>
 {% endblock %}
 
 {% block jqueryready %}
 
   $("#handimage").click( function() { display_letter("B"); });
 
+  $('#inputarea').submit( function() { display_word($('#text').val()); return false; });
+
+  /* fill out the table of signs */
+  
+  $("#fstable td").each(function() {
+      letter = $(this).attr("id");
+      if (letter != undefined) {
+        $(this).append("<img src='{% auslan_static_prefix %}images/twohanded/"+fsimages[letter]+"' alt='"+letter+">");
+        $(this).append("<div>"+letter+"</div>");
+	$(this).mouseover(function() {
+	    update_image("#mainimg", $(this).attr("id"));
+	});
+      }
+  });
 {% endblock %}
 
 
 {% block content %}
-
-<p>Here is an image:</p>
-
-<div id="handimage">
-   <img src="{% auslan_static_prefix %}images/twohanded/th_a.jpg" alt="A">
+ 
+<div id="hand">
+  <div id="handimage">
+   <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt="">
+   <img id="backimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt="">
+  </div>  
+<form id="inputarea">
+  <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
+  </p>
+</form>
 </div>
+</div>
+
+
+<table id="fstable">
+ <tr>
+   <td id="A"></td>
+   <td id="B"></td>
+   <td id="C"></td>
+   <td id="D"></td>
+   <td id="E"></td>
+ </tr>
+ <tr>
+   <td id="F"></td>
+   <td id="G"></td>
+   <td id="H"></td>
+   <td id="I"></td>
+   <td id="J"></td>
+ </tr>
+ <tr>
+   <td id="K"></td>
+   <td id="L"></td>
+   <td id="M"></td>
+   <td id="N"></td>
+   <td id="O"></td>
+ </tr>
+ <tr>
+   <td id="P"></td>
+   <td id="Q"></td>
+   <td id="R"></td>
+   <td id="S"></td>
+   <td id="T"></td>
+ </tr>
+ <tr>
+   <td id="U"></td>
+   <td id="V"></td>
+   <td id="W"></td>
+   <td id="X"></td>
+   <td id="Y"></td>
+ </tr>
+ <tr>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td id="Z"></td>
+ </tr>
+</table>
+
+
+
 
 {% endblock %}
 

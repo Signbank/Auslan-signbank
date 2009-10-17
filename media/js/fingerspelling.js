@@ -19,10 +19,7 @@ jQuery.clearTimer = function(a){
 };
 
 
-
-/* id of the image we will be updating */
-var fsimage = $("#handimage").find("img");
-
+ 
 /* base url of fingerspelling images */
 var baseurl = "/static/images/twohanded/";
 
@@ -53,26 +50,43 @@ fsimages["W"] =  "th_w.jpg";
 fsimages["X"] =  "th_x.jpg";
 fsimages["Y"] =  "th_y.jpg";
 fsimages["Z"] =  "th_z.jpg";
+fsimages["transition"] = "transition.jpg";
+
+function update_image(imageid, letter) {
+    $(imageid).attr('src', baseurl+fsimages[letter]);
+}
 
 /* display a fingerspelling sign image or image sequence */
-function display_letter(letter) {
-    console.log("Setting src to "+baseurl+fsimages[letter]);
-    $("#handimage").find("img").attr('src', baseurl+fsimages[letter]);
+/* TODO: display H and J image sequences */
+function display_letter(letter) { 
+
+    if (fsimages[letter] == undefined) {
+        letter = "transition";
+    }
+    
+    /* set up the back image with the new letter */
+    update_image("#backimg", "transition");
+    /* fade out the main image */    
+    $("#mainimg").hide();
+    /* now replace the main image */
+    update_image("#mainimg", letter);
+    /* and fade it in */
+    $("#mainimg").fadeIn("slow");
 }
 
 
 function display_word(word) {
     /* set the alt attribute of the image to the word in upper case */
-    $("#handimage").find("img").attr('alt', word.toUpperCase());
+    $("#mainimg").attr('alt', word.toUpperCase());
     display_alt_attr();
 }
 
 function display_alt_attr() {
-    word = $("#handimage").find("img").attr('alt');
-    if (word != undefined) {
+    word = $("#mainimg").attr('alt');
+    if (word != undefined) { 
         display_letter(word[0]);
         $("#handimage").find("img").attr('alt', word.substring(1));    
-        $.timer(1000, display_alt_attr);
+        $.timer(1500, display_alt_attr);
     }
 }
 
