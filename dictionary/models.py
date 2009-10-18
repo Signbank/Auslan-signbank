@@ -8,6 +8,9 @@ manageable.
 
 from django.db.models import Q
 from django.db import models
+from django.conf import settings 
+import sys, os
+
 #from models_legacy import Sign
 
 handedness_choices = (("One", "One"),("Two", "Two"), ("Double", "Double"))
@@ -444,6 +447,14 @@ class Gloss(models.Model):
                 video_num = homophones[0].target.sn
                 
         return "video/"+str(video_num)[:2]+"/"+str(video_num)+".flv"
+    
+    def has_video(self):
+        """Test to see if the video for this sign is present"""
+        
+        video = self.get_video_url()
+        # where's it supposed to be?
+        video = os.path.join(settings.MEDIA_ROOT, video)
+        return os.path.exists(video)
     
     def definitions(self):
         """gather together the definitions for this gloss"""

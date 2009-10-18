@@ -243,5 +243,22 @@ def keyword_value_list(request, prefix):
     kwds_list = [k.text for k in kwds] 
     return HttpResponse("\n".join(kwds_list), content_type='text/plain')
     
+
+def missing_video_list():
+    """A list of signs that don't have an
+    associated video file"""
     
- 
+    glosses = Gloss.objects.filter(inWeb__exact=True)
+    for gloss in glosses:
+        if not gloss.has_video():
+            yield gloss
+
+def missing_video_view(request, flavour):
+    """A view for the above list"""
+    
+    glosses = missing_video_list()
+    
+    return render_to_response("dictionary/missingvideo.html",
+                              {'glosses': glosses})
+
+
