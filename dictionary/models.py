@@ -6,6 +6,7 @@ manageable.
 
 """
 
+from django.db.models import Q
 from django.db import models
 #from models_legacy import Sign
 
@@ -72,7 +73,8 @@ class Keyword(models.Model):
         
         if request.user.is_authenticated() and request.user.is_staff:
             if flavour == 'medical':
-                alltrans = self.translation_set.filter(gloss__InMedLex__exact=True)
+                # needs to match the condition in views.search 
+                alltrans = self.translation_set.filter(Q(gloss__InMedLex__exact=True)|Q(gloss__healthtf__exact=True))
             else:
                 alltrans = self.translation_set.all()
         else:
@@ -293,7 +295,7 @@ class Gloss(models.Model):
     groomtf = models.NullBooleanField(null=True, blank=True)
     
 
-    healthtf = models.NullBooleanField(null=True, blank=True) 
+    healthtf = models.NullBooleanField("Health Related Sign", null=True, blank=True) 
     
     
     # which versions of the dictionary should this gloss appear in
@@ -301,7 +303,7 @@ class Gloss(models.Model):
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)
     InMainBook = models.NullBooleanField("In the main book", null=True, blank=True)
     InSuppBook = models.NullBooleanField("In the supplementary book", null=True, blank=True)  
-    InMedLex = models.NullBooleanField("In Medical SignBank", null=True, default=False)  
+    InMedLex = models.NullBooleanField("Problematic Medical Sign", null=True, default=False)  
     isNew = models.NullBooleanField("Is this a proposed new sign?", null=True, default=False)
     
     inittext = models.CharField(max_length="50", blank=True) 
