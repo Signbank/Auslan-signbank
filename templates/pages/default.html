@@ -26,6 +26,7 @@
 
 {% block bodyid %}id='pages'{% endblock %}
 
+
 {% block content %}
 
 {# show the edit button if the user has permission to change pages #}
@@ -34,7 +35,7 @@
     <a href="/admin/pages/page/{{page.id}}/">[Edit]</a>
 </div>
 {% endif %}
- 
+
 {% if page.pagevideo_set.all %}
 
     <div id="videocontainer">
@@ -48,7 +49,9 @@
     </div>
 {% endif %}
 
+{% block pagecontent %}
    {{ page.content }}
+{% endblock %}
 
   {% block bottomcontent %}
   {% endblock %}

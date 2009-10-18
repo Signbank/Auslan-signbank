@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings 
-
+from django.db.models import Q
 import os
 
 from auslan.dictionary.models import *
@@ -177,15 +177,20 @@ def search(request, flavour='dictionary'):
             if request.GET.has_key('msb'):
                 if request.GET['msb'] == "1":
                     flavour = 'medical'
-            else:
-                flavour = 'dictionary'
+                else:
+                    flavour = 'dictionary'
             
-            if request.user.is_authenticated() and request.user.is_staff:
+            
+            if request.user.is_authenticated() and request.user.is_staff: 
                 # staff get to see all the words, but might be only medical
                 if flavour == 'medical':
-                    words = Keyword.objects.filter(text__istartswith=term, 
-                                                   translation__gloss__InMedLex__exact=True).distinct()
-                else:
+                    # select InMedLex OR healthtf to get all medical words
+                    # remember InMedLex means 'Problematic Medical Sign'
+                    # NOTE: dependancy with models.Keyword.match_request
+                    words = Keyword.objects.filter(Q(text__istartswith=term),  
+                                                   Q(translation__gloss__InMedLex__exact=True) |
+                                                   Q(translation__gloss__healthtf__exact=True)).distinct()
+                else: 
                     words = Keyword.objects.filter(text__istartswith=term)
             else:
                 # regular users see either everything or health only signs
@@ -238,3 +243,5 @@ def keyword_value_list(request, prefix):
     kwds_list = [k.text for k in kwds] 
     return HttpResponse("\n".join(kwds_list), content_type='text/plain')
     
+    
+ 
