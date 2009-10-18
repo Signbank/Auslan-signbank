@@ -21,7 +21,9 @@ jQuery.clearTimer = function(a){
 
  
 /* base url of fingerspelling images */
-var baseurl = "/static/images/twohanded/";
+/* needs to be set in client page */
+/* var baseurl='{% auslan_static_prefix %}images/twohanded' */
+
 
 var fsimages = Object()
 fsimages["A"] =  "th_a.jpg";

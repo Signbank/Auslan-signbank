@@ -2,6 +2,10 @@
 {% extends "baselayout.html" %}
  
 {% block extrahead %}
+    <script type="text/javascript">
+    /* base url of fingerspelling images */ 
+    var baseurl = "{% auslan_static_prefix %}images/twohanded/";
+    </script>
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
     
     <style type="text/css">
@@ -47,6 +51,7 @@
 
 {% block jqueryready %}
 
+  
   $("#handimage").click( function() { display_letter("B"); });
 
   $('#inputarea').submit( function() { display_word($('#text').val()); return false; });
@@ -56,7 +61,7 @@
   $("#fstable td").each(function() {
       letter = $(this).attr("id");
       if (letter != undefined) {
-        $(this).append("<img src='{% auslan_static_prefix %}images/twohanded/"+fsimages[letter]+"' alt='"+letter+">");
+        $(this).append("<img src='"+baseurl+fsimages[letter]+"' alt='"+letter+">");
         $(this).append("<div>"+letter+"</div>");
 	$(this).mouseover(function() {
 	    update_image("#mainimg", $(this).attr("id"));
