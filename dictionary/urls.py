@@ -20,7 +20,9 @@ urlpatterns = patterns('',
     (r'^update/gloss/(?P<glossid>\d+)$', 'auslan.dictionary.update.update_gloss'),
     (r'^update/video/(?P<glossid>\d+)$', 'auslan.dictionary.update.update_video'),
     
-    (r'^ajax/keyword/(?P<prefix>.*)$', 'auslan.dictionary.views.keyword_value_list'),      
+    (r'^ajax/keyword/(?P<prefix>.*)$', 'auslan.dictionary.views.keyword_value_list'),
+    
+    (r'^missingvideo.html$', 'auslan.dictionary.views.missing_video_view'),
 
 )
 

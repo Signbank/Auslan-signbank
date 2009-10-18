@@ -1,0 +1,10 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
+ 
+ <ul>
+ {% for gloss in glosses %}
+   <li>{{gloss.idgloss}}</li>
+ {% endfor %}
+ </ul>
+{% endblock %}
