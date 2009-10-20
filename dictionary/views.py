@@ -177,6 +177,11 @@ def search(request, flavour='dictionary'):
             if request.GET.has_key('msb'):
                 if request.GET['msb'] == "1":
                     flavour = 'medical'
+            else:
+                # really want to redirect to the other flavour here
+                if flavour == 'medical':
+                    newurl = request.path.replace('medical', 'dictionary')
+                    return HttpResponseRedirect(newurl+"?query="+term)
                 else:
                     flavour = 'dictionary'
             
