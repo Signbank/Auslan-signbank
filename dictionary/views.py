@@ -173,17 +173,17 @@ def search(request, flavour='dictionary'):
             term = term.encode("latin-1")
             
             # check the submitted 'msb' checkbox and change the flavour
-            # as appropriate
-            if request.GET.has_key('msb'):
-                if request.GET['msb'] == "1":
-                    flavour = 'medical'
-            else:
-                # really want to redirect to the other flavour here
-                if flavour == 'medical':
-                    newurl = request.path.replace('medical', 'dictionary')
-                    return HttpResponseRedirect(newurl+"?query="+term)
-                else:
-                    flavour = 'dictionary'
+            # as appropriate, do this by redirecting so that the page
+            # url is correct always
+            if request.GET.has_key('msb') and flavour == 'dictionary':
+                newurl = request.path.replace('dictionary', 'medical')
+                print "redirecting", request.path, "to", newurl
+                return HttpResponseRedirect("%s?query=%s&msb=1" % (newurl, term))
+            elif not request.GET.has_key('msb') and flavour == 'medical':
+                newurl = request.path.replace('medical', 'dictionary')
+                print "redirecting", request.path, "to", newurl
+                return HttpResponseRedirect(newurl+"?query="+term)
+            
             
             
             if request.user.is_authenticated() and request.user.is_staff: 
