@@ -61,9 +61,6 @@ html {
 }
 #signs {
    background-color: #1B1D1F;
-   text-align: left;
-   float: left;
-   width: 424px;  /* 847/2 */
 }
 
 #matches .match {
@@ -135,8 +132,7 @@ html {
 }
 
 
-#staffinfo {
-   margin-left: 340px; 
+#staffinfo { 
    background-color: #FFF;
 }
 #staffinfo h2 {

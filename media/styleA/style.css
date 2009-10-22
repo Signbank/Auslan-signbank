@@ -34,8 +34,6 @@ body {
    margin-bottom: 0px;
 }
 
-
-
 #content {
    margin: 0px;
    padding-left: 1em;
@@ -76,35 +74,50 @@ body {
 }
 
 #signinfo {
-   margin: 0px; 
+   margin: 0px;
+   height: 50px;
+   margin-bottom: 0px;
 }
 
 #signinfo h2 {
    margin: 0px;
-   padding: 0.5em;
+   padding: 6px;
+}
+#signinfo .prev {
+   padding-left: 6px;
+   float: left;
+}
+
+#signinfo .next {
+   float: right;
+   padding-right: 6px;
 }
 
 #signnav { 
 }
 
-#signnav #signs {
+#signs { 
+   margin-right: 0em;
+   text-align: left;
    float: left;
+   height: 50px;
+   width: 338px;  /* to match rh edge of video container */
+}
+
+
+#signnav #matches {
    height: 50px;
 }
 
-#signnav #matches {
-   height: 50px; 
-}
-
 #definitionblock {
-   margin-top: -1em;
+   margin-top: 0em;
    background-color: #FFF;
 }
 
 #leftblock {
    float: left; 
    margin-left: 6px;
-   margin-top: 0px;
+   margin-top: -13px;
 }
 
 #videocontainer {
@@ -120,14 +133,19 @@ body {
 }
 
 #keywords {
-   margin-left: 332px;
-   padding-left: 1em; 
+   margin-left: 338px;
+   padding-left: 6px; 
    margin-bottom: -0.5em;
 }
 #definition {
-   margin-left: 332px;
-   padding-left: 1em;
+   margin-left: 338px;
+   padding-left: 6px;
 }
+#staffinfo {
+   margin-left: 338px;
+   padding-left: 6px;
+}
+
 
 #states {
    text-align: center;

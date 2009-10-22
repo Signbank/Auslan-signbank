@@ -43,14 +43,14 @@
             {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
 
             {% if navigation.prev %}
-            <span class="prev">
+            <div class="prev">
               <a href="/{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
-            </span>
+            </div>
             {% endif %}
             {% if navigation.next %}
-            <span class="next">
+            <div class="next">
              <a href="/{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign&gt;</a>
-            </span>
+            </div>
             {% endif %}
     </div>
     

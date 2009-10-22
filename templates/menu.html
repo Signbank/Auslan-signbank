@@ -9,7 +9,7 @@
     <ul class="sf-submenu">
     {% for subitem in item.children %}
       <li {% if subitem.current %}class='current'{% endif %}><a href="{{subitem.url}}">{{subitem.title}}</a></li>
-    {% endfor %}
+    {% endfor %} 
     </ul>
   </div>
   {% endif %}
@@ -29,5 +29,5 @@
 {% if user.is_authenticated %}
 <li><a href="/logout.html">Logout</a></li>
 <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
-{% endif %}
+{% endif %} 
 </ul>
