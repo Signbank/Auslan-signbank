@@ -115,8 +115,7 @@ def gloss(request, idgloss, flavour='dictionary'):
         trans = allkwds[0]
         
     videourl = gloss.get_video_url()
- 
-    gloss = trans.gloss
+
     if request.user.is_staff:
         if flavour == 'medical':
             glosscount = Gloss.objects.filter(Q(healthtf__exact=True) | Q(InMedLex__exact=True)).count()
@@ -139,9 +138,9 @@ def gloss(request, idgloss, flavour='dictionary'):
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
         update_form = GlossUpdateForm(
-                {'inWeb': trans.gloss.inWeb,
-                 'inMedLex': trans.gloss.InMedLex,
-                 'healthtf': trans.gloss.healthtf,
+                {'inWeb': gloss.inWeb,
+                 'inMedLex': gloss.InMedLex,
+                 'healthtf': gloss.healthtf,
                   })    
     
     # get the last match keyword if there is one passed along as a form variable
