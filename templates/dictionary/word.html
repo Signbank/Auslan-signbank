@@ -41,33 +41,17 @@
     <div id="signs">
         <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
             {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
-        {% ifequal flavour "medical" %}
-         {% if translation.gloss.prev_medical_gloss %}
-            <span class="previous">
-                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Medical Sign</a>
-            </span>
-         {% endif %}
-        {% else %}
-        {% if translation.gloss.prev_dictionary_gloss %}  
-            <span class="previous">
-                <a href="/{{flavour}}/gloss/{{translation.gloss.prev_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous Sign</a>
-            </span>
-        {% endif %}
-        {% endifequal %}
 
-        {% ifequal flavour "medical" %}
-         {% if translation.gloss.next_medical_gloss %}
-            <span class="next">
-              <a href="/{{flavour}}/gloss/{{translation.gloss.next_medical_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Medical Sign&gt;</a>
+            {% if navigation.prev %}
+            <span class="prev">
+              <a href="/{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
             </span>
-         {% endif %}
-        {% else %}
-         {% if translation.gloss.next_dictionary_gloss %}
-           <span class="next">
-            <a href="/{{flavour}}/gloss/{{translation.gloss.next_dictionary_gloss.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign&gt;</a>
-           </span>
-         {% endif %}
-        {% endifequal %}
+            {% endif %}
+            {% if navigation.next %}
+            <span class="next">
+             <a href="/{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign&gt;</a>
+            </span>
+            {% endif %}
     </div>
     
     <div id="matches">
@@ -97,12 +81,13 @@
                REPLAY
             </div>
         </div>
-        
+        {% if feedback %}
         <div id="feedback">
             <ul>
                 <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{flavour}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
             </ul> 
         </div>
+        {% endif %}
         
         <div id="states">      
             

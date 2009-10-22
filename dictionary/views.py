@@ -39,30 +39,31 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
-    
-    # remember that n is one indexed
-    if n>1:
-        prev = n-1
-    else:
-        prev = None
-        
-    if n < total:
-        next = n+1
-    else:
-        next = None
         
     videourl = trans.gloss.get_video_url()
     
     trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
-    
+
+    # work out the number of this gloss and the total number    
     gloss = trans.gloss
-    if flavour == 'medical':
-        glosscount = Gloss.objects.filter(InMedLex__exact=True).count()
-        glossposn = Gloss.objects.filter(InMedLex__exact=True, sn__lt=gloss.sn).count()+1
+    if request.user.is_staff:
+        if flavour == 'medical':
+            glosscount = Gloss.objects.filter(Q(healthtf__exact=True) | Q(InMedLex__exact=True)).count()
+            glossposn = Gloss.objects.filter(Q(InMedLex__exact=True) | Q(healthtf__exact=True), sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.count()
+            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
     else:
-        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1      
-            
+        if flavour == 'medical':
+            glosscount = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True, sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1        
+    
+    # navigation gives us the next and previous signs
+    nav = gloss.navigation(flavour, request.user.is_staff)
+    
     # the gloss update form for staff
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
@@ -82,10 +83,9 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
                                'n': n, 
-                               'total': total,
-                               'prev': prev,
-                               'next': next,
+                               'total': total, 
                                'matches': range(1, total+1),
+                               'navigation': nav,
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
@@ -95,6 +95,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
+                               'feedback' : True,
                                'feedbackmessage': feedbackmessage,
                                },
                                context_instance=RequestContext(request))
@@ -115,13 +116,25 @@ def gloss(request, idgloss, flavour='dictionary'):
         
     videourl = gloss.get_video_url()
  
-    if flavour == 'medical':
-        glosscount = Gloss.objects.filter(InMedLex__exact=True).count()
-        glossposn = Gloss.objects.filter(InMedLex__exact=True, sn__lt=gloss.sn).count()+1
+    gloss = trans.gloss
+    if request.user.is_staff:
+        if flavour == 'medical':
+            glosscount = Gloss.objects.filter(Q(healthtf__exact=True) | Q(InMedLex__exact=True)).count()
+            glossposn = Gloss.objects.filter(Q(InMedLex__exact=True) | Q(healthtf__exact=True), sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.count()
+            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
     else:
-        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1   
-    
+        if flavour == 'medical':
+            glosscount = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True, sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1    
+        
+    # navigation gives us the next and previous signs
+    nav = gloss.navigation(flavour, request.user.is_staff)
+
     # the gloss update form for staff
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
@@ -149,6 +162,7 @@ def gloss(request, idgloss, flavour='dictionary'):
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
+                               'navigation': nav,
                                'update_form': update_form,
                                },
                                context_instance=RequestContext(request))
