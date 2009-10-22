@@ -1,0 +1,100 @@
+#navigation { 
+  height: 60px;  /* 34 + 26 */
+  background-color:    #e3e3e3;
+}
+
+.sf-menu {
+   float:         	left;
+   margin-bottom:       1em;
+   width: 847px;
+   background-color:   #e3e3e3;
+}
+.sf-menu a {
+   text-decoration:        none; 
+   padding: 0.5em .75em 0em 1em;
+}
+
+.sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
+   color:	#000;
+}
+
+.sf-menu ul {
+   height: 40px;
+}
+
+
+.sf-menu li {
+   height:  34px;
+   font-weight: normal; /* needed to override bold for .current below */
+}
+.sf-menu .current {
+   font-weight: bold;
+   background: #ccc;
+}
+
+
+.sf-menu .submenu  {
+   
+}
+
+.sf-menu li ul {
+   height: 26px; 
+}
+
+.sf-navbar li ul {
+  width: 847px;
+}
+
+.sf-menu li ul li { 
+   height: 26px;
+   
+}
+.sf-menu li ul li a {
+   height: inherit;
+}
+
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul {
+	left:	0;
+	top:	33px; /* match top ul list item height */ 
+}
+
+/* superfish menu styling - background image is assumed 26px high */
+
+/* top level menu entries */
+.sf-menu li {
+   border-right:	   1px solid #000; 
+   background-color:       #e3e3e3;
+}
+.sf-menu li.menulast {
+   border-right: none;
+   background-color: #eee;
+   width: 100px;
+}
+.sf-menu li ul {   
+   background-color: #eee;
+}
+
+.sf-menu ul a { 
+   padding: 2px .75em 0em 1em;
+}
+/* first level of dropdown menus */
+.sf-menu li li {
+}
+/* second level of dropdown menus */
+.sf-menu li li li { 
+
+}
+.sf-menu li:hover, .sf-menu li.sfHover,
+.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {  
+   background-color: #ccc; 
+}
+
+.sf-menu li li:hover, .sf-menu li li.sfHover,
+.sf-menu li li a:focus, .sf-menu li li a:hover, .sf-menu li li  a:active {
+  height: 25px;
+}
+
+
+
+
