@@ -395,8 +395,6 @@ class Gloss(models.Model):
     weathertf = models.NullBooleanField(null=True, blank=True)
     worktf = models.NullBooleanField(null=True, blank=True)
     
-
-    
     sense = models.IntegerField("Sense Number", null=True, blank=True) 
     sn = models.IntegerField("Sign Number", null=True, blank=True)   # this is a sign number - was trying
             # to be a primary key, also defines a sequence - need to keep the sequence
@@ -406,29 +404,69 @@ class Gloss(models.Model):
     
     StemSN = models.IntegerField(null=True, blank=True) 
 
-    def next_dictionary_gloss(self):
+    def navigation(self, flavour, is_staff):
+        """Return a gloss navigation structure that can be used to
+        generate next/previous links from within a template page"""
+    
+        result = dict() 
+        if flavour == 'medical':
+            result['next'] = self.next_medical_gloss(is_staff)
+            result['prev'] = self.prev_medical_gloss(is_staff)
+        else:
+            result['next'] = self.next_dictionary_gloss(is_staff)
+            result['prev'] = self.prev_dictionary_gloss(is_staff)
+        print "Navigation: ", result
+        return result
+
+    def next_dictionary_gloss(self, staff=False):
         """Find the next gloss in dictionary order"""
-        return Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True).order_by('sn')[0]
+        if staff:
+            set =  Gloss.objects.filter(sn__gt=self.sn).order_by('sn')
+        else:
+            set = Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True).order_by('sn')
+        if set:
+            return set[0]
+        else:
+            return None
  
-    def prev_dictionary_gloss(self):
+    def prev_dictionary_gloss(self, staff=False):
         """Find the previous gloss in dictionary order"""
-        return Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True).order_by('-sn')[0]
+        if staff:
+            set = Gloss.objects.filter(sn__lt=self.sn).order_by('-sn')
+        else:
+            set = Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True).order_by('-sn')
+        if set:
+            return set[0]
+        else:
+            return None     
      
-    def next_medical_gloss(self):
+    def next_medical_gloss(self, staff=False):
         """Find the next gloss in dictionary order within the medical subset"""
-        all = Gloss.objects.filter(sn__gt=self.sn, InMedLex__exact=True).order_by('sn')
+        if staff:
+            all = Gloss.objects.filter(Q(sn__gt=self.sn), Q(healthtf__exact=True) | Q(InMedLex__exact=True)).order_by('sn')
+        else:
+            all = Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('sn')
+
+        print "Next: ", self.sn, all
+
         if len(all) > 0:
             return all[0]
         else:
             return None
     
-    def prev_medical_gloss(self):
+    def prev_medical_gloss(self, staff=False):
         """Find the previous gloss in dictionary order within the medical subset"""
-        all = Gloss.objects.filter(sn__lt=self.sn, InMedLex__exact=True).order_by('-sn')
+        if staff:
+            all = Gloss.objects.filter(Q(sn__lt=self.sn), Q(healthtf__exact=True) | Q(InMedLex__exact=True)).order_by('-sn')
+        else:
+            all = Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('-sn')
+
+        print "Prev: ", self.sn, all
+
         if len(all) > 0:
             return all[0]
         else:
-            return None             
+            return None           
         
 
     def get_absolute_url(self):

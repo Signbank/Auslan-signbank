@@ -2,6 +2,8 @@
 @import "fonts.css";
 /* styles used in pages */
 @import "../css/textstyles.css";
+/* styles for the main navigation menu */
+@import "navigation.css";
 
 /* layout */
 body {
@@ -32,54 +34,7 @@ body {
    margin-bottom: 0px;
 }
 
-#navigation { 
-  height: 54px;
-}
 
-.sf-menu {
-   float:         	left;
-   margin-bottom:       1em;
-   width: 100%;
-}
-.sf-menu a {
-   padding: 		   0.5em .75em 0em 1em; 
-}
-.sf-menu ul {
-   height: 40px;
-}
-.sf-menu li {
-   height:  34px;
-   font-weight: normal; /* needed to override bold for .current below */
-}
-.sf-menu .current {
-   font-weight: bold;
-   background: #ccc;
-}
-
-
-.sf-menu .submenu  {
-   
-}
-
-.sf-navbar li ul {
-   height: 34px;
-   width: auto;
-}
-
-
-.sf-menu li ul li { 
-   height: 34px;
-   
-}
-.sf-menu li ul li a {
-   height: inherit;
-}
-
-.sf-menu li:hover ul,
-.sf-menu li.sfHover ul {
-	left:	0;
-	top:	34px; /* match top ul list item height */ 
-}
 
 #content {
    margin: 0px;

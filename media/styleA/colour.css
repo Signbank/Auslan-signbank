@@ -39,39 +39,6 @@ html {
    font-variant: small-caps;
 }
 
-#navigation {
-   background-color:    #e3e3e3;
-}
-
-/* superfish menu styling - background image is assumed 26px high */
-.sf-menu {
-   background-color:    #e3e3e3;
-}
-.sf-menu a {
-   text-decoration:        none; 
-}
-.sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
-   color:			#000;
-}
-/* top level menu entries */
-.sf-menu li {
-   border-right:	   1px solid #000; 
-   background-color:       #e3e3e3;
-}
-.sf-menu li ul {   
-   background-color: #eee;
-}
-/* first level of dropdown menus */
-.sf-menu li li {
-}
-/* second level of dropdown menus */
-.sf-menu li li li {
-}
-.sf-menu li:hover, .sf-menu li.sfHover,
-.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active { 
-   outline:		0;
-   text-decoration: underline; 
-}
 
 #footer {
    background-color: #F0FFDF;   
