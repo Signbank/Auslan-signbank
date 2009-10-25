@@ -176,6 +176,7 @@ body {
 }
 
 #pages #videocontainer table {
+   height: 2em;
    width: 100%;
    text-align: center;
 }
