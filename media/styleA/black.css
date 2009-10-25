@@ -22,9 +22,9 @@ html {
 }
 
 /* superfish menu styling - background image is assumed 26px high */
-.sf-menu { 
+.sf-navbar  { 
    background-image: url(colours/black/black_08.gif);
-   background-position: right;
+   background-position: top right;
    background-repeat: no-repeat;
 }
 

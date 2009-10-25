@@ -1,100 +1,48 @@
-#navigation { 
-  height: 60px;  /* 34 + 26 */
+#navigation {  
   background-color:    #e3e3e3;
+  height: 65px;
 }
 
-.sf-menu {
-   float:         	left;
-   margin-bottom:       1em;
+.sf-menu {  
    width: 847px;
    background-color:   #e3e3e3;
 }
-.sf-menu a {
-   text-decoration:        none; 
-   padding: 0.5em .75em 0em 1em;
-}
 
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
-   color:	#000;
-}
-
-.sf-menu ul {
-   height: 40px;
+	color:			#000;
 }
 
 
-.sf-menu li {
-   height:  34px;
-   font-weight: normal; /* needed to override bold for .current below */
+.sf-navbar {
+  background-color:    #e3e3e3; 
 }
-.sf-menu .current {
-   font-weight: bold;
-   background: #ccc;
+.sf-navbar li {
+  background:	       #e3e3e3; 
 }
 
-
-.sf-menu .submenu  {
-   
+.sf-navbar li.current {
+	background:		#ccc;
+}
+.sf-navbar li li {
+	background:		#e3e3e3; 
 }
 
-.sf-menu li ul {
-   height: 26px; 
+.sf-navbar li:hover,
+.sf-navbar li.sfHover,
+.sf-navbar li li.current,
+.sf-navbar a:focus, .sf-navbar a:hover, .sf-navbar a:active {
+	background:		#ccc;
 }
-
-.sf-navbar li ul {
-  width: 847px;
+.sf-navbar ul li:hover,
+.sf-navbar ul li.sfHover,
+ul.sf-navbar ul li:hover li,
+ul.sf-navbar ul li.sfHover li,
+.sf-navbar ul a:focus, .sf-navbar ul a:hover, .sf-navbar ul a:active {
+	background:		#ccc;
 }
-
-.sf-menu li ul li { 
-   height: 26px;
-   
+ul.sf-navbar li li li:hover,
+ul.sf-navbar li li li.sfHover,
+.sf-navbar li li.current li.current,
+.sf-navbar ul li li a:focus, .sf-navbar ul li li a:hover, .sf-navbar ul li li a:active {
+	background:		#ccc;
 }
-.sf-menu li ul li a {
-   height: inherit;
-}
-
-.sf-menu li:hover ul,
-.sf-menu li.sfHover ul {
-	left:	0;
-	top:	33px; /* match top ul list item height */ 
-}
-
-/* superfish menu styling - background image is assumed 26px high */
-
-/* top level menu entries */
-.sf-menu li {
-   border-right:	   1px solid #000; 
-   background-color:       #e3e3e3;
-}
-.sf-menu li.menulast {
-   border-right: none;
-   background-color: #eee;
-   width: 100px;
-}
-.sf-menu li ul {   
-   background-color: #eee;
-}
-
-.sf-menu ul a { 
-   padding: 2px .75em 0em 1em;
-}
-/* first level of dropdown menus */
-.sf-menu li li {
-}
-/* second level of dropdown menus */
-.sf-menu li li li { 
-
-}
-.sf-menu li:hover, .sf-menu li.sfHover,
-.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {  
-   background-color: #ccc; 
-}
-
-.sf-menu li li:hover, .sf-menu li li.sfHover,
-.sf-menu li li a:focus, .sf-menu li li a:hover, .sf-menu li li  a:active {
-  height: 25px;
-}
-
-
-
-
