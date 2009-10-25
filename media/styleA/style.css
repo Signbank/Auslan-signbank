@@ -118,7 +118,7 @@ body {
 #leftblock {
    float: left; 
    margin-left: 6px;
-   margin-top: -1px;  /* need to align with #signinfo above*/
+   margin-top: -2px;  /* need to align with #signinfo above*/
 }
 
 #videocontainer {
