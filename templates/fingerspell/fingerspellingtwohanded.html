@@ -2,72 +2,77 @@
 {% extends "baselayout.html" %}
  
 {% block extrahead %}
+
+    <!-- jquery-ui components (slider)-->
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-lightness/jquery-ui-1.7.2.custom.css">      
+
     <script type="text/javascript">
     /* base url of fingerspelling images */ 
     var baseurl = "{% auslan_static_prefix %}images/twohanded/";
+
+    var fsimages = Object()
+    fsimages["A"] =  "th_a.jpg";
+    fsimages["B"] =  "th_b.jpg";
+    fsimages["C"] =  "th_c.jpg";
+    fsimages["D"] =  "th_d.jpg";
+    fsimages["E"] =  "th_e.jpg";
+    fsimages["F"] =  "th_f.jpg";
+    fsimages["G"] =  "th_g.jpg";
+    fsimages["H"] =  ["th_h0.jpg", "th_h1.jpg",  "th_h2.jpg", "th_h3.jpg", "th_h4.jpg"];
+    fsimages["I"] =  "th_i.jpg";
+    fsimages["J"] =  ["th_j0.jpg", "th_j1.jpg", "th_j2.jpg"];
+    fsimages["K"] =  "th_k.jpg";
+    fsimages["L"] =  "th_l.jpg";
+    fsimages["M"] =  "th_m.jpg";
+    fsimages["N"] =  "th_n.jpg";
+    fsimages["O"] =  "th_o.jpg";
+    fsimages["P"] =  "th_p.jpg";
+    fsimages["Q"] =  "th_q.jpg";
+    fsimages["R"] =  "th_r.jpg";
+    fsimages["S"] =  "th_s.jpg";
+    fsimages["T"] =  "th_t.jpg";
+    fsimages["U"] =  "th_u.jpg";
+    fsimages["V"] =  "th_v.jpg";
+    fsimages["W"] =  "th_w.jpg";
+    fsimages["X"] =  "th_x.jpg";
+    fsimages["Y"] =  "th_y.jpg";
+    fsimages["Z"] =  "th_z.jpg";
+    fsimages["transition"] = "transition.jpg";    
+    
     </script>
+    
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
-    
-    <style type="text/css">
-    #hand {
-      float: left;
-    }
-    
-    #handimage {
-      position: relative;
-      height: 244px;
-      width:  292px;
-      background-color: #4b62ae;
-      border: 1px solid black;
-    }
-    /* images are 192x144 centre them in the above div */
-    #mainimg, #backimg {
-      position: absolute;
-      top: 50px;
-      left: 50px;
-      display: block;
-      margin: auto;
-    }
-    #mainimg {
-      z-index: 1;
-    }
-    #backimg {
-      z-image: 0;
-    }
-    #fstable td {
-      margin-right: -1em;
-    }
-    #fstable img {
-      width: 75px;
-    }
-    #fstable td div {
-      margin-top: -1.4em;
-      font-size: large;
-      color: #fff;
-      text-align: center;
-    }
-    </style>
+
 {% endblock %}
 
-{% block jqueryready %}
+{% block jqueryready %} 
 
-  
-  $("#handimage").click( function() { display_letter("B"); });
-
-  $('#inputarea').submit( function() { display_word($('#text').val()); return false; });
+  $('#inputarea').submit( function() {
+      speed = 1500-$("#slider").slider("option", "value");
+      display_string("#mainimg", $('#text').val(), speed);
+      return false;
+    });
 
   /* fill out the table of signs */
   
   $("#fstable td").each(function() {
       letter = $(this).attr("id");
-      if (letter != undefined) {
-        $(this).append("<img src='"+baseurl+fsimages[letter]+"' alt='"+letter+">");
+      if (letter != undefined) { 
+	if (typeof(fsimages[letter]) == 'object') {
+	  image = fsimages[letter][0];
+	} else {
+	  image = fsimages[letter];
+	}
+        $(this).append("<img src='"+baseurl+image+"' alt='"+letter+">");
         $(this).append("<div>"+letter+"</div>");
-	$(this).mouseover(function() {
-	    update_image("#mainimg", $(this).attr("id"));
+	$(this).click(function() {
+	    display_letter("#mainimg", $(this).attr("id"), 1500-$("#slider").slider('option', 'value'));
 	});
       }
   });
+  /* slider is 0-1000, we use 1500-value as the speed value */
+  $("#slider").slider({min: 0, max: 1000, value: 500});
 {% endblock %}
 
 
@@ -75,15 +80,18 @@
  
 <div id="hand">
   <div id="handimage">
-   <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt="">
-   <img id="backimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt="">
-  </div>  
-<form id="inputarea">
-  <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
-  </p>
-</form>
-</div>
-</div>
+    <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+  </div>
+
+  <form id="inputarea">
+    <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
+    </p>
+  </form>
+
+  <h2>Speed</h2> 
+  <div id="slider"></div>
+
+</div> 
 
 
 <table id="fstable">
@@ -131,7 +139,7 @@
  </tr>
 </table>
 
-
+<p>One handed fingerspelling signs for Americal Sign Language are also available: <a href="onehanded.html">link</a></p>
 
 
 {% endblock %}

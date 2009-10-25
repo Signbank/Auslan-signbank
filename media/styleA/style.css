@@ -295,3 +295,49 @@ body {
   padding-right: 1em;
   padding-top: 1em;
 }
+
+/* styles for finger spelling pages */
+
+#hand {
+  float: left;
+}
+
+#handimage {
+  position: relative;
+  height: 244px;
+  width:  292px;
+  background-color: #4b62ae;
+  border: 5px solid black;
+}
+/* images are 192x144 centre them in the above div */
+#mainimg {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  display: block;
+  margin: auto;
+}
+#mainimg {
+  z-index: 1;
+}
+#backimg {
+  z-image: 0;
+}
+#fstable td {
+  margin-right: -1em;
+}
+#fstable img {
+  width: 75px;
+}
+#fstable td div {
+  margin-top: -1.4em;
+  font-size: large;
+  color: #fff;
+  text-align: center;
+}
+
+
+
+
+
+
