@@ -6,6 +6,7 @@ from django.conf import settings
 import sys, os, time, signal
 from subprocess import Popen, PIPE
 from tempfile import mkstemp
+from auslan.log import debug
 
 from logging import debug
 
@@ -13,8 +14,9 @@ class UploadedFLVFile(UploadedFile):
     """
     A file converted to FLV.
     """
-    def __init__(self, name):  
-        self.name = name  
+    def __init__(self, name): 
+        self.name = name
+        self.fullname = name # needed because UploadedFile will clobber .name
         self.field_name = None
         self.content_type = 'video/flv'
         self.charset = None
@@ -30,8 +32,10 @@ class UploadedFLVFile(UploadedFile):
     
     def rename(self, location):
         """Rename (move) the file to a new location on disk"""
-
-        os.rename(self.name, location)
+        
+        #debug("moving %s to %s (%s)" % (self.fullname, location, self._name))
+        # use fullname here because name has been clobbered by UploadedFile
+        os.rename(self.fullname, location)
         self.name = location
         
     def delete(self):
@@ -59,6 +63,7 @@ class VideoUploadToFLVField(forms.FileField):
     def clean(self, data, initial=None):
         """Checks that the file is valid video and converts it to
         FLV format"""
+        
         
         f = super(VideoUploadToFLVField, self).clean(data, initial)
         if f is None:

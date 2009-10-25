@@ -113,7 +113,7 @@ if production:
     
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
-    FFMPEG_TIMEOUT = 5
+    FFMPEG_TIMEOUT = 20
     
     TEMPLATE_DIRS = (
         '/var/django/auslan/templates'
@@ -146,7 +146,7 @@ else:
  
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/Applications/ffmpegX.app/Contents/Resources/ffmpeg"
-    FFMPEG_TIMEOUT = 5
+    FFMPEG_TIMEOUT = 20
     
     TEMPLATE_DIRS = (
         'templates'
