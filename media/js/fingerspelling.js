@@ -20,76 +20,91 @@ jQuery.clearTimer = function(a){
 
 
  
-/* base url of fingerspelling images */
-/* needs to be set in client page */
-/* var baseurl='{% auslan_static_prefix %}images/twohanded' */
 
 
-var fsimages = Object()
-fsimages["A"] =  "th_a.jpg";
-fsimages["B"] =  "th_b.jpg";
-fsimages["C"] =  "th_c.jpg";
-fsimages["D"] =  "th_d.jpg";
-fsimages["E"] =  "th_e.jpg";
-fsimages["F"] =  "th_f.jpg";
-fsimages["G"] =  "th_g.jpg";
-fsimages["H"] =  ("th_h0.jpg", "th_h1.jpg",  "th_h2.jpg", "th_h3.jpg", "th_h4.jpg");
-fsimages["I"] =  "th_i.jpg";
-fsimages["J"] =  ("th_j0.jpg", "th_j1.jpg", "th_j2.jpg");
-fsimages["K"] =  "th_k.jpg";
-fsimages["L"] =  "th_l.jpg";
-fsimages["M"] =  "th_m.jpg";
-fsimages["N"] =  "th_n.jpg";
-fsimages["O"] =  "th_o.jpg";
-fsimages["P"] =  "th_p.jpg";
-fsimages["Q"] =  "th_q.jpg";
-fsimages["R"] =  "th_r.jpg";
-fsimages["S"] =  "th_s.jpg";
-fsimages["T"] =  "th_t.jpg";
-fsimages["U"] =  "th_u.jpg";
-fsimages["V"] =  "th_v.jpg";
-fsimages["W"] =  "th_w.jpg";
-fsimages["X"] =  "th_x.jpg";
-fsimages["Y"] =  "th_y.jpg";
-fsimages["Z"] =  "th_z.jpg";
-fsimages["transition"] = "transition.jpg";
+function update_image(imageid, image) {
 
-function update_image(imageid, letter) {
-    $(imageid).attr('src', baseurl+fsimages[letter]);
+    $(imageid).attr('src', image); 
 }
 
-/* display a fingerspelling sign image or image sequence */
-/* TODO: display H and J image sequences */
-function display_letter(letter) { 
+/* an animation plan is a sequence of objects
+   with properties:
+   'src' - image source url
+   'time' -- time in milliseconds to display
+   
+    we have two procedures, one to build a plan given
+    a word, another to animate a plan
+*/
 
+function plan_string(str, speed) {
+    plan = [] 
+    for(var i=0; i<str.length; i++) {
+        plan = plan.concat(plan_letter(str[i], speed));
+        /* insert a transition between letters */
+        if (i<str.length-1) {
+            plan = plan.concat(plan_transition(speed));
+        }
+    }
+    return plan;
+}
+
+function plan_transition(speed) {
+    return( [{src: baseurl+fsimages["transition"], time: speed/5}]);
+}
+
+function plan_letter(letter, speed) { 
+    
+    letter = letter.toUpperCase();
+    
     if (fsimages[letter] == undefined) {
         letter = "transition";
     }
-    
-    /* set up the back image with the new letter */
-    update_image("#backimg", "transition");
-    /* fade out the main image */    
-    $("#mainimg").hide();
-    /* now replace the main image */
-    update_image("#mainimg", letter);
-    /* and fade it in */
-    $("#mainimg").fadeIn("slow");
-}
-
-
-function display_word(word) {
-    /* set the alt attribute of the image to the word in upper case */
-    $("#mainimg").attr('alt', word.toUpperCase());
-    display_alt_attr();
-}
-
-function display_alt_attr() {
-    word = $("#mainimg").attr('alt');
-    if (word != undefined) { 
-        display_letter(word[0]);
-        $("#handimage").find("img").attr('alt', word.substring(1));    
-        $.timer(1500, display_alt_attr);
+    /* check if we have one or multiple images */ 
+    if (typeof(fsimages[letter]) == 'object') {
+        /* a sequence, we animate them */
+        imglist = fsimages[letter];
+        result = [];
+        brieftime = speed/4;  /* ms time between images */
+        
+        for(var i=0; i<imglist.length; i++) {
+            result.push({src: baseurl+imglist[i], time: brieftime});
+        }
+        
+        return(result);
+        
+    } else {
+        return([{src: baseurl+fsimages[letter], time: speed}]);
     }
+}
+
+/* animate a plan
+   show the first image,
+   schedule animation of the remainder after the given delay
+*/
+function animate_plan(imageid, plan) { 
+    if (plan.length == 0) {
+        return
+    }
+    step = plan.shift();
+    update_image(imageid, step['src']);
+    /* define a callback function to do the rest */
+    var newfun = function () {
+        animate_plan(imageid, plan);
+    }
+    /* schedule newfn in a bit */
+    $.timer(step['time'], newfun);
+}
+
+
+function display_letter(imageid, letter, speed) {
+    plan = plan_letter(letter, speed);
+    animate_plan(imageid, plan);
+}
+
+
+function display_string(imageid, letter, speed) {
+    plan = plan_string(letter, speed); 
+    animate_plan(imageid, plan);
 }
 
 
