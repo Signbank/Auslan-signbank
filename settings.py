@@ -119,6 +119,9 @@ if production:
         '/var/django/auslan/templates'
     )
     
+    LOG_FILENAME = "/var/log/auslan-debug.log"
+    
+    
 else:
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
@@ -150,6 +153,9 @@ else:
     )
 
     EMAIL_HOST = 'smtp.ics.mq.edu.au'
+    
+    LOG_FILENAME = "debug.log"
+
 
 
 # location and URL for uploaded files
@@ -166,4 +172,5 @@ PAGES_VIDEO_LOCATION = 'pages/'
 # videos are stored here prior to copying over to the main
 # storage location
 VIDEO_UPLOAD_LOCATION = "upload/"
+
 
