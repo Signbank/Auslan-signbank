@@ -26,12 +26,10 @@ class PageVideoForm(forms.ModelForm):
         model = PageVideo
 
     def save(self, commit=True):
-        print "Saving a video form"
-        print "VideoName: ", self.cleaned_data['video']
-        print "cleaned data", self.cleaned_data
+        log("Saving a video form")
+        log("VideoName: %s" % (self.cleaned_data['video'],))
+        log("Cleaned data: %s" % (self.cleaned_data,))
         instance = super(PageVideoForm, self).save(commit=commit)
-        print "Instance:",  instance.video
-        return instance
 
 class PageVideoInline(admin.TabularInline):
     form = PageVideoForm

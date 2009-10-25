@@ -7,6 +7,8 @@ import sys, os, time, signal
 from subprocess import Popen, PIPE
 from tempfile import mkstemp
 
+from logging import debug
+
 class UploadedFLVFile(UploadedFile):
     """
     A file converted to FLV.
@@ -91,7 +93,7 @@ class VideoUploadToFLVField(forms.FileField):
             # the flv file, not the original but I can't 
             # create one of those from an existing file
             # so I use my own wrapper class            
-            print "Converted to flash: ", flvfile
+            debug("Converted to flash: " + flvfile)
 
             os.unlink(tmpname)
             return UploadedFLVFile(flvfile)
@@ -106,7 +108,7 @@ class VideoUploadToFLVField(forms.FileField):
                 
         ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-s", self.geometry, targetfile]
      
-        print ffmpeg
+        debug(ffmpeg)
         
         process =  Popen(ffmpeg, stdout=PIPE, stderr=PIPE)
         start = time.time()
@@ -115,6 +117,7 @@ class VideoUploadToFLVField(forms.FileField):
             if time.time()-start > settings.FFMPEG_TIMEOUT:
                 # we've gone over time, kill the process  
                 os.kill(process.pid, signal.SIGKILL)
+                debug("Killing ffmpeg process")
                 raise ValidationError("Conversion of video took too long. Please try another format.")
         
 
