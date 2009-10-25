@@ -77,7 +77,7 @@
 {% endblock %}
 
 
-{% block content %}
+{% block content %} <p>&nbsp;</p> {# needed to stop the table flying off to the right! #}
  
 <div id="hand">
   <div id="handimage">
@@ -91,7 +91,7 @@
 
   <h2>Speed</h2> 
   <div id="slider"></div>
-
+  <p>Adjust the slider for slower or faster playback.</p>
 </div> 
 
 
@@ -138,13 +138,14 @@
  </tr>
 </table>
 
+<div id="info">
 <p>This is the American Sign Language
 one-handed manual alphabet which is used in the United States and Canada. It
 is also used in many other countries and regions of the world, but usually
 with local variations and additions.</p>
 
 <p>Return to <a href="twohanded.html">two handed finger spelling</a></p>
-
+</div>
 
 {% endblock %}
 

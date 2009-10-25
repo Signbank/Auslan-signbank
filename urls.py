@@ -24,6 +24,9 @@ urlpatterns = patterns('',
     
     (r'^spell/twohanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingtwohanded.html'}),
     (r'^spell/onehanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingonehanded.html'}),
+    (r'^numbersigns.html$', direct_to_template, {'template': 'numbersigns/numbersigns.html'}),
+
+ 
     
     # compatibility with old links - intercept and return 401
     (r'^index.cfm', direct_to_template, {'template': 'compat.html',}),

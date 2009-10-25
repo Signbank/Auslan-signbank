@@ -321,9 +321,9 @@ body {
 #mainimg {
   z-index: 1;
 }
-#backimg {
-  z-image: 0;
+#fstable {
 }
+
 #fstable td {
   margin-right: -1em;
 }
@@ -335,6 +335,9 @@ body {
   font-size: large;
   color: #fff;
   text-align: center;
+}
+#info {
+   clear: both;
 }
 
 

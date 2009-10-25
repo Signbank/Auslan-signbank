@@ -78,6 +78,8 @@
 
 {% block content %}
  
+ <p>&nbsp;</p> {# needed to stop the table flying off to the right! #}
+ 
 <div id="hand">
   <div id="handimage">
     <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
@@ -90,7 +92,7 @@
 
   <h2>Speed</h2> 
   <div id="slider"></div>
-
+  <p>Adjust the slider for slower or faster playback.</p>
 </div> 
 
 
@@ -137,8 +139,9 @@
  </tr>
 </table>
 
+<div id="info">
 <p>One handed fingerspelling signs for Americal Sign Language are also available: <a href="onehanded.html">link</a></p>
-
+</div>
 
 {% endblock %}
 
