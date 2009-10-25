@@ -17,6 +17,15 @@ clips = [
  'ns_1g'         // 8
 ]
 
+config = {
+    plugins: { 
+	    controls: null 
+    },
+    play: { opacity: 0 },
+};
+
+flowplayer("player", "{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.swf", config);
+ 
 var currentNS = -1;
 
 function playNS(n) { 
@@ -50,17 +59,8 @@ function playNS(n) {
         in the table at right. The corresponding video will 
         then play in the viewer above.
       </p>
-  
-<script type="text/javascript" src="{% auslan_static_prefix %}/mediaplayer/swfobject.js"></script>
  
- 
-<div id="player">This text will be replaced</div>
-<script type="text/javascript">
-var so = new SWFObject('{% auslan_static_prefix %}/mediaplayer/player.swf','mpl','192','144','9');
-so.addParam('allowscriptaccess','always'); 
-so.addParam('flashvars','&controlbar=none&autostart=true');
-so.write('player');
-</script>
+<div id="player"></div>
 
 
       <table width="470" border="0" cellspacing="0" cellpadding="0">
