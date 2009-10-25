@@ -4,25 +4,24 @@
 {# add in the top level menu items from pages #}
 {% for item in menu %}
   <li {% if item.current %}class='current'{% endif %}><a href="{{item.url}}">{{item.title}}</a>
-  {% if item.children %}
-  <div class="submenu">
+  {% if item.children %} 
     <ul class="sf-submenu">
     {% for subitem in item.children %}
       <li {% if subitem.current %}class='current'{% endif %}><a href="{{subitem.url}}">{{subitem.title}}</a></li>
     {% endfor %} 
-    </ul>
-  </div>
+    </ul> 
   {% endif %}
   </li>
 {% endfor %}
 
 {% if user.is_staff %}
 <li><a>Staff</a>
-<ul> 
-<li><a href="/admin/">Admin</a></li>
-<li><a href="/feedback/show.html">View Feedback</a></li>
-<li><a href="/attachments/">File Attachments</a></li>
-</ul>
+    <ul> 
+        <li><a href="/admin/">Admin</a></li>
+        <li><a href="/feedback/show.html">View Feedback</a></li>
+        <li><a href="/attachments/">File Attachments</a></li>
+    </ul>
+</li>
 {% endif %}
 
 {% if user.is_authenticated %}

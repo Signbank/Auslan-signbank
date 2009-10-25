@@ -27,14 +27,16 @@ urlpatterns = patterns('',
     
     # compatibility with old links - intercept and return 401
     (r'^index.cfm', direct_to_template, {'template': 'compat.html',}),
-                       
+
    # (r'^accounts/login/', 'django.contrib.auth.views.login'),
         
     (r'^accounts/', include('auslan.registration.urls')),
     
     (r'^admin/doc/', include('django.contrib.admindocs.urls')), 
     (r'^admin/(.*)', admin.site.root),
-    
+
+
+    (r'^test.html$', 'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),    
 )
 
 
