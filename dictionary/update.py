@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings 
 from django.contrib.auth.decorators import permission_required
-
+from auslan.log import debug
 
 import os
 
@@ -74,6 +74,7 @@ def update_video(request, glossid, flavour='dictionary'):
             if form.cleaned_data.has_key('videofile'):
                 video = form.cleaned_data['videofile']
                 # copy to comment video location
+                debug("video name is %s" % video.name)
                 basename = os.path.split(video.name)[-1]
                 # this will be the path to the video, relative to MEDIA_ROOT
                 videofile = os.path.join(settings.VIDEO_UPLOAD_LOCATION, basename)
