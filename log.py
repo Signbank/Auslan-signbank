@@ -4,7 +4,8 @@ import sys
 from django.conf import settings
 
 def init_logging():
-    logging.basicConfig(filename=settings.LOG_FILENAME, level=logging.DEBUG)
+    logging.basicConfig(filename=settings.LOG_FILENAME, level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def debug(msg):
     logging.debug(msg)

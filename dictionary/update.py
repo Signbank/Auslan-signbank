@@ -73,8 +73,7 @@ def update_video(request, glossid, flavour='dictionary'):
         if form.is_valid(): 
             if form.cleaned_data.has_key('videofile'):
                 video = form.cleaned_data['videofile']
-                # copy to comment video location
-                debug("video name is %s" % video.name)
+                # copy to comment video location 
                 basename = os.path.split(video.name)[-1]
                 # this will be the path to the video, relative to MEDIA_ROOT
                 videofile = os.path.join(settings.VIDEO_UPLOAD_LOCATION, basename)
@@ -108,6 +107,7 @@ def update_video(request, glossid, flavour='dictionary'):
                     os.link(newlocation, backup)
                  
                 os.rename(fullpath, newlocation)
+                debug("Replaced video file: %s" % newlocation)
                 status = "completed"
     else: 
         form = VideoUpdateForm()
