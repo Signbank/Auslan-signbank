@@ -37,7 +37,12 @@
 $(document).ready(function(){
   
   /* initialise navigation menus */
-  $('.sf-menu').superfish({pathLevels: 1, dropShadows: false, pathClass: 'current'});
+  $('.sf-menu').superfish({
+        pathLevels: 1,
+        dropShadows: false,
+        pathClass: 'current',
+        delay: 1000
+        });
   
   {% block jqueryready %}
   
