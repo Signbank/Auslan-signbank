@@ -347,9 +347,9 @@ body {
   width: 75px;
 }
 #fstable td div {
-/*  margin-top: -1.4em; */
+  margin-top: -1.4em; 
   font-size: large;
-  color: #000;
+  color: #fff;
   text-align: center;
 }
 #info {
