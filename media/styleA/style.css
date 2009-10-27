@@ -302,7 +302,8 @@ body {
 
 
 #footer { 
-   background-color: #F0FFDF;   
+   background-color: #e3e3e3;
+   border-top: 1px solid #ccc;   
    margin: 0px;
    padding: 0px;
    height: 50px;
