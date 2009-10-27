@@ -4,6 +4,7 @@ from auslan.pages.models import Page, PageVideo
 from auslan.video.fields import VideoUploadToFLVField
 from django.utils.translation import ugettext_lazy as _
 
+from auslan.log import debug
 
 class PageForm(forms.ModelForm):
     url = forms.RegexField(label=_("URL"), max_length=100, regex=r'^[-\w/]+$',
@@ -26,10 +27,12 @@ class PageVideoForm(forms.ModelForm):
         model = PageVideo
 
     def save(self, commit=True):
-        log("Saving a video form")
-        log("VideoName: %s" % (self.cleaned_data['video'],))
-        log("Cleaned data: %s" % (self.cleaned_data,))
+        debug("Saving a video form")
+        debug("VideoName: %s" % (self.cleaned_data['video'],))
+        debug("Cleaned data: %s" % (self.cleaned_data,))
         instance = super(PageVideoForm, self).save(commit=commit)
+        debug("Instance video: %s" % instance.video)
+        return instance
 
 class PageVideoInline(admin.TabularInline):
     form = PageVideoForm

@@ -47,8 +47,7 @@ html {
 /* style for the layout of word definitions */
 #signinfo {
    background-color: #1B1D1F;
-   color: #FFF;
-   padding-bottom: 3px;
+   color: #FFF; 
 }
 #signinfo h2 { 
    font-size: small;
@@ -89,17 +88,10 @@ html {
 
 
 #videocontainer { 
-   background-color:  #1B1D1F;
-   width: 332px;
+
+   background-color:  #1B1D1F; 
 }
-#videocontainer object {
-   margin-left: 6px;
-   margin-right: 6px;
-}
-#videocontainer #player {
-   margin-left: 6px;
-   margin-right: 6px;
-}
+
 
 #videoreplay {
    font-weight: bold;

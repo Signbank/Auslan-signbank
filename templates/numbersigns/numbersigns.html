@@ -24,7 +24,7 @@ config = {
     play: { opacity: 0 },
 };
 
-flowplayer("player", "{% auslan_static_prefix %}flowplayer3/flowplayer-3.0.2.swf", config);
+flowplayer("player", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config);
  
 var currentNS = -1;
 
@@ -42,28 +42,21 @@ function playNS(n) {
         img.src = "{% auslan_static_prefix %}img/"+clips[n]+"_select.jpg";
 	
 	var player = document.getElementById('player');
-	console.log("{% auslan_static_prefix %}flash/"+clips[n]+".flv");	
-	player.sendEvent("LOAD", "{% auslan_static_prefix %}flash/"+clips[n]+".flv");
-	player.sendEvent("PLAY");
+	videourl = "{% auslan_static_prefix %}flash/"+clips[n]+".flv";	
+	flowplayer('player').play(videourl);
     }
 }
 
 {% endblock %}
  
-
+{% block bodyid %}id='numbersigns'{% endblock %}
 {% block content %}
 
-<p>
-        To view signs used to express numbers from ten to 
-        one billion, click a sign          
-        in the table at right. The corresponding video will 
-        then play in the viewer above.
-      </p>
- 
+<div id="videocontainer">
 <div id="player"></div>
+</div>
 
-
-      <table width="470" border="0" cellspacing="0" cellpadding="0">
+      <table id="numsigntable" width="470" border="0" cellspacing="0" cellpadding="0">
         <tr><td colspan="5"><img src="{% auslan_static_prefix %}img/ns_001-009.jpg" width="470" height="129" alt=""></td></tr>
         <tr>
           <td><a href="javascript:playNS(0)"><img id='ns_010' src="{% auslan_static_prefix %}img/ns_010.jpg" width="95" height="91" alt="" border="0"></a><br></td>
@@ -80,5 +73,10 @@ function playNS(n) {
           <td><img src="{% auslan_static_prefix %}img/ns_empty.gif" width="93" height="92" alt="" border="0"><br></td>
         </tr>
       </table>
-      
+     <p>
+        To view signs used to express numbers from ten to 
+        one billion, click a sign          
+        in the table at above right. The corresponding video will 
+        then play in the viewer above.
+      </p> 
 {% endblock %}
