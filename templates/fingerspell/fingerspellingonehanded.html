@@ -58,14 +58,17 @@
   /* fill out the table of signs */
   
   $("#fstable td").each(function() {
-      letter = $(this).attr("id");
+      letter = $(this).attr("id"); 
       if (letter != undefined) { 
 	if (typeof(fsimages[letter]) == 'object') {
-	  image = fsimages[letter][0];
+	  imagesrc = fsimages[letter][0];
 	} else {
-	  image = fsimages[letter];
+	  imagesrc = fsimages[letter];
 	}
-        $(this).append("<img src='"+baseurl+image+"' alt='"+letter+">");
+	/* make a new image */
+	var image = new Image();
+	$(image).attr('src', baseurl+imagesrc);
+	$(this).append(image); 
         $(this).append("<div>"+letter+"</div>");
 	$(this).click(function() {
 	    display_letter("#mainimg", $(this).attr("id"), 1500-$("#slider").slider('option', 'value'));
