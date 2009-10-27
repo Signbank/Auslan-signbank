@@ -38,7 +38,7 @@ body {
 #content {
    margin: 0px;
    padding-left: 1em;
-   padding-right: 1em;
+   padding-right: 1em; 
 }
 
 /* Two border divs on the left and right
@@ -82,7 +82,8 @@ body {
 
 #signinfo h2 {
    margin: 0px;
-   padding: 6px;
+   padding-left: 6px;
+   padding-bottom: 6px;
 }
 #signinfo .prev {
    padding-left: 6px;
@@ -100,8 +101,7 @@ body {
 #signs { 
    margin-right: 0em;
    text-align: left;
-   float: left;
-   height: 50px;
+   float: left; 
    width: 338px;  /* to match rh edge of video container */
 }
 
@@ -111,18 +111,19 @@ body {
 }
 
 #definitionblock {
-   margin-top: 0em;
+   border-top: 1px solid #000; 
+   margin-top: 0px;
    background-color: #FFF;
 }
 
 #leftblock {
    float: left; 
    margin-left: 6px;
-   margin-top: -2px;  /* need to align with #signinfo above*/
+    
 }
 
 #videocontainer {
-   width: auto;
+   width: 320px;
 }
 #videocontainer #player {
    margin: auto;
@@ -148,6 +149,17 @@ body {
 }
 
 
+#numbersigns #videocontainer  {
+   float: left;   
+}
+#numbersigns #numsigntable { 
+   float: left;
+   margin-left: 10px;
+}
+#numbersigns p {
+   float: left;
+}
+
 #states {
    text-align: center;
    margin-left: auto;
@@ -165,20 +177,24 @@ body {
 /* styles for the pages app */
 
 #pages #videocontainer {
+   background-color: #000;
    margin-left: auto;
-   margin-right: auto; 
+   margin-right: auto;
+   width: 330px;
 }
 
 #pages #videocontainer #player {
-   margin: auto;
-   width:320px;
-   height:240px;
+   width: 320px;
+   height: 240px; 
+}
+#pages #videocontainer #player object {
+   margin-top: -11px; /* not sure why this is needed */
 }
 
 #pages #videocontainer table {
-   height: 2em;
    width: 100%;
    text-align: center;
+   background-color: #000;
 }
 
 #pages #videocontainer a:link, #pages #videocontainer a:visited {
@@ -319,9 +335,6 @@ body {
   display: block;
   margin: auto;
 }
-#mainimg {
-  z-index: 1;
-}
 #fstable {
 }
 
@@ -332,9 +345,9 @@ body {
   width: 75px;
 }
 #fstable td div {
-  margin-top: -1.4em;
+/*  margin-top: -1.4em; */
   font-size: large;
-  color: #fff;
+  color: #000;
   text-align: center;
 }
 #info {
