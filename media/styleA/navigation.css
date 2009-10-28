@@ -14,10 +14,13 @@
 
 
 .sf-navbar {
-  background-color:    #e3e3e3; 
+  background-color:    #e3e3e3;
 }
 .sf-navbar li {
-  background:	       #e3e3e3; 
+  background-color:	       #e3e3e3;
+  border-right:  1px solid #ccc;
+  border-bottom:  1px solid #ccc;
+  
 }
 
 .sf-navbar li.current {

@@ -1,6 +1,9 @@
 {% extends "baselayout.html" %}
 
 {% block jqueryready %}
+
+{% if page.pagevideo_set.all %}
+
     config = {
         plugins: { 
                 controls: {
@@ -17,10 +20,12 @@
         play: { opacity: 0 }
     };
     flowplayer("player", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config);
+{% endif %}
 
 {% endblock %}
 
 {% block script %}
+{% if page.pagevideo_set.all %}
     function play(url) {
         $f('player').play(url);
     }
@@ -28,6 +33,7 @@
     function replay() {
         $f('player').play();
     }
+{% endif %}
 {% endblock %}
 
 {% block bodyid %}id='pages'{% endblock %}
