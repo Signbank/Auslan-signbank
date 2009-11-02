@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import models as authmodels
 from django.conf import settings
+import os.path
 
 # Models for file attachments uploaded to the site
 # basically just a simple container for files
@@ -8,7 +9,7 @@ from django.conf import settings
 
 class Attachment(models.Model):
     
-    file = models.FileField(upload_to='/media')
+    file = models.FileField(upload_to='upload/attachments')
     description = models.TextField(blank=True)
     date = models.DateField(auto_now=True)
     uploader = models.ForeignKey(authmodels.User)
