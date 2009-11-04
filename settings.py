@@ -11,7 +11,10 @@ DEFAULT_FROM_EMAIL = "webmaster@auslan.org.au"
 TIME_ZONE = 'Australia/Sydney'
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1          
+# site_id
+#   1 = www.auslan.org.au
+#   2 = beta.auslan.org.au
+SITE_ID = 2
 USE_I18N = True
 
 # URL for login, used by automatic redirects to login 
