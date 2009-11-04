@@ -72,6 +72,7 @@ class RegistrationProfileAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'activation_key_expired', )
     search_fields = ('user__username', 'user__first_name', )
  
+ 
    
 admin.site.register(Gloss, GlossAdmin) 
 admin.site.register(Keyword, KeywordAdmin) 

@@ -447,8 +447,6 @@ class Gloss(models.Model):
         else:
             all = Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('sn')
 
-        print "Next: ", self.sn, all
-
         if len(all) > 0:
             return all[0]
         else:
@@ -460,9 +458,7 @@ class Gloss(models.Model):
             all = Gloss.objects.filter(Q(sn__lt=self.sn), Q(healthtf__exact=True) | Q(InMedLex__exact=True)).order_by('-sn')
         else:
             all = Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('-sn')
-
-        print "Prev: ", self.sn, all
-
+ 
         if len(all) > 0:
             return all[0]
         else:
