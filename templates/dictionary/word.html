@@ -44,12 +44,12 @@
 
             {% if navigation.prev %}
             <div class="prev">
-              <a href="/{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&lt;Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
+              <a href="/{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
             </div>
             {% endif %}
             {% if navigation.next %}
             <div class="next">
-             <a href="/{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign&gt;</a>
+             <a href="/{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign &raquo;</a>
             </div>
             {% endif %}
     </div>

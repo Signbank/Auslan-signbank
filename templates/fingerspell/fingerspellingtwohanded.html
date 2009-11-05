@@ -57,8 +57,8 @@
   /* fill out the table of signs */
   
   $("#fstable td").each(function() {
-      letter = $(this).attr("id"); 
-      if (letter != undefined) { 
+      letter = $(this).attr("id");
+      if ($(this).attr("class") != 'blank') { 
 	if (typeof(fsimages[letter]) == 'object') {
 	  imagesrc = fsimages[letter][0];
 	} else {
@@ -79,9 +79,7 @@
 {% endblock %}
 
 
-{% block content %}
- 
- <p>&nbsp;</p> {# needed to stop the table flying off to the right! #}
+{% block content %} 
  
 <div id="hand">
   <div id="handimage">
@@ -136,8 +134,8 @@
    <td id="Y"></td>
  </tr>
  <tr>
-   <td></td>
-   <td colspan='3'><p>Click on images to view.</p></td>
+   <td class='blank'></td>
+   <td colspan='3' class='blank'><p>Click on images to view.</p></td>
    <td id="Z"></td>
  </tr>
 </table>

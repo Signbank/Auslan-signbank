@@ -84,16 +84,27 @@ body {
    margin: 0px;
    padding-left: 6px;
    padding-bottom: 6px;
+   font-weight: normal;
 }
-#signinfo .prev {
-   padding-left: 6px;
-   float: left;
+#signinfo .prev { 
+   float: left; 
 }
 
 #signinfo .next {
-   float: right;
+   float: right; 
+}
+
+#signinfo .prev, #signinfo .next {
+   font-size: smaller;
+   font-variant: small-caps;
+   padding-left: 6px;
    padding-right: 6px;
 }
+
+#signinfo .prev:hover, #signinfo .next:hover {  
+   border: 1px outset #fff; 
+}
+
 
 #signnav { 
 }
@@ -205,6 +216,14 @@ body {
 
 #pages #editbutton {
    float: right;
+}
+
+#pages h1, #pages h2, #pages h3 {
+   font-family: Georgia, serif;
+   font-weight: normal;
+   font-variant: small-caps;
+ 
+   margin-bottom: 0;
 }
 
 /* table of links in the mainpage template */

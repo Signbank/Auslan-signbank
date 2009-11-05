@@ -2,14 +2,18 @@
 /* Fonts */
 
 body {
-   font-family: arial,helvetica,sans-serif;
+   font-family: Trebuchet,helvetica,sans-serif;
    font-size: 10pt;
 }
 h1, h2, h3 {
-   font-family: Arial Rounded MT Bold, Trebuchet, sans-serif;
+   font-family:  Trebuchet, sans-serif;
 }
 
 #states span {
    font-size: small;
    color: #aaa;
+}
+
+#pages #content {
+   font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
 }
