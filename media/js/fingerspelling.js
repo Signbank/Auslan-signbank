@@ -20,7 +20,27 @@ jQuery.clearTimer = function(a){
 
 
  
-
+function fill_fstable () {
+      /* fill the fingerspell table with images */
+      $("#fstable td").each(function() {
+      letter = $(this).attr("id");
+      if ($(this).attr("class") != 'blank') { 
+	if (typeof(fsimages[letter]) == 'object') {
+	  imagesrc = fsimages[letter][0];
+	} else {
+	  imagesrc = fsimages[letter];
+	}
+	/* make a new image */
+	var image = new Image();
+	$(image).attr('src', baseurl+imagesrc);
+	$(this).append(image); 
+        $(this).append("<div>"+letter+"</div>");
+	$(this).click(function() {
+	    display_letter("#mainimg", $(this).attr("id"), 1500-$("#slider").slider('option', 'value'));
+	});
+      }
+  });
+}
 
 function update_image(imageid, image) {
 
