@@ -55,25 +55,8 @@
     });
 
   /* fill out the table of signs */
-  
-  $("#fstable td").each(function() {
-      letter = $(this).attr("id");
-      if ($(this).attr("class") != 'blank') { 
-	if (typeof(fsimages[letter]) == 'object') {
-	  imagesrc = fsimages[letter][0];
-	} else {
-	  imagesrc = fsimages[letter];
-	}
-	/* make a new image */
-	var image = new Image();
-	$(image).attr('src', baseurl+imagesrc);
-	$(this).append(image); 
-        $(this).append("<div>"+letter+"</div>");
-	$(this).click(function() {
-	    display_letter("#mainimg", $(this).attr("id"), 1500-$("#slider").slider('option', 'value'));
-	});
-      }
-  });
+  fill_fstable();  
+
   /* slider is 0-1000, we use 1500-value as the speed value */
   $("#slider").slider({min: 0, max: 1000, value: 500});
 {% endblock %}

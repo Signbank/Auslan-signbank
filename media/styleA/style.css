@@ -357,7 +357,8 @@ body {
   display: block;
   margin: auto;
 }
-#fstable {
+#fstable { 
+   float: left;
 }
 
 #fstable td {
