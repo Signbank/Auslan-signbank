@@ -48,38 +48,45 @@
 
 {% block jqueryready %} 
 
-  $('#inputarea').submit( function() {
+function fingerspell_play() {
       speed = 1500-$("#slider").slider("option", "value");
       display_string("#mainimg", $('#text').val(), speed);
       return false;
-    });
+    }
 
+  $('#inputarea').submit( fingerspell_play );
+  $('#replay').click( fingerspell_play );
+  
   /* fill out the table of signs */
   fill_fstable();  
 
   /* slider is 0-1000, we use 1500-value as the speed value */
   $("#slider").slider({min: 0, max: 1000, value: 500});
+  
 {% endblock %}
 
 
 {% block content %} 
  
-<div id="hand">
-  <div id="handimage">
-    <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
-  </div>
+<div id="fingerspellblock">
+  <div id="leftblock"> 
+    <div id="handcontainer">
+      <div id="handimage">
+	<img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+      </div>
+      <div id="replay">REPLAY</div>
+    </div>
+  
+    <form id="inputarea">
+      <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
+      </p>
+    </form>
+   
+    <div id="slider"></div>
+    <p>Adjust the slider for slower or faster playback.</p>
+  </div> 
 
-  <form id="inputarea">
-    <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
-    </p>
-  </form>
-
-  <h2>Speed</h2> 
-  <div id="slider"></div>
-  <p>Adjust the slider for slower or faster playback.</p>
-</div> 
-
-
+<div id="fingerspellright">
 <table id="fstable">
  <tr>
    <td id="A"></td>
@@ -123,10 +130,13 @@
  </tr>
 </table>
 
-<div id="info">
-<p>One handed fingerspelling signs for Americal Sign Language are also available: <a href="onehanded.html">link</a></p>
+  <div id="info">
+  <p>One handed fingerspelling signs for American Sign Language
+  are also available: <a href="onehanded.html">link</a></p>
+  </div>
 </div>
-
+</div>
+  
 {% endblock %}
 
 

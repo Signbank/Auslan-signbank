@@ -92,8 +92,8 @@ html {
    background-color:  #1B1D1F; 
 }
 
-
-#videoreplay {
+/* replay block below both videos and fingerspelling images */
+#replay {
    font-weight: bold;
    font-variant: small-caps;
    color: #5C9ACB;
@@ -106,6 +106,13 @@ html {
    padding-right: 32px;
 
 }
+
+
+#handcontainer { 
+
+   background-color:  #1B1D1F; 
+}
+
 
 #keywords {  
 }
