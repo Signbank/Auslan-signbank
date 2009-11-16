@@ -12,7 +12,8 @@
         clip: {
             url: '{% auslan_media_prefix %}{{ videofile }}',
             autoplay: true
-        }
+        },
+        onFullscreen: function() {return false;},
     };
     flowplayer("player", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config);
  
