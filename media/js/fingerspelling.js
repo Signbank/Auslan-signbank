@@ -123,6 +123,7 @@ function display_letter(imageid, letter, speed) {
 
 
 function display_string(imageid, letter, speed) {
+    /* TODO: interrupt any playing animations before starting */
     plan = plan_string(letter, speed); 
     animate_plan(imageid, plan);
 }
