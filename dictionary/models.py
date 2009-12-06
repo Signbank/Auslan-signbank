@@ -415,7 +415,6 @@ class Gloss(models.Model):
         else:
             result['next'] = self.next_dictionary_gloss(is_staff)
             result['prev'] = self.prev_dictionary_gloss(is_staff)
-        print "Navigation: ", result
         return result
 
     def next_dictionary_gloss(self, staff=False):
