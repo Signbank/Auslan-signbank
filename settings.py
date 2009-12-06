@@ -91,7 +91,7 @@ import socket
 production = (socket.gethostname() == 'web106.webfaction.com')
 
 if production:
-    DEBUG = True
+    DEBUG = False
     TEMPLATE_DEBUG = DEBUG
     EMAIL_HOST =  "localhost"
     
