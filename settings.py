@@ -88,41 +88,41 @@ LOGIN_REDIRECT_URL = '/feedback/'
 
 # look at the hostname to see if we're on the production server
 import socket
-production = (socket.gethostname() == 'stevecassidy.net')
+production = (socket.gethostname() == 'web106.webfaction.com')
 
 if production:
-    DEBUG = False
+    DEBUG = True
     TEMPLATE_DEBUG = DEBUG
     EMAIL_HOST =  "localhost"
     
     DATABASE_ENGINE = 'mysql'          
-    DATABASE_NAME = 'auslan'          
-    DATABASE_USER = 'auslan'            
-    DATABASE_PASSWORD = 'trevorC5A'        
+    DATABASE_NAME = 'stevecassidy_aln'          
+    DATABASE_USER = 'stevecassidy_aln'            
+    DATABASE_PASSWORD = 'pigeon59'        
     DATABASE_HOST = ''             
     DATABASE_PORT = '' 
     
     # Absolute path to the directory that holds media. 
-    MEDIA_ROOT = '/var/www-auslan-media/'
+    MEDIA_ROOT = '/home/stevecassidy/webapps/home/auslan-video/'
     # URL that handles the media served from MEDIA_ROOT. 
-    MEDIA_URL = '/media/'
+    MEDIA_URL = 'http://media.auslan.org.au/auslan-video/'
     
     # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
     # trailing slash.
-    ADMIN_MEDIA_PREFIX = '/djangomedia/'
+    ADMIN_MEDIA_PREFIX = 'http://djangomedia.stevecassidy.webfactional.com/'
     
     # Ditto for static files from the Auslan site (css, etc) with trailing slash 
-    AUSLAN_STATIC_PREFIX = "/media/media-beta/"
+    AUSLAN_STATIC_PREFIX = "http://media.auslan.org.au/auslan-static/"
     
     # location of ffmpeg, used to convert uploaded videos
-    FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
+    FFMPEG_PROGRAM = "/usr/local/bin/ffmpeg"
     FFMPEG_TIMEOUT = 60
     
     TEMPLATE_DIRS = (
-        '/var/django/auslan/templates'
+        '/home/stevecassidy/webapps/auslan/auslan/templates'
     )
     
-    LOG_FILENAME = "/var/log/auslan-debug.log"
+    LOG_FILENAME = "/home/stevecassidy/logs/user/auslan-debug.log"
     
     
 else:
