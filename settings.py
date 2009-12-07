@@ -14,7 +14,7 @@ LANGUAGE_CODE = 'en-us'
 # site_id
 #   1 = www.auslan.org.au
 #   2 = beta.auslan.org.au
-SITE_ID = 2
+SITE_ID = 1
 USE_I18N = True
 
 # URL for login, used by automatic redirects to login 
