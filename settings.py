@@ -103,7 +103,7 @@ if production:
     DATABASE_PORT = '' 
     
     # Absolute path to the directory that holds media. 
-    MEDIA_ROOT = '/home/stevecassidy/webapps/home/auslan-video/'
+    MEDIA_ROOT = '/home/stevecassidy/webapps/auslanstatic/auslan-video/'
     # URL that handles the media served from MEDIA_ROOT. 
     MEDIA_URL = 'http://media.auslan.org.au/auslan-video/'
     
