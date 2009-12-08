@@ -37,8 +37,11 @@ class UploadedFLVFile(UploadedFile):
         #debug("moving %s to %s (%s)" % (self.fullname, location, self._name))
         # use fullname here because name has been clobbered by UploadedFile
         # need shutil.copy not os.rename because temp dir might be a different device
-        shutil.copy(self.fullname, location)
+        source = self.fullname
+        shutil.copy(source, location)
         self.name = location
+        # remove the original
+        os.unlink(source)
         
     def delete(self):
         """Remove the file"""
