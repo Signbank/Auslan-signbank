@@ -2,6 +2,36 @@
 
 {% block pagetitle %}Auslan Update Video for Gloss{% endblock %}
 
+{% block jqueryready %}
+    config1 = {
+        plugins: { 
+                controls: null 
+        },
+        play: { opacity: 0 },
+        clip: {
+            url: '{% auslan_media_prefix %}{{ gloss.get_video_url }}',
+            autoplay: true
+        },
+        onBeforeFullscreen: function() {return false;}
+    };
+    config2 = {
+        plugins: { 
+                controls: null 
+        },
+        play: { opacity: 0 },
+        clip: {
+            url: '{% auslan_media_prefix %}{{ videofile }}',
+            autoplay: true
+        },
+        onBeforeFullscreen: function() {return false;}
+    };
+    flowplayer("player1", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config1);
+    flowplayer("player2", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config1);
+ 
+    $('#feedbackmessage').fadeOut(5000);
+    
+{% endblock %}
+
 {% block content %}
 <div style='margin-left: auto; margin-right: auto; text-align: center;'>
 <h2>Update Video for Gloss <em>{{gloss.idgloss}}</em></h2>
@@ -26,45 +56,12 @@
   <tr><th>Existing Video</th><th>New Video</th></tr>
 </thead>
 <tbody>
-  <tr><td>
-<object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-        width="192" height="144" id="FlowPlayer">
-                          <param name="allowScriptAccess" value="always" />
-                          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-                          <param name="quality" value="high" />
-                          <param name="scale" value="noScale" />
-                          <param name="wmode" value="transparent" /> 
-                          <param name="flashvars"
-                                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ gloss.get_video_url }}' }  ], 
-                                                autoPlay: true, 
-                                                autoBuffering: false, 
-                                                loop: false, 
-                                                autoRewind: true,   
-                                                hideControls: true}" 
-                          />
-                       </object>
-    </td>
-    <td>           
-
-<object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-        width="192" height="144" id="FlowPlayer">
-                          <param name="allowScriptAccess" value="always" />
-                          <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-                          <param name="quality" value="high" />
-                          <param name="scale" value="noScale" />
-                          <param name="wmode" value="transparent" /> 
-                          <param name="flashvars"
-                                value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ videofile }}' }  ], 
-                                                autoPlay: true, 
-                                                autoBuffering: false, 
-                                                loop: false, 
-                                                autoRewind: true,   
-                                                hideControls: true}" 
-                          />
-                       </object>
-    </td>
-    </tr>
-    <tr>
+  <tr>
+    <td><div id="player1"></div></td>
+    <td><div id="player2"></div></td>        
+  </tr>
+  
+  <tr>
     <td colspan="2">
     <form method="POST">
     <input type="hidden" name="confirmvideofile" value="{{videofile}}"/> 
@@ -73,7 +70,7 @@
     <button name="Cancel" value="cancel">Cancel</button>
     </form>
     </td>
-    </tr>
+  </tr>
     
   </tbody>
 </table>
