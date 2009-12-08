@@ -3,36 +3,42 @@
 {% block pagetitle %}Auslan Update Video for Gloss{% endblock %}
 
 {% block jqueryready %}
-    config1 = {
-        plugins: { 
-                controls: null 
-        },
-        play: { opacity: 0 },
-        clip: {
-            url: '{% auslan_media_prefix %}{{ gloss.get_video_url }}',
-            autoplay: true
-        },
-        onBeforeFullscreen: function() {return false;}
-    };
-    config2 = {
-        plugins: { 
-                controls: null 
-        },
-        play: { opacity: 0 },
-        clip: {
-            url: '{% auslan_media_prefix %}{{ videofile }}',
-            autoplay: true
-        },
-        onBeforeFullscreen: function() {return false;}
-    };
-    flowplayer("player1", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config1);
-    flowplayer("player2", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config2);
+
+  flowplayer("player1", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", '{% auslan_media_prefix %}{{ gloss.get_video_url }}'); 
+  flowplayer("player2", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", '{% auslan_media_prefix %}{{ videofile }}'); 
   
-    
 {% endblock %}
 
+{% block extrahead %}
+
+<style type="text/css">
+
+td .player {
+   width: 320px;
+}
+.player {
+   margin: auto;
+   width:320px;
+   height:240px;
+   border-left: 6px solid black;
+   border-right: 6px solid black;
+}
+
+#container {
+  text-align: center;
+  padding: 2em;
+}
+#videos {
+  width: 100%;
+  margin: auto;
+}
+</style>
+
+{% endblock %}
+
+
 {% block content %}
-<div style='margin-left: auto; margin-right: auto; text-align: center;'>
+<div id="container">
 <h2>Update Video for Gloss <em>{{gloss.idgloss}}</em></h2>
 
 {% ifequal status "cancelled" %}
@@ -50,14 +56,15 @@
 
 {% ifequal status "form" %}
 {% if videofile %}
-<table style='margin-left: auto; margin-right; auto;'>
+
+<table id="videos">
 <thead>
   <tr><th>Existing Video</th><th>New Video</th></tr>
 </thead>
 <tbody>
   <tr>
-    <td><div id="player1"></div></td>
-    <td><div id="player2"></div></td>        
+    <td><div class='player' id="player1"></div></td>
+    <td><div class='player' id="player2"></div></td>        
   </tr>
   
   <tr>
