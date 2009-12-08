@@ -7,6 +7,7 @@ import sys, os, time, signal
 from subprocess import Popen, PIPE
 from tempfile import mkstemp
 from auslan.log import debug
+import shutil
 
 from logging import debug
 
