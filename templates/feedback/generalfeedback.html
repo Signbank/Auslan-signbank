@@ -9,11 +9,14 @@
      
 
 {% block content %}
- <p class="asbCFrameLeftText">Please enter any comments you may have about this site and click "submit" to send your feedback to us. We value your contributions and comments.</p>
+
 
 {% if valid %}
-  <p>Thanks for your comment.</p>
+  <p>"Thanks for your comment. We value your contribution."</p>
 {% else %}
+   <p>Please enter any comments you may have about this site and click
+   "submit" to send your feedback to us. We value your contributions and comments.</p>
+   
   <form method="post" name="general" enctype="multipart/form-data">
     
     <div id="{{form.comment.name}}Div" class="formcomponent">
