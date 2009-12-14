@@ -189,12 +189,10 @@ def search(request, flavour='dictionary'):
             # as appropriate, do this by redirecting so that the page
             # url is correct always
             if request.GET.has_key('msb') and flavour == 'dictionary':
-                newurl = request.path.replace('dictionary', 'medical')
-                print "redirecting", request.path, "to", newurl
+                newurl = request.path.replace('dictionary', 'medical') 
                 return HttpResponseRedirect("%s?query=%s&msb=1" % (newurl, term))
             elif not request.GET.has_key('msb') and flavour == 'medical':
-                newurl = request.path.replace('medical', 'dictionary')
-                print "redirecting", request.path, "to", newurl
+                newurl = request.path.replace('medical', 'dictionary') 
                 return HttpResponseRedirect(newurl+"?query="+term)
             
             
