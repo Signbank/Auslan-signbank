@@ -163,13 +163,27 @@ body {
    padding-left: 6px;
 }
 
-
-#numbersigns #videocontainer  {
-   float: left;   
+#numbersigns {
+   border-top: 10px solid black;
 }
+#numbersigns #videocontainer  {
+   float: left;
+   margin-top: -2px;
+}
+ 
+#numbersigns #videocontainer #player {
+   margin: auto;
+   width:320px;
+   height:240px;
+   border-left: 6px solid black;
+   border-right: 6px solid black;
+}
+
+
+
 #numbersigns #numsigntable { 
    float: left;
-   margin-left: 10px;
+   margin-left: 20px;
 }
 #numbersigns p {
    float: left;
