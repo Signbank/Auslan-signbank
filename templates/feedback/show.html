@@ -155,9 +155,9 @@ jQuery(document).ready(function(){
     </div>
     <div class="commentbody">
     {% if fb.video %}  
-     <div class="feedbackvideo">
-       <a href="{% auslan_media_prefix %}{{fb.video}}">Video</a>
-     </div>
+	 <div class="feedbackvideo">
+	   <div class='video' id="missing-video-{{fb.id}}">{% auslan_media_prefix %}{{fb.video}}</div>
+	 </div>
     {% endif %}
      <dl>
       <dt>Handform</dt><dd>{{fb.get_handform_display}}</dd>
