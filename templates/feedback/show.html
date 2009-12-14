@@ -2,15 +2,46 @@
 
 {% block script %}
 
+/* reveal a comment, possibly including a video */
+togglecomment = function() {
+  if ($(this).hasClass('showing')) {
+    $(this).children('.commentbody').hide();
+    $(this).removeClass('showing');
+    $(this).find('.indicator').removeClass('ui-icon-minus').addClass('ui-icon-plus');
+    console.log(this);
+    /* remove any flowplayer instances */
+    $(this).find('.feedbackvideo').each(function(){ 
+	$(this).find('object').remove(); 
+    });
+    
+  } else {
+    $(this).children('.commentbody').show();
+    $(this).addClass('showing');
+    $(this).find('.indicator').removeClass('ui-icon-plus').addClass('ui-icon-minus');
+    console.log(this);
+    
+    $(this).find('.feedbackvideo').each(function(){ 
+	  div = $(this).children('.video');
+	  id = div.attr('id');
+	  url = div.text();
+	  /* why the f*** do I need to do this twice!!! */
+	  /* player doesn't appear until the second time with only one call */
+	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
+	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
+	});
+    
+    
+  }
+}
+
 jQuery(document).ready(function(){
-	$(".showbutton").toggle(
-	    /* I don't understand why the button labels need to be transposed here */
-	    function(){ $(this).html("Hide"); $(this).parents(".head").next().show(); },
-	    function(){ $(this).html("Show"); $(this).parents(".head").next().hide(); }
-	);
+ 
+	$('.comment').click(togglecomment);
+	
 	$('.commentbody').hide();
 	
 	$('.delete').click(function() {
+	  alert("Delete this comment");
 	  parent = $(this).parents(".head");
 	  parts = parent.attr("id").split("-");
 	  kind = parts[0];
@@ -21,10 +52,37 @@ jQuery(document).ready(function(){
 	     $(parent).parents("li").remove();
 	  })
 	})
-	
+	$('.delete').confirm({
+	    msg:'Delete this comment?',
+	    timeout:3000
+	});	
 	
 });
 
+{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.confirm-1.2.js"></script>
+
+<style type='text/css'> 
+   .ui-icon {
+       display: inline-block;
+       background-color: #fff;
+       border: 1px solid black;
+   }
+   ul {
+    list-style: none;
+   }
+   .comment .head { 
+    }
+    
+
+.video { 
+   width:320px;
+   height:240px; 
+}
+    
+</style>
 {% endblock %}
 
 
@@ -34,40 +92,25 @@ jQuery(document).ready(function(){
   <ul>
   {% for fb in general %}
     <li class="comment">
-    <div class="head" id="general-{{fb.id}}">
-      {{fb.date|date:"d M Y"}}: 
-      {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
-      <button class="showbutton">Show</button>
-      <button class="delete">Delete</button> 
-    </div>
-    
-    <div class="commentbody">
-    {% if fb.video %}
-    
-     <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-		      width="192" height="144" id="FlowPlayer">
-		  <param name="allowScriptAccess" value="always" />
-		  <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-		  <param name="quality" value="high" />
-		  <param name="scale" value="noScale" />
-		  <param name="wmode" value="transparent" /> 
-		  <param name="flashvars"
-			value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ fb.video }}' }  ], 
-					autoPlay: true, 
-					autoBuffering: false, 
-					loop: false, 
-					autoRewind: true,   
-					hideControls: true}" 
-		  />
-	       </object>
-     
-     
-    {% endif %} 
-    
-    <p>{{fb.comment}}</p>
-    
-    </div>
-    </li>          
+	
+      <div class="head" id="general-{{fb.id}}">
+	<span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
+	{{fb.date|date:"d M Y"}}: 
+	{{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
+	<span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
+      </div>
+      
+      <div class="commentbody">
+	{% if fb.video %}
+	 <div class="feedbackvideo">
+	   <div class='video' id="general-video-{{fb.id}}">{% auslan_media_prefix %}{{fb.video}}</div>
+	 </div>
+	{% endif %} 
+      
+	<p>{{fb.comment}}</p>
+      
+       </div>
+    </li>    
   {% endfor %}
   </ul>
   
@@ -76,11 +119,11 @@ jQuery(document).ready(function(){
   {% for fb in signfb %}
     <li class="comment">
     <div class="head" id="sign-{{fb.id}}">
+      <span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
       {{fb.date|date:"d M Y"}}: 
       {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
-      on <a href="{{fb.translation.get_absolute_url}}">{{fb.translation}}</a>
-      <button class="showbutton">Show</button>
-      <button class="delete">Delete</button> 
+      on <a href="{{fb.translation.get_absolute_url}}">{{fb.translation}}</a> 
+      <span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
     </div>
     <div class="commentbody">
     <p>{{fb.comment}}</p>     
@@ -104,31 +147,16 @@ jQuery(document).ready(function(){
     <li class="comment">
     
     <div class="head" id="missingsign-{{fb.id}}">
+      <span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
        {{fb.date|date:"d M Y"}}: 
        {{fb.user.first_name}} {{fb.user.last_name}} 
-       (<a href="mailto:{{fb.user.email}}">Email</a>)
-      <button class="showbutton">Show</button>
-      <button class="delete">Delete</button> 
+       (<a href="mailto:{{fb.user.email}}">Email</a>) 
+      <span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
     </div>
     <div class="commentbody">
     {% if fb.video %}  
-    <div class="commentvideo">
-      <object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
-	      width="192" height="144" id="FlowPlayer">
-	  <param name="allowScriptAccess" value="always" />
-	  <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" />
-	  <param name="quality" value="high" />
-	  <param name="scale" value="noScale" />
-	  <param name="wmode" value="transparent" /> 
-	  <param name="flashvars"
-		value="config={ playList: [ { url: '{% auslan_media_prefix %}{{ fb.video.name }}' }  ], 
-				autoPlay: true, 
-				autoBuffering: false, 
-				loop: false, 
-				autoRewind: true,   
-				hideControls: true}" 
-	  />
-       </object>
+     <div class="feedbackvideo">
+       <a href="{% auslan_media_prefix %}{{fb.video}}">Video</a>
      </div>
     {% endif %}
      <dl>
