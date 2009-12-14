@@ -8,7 +8,6 @@ togglecomment = function() {
     $(this).children('.commentbody').hide();
     $(this).removeClass('showing');
     $(this).find('.indicator').removeClass('ui-icon-minus').addClass('ui-icon-plus');
-    console.log(this);
     /* remove any flowplayer instances */
     $(this).find('.feedbackvideo').each(function(){ 
 	$(this).find('object').remove(); 
@@ -18,13 +17,12 @@ togglecomment = function() {
     $(this).children('.commentbody').show();
     $(this).addClass('showing');
     $(this).find('.indicator').removeClass('ui-icon-plus').addClass('ui-icon-minus');
-    console.log(this);
     
     $(this).find('.feedbackvideo').each(function(){ 
 	  div = $(this).children('.video');
 	  id = div.attr('id');
 	  url = div.text();
-	  /* why the f*** do I need to do this twice!!! */
+	  /* why do I need to do this twice!!! */
 	  /* player doesn't appear until the second time with only one call */
 	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
 	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
@@ -40,8 +38,7 @@ jQuery(document).ready(function(){
 	
 	$('.commentbody').hide();
 	
-	$('.delete').click(function() {
-	  alert("Delete this comment");
+	$('.delete').click(function() { 
 	  parent = $(this).parents(".head");
 	  parts = parent.attr("id").split("-");
 	  kind = parts[0];
