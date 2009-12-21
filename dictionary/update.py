@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from auslan.log import debug
 
-import os
+import os, shutil
 
 from auslan.dictionary.models import *
 from auslan.dictionary.forms import * 
