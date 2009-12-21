@@ -105,8 +105,10 @@ def update_video(request, glossid, flavour='dictionary'):
                     if os.access(backup, os.F_OK):
                         os.unlink(backup)
                     os.link(newlocation, backup)
-                 
-                os.rename(fullpath, newlocation)
+                
+                # need shutil.copy here since we might be on different devices
+                shutil.copy(fullpath, newlocation)
+                #os.rename(fullpath, newlocation)
                 debug("Replaced video file: %s" % newlocation)
                 status = "completed"
     else: 
