@@ -93,7 +93,9 @@ production = (socket.gethostname() == 'web106.webfaction.com')
 if production:
     DEBUG = False
     TEMPLATE_DEBUG = DEBUG
-    EMAIL_HOST =  "localhost"
+    EMAIL_HOST =  "smtp.webfaction.com"
+    EMAIL_HOST_USER = "stevecassidy"
+    EMAIL_HOST_PASSWORD = "k399doopl"
     
     DATABASE_ENGINE = 'mysql'          
     DATABASE_NAME = 'stevecassidy_aln'          
