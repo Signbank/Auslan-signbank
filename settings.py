@@ -130,7 +130,7 @@ if production:
 else:
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
-    EMAIL_HOST = "mail.optusnet.com.au" 
+    EMAIL_HOST = "mail.exetel.com.au" 
     
     DATABASE_ENGINE = 'sqlite3'          
     DATABASE_NAME = 'auslan.db'          
