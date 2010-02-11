@@ -43,11 +43,11 @@ class UploadedFLVFile(UploadedFile):
         shutil.copy(source, location)
         self.name = location
         # remove the original
-        os.unlink(source)
+        #os.unlink(source)
         
     def delete(self):
         """Remove the file"""
-        os.unlink(self.name)
+        #os.unlink(self.name)
         
 
 class VideoUploadToFLVField(forms.FileField):
@@ -108,7 +108,7 @@ class VideoUploadToFLVField(forms.FileField):
         # so I use my own wrapper class            
         debug("Converted to flash: " + flvfile)
 
-        os.unlink(tmpname)
+        #os.unlink(tmpname)
         return UploadedFLVFile(flvfile) 
 
 
