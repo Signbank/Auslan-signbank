@@ -9,6 +9,8 @@ from tempfile import mkstemp
 from auslan.log import debug
 import shutil
 
+from django.core.mail import mail_admins, EmailMessage
+
 from logging import debug
 
 class UploadedFLVFile(UploadedFile):
@@ -98,25 +100,32 @@ class VideoUploadToFLVField(forms.FileField):
         # construct an flv filename
         flvfile = tmpname+".flv"
         # now do the conversion to flv
-        if self.convert_to_flv(tmpname, flvfile):
-            # we want to return an UploadedFile obj representing
-            # the flv file, not the original but I can't 
-            # create one of those from an existing file
-            # so I use my own wrapper class            
-            debug("Converted to flash: " + flvfile)
+        # will raise an error on failure 
+        self.convert_to_flv(tmpname, flvfile)
+        # we want to return an UploadedFile obj representing
+        # the flv file, not the original but I can't 
+        # create one of those from an existing file
+        # so I use my own wrapper class            
+        debug("Converted to flash: " + flvfile)
 
-            os.unlink(tmpname)
-            return UploadedFLVFile(flvfile)
-        else:
-            raise ValidationError("Conversion of video failed: please try to use a diffent format")
-        
-        
+        os.unlink(tmpname)
+        return UploadedFLVFile(flvfile) 
 
 
     def convert_to_flv(self, sourcefile, targetfile):
         """Convert video to flv format"""
-                
-        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-s", self.geometry, targetfile]
+
+        errormsg = ""
+        
+        # ffmpeg command options:
+        #  -y  answer yes to all queries
+        #  -v -1 be less verbose
+        # -i sourcefile   input file
+        # -f flv  output format is flv
+        # -an no audio in output
+        # -s geometry set size of output
+        # 
+        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-an", "-s", self.geometry, targetfile]
      
         debug(ffmpeg)
         
@@ -128,7 +137,7 @@ class VideoUploadToFLVField(forms.FileField):
                 # we've gone over time, kill the process  
                 os.kill(process.pid, signal.SIGKILL)
                 debug("Killing ffmpeg process")
-                raise ValidationError("Conversion of video took too long. Please try another format.")
+                errormsg = "Conversion of video took too long.  This site is only able to host relatively short videos."
         
 
         status = process.poll()
@@ -140,10 +149,24 @@ class VideoUploadToFLVField(forms.FileField):
             fsize = s.st_size
             if (fsize == 0):
                 os.remove(targetfile)
-                return False
-            else:
-                return True
+                errormsg = "Conversion of video failed: please try to use a diffent format"
         except:
-            return False
-
+            errormsg = "Conversion of video failed: please try to use a different video format"
+            
+        if errormsg:
+            # we have a conversion error
+            # notify the admins, attaching the offending file
+            msgtxt = "Error: %s\n\nCommand: %s\n\n" % (errormsg, " ".join(ffmpeg))
+            
+            print msgtxt
+            
+            message = EmailMessage("Video conversion failed on Auslan",
+                                   msgtxt,
+                                   to=[a[1] for a in settings.ADMINS])
+            message.attach_file(sourcefile)
+            message.send(fail_silently=False)
+            
+            
+            # and raise a validation error for the caller
+            raise ValidationError(errormsg)
 
