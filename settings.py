@@ -117,7 +117,7 @@ if production:
     AUSLAN_STATIC_PREFIX = "http://media.auslan.org.au/auslan-static/"
     
     # location of ffmpeg, used to convert uploaded videos
-    FFMPEG_PROGRAM = "/usr/local/bin/ffmpeg"
+    FFMPEG_PROGRAM = "/home/stevecassidy/bin/ffmpeg.sh"
     FFMPEG_TIMEOUT = 60
     
     TEMPLATE_DIRS = (

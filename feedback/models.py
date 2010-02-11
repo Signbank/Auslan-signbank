@@ -23,7 +23,7 @@ class GeneralFeedback(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='unread')
            
     class Meta:
-        ordering = ['user']
+        ordering = ['-date']
 
 class GeneralFeedbackForm(forms.Form):
     """Form for general feedback"""
@@ -103,7 +103,7 @@ class SignFeedback(models.Model):
         return str(self.translation.translation) + " by " + str(self.user) + " on " + str(self.date)
 
     class Meta:
-        ordering = ['user']
+        ordering = ['-date']
 
 class SignFeedbackForm(forms.Form):
     """Form for input of sign feedback"""
@@ -322,5 +322,5 @@ class MissingSignFeedback(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='unread')
 
     class Meta:
-        ordering = ['user']
+        ordering = ['-date']
     
