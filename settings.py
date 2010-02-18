@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'auslan.registration',
     'auslan.pages',
     'auslan.attachments',
+    'auslan.video',
 )
 
 ROOT_URLCONF = 'auslan.urls'

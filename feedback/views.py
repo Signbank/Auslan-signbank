@@ -141,7 +141,25 @@ def showfeedback(request):
     
     
     
+
+@login_required
+def glossfeedback(request, glossid):
     
+    gloss = get_object_or_404(Gloss, idgloss=glossid)
+    
+    # construct a translation so we can record feedback against it
+    # really should have recorded feedback for a gloss, not a sign
+    allkwds = gloss.translation_set.all()
+    if len(allkwds) == 0:
+        
+        trans = Translation()
+    else:
+        trans = allkwds[0]
+    
+    return recordsignfeedback(request, trans, 1, len(allkwds))
+    
+    
+
 # Feedback on individual signs
 @login_required
 def signfeedback(request, keyword, n):
@@ -153,11 +171,22 @@ def signfeedback(request, keyword, n):
     # returns (matching translation, number of matches) 
     (trans, total) =  word.match_request(request, n)
     
+    return recordsignfeedback(request, trans, n, total)
+    
+    
+def recordsignfeedback(request, trans, n, total):
+    """Do the work of recording feedback for a sign or gloss"""
+    
     # get the page to return to from the get request
     if request.GET.has_key('return'):
         sourcepage = request.GET['return']
     else:
         sourcepage = ""
+    
+    if request.GET.has_key('lastmatch'):
+        lastmatch = request.GET['lastmatch']
+    else:
+        lastmatch = None
     
     valid = False
     
@@ -183,7 +212,10 @@ def signfeedback(request, keyword, n):
             sfb.save()
             valid = True
             # redirect to the original page
-            return HttpResponseRedirect(sourcepage+"?feedbackmessage='Thank you. Your feedback has been saved.")
+            if lastmatch:
+                return HttpResponseRedirect(sourcepage+"?lastmatch="+lastmatch+"&feedbackmessage='Thank you. Your feedback has been saved.")
+            else:
+                return HttpResponseRedirect(sourcepage+"?feedbackmessage='Thank you. Your feedback has been saved.")                    
     else:
         feedback_form = SignFeedbackForm()
         
@@ -193,7 +225,8 @@ def signfeedback(request, keyword, n):
                                'total': total,   
                                'feedback_form': feedback_form, 
                                'valid': valid,
-                               'sourcepage': sourcepage
+                               'sourcepage': sourcepage,
+                               'lastmatch': lastmatch
                                },
                                context_instance=RequestContext(request))
 

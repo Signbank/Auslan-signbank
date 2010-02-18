@@ -82,15 +82,20 @@
                REPLAY
             </div>
         </div>
-        {% if feedback %}
+        
         <div id="feedback">
             <ul>
+                {% ifequal viewname "words" %}
                 <li><a href="/feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{flavour}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                {% else %}
+                <li><a href="/feedback/gloss/{{gloss.idgloss}}.html?return=/{{flavour}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                {% endifequal %}
+                
                 <li><a href="/feedback/missingsign.html">Report a missing sign</a></li>
                 <li><a href="/feedback/generalfeedback.html">Provide general site feedback</a></li>
             </ul> 
         </div>
-        {% endif %}
+        
         
         <div id="states">      
             

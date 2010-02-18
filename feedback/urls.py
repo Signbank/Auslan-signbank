@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     
     (r'^sign/(?P<keyword>.+)-(?P<n>\d+).html$',  'auslan.feedback.views.signfeedback'),
    
+    (r'^gloss/(?P<glossid>.+).html$',  'auslan.feedback.views.glossfeedback'),
+   
    
     (r'^(?P<kind>general|sign|missingsign)/delete/(?P<id>\d+)$', 'auslan.feedback.views.delete'),
 )
