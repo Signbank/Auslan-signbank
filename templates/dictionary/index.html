@@ -12,6 +12,14 @@
       <a href="/{{flavour}}/search?query={{letter}}{% ifequal flavour "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
    {% endfor %}
    </p>
+
+    {% ifequal flavour "medical" %}
+
+    <p>Please help us improve the Medical SignBank. See <a href="/research/medicalhelp/">how you can help</a>.</p>
+    
+    {% endifequal %}
+
+
 {% endblock %}
 
 
