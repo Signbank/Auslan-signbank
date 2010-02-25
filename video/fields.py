@@ -125,7 +125,7 @@ class VideoUploadToFLVField(forms.FileField):
         # -an no audio in output
         # -s geometry set size of output
         # 
-        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-an", "-s", self.geometry, targetfile]
+        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-an", targetfile]
      
         debug(ffmpeg)
         
