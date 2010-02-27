@@ -1,0 +1,39 @@
+<html>
+ <head><title>Video Test</title></head>
+ <script src="/static/flowplayer/flowplayer-3.1.4.min.js"></script>
+ <body>
+   <h1>Video Test</h1>
+
+    <video width="640" height="480" autoplay controls>
+            <source src="media/24320.ogv" type="video/ogg"></source>
+            <source src="media/24320.mp4" type="video/mp4"></source><!--[if gt IE 6]>
+            <object width="640" height="495" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"><!
+            [endif]--><!--[if !IE]><!-->
+            <object width="640" height="495" type="video/quicktime" data="media/24320.mp4">
+            <!--<![endif]-->
+                <param name="src" value="media/24320.mp4" />
+                <param name="showlogo" value="false" />
+                <param name="autoplay" value="false" />
+                
+                <div>
+                    <!-- fall back to flowplayer -->
+                    <a  
+                        href="media/24320.mp4"  
+                        style="display:block;width:640px;height:495px"  
+                        id="player">
+                     </a> 
+
+                    <p>No video playback capabilities, please download the video below</p>
+                </div>
+            </object><!--[if gt IE 6]><!--></object><!--<![endif]-->
+    </video>
+
+    <p>Download Video: <a href="media/24320.mp4">Apple iTunes "MP4"</a> | <a href="media/24320.ogv">Open Format "OGG"</a></p>
+ 
+
+     <!-- this will install flowplayer inside previous A- tag. -->
+     <script>
+             flowplayer("player", "/static/flowplayer/flowplayer-3.1.5.swf");
+     </script>
+
+</html>
