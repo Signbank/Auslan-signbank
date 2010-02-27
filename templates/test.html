@@ -1,10 +1,9 @@
 <html>
- <head><title>Video Test</title></head>
- <script src="/static/flowplayer/flowplayer-3.1.4.min.js"></script>
+ <head><title>Video Test</title></head> 
  <body>
    <h1>Video Test</h1>
 
-    <video width="640" height="480" autoplay controls>
+    <video width="640" height="480" autoplay>
             <source src="media/24320.ogv" type="video/ogg"></source>
             <source src="media/24320.mp4" type="video/mp4"></source><!--[if gt IE 6]>
             <object width="640" height="495" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"><!
@@ -15,25 +14,27 @@
                 <param name="showlogo" value="false" />
                 <param name="autoplay" value="false" />
                 
-                <div>
-                    <!-- fall back to flowplayer -->
-                    <a  
-                        href="media/24320.mp4"  
-                        style="display:block;width:640px;height:495px"  
-                        id="player">
-                     </a> 
-
-                    <p>No video playback capabilities, please download the video below</p>
-                </div>
+                <object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='640' height='480' id='player1' name='player1'>
+                    <param name='movie' value='/static/mediaplayer/player.swf'>
+                    <param name='allowfullscreen' value='false'> 
+                    <param name='allowscriptaccess' value='always'>
+                    <param name='flashvars' value='file=/media/24320.mp4&autostart=true&controlbar=none'>
+                    <embed id='player1'
+                           name='player1'
+                           src='/static/mediaplayer/player.swf'
+                           width='640'
+                           height='480'
+                           allowscriptaccess='always'
+                           allowfullscreen='true'
+                           flashvars="file=/media/24320.mp4&autostart=true&controlbar=none"
+                    />
+                
+                 <img src="__POSTER__.JPG" width="640" height="360" alt="__Title of video__"
+                         title="No video playback capabilities, please download the video below" />
+             
             </object><!--[if gt IE 6]><!--></object><!--<![endif]-->
     </video>
 
     <p>Download Video: <a href="media/24320.mp4">Apple iTunes "MP4"</a> | <a href="media/24320.ogv">Open Format "OGG"</a></p>
  
-
-     <!-- this will install flowplayer inside previous A- tag. -->
-     <script>
-             flowplayer("player", "/static/flowplayer/flowplayer-3.1.5.swf");
-     </script>
-
 </html>
