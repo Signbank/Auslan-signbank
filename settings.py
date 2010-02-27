@@ -141,7 +141,7 @@ else:
     DATABASE_PORT = '' 
     
     # Absolute path to the directory that holds media. 
-    MEDIA_ROOT = '/Users/steve/projects/auslan-newlayout/auslan/media/'
+    MEDIA_ROOT = '../media/'
     # URL that handles the media served from MEDIA_ROOT. 
     MEDIA_URL = '/media/'
     
@@ -151,7 +151,7 @@ else:
     AUSLAN_STATIC_PREFIX = "/static/"
  
     # location of ffmpeg, used to convert uploaded videos
-    FFMPEG_PROGRAM = "/Applications/ffmpegX.app/Contents/Resources/ffmpeg"
+    FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
     FFMPEG_TIMEOUT = 60
     
     TEMPLATE_DIRS = (
