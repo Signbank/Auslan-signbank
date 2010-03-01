@@ -3,14 +3,14 @@
  <body>
    <h1>Video Test</h1>
 
-    <video width="640" height="480" autoplay>
-            <source src="media/24320.ogv" type="video/ogg"></source>
-            <source src="media/24320.mp4" type="video/mp4"></source><!--[if gt IE 6]>
+    <video width="640" height="480" controls autoplay>
+            <source src="{% auslan_media_prefix %}{{params.videofile}}.ogv" type="video/ogg"></source>
+            <source src="{% auslan_media_prefix %}{{params.videofile}}.mp4" type="video/mp4"></source><!--[if gt IE 6]>
             <object width="640" height="495" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"><!
             [endif]--><!--[if !IE]><!-->
-            <object width="640" height="495" type="video/quicktime" data="media/24320.mp4">
+            <object width="640" height="495" type="video/quicktime" data="{% auslan_static_prefix %}{{params.videofile}}.mp4">
             <!--<![endif]-->
-                <param name="src" value="media/24320.mp4" />
+                <param name="src" value="{% auslan_media_prefix %}{{params.videofile}}.mp4" />
                 <param name="showlogo" value="false" />
                 <param name="autoplay" value="false" />
                 
@@ -18,7 +18,7 @@
                     <param name='movie' value='/static/mediaplayer/player.swf'>
                     <param name='allowfullscreen' value='false'> 
                     <param name='allowscriptaccess' value='always'>
-                    <param name='flashvars' value='file=/media/24320.mp4&autostart=true&controlbar=none'>
+                    <param name='flashvars' value='file=/{% auslan_media_prefix %}{{params.videofile}}.mp4&autostart=true&controlbar=none'>
                     <embed id='player1'
                            name='player1'
                            src='/static/mediaplayer/player.swf'
@@ -26,7 +26,7 @@
                            height='480'
                            allowscriptaccess='always'
                            allowfullscreen='true'
-                           flashvars="file=/media/24320.mp4&autostart=true&controlbar=none"
+                           flashvars="file=/{% auslan_media_prefix %}{{params.videofile}}.mp4&autostart=true&controlbar=none"
                     />
                 
                  <img src="__POSTER__.JPG" width="640" height="360" alt="__Title of video__"
@@ -35,6 +35,6 @@
             </object><!--[if gt IE 6]><!--></object><!--<![endif]-->
     </video>
 
-    <p>Download Video: <a href="media/24320.mp4">Apple iTunes "MP4"</a> | <a href="media/24320.ogv">Open Format "OGG"</a></p>
+    <p>Download Video: <a href="{% auslan_media_prefix %}{{ params.videofile }}.mp4">Apple iTunes "MP4"</a> | <a href="{% auslan_media_prefix %}{{params.videofile}}.ogv">Open Format "OGG"</a></p>
  
 </html>

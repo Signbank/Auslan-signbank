@@ -106,6 +106,9 @@ def update_video(request, glossid, flavour='dictionary'):
                         os.unlink(backup)
                     os.link(newlocation, backup)
                 
+                
+                # need to make sure the target directory is there
+                os.makedirs(os.path.dirname(newlocation))
                 # need shutil.copy here since we might be on different devices
                 shutil.copy(fullpath, newlocation)
                 #os.rename(fullpath, newlocation)

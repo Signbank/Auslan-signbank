@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
 
 
-    (r'^test.html$', 'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),    
+    (r'^test/(?P<videofile>.*)$', 'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),    
 )
 
 
