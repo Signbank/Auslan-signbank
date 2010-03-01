@@ -151,7 +151,7 @@ else:
     AUSLAN_STATIC_PREFIX = "/static/"
  
     # location of ffmpeg, used to convert uploaded videos
-    FFMPEG_PROGRAM = "/usr/bin/ffmpeg"
+    FFMPEG_PROGRAM = "/Applications/ffmpegX.app/Contents/Resources/ffmpeg"
     FFMPEG_TIMEOUT = 60
     
     TEMPLATE_DIRS = (

@@ -20,7 +20,38 @@ class Video(models.Model):
     h264 = models.FileField("h264 (mp4) version of file", upload_to=settings.MEDIA_ROOT)
     ogg = models.FileField("ogg theora version of file", upload_to=settings.MEDIA_ROOT)
     
+    def __repr__(self):
+        """Generate an HTML fragment to display this video"""
+        
+        return "<video>video goes here</video>"
     
+    def ensure_converted(self):
+        """Make sure that the converted versions of the original
+        video have been generated."""
+        
+        pass
+    
+
+class VideoSet(models.Model):
+    """A set of videos in alternate formats"""
+    
+    geometry = models.CharField("Target geometry for converted files", max_length="20", default="320x240")
+    
+    
+      
+
+class VideoFile(models.Model):
+    """A video file in some format"""
+    
+    file = models.FileField("Video file", upload_to=settings.MEDIA_ROOT)
+    mimetype = models.CharField("Mime type", max_length=50)
+    videoset = models.ForeignKey(VideoSet)
+    
+    
+    
+    
+        
+        
     
 def ffmpeg(sourcefile, format, geometry, targetfile):
     """Convert video to some new format via ffmpeg
