@@ -108,7 +108,11 @@ def update_video(request, glossid, flavour='dictionary'):
                 
                 
                 # need to make sure the target directory is there
-                os.makedirs(os.path.dirname(newlocation))
+                try:
+                    os.makedirs(os.path.dirname(newlocation))
+                except:
+                    pass
+                
                 # need shutil.copy here since we might be on different devices
                 shutil.copy(fullpath, newlocation)
                 #os.rename(fullpath, newlocation)

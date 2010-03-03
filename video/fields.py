@@ -98,7 +98,7 @@ class VideoUploadToFLVField(forms.FileField):
             os.close(tmp)
             
         # construct an flv filename
-        flvfile = tmpname+".flv"
+        flvfile = tmpname+".mp4"
         # now do the conversion to flv
         # will raise an error on failure 
         self.convert_to_flv(tmpname, flvfile)
@@ -124,10 +124,13 @@ class VideoUploadToFLVField(forms.FileField):
         # -f flv  output format is flv
         # -an no audio in output
         # -s geometry set size of output
-        # 
-        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", "flv", "-an", targetfile]
+        #
+        # new options for conversion to h264/mp4
+        # ffmpeg -v -1 -i $1 -an -vcodec libx264 -vpre hq -crf 22 -threads 0 $1:r.mp4
+        #
+        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-vcodec", "h264", "-an", targetfile]
      
-        debug(ffmpeg)
+        debug(" ".join(ffmpeg))
         
         process =  Popen(ffmpeg, stdout=PIPE, stderr=PIPE)
         start = time.time()
