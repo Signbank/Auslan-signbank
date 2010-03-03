@@ -481,7 +481,19 @@ class Gloss(models.Model):
             if len(homophones) > 0:   
                 video_num = homophones[0].target.sn
                 
-        return "video/"+str(video_num)[:2]+"/"+str(video_num)+".flv"
+        videobase = "video/"+str(video_num)[:2]+"/"+str(video_num)
+        
+        # look for mp4 version first, return it if present
+        
+        if os.path.exists(os.path.join(settings.MEDIA_ROOT, videobase+".mp4")):
+            return videobase+".mp4"
+        elif os.path.exists(os.path.join(settings.MEDIA_ROOT, videobase+".flv")):
+            return videobase+".flv"
+        else:
+            # a static image - need to get the URL right for this - or maybe do it in the template, return None here
+            return "no-video.png"
+        
+        
     
     def has_video(self):
         """Test to see if the video for this sign is present"""
