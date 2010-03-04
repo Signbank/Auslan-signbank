@@ -99,21 +99,21 @@ class VideoUploadToFLVField(forms.FileField):
             
         # construct an flv filename
         flvfile = tmpname+".mp4"
-        # now do the conversion to flv
+        # now do the conversion to mp4
         # will raise an error on failure 
-        self.convert_to_flv(tmpname, flvfile)
+        self.convert(tmpname, mp4file)
         # we want to return an UploadedFile obj representing
         # the flv file, not the original but I can't 
         # create one of those from an existing file
         # so I use my own wrapper class            
-        debug("Converted to flash: " + flvfile)
+        debug("Converted to mp4: " + mp4file)
 
         #os.unlink(tmpname)
         return UploadedFLVFile(flvfile) 
 
 
-    def convert_to_flv(self, sourcefile, targetfile):
-        """Convert video to flv format"""
+    def convert(self, sourcefile, targetfile):
+        """Convert video to mp4 format"""
 
         errormsg = ""
         
@@ -128,7 +128,7 @@ class VideoUploadToFLVField(forms.FileField):
         # new options for conversion to h264/mp4
         # ffmpeg -v -1 -i $1 -an -vcodec libx264 -vpre hq -crf 22 -threads 0 $1:r.mp4
         #
-        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-vcodec", "h264", "-an", targetfile]
+        ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-vcodec", "libx264", "-an", "-vpre", "hq", "-crf", "22", "-threads", "0", targetfile]
      
         debug(" ".join(ffmpeg))
         
