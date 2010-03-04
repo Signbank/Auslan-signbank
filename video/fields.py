@@ -97,7 +97,7 @@ class VideoUploadToFLVField(forms.FileField):
                 os.write(tmp,chunk)
             os.close(tmp)
             
-        # construct an flv filename
+        # construct an mp4 filename
         mp4file = tmpname+".mp4"
         # now do the conversion to mp4
         # will raise an error on failure 
