@@ -109,7 +109,7 @@ class VideoUploadToFLVField(forms.FileField):
         debug("Converted to mp4: " + mp4file)
 
         #os.unlink(tmpname)
-        return UploadedFLVFile(flvfile) 
+        return UploadedFLVFile(mp4file) 
 
 
     def convert(self, sourcefile, targetfile):
