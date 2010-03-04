@@ -10,7 +10,7 @@
         },
         play: { opacity: 0 },
         clip: {
-            url: '{% auslan_media_prefix %}{{ videofile }}',
+            url: '{% if videofile %}{% auslan_media_prefix %}{{ videofile }}{% else %}{% auslan_static_prefix %}images/no-video.png{% endif %}',
             autoplay: true
         },
         onBeforeFullscreen: function() {return false;}

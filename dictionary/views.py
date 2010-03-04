@@ -41,7 +41,10 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     allkwds = trans.gloss.translation_set.all()
         
     videourl = trans.gloss.get_video_url()
-    
+    if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
+        videourl = None
+        
+        
     trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
 
     # work out the number of this gloss and the total number    
@@ -115,6 +118,8 @@ def gloss(request, idgloss, flavour='dictionary'):
         trans = allkwds[0]
         
     videourl = gloss.get_video_url()
+    if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
+        videourl = None
 
     if request.user.is_staff:
         if flavour == 'medical':
