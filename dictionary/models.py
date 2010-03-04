@@ -483,15 +483,24 @@ class Gloss(models.Model):
                 
         videobase = "video/"+str(video_num)[:2]+"/"+str(video_num)
         
-        # look for mp4 version first, return it if present
+        # careful logic for finding the video url since this is used two
+        # ways. There might be a video file, in which case we want to know
+        # where it is, but there might not be one, in which case we want
+        # to know where to put it.
+        # Since we're switching to mp4, this gets complicated. If there is
+        # an flv and an mp4, we want the mp4. If there is just flv, we'll
+        # take that. If there is neither, return the mp4 path so that it
+        # can be created there.
         
-        if os.path.exists(os.path.join(settings.MEDIA_ROOT, videobase+".mp4")):
+        fileroot = os.path.join(settings.MEDIA_ROOT, videobase)
+        
+        
+        if os.path.exists(fileroot+".mp4") and os.path.exists(fileroot+".flv"):
             return videobase+".mp4"
-        elif os.path.exists(os.path.join(settings.MEDIA_ROOT, videobase+".flv")):
+        elif os.path.exists(fileroot+".flv"):
             return videobase+".flv"
-        else:
-            # a static image - need to get the URL right for this - or maybe do it in the template, return None here
-            return "no-video.png"
+        else: # covers cases where the file is there or not there
+            return videobase+".mp4"
         
         
     
