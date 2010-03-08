@@ -63,7 +63,7 @@ class GlossAdmin(admin.ModelAdmin):
               )
     save_on_top = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
-    search_fields = ['^idgloss']
+    search_fields = ['^idgloss', '=sn']
     list_filter = ['InMedLex', 'healthtf', 'inWeb']
     inlines = [ RelationInline, DefinitionInline, TranslationInline ]
 

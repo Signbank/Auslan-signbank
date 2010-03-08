@@ -115,6 +115,7 @@ def update_video(request, glossid, flavour='dictionary'):
                 
                 # need shutil.copy here since we might be on different devices
                 shutil.copy(fullpath, newlocation)
+                os.unlink(fullpath)
                 #os.rename(fullpath, newlocation)
                 debug("Replaced video file: %s" % newlocation)
                 status = "completed"
