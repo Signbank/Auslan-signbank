@@ -61,7 +61,7 @@
              {% ifequal p page.number %}
              <strong>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</strong>
              {% else %}
-             <a href="?query={{query}}&page={{p}}">{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
+             <a href='?query={{query}}&page={{p}}{% ifequal flavour "medical" %}&msb=1{% endifequal %}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
              {% endifequal %}
           {% endfor %}
           </p>
