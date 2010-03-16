@@ -13,7 +13,7 @@ class EmailBackend(ModelBackend):
         if email_re.search(username):
             try: 
                 user = User.objects.get(email__iexact=username) 
-                if user.check_password(password):
+                if user.check_password(password): 
                     return user
             except User.DoesNotExist: 
                 return None
