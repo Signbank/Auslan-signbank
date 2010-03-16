@@ -12,7 +12,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.auth import views as auth_views
 
 # local imports
-from views import activate, register
+from views import activate, register, mylogin
 from forms import *
 from models import UserProfile
 
@@ -26,7 +26,7 @@ urlpatterns = patterns('',
                            activate,
                            name='registration_activate'),
                        url(r'^login/$',
-                           auth_views.login,
+                           mylogin,
                            {'template_name': 'registration/login.html'},
                            name='auth_login'),
                        url(r'^logout/$',
