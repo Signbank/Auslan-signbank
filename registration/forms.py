@@ -274,8 +274,7 @@ class EmailAuthenticationForm(forms.Form):
         enabled. Note that the request (a HttpRequest object) must have set a
         cookie with the key TEST_COOKIE_NAME and value TEST_COOKIE_VALUE before
         running this validation.
-        """
-        print "init EmailAuthenticationForm"
+        """ 
         self.request = request
         self.user_cache = None
         super(EmailAuthenticationForm, self).__init__(*args, **kwargs)
