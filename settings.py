@@ -127,6 +127,7 @@ if production:
     
     LOG_FILENAME = "/home/stevecassidy/logs/user/auslan-debug.log"
     
+    FILE_UPLOAD_TEMP_DIR = "/home/stevecassidy/videoupload/"
     
 else:
     DEBUG = True
