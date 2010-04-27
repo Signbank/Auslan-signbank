@@ -174,11 +174,7 @@
     <div id="keywords"> 
          <p><strong>Keywords:</strong>
          {% for kwd in allkwds %}
-           {% ifequal translation.translation kwd.translation %}
-           <b>{{ kwd.translation }}</b>
-           {% else %}
-           {{ kwd.translation }} 
-           {% endifequal %}
+           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
          {% endfor %}
          </p>
     </div>
