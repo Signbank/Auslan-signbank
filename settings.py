@@ -120,7 +120,8 @@ if production:
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/home/stevecassidy/bin/ffmpeg.sh"
     FFMPEG_TIMEOUT = 60
-    
+    FFMPEG_OPTIONS = ["-vcodec", "libx264", "-an", "-vpre", "hq", "-crf", "22", "-threads", "0"]
+
     TEMPLATE_DIRS = (
         '/home/stevecassidy/webapps/auslan/auslan/templates'
     )
@@ -154,6 +155,7 @@ else:
     # location of ffmpeg, used to convert uploaded videos
     FFMPEG_PROGRAM = "/Applications/ffmpegX.app/Contents/Resources/ffmpeg"
     FFMPEG_TIMEOUT = 60
+    FFMPEG_OPTIONS = ["-vcodec", "h264", "-an"]
     
     TEMPLATE_DIRS = (
         'templates'

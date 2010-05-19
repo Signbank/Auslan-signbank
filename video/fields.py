@@ -10,6 +10,7 @@ from auslan.log import debug
 import shutil
 
 from django.core.mail import mail_admins, EmailMessage
+from auslan.video.convertvideo import convert_video
 
 from logging import debug
 
@@ -110,9 +111,14 @@ class VideoUploadToFLVField(forms.FileField):
 
         #os.unlink(tmpname)
         return UploadedFLVFile(mp4file) 
-
-
+    
     def convert(self, sourcefile, targetfile):
+        """Convert a video to h264 format using the magic script"""
+        
+        convert_video(sourcefile, targetfile)
+
+
+    def xconvert(self, sourcefile, targetfile):
         """Convert video to mp4 format"""
 
         errormsg = ""
