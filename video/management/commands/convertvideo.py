@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError  
-from auslan.video.fields import VideoUploadToFLVField
+from auslan.video.convertvideo import convert_video
 
 
 class Command(BaseCommand):
@@ -16,8 +16,7 @@ class Command(BaseCommand):
             infile = args[0] 
             outfile = args[1]
             
-            f = VideoUploadToFLVField()
-            
-            f.convert(infile, outfile)
+            convert_video(infile, outfile)
+     
         else:
             print "Usage convertvideo", self.args
