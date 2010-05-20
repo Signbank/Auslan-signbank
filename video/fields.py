@@ -7,7 +7,7 @@ import sys, os, time, signal
 from subprocess import Popen, PIPE
 from tempfile import mkstemp
 from auslan.log import debug
-import shutil
+import shutil, stat
 
 from django.core.mail import mail_admins, EmailMessage
 from auslan.video.convertvideo import convert_video
@@ -42,6 +42,8 @@ class UploadedFLVFile(UploadedFile):
         # need shutil.copy not os.rename because temp dir might be a different device
         source = self.fullname
         shutil.copy(source, location)
+        # make sure they're readable by everyone
+        os.chmod(location, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH )
         self.name = location
         # remove the original
         #os.unlink(source)
