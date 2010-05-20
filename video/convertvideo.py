@@ -36,6 +36,8 @@ def parse_ffmpeg_output(text):
     m = re.search("Video: ([^,]+),", result['input'])
     if m:
         result['inputvideoformat'] = m.groups()[0]
+    else:
+        result['inputvideoformat'] = 'unknown'
         
     return result
             
