@@ -91,7 +91,7 @@ def convert_video(sourcefile, targetfile):
         shutil.copy(sourcefile, targetfile) 
     else: 
         # convert the video
-        b = ffmpeg(sourcefile, targetfile, options=convert_options)
+        b = ffmpeg(sourcefile, targetfile, options=FFMPEG_OPTIONS)
 
     format = probe_format(targetfile)
     if format == 'h264':
