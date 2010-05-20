@@ -99,12 +99,12 @@ def update_video(request, glossid, flavour='dictionary'):
             else: 
                 # copy video to proper location
                 newlocation = os.path.join(settings.MEDIA_ROOT, thisgloss.get_video_url())
-                # backup existing file if any, create a hard link
+                # backup existing file if any
                 if os.access(newlocation, os.F_OK):
                     backup = newlocation + ".bak"
                     if os.access(backup, os.F_OK):
                         os.unlink(backup)
-                    os.link(newlocation, backup)
+                    shutil.copy(newlocation, backup)
                 
                 
                 # need to make sure the target directory is there
