@@ -115,7 +115,11 @@ class VideoUploadToFLVField(forms.FileField):
     def convert(self, sourcefile, targetfile):
         """Convert a video to h264 format using the magic script"""
         
-        convert_video(sourcefile, targetfile)
+        if convert_video(sourcefile, targetfile):
+            return True
+        else:
+            errormsg = "Video conversion failed"
+            raise ValidationError(errormsg)
 
 
     def xconvert(self, sourcefile, targetfile):
