@@ -1,0 +1,174 @@
+
+{% extends "baselayout.html" %}
+ 
+{% block extrahead %}
+
+    <!-- jquery-ui components (slider)-->
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/fspractice.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-lightness/jquery-ui-1.7.2.custom.css">      
+
+    <script type="text/javascript">
+    /* base url of fingerspelling images */ 
+    var baseurl = "{% auslan_static_prefix %}images/twohanded/";
+
+    var fsimages = Object()
+    fsimages["A"] =  "th_a.jpg";
+    fsimages["B"] =  "th_b.jpg";
+    fsimages["C"] =  "th_c.jpg";
+    fsimages["D"] =  "th_d.jpg";
+    fsimages["E"] =  "th_e.jpg";
+    fsimages["F"] =  "th_f.jpg";
+    fsimages["G"] =  "th_g.jpg";
+    fsimages["H"] =  ["th_h0.jpg", "th_h1.jpg",  "th_h2.jpg", "th_h3.jpg", "th_h4.jpg"];
+    fsimages["I"] =  "th_i.jpg";
+    fsimages["J"] =  ["th_j0.jpg", "th_j1.jpg", "th_j2.jpg"];
+    fsimages["K"] =  "th_k.jpg";
+    fsimages["L"] =  "th_l.jpg";
+    fsimages["M"] =  "th_m.jpg";
+    fsimages["N"] =  "th_n.jpg";
+    fsimages["O"] =  "th_o.jpg";
+    fsimages["P"] =  "th_p.jpg";
+    fsimages["Q"] =  "th_q.jpg";
+    fsimages["R"] =  "th_r.jpg";
+    fsimages["S"] =  "th_s.jpg";
+    fsimages["T"] =  "th_t.jpg";
+    fsimages["U"] =  "th_u.jpg";
+    fsimages["V"] =  "th_v.jpg";
+    fsimages["W"] =  "th_w.jpg";
+    fsimages["X"] =  "th_x.jpg";
+    fsimages["Y"] =  "th_y.jpg";
+    fsimages["Z"] =  "th_z.jpg";
+    fsimages["transition"] = "transition.jpg";    
+    
+    </script>
+    
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+
+{% endblock %}
+
+{% block jqueryready %}
+
+  current_word = "albatros";
+
+  function fingerspell_play() {
+      speed = 1500-$("#slider").slider("option", "value");
+      display_string("#mainimg", current_word, speed);
+      return false;
+  }
+
+  function new_word() {
+  
+    current_word = get_word();
+    $("#answer").hide().html(current_word);
+    fingerspell_play();   
+    return false;
+  }
+
+  function reveal_answer() {
+  
+    $("#answer").show()
+    return false;
+  }
+  
+  
+  $('#new_word').click( new_word );
+  $('#reveal_answer').click( reveal_answer );
+  $('#replay').click( fingerspell_play );
+  $('#toggle_images').toggle(
+	         function() {$("#fstable").hide();},
+	         function() {$("#fstable").show();});
+  
+  /* fill out the table of signs */
+  fill_fstable();  
+
+  /* slider is 0-1000, we use 1500-value as the speed value */
+  $("#slider").slider({min: 0, max: 1000, value: 500});
+  
+  
+{% endblock %}
+
+
+{% block content %} 
+ 
+<div id="fingerspellblock">
+  <div id="leftblock"> 
+    <div id="handcontainer">
+      <div id="handimage">
+	<img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+      </div>
+      <div id="replay">REPLAY</div>
+    </div>
+  
+    <form id="inputarea">
+      <p><button id="new_word">New Word</button>
+	 <button id="reveal_answer">Reveal Answer</button>
+	 <button id="toggle_images">Toggle Images</button>
+      </p>
+      <p id="answerpara">The word is: <span id="answer"></span></p>
+    </form>
+   
+    <div id="slider"></div>
+    <p>
+    Click <em>New Word</em>
+   on the left to have a word spelled out; <em>Replay</em>
+   will play the word again. Click <em>Reveal Answer</em>
+   to check your answer.
+   Adjust the slider for slower or faster playback.
+    </p>
+  </div> 
+
+<div id="fingerspellright">
+<table id="fstable">
+ <tr>
+   <td id="A"></td>
+   <td id="B"></td>
+   <td id="C"></td>
+   <td id="D"></td>
+   <td id="E"></td>
+ </tr>
+ <tr>
+   <td id="F"></td>
+   <td id="G"></td>
+   <td id="H"></td>
+   <td id="I"></td>
+   <td id="J"></td>
+ </tr>
+ <tr>
+   <td id="K"></td>
+   <td id="L"></td>
+   <td id="M"></td>
+   <td id="N"></td>
+   <td id="O"></td>
+ </tr>
+ <tr>
+   <td id="P"></td>
+   <td id="Q"></td>
+   <td id="R"></td>
+   <td id="S"></td>
+   <td id="T"></td>
+ </tr>
+ <tr>
+   <td id="U"></td>
+   <td id="V"></td>
+   <td id="W"></td>
+   <td id="X"></td>
+   <td id="Y"></td>
+ </tr>
+ <tr>
+   <td class='blank'></td>
+   <td colspan='3' class='blank'><p>Click on images to view.
+   </p></td>
+   <td id="Z"></td>
+ </tr>
+</table>
+
+  <div id="info">
+     <p></p>
+  </div>
+</div>
+</div>
+  
+{% endblock %}
+
+

@@ -130,6 +130,7 @@ body {
 #leftblock {
    float: left; 
    margin-left: 6px;
+   width: 320px;
     
 }
 
@@ -142,6 +143,15 @@ body {
    height:240px;
    border-left: 6px solid black;
    border-right: 6px solid black;
+}
+
+/* style for the answer in the fingerspelling practice page */
+#answerpara {
+   font-size: larger;
+   font-weight: bold;
+}
+#answer {
+   color: #FF0000;
 }
 
 /* replay for both video and fingerspelling images */

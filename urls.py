@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     
     
     (r'^spell/twohanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingtwohanded.html'}),
+    (r'^spell/practice.html$', direct_to_template, {'template': 'fingerspell/fingerspellingpractice.html'}),
     (r'^spell/onehanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingonehanded.html'}),
     (r'^numbersigns.html$', direct_to_template, {'template': 'numbersigns/numbersigns.html'}),
 

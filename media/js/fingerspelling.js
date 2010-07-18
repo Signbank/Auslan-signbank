@@ -57,14 +57,14 @@ function update_image(imageid, image) {
 */
 
 function plan_string(str, speed) {
-    plan = [] 
+    plan = [plan_transition(speed)];
     for(var i=0; i<str.length; i++) {
         plan = plan.concat(plan_letter(str[i], speed));
         /* insert a transition between letters */
         if (i<str.length-1) {
             plan = plan.concat(plan_transition(speed));
         }
-    }
+    } 
     return plan;
 }
 

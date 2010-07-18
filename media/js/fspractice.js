@@ -1,4 +1,10 @@
-function asb_fs_GetPracticeWordList() {
+function get_word() {
+	words = get_word_list();
+	var rand = Math.floor(Math.random() * words.length);
+	return words[rand];
+}
+
+function get_word_list() {
 	var aTmp = new Array();
 	aTmp[0] = "hostel";
 	aTmp[1] = "dazzling";
