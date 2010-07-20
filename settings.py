@@ -52,7 +52,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "auslan.pages.context_processors.menu",
- 
+     
     )
  
 
@@ -181,5 +181,4 @@ PAGES_VIDEO_LOCATION = 'pages/'
 # videos are stored here prior to copying over to the main
 # storage location
 VIDEO_UPLOAD_LOCATION = "upload/"
-
 

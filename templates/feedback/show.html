@@ -123,15 +123,19 @@ jQuery(document).ready(function(){
       <span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
     </div>
     <div class="commentbody">
-    <p>{{fb.comment}}</p>     
-    <ul> 
+    <p><strong>Comment:</strong>{{fb.comment}}</p>
+    <p><strong>Don't Belong:</strong>{{fb.knownotbelong}}</p>
+    <!--
+    <ul>  
 	<li>Auslan Sign: {{fb.get_isAuslan_display}}</li>
 	<li>Where Used: {{fb.get_whereused_display}}</li>
 	<li>Liked: {{fb.get_like_display}}</li>
 	<li>Used: {{fb.get_use_display}}</li>
 	<li>Use Suggested: {{fb.get_suggested_display}}</li>
 	<li>Correct: {{fb.get_correct_display}}</li>
+    
     </ul>
+    -->
     </div>
     </li>
   {% endfor %}

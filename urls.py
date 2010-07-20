@@ -36,9 +36,8 @@ urlpatterns = patterns('',
         
     (r'^accounts/', include('auslan.registration.urls')),
     
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')), 
-    (r'^admin/(.*)', admin.site.root),
-
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),  
+    (r'^admin/', include(admin.site.urls)), 
 
     (r'^test/(?P<videofile>.*)$', 'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),    
 )
