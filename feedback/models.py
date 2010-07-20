@@ -108,15 +108,21 @@ class SignFeedback(models.Model):
 class SignFeedbackForm(forms.Form):
     """Form for input of sign feedback"""
     
-    isAuslan = forms.ChoiceField(choices=isAuslanChoices, widget=forms.RadioSelect)
-    whereused = forms.ChoiceField(choices=whereusedChoices)
-    like = forms.ChoiceField(choices=likedChoices, widget=forms.RadioSelect)
-    use = forms.ChoiceField(choices=useChoices, widget=forms.RadioSelect)
-    suggested = forms.ChoiceField(choices=suggestedChoices, initial=3, required=False, widget=forms.RadioSelect)
-    correct = forms.ChoiceField(choices=correctChoices, widget=forms.RadioSelect)
-    kwnotbelong = forms.CharField(required=False, widget=forms.Textarea)
+    #isAuslan = forms.ChoiceField(choices=isAuslanChoices, widget=forms.RadioSelect)
+    isAuslan = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    #whereused = forms.ChoiceField(choices=whereusedChoices)
+    whereused = forms.CharField(initial='n/a', widget=forms.HiddenInput)
+    #like = forms.ChoiceField(choices=likedChoices, widget=forms.RadioSelect)
+    like = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    #use = forms.ChoiceField(choices=useChoices, widget=forms.RadioSelect)
+    use = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    #suggested = forms.ChoiceField(choices=suggestedChoices, initial=3, required=False, widget=forms.RadioSelect)
+    suggested = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    #correct = forms.ChoiceField(choices=correctChoices, widget=forms.RadioSelect)
+    correct = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    kwnotbelong = forms.CharField(required=False, widget=forms.Textarea) 
     comment = forms.CharField(required=False, widget=forms.Textarea)
-    
+
  
 handformChoices = (
                     (1, 'One handed'),
