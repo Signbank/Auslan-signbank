@@ -37,7 +37,8 @@ isAuslanChoices = ( (1, "yes"),
                     (2, "Perhaps"), 
                     (3, "Don't know"),
                     (4, "Don't think so"),
-                    (5, "No")
+                    (5, "No"),
+                    (0, "N/A")
                     )
                     
 whereusedChoices = (('auswide', 'Australia Wide'),
@@ -51,34 +52,39 @@ whereusedChoices = (('auswide', 'Australia Wide'),
                     ('tas', "Tasmania"),
                     ('nt', "Northern Territory"),
                     ('act', "Australian Capital Territory"),
-                    ('dk', "Don't Know")
+                    ('dk', "Don't Know"),
+                    ('n/a', "N/A")
                     )
 
 likedChoices =    ( (1, "yes"), 
                     (2, "A little"), 
                     (3, "Don't care"),
                     (4, "Not much"),
-                    (5, "No")
+                    (5, "No"),
+                    (0, "N/A")
                     )
                                         
 useChoices =      ( (1, "yes"), 
                     (2, "Sometimes"), 
                     (3, "Not Often"),
-                    (4, "No") 
+                    (4, "No"),
+                    (0, "N/A") 
                     )
                          
 suggestedChoices =( (1, "yes"), 
                     (2, "Sometimes"), 
                     (3, "Don't Know"),
                     (4, "Perhaps"),
-                    (5, "No") 
+                    (5, "No"),
+                    (0, "N/A")
                     )
                     
 correctChoices =  ( (1, "yes"), 
                     (2, "Mostly Correct"), 
                     (3, "Don't Know"),
                     (4, "Mostly Wrong"),
-                    (5, "No") 
+                    (5, "No"),
+                    (0, "N/A") 
                     )
                     
 class SignFeedback(models.Model):
@@ -108,18 +114,18 @@ class SignFeedback(models.Model):
 class SignFeedbackForm(forms.Form):
     """Form for input of sign feedback"""
     
-    #isAuslan = forms.ChoiceField(choices=isAuslanChoices, widget=forms.RadioSelect)
-    isAuslan = forms.IntegerField(initial=0, widget=forms.HiddenInput)
-    #whereused = forms.ChoiceField(choices=whereusedChoices)
-    whereused = forms.CharField(initial='n/a', widget=forms.HiddenInput)
-    #like = forms.ChoiceField(choices=likedChoices, widget=forms.RadioSelect)
-    like = forms.IntegerField(initial=0, widget=forms.HiddenInput)
-    #use = forms.ChoiceField(choices=useChoices, widget=forms.RadioSelect)
-    use = forms.IntegerField(initial=0, widget=forms.HiddenInput)
-    #suggested = forms.ChoiceField(choices=suggestedChoices, initial=3, required=False, widget=forms.RadioSelect)
-    suggested = forms.IntegerField(initial=0, widget=forms.HiddenInput)
-    #correct = forms.ChoiceField(choices=correctChoices, widget=forms.RadioSelect)
-    correct = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    isAuslan = forms.ChoiceField(choices=isAuslanChoices, initial=0, widget=forms.RadioSelect)
+    #isAuslan = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    whereused = forms.ChoiceField(choices=whereusedChoices, initial="n/a")
+    #whereused = forms.CharField(initial='n/a', widget=forms.HiddenInput)
+    like = forms.ChoiceField(choices=likedChoices,  initial=0, widget=forms.RadioSelect)
+    #like = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    use = forms.ChoiceField(choices=useChoices, initial=0,  widget=forms.RadioSelect)
+    #use = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    suggested = forms.ChoiceField(choices=suggestedChoices, initial=3, required=False, widget=forms.RadioSelect)
+    #suggested = forms.IntegerField(initial=0, widget=forms.HiddenInput)
+    correct = forms.ChoiceField(choices=correctChoices, initial=0, widget=forms.RadioSelect)
+    #correct = forms.IntegerField(initial=0, widget=forms.HiddenInput)
     kwnotbelong = forms.CharField(required=False, widget=forms.Textarea) 
     comment = forms.CharField(required=False, widget=forms.Textarea)
 
