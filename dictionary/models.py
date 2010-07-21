@@ -22,6 +22,7 @@ class Translation(models.Model):
      
     gloss = models.ForeignKey("Gloss")
     translation = models.ForeignKey("Keyword")
+    index = models.IntegerField("Index")
     
     def __str__(self):
         return str(self.gloss)+"-"+str(self.translation)
@@ -39,7 +40,7 @@ class Translation(models.Model):
         
     
     class Meta:
-        ordering = ['gloss']
+        ordering = ['gloss', 'index']
         
     class Admin:
         list_display = ['gloss', 'translation']
