@@ -4,9 +4,8 @@
 {% block extrahead %}
 
     <!-- jquery-ui components (slider)-->
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.8.4.custom.min.js"></script>
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fspractice.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-lightness/jquery-ui-1.7.2.custom.css">      
 
     <script type="text/javascript">
     /* base url of fingerspelling images */ 
@@ -75,9 +74,6 @@
   $('#new_word').click( new_word );
   $('#reveal_answer').click( reveal_answer );
   $('#replay').click( fingerspell_play );
-  $('#toggle_images').toggle(
-	         function() {$("#fstable").hide();},
-	         function() {$("#fstable").show();});
   
   /* fill out the table of signs */
   fill_fstable();  
@@ -102,8 +98,7 @@
   
     <form id="inputarea">
       <p><button id="new_word">New Word</button>
-	 <button id="reveal_answer">Reveal Answer</button>
-	 <button id="toggle_images">Toggle Images</button>
+	 <button id="reveal_answer">Reveal Answer</button> 
       </p>
       <p id="answerpara">The word is: <span id="answer"></span></p>
     </form>
@@ -164,7 +159,7 @@
 </table>
 
   <div id="info">
-     <p></p>
+     <p>Return to <a href="twohanded.html">two handed fingerspelling</a></p>
   </div>
 </div>
 </div>
