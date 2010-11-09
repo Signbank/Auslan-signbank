@@ -260,10 +260,10 @@
         <table id="staffops">
           <tr>
             <td>Annotation ID Gloss:<br> <strong>{{gloss.annotation_idgloss}}</strong></td>
-            <td><a href="{% url auslan.views.index %}/admin/dictionary/gloss/{{gloss.id}}">Edit the 
+            <td><a href="{% url auslan.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit the 
           gloss <em>'{{ gloss.idgloss}}'</em></a></td>
           <td>
-            <a href="javascript:window.open('{% url auslan.views.index %}/dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+            <a href="javascript:window.open('{% url auslan.views.index %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
           </td>
           </tr>
         </table>
@@ -292,7 +292,7 @@
         {% endif %}
   
         {%if update_form %}
-        <form action="{% url auslan.views.index %}/dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+        <form action="{% url auslan.views.index %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
        
             <fieldset class="glossupdate">
             <legend>Quick Updates</legend>
