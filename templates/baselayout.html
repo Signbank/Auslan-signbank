@@ -78,7 +78,7 @@ pageTracker._trackPageview();
     <div id="rightcontentborder"></div>
     <div id="header">
        <h1>Auslan - Signbank</h1>
-       <form id="frmSearch" name="frmSearch" method="get" action="/{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
+       <form id="frmSearch" name="frmSearch" method="get" action="{% url auslan.views.index %}{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50">
           <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>
           <br>Medical Signs only<input type="checkbox" name="msb" value="1" {% ifequal flavour "medical" %}checked='1'{% endifequal %}>      
@@ -103,7 +103,7 @@ pageTracker._trackPageview();
      
           <div id="copyright">
               &copy; 2009, Trevor Johnston, Macquarie University. All rights reserved.<br>
-              <a href="/feedback/generalfeedback.html">Provide feedback on the site</a> 
+              <a href="{% url auslan.feedback.views.generalfeedback %}">Provide feedback on the site</a> 
           </div>
     </div>
      
