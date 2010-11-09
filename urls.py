@@ -17,9 +17,9 @@ urlpatterns = patterns('',
     (r'^feedback/', include('auslan.feedback.urls')),
     (r'^attachments/', include('auslan.attachments.urls')),
 
-    (r'^register.html', 'auslan.views.index'), 
+    #(r'^register.html', 'auslan.views.index'), 
     (r'^logout.html', 'django.contrib.auth.views.logout',
-                       {'next_page': "/"}),
+                       {'next_page': "/"}, "logout"),
     
     
     (r'^spell/twohanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingtwohanded.html'}),

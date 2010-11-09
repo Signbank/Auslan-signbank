@@ -41,7 +41,7 @@
                <td valign="top">
           {% for word in page.object_list %}
             <p>
-              <a href="/{{flavour}}/words/{{ word.text }}-1.html">{{ word.text }}</a>
+              <a href="{% url auslan.views.index %}/{{flavour}}/words/{{ word.text }}-1.html">{{ word.text }}</a>
               {% if not word.inWeb %}*{% endif %}  
             </p>
 
