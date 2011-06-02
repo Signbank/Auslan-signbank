@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib import admin
-from auslan.pages.models import Page, PageVideo
-from auslan.video.fields import VideoUploadToFLVField
+from signbank.pages.models import Page, PageVideo
+from signbank.video.fields import VideoUploadToFLVField
 from django.utils.translation import ugettext_lazy as _
 
-from auslan.log import debug
+from signbank.log import debug
 
 class PageForm(forms.ModelForm):
     url = forms.RegexField(label=_("URL"), max_length=100, regex=r'^[-\w/]+$',

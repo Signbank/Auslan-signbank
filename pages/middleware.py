@@ -1,7 +1,7 @@
 from views import page
 from django.http import Http404
 from django.conf import settings
-from auslan.log import debug
+from signbank.log import debug
 
 class PageFallbackMiddleware(object):
     def process_response(self, request, response):

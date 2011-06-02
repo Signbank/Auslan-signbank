@@ -1,4 +1,4 @@
-from auslan.pages.models import Page
+from signbank.pages.models import Page
 
 
 def menu(request):

@@ -4,7 +4,7 @@ from django.conf import settings
 from django import forms
 import os.path
 from django.core.files import File
-from auslan.attachments.models import Attachment
+from signbank.attachments.models import Attachment
 
 # TODO: both list and upload views should be handled by the same view fn
 # TODO: deal with uploading duplicate files - offer to replace 

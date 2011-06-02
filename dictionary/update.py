@@ -5,12 +5,12 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings 
 from django.contrib.auth.decorators import permission_required
-from auslan.log import debug
+from signbank.log import debug
 
 import os, shutil
 
-from auslan.dictionary.models import *
-from auslan.dictionary.forms import * 
+from signbank.dictionary.models import *
+from signbank.dictionary.forms import * 
  
 def update_gloss(request, glossid, flavour='dictionary'):
     """View to update a gloss from the form displayed on the staff view"""

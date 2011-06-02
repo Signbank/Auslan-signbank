@@ -1,4 +1,4 @@
-from auslan.pages.models import *
+from signbank.pages.models import *
 from django.template import loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect

@@ -1,5 +1,5 @@
 from django.contrib import admin 
-from auslan.attachments.models import *
+from signbank.attachments.models import *
  
 class AttachmentAdmin(admin.ModelAdmin):
    list_display = ['file', 'date', 'uploader']
