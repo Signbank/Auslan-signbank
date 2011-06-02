@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview 
-from auslan.video.fields import VideoUploadToFLVField
+from signbank.video.fields import VideoUploadToFLVField
 
 
 class GlossUpdateForm(forms.Form):

@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError  
-from auslan.video.convertvideo import convert_video
+from signbank.video.convertvideo import convert_video
 
 
 class Command(BaseCommand):

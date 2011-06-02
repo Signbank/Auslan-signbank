@@ -1,5 +1,5 @@
 from django.contrib import admin 
-from auslan.dictionary.models import *
+from signbank.dictionary.models import *
 
 class KeywordAdmin(admin.ModelAdmin):
     search_fields = ['^text']

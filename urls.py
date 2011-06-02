@@ -11,13 +11,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    (r'^$', 'auslan.views.index'),
+    (r'^$', 'signbank.views.index'),
     
-    (r'^(?P<flavour>dictionary|medical)/', include('auslan.dictionary.urls')),
-    (r'^feedback/', include('auslan.feedback.urls')),
-    (r'^attachments/', include('auslan.attachments.urls')),
+    (r'^(?P<flavour>dictionary|medical)/', include('signbank.dictionary.urls')),
+    (r'^feedback/', include('signbank.feedback.urls')),
+    (r'^attachments/', include('signbank.attachments.urls')),
 
-    #(r'^register.html', 'auslan.views.index'), 
+    #(r'^register.html', 'signbank.views.index'), 
     (r'^logout.html', 'django.contrib.auth.views.logout',
                        {'next_page': "/"}, "logout"),
     
@@ -34,7 +34,7 @@ urlpatterns = patterns('',
 
    # (r'^accounts/login/', 'django.contrib.auth.views.login'),
         
-    (r'^accounts/', include('auslan.registration.urls')),
+    (r'^accounts/', include('signbank.registration.urls')),
     
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),  
     (r'^admin/', include(admin.site.urls)), 

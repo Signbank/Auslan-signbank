@@ -41,8 +41,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'auslan.middleware.UserBasedExceptionMiddleware',
-    'auslan.pages.middleware.PageFallbackMiddleware',
+    'signbank.middleware.UserBasedExceptionMiddleware',
+    'signbank.pages.middleware.PageFallbackMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -51,17 +51,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-    "auslan.pages.context_processors.menu",
+    "signbank.pages.context_processors.menu",
      
     )
  
 
 
-TEMPLATE_TAGS = ('auslan.dictionary.templatetags.prefixes', )
+TEMPLATE_TAGS = ('signbank.dictionary.templatetags.prefixes', )
 
 # add the Email backend to allow logins using email as username
 AUTHENTICATION_BACKENDS = (
-    "auslan.registration.EmailBackend",
+    "signbank.registration.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -74,16 +74,16 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.admin', 
     'django.contrib.admindocs',
-    'auslan.dictionary',
-    'auslan.feedback',
-    'auslan.registration',
-    'auslan.pages',
-    'auslan.attachments',
-    'auslan.video',
+    'signbank.dictionary',
+    'signbank.feedback',
+    'signbank.registration',
+    'signbank.pages',
+    'signbank.attachments',
+    'signbank.video',
     'south',
 )
 
-ROOT_URLCONF = 'auslan.urls'
+ROOT_URLCONF = 'signbank.urls'
 LOGIN_REDIRECT_URL = '/feedback/'
 
 ## server specific settings
@@ -137,7 +137,7 @@ else:
     EMAIL_HOST = "mail.exetel.com.au" 
     
     DATABASE_ENGINE = 'sqlite3'          
-    DATABASE_NAME = 'auslan.db'          
+    DATABASE_NAME = 'signbank.db'          
     DATABASE_USER = ''            
     DATABASE_PASSWORD = ''        
     DATABASE_HOST = ''             

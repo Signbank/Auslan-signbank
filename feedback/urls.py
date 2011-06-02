@@ -1,20 +1,20 @@
 from django.conf.urls.defaults import *
-from auslan.dictionary.models import *
+from signbank.dictionary.models import *
 
 urlpatterns = patterns('',
     
-    (r'^$', 'auslan.feedback.views.index'),
+    (r'^$', 'signbank.feedback.views.index'),
     
-    (r'^show.html', 'auslan.feedback.views.showfeedback'),
-    (r'^missingsign.html', 'auslan.feedback.views.missingsign'), 
-    (r'^generalfeedback.html', 'auslan.feedback.views.generalfeedback'),
+    (r'^show.html', 'signbank.feedback.views.showfeedback'),
+    (r'^missingsign.html', 'signbank.feedback.views.missingsign'), 
+    (r'^generalfeedback.html', 'signbank.feedback.views.generalfeedback'),
     
-    (r'^sign/(?P<keyword>.+)-(?P<n>\d+).html$',  'auslan.feedback.views.signfeedback'),
+    (r'^sign/(?P<keyword>.+)-(?P<n>\d+).html$',  'signbank.feedback.views.signfeedback'),
    
-    (r'^gloss/(?P<glossid>.+).html$',  'auslan.feedback.views.glossfeedback'),
+    (r'^gloss/(?P<glossid>.+).html$',  'signbank.feedback.views.glossfeedback'),
    
    
-    (r'^(?P<kind>general|sign|missingsign)/delete/(?P<id>\d+)$', 'auslan.feedback.views.delete'),
+    (r'^(?P<kind>general|sign|missingsign)/delete/(?P<id>\d+)$', 'signbank.feedback.views.delete'),
 )
 
 

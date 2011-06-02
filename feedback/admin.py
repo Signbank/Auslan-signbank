@@ -1,5 +1,5 @@
 from django.contrib import admin 
-from auslan.feedback.models import *
+from signbank.feedback.models import *
  
 class GeneralFeedbackAdmin(admin.ModelAdmin):
    list_display = ['user', 'date', 'comment']

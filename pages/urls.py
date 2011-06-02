@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('auslan.pages.views',
+urlpatterns = patterns('signbank.pages.views',
     (r'^(?P<url>.*)$', 'page'),
 )

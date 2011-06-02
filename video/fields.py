@@ -6,11 +6,11 @@ from django.conf import settings
 import sys, os, time, signal
 from subprocess import Popen, PIPE
 from tempfile import mkstemp
-from auslan.log import debug
+from signbank.log import debug
 import shutil, stat
 
 from django.core.mail import mail_admins, EmailMessage
-from auslan.video.convertvideo import convert_video
+from signbank.video.convertvideo import convert_video
 
 from logging import debug
 

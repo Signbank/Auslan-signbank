@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth import models as authmodels
 from django.conf import settings
-from auslan.video.fields import VideoUploadToFLVField
+from signbank.video.fields import VideoUploadToFLVField
 
-from auslan.dictionary.models import *
-# models to represent the feedback from users in the auslan site
+from signbank.dictionary.models import *
+# models to represent the feedback from users in the site
 
 from django import forms
 

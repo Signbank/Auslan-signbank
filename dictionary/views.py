@@ -7,9 +7,9 @@ from django.conf import settings
 from django.db.models import Q
 import os
 
-from auslan.dictionary.models import *
-from auslan.dictionary.forms import * 
-from auslan.feedback.models import *
+from signbank.dictionary.models import *
+from signbank.dictionary.forms import * 
+from signbank.feedback.models import *
 
 def index(request, flavour='dictionary'):
     """Default view showing a browse/search entry

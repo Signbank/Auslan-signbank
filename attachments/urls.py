@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from auslan.attachments.models import *
+from signbank.attachments.models import *
 
 urlpatterns = patterns('',
     
@@ -7,6 +7,6 @@ urlpatterns = patterns('',
        {'queryset': Attachment.objects.all(),
         'template_name': 'list.html',
        }, "attachments"),
-    (r'^upload/', 'auslan.attachments.views.upload_file'),
+    (r'^upload/', 'signbank.attachments.views.upload_file'),
 )
 
