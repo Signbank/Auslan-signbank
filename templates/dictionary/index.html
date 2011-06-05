@@ -9,13 +9,13 @@
     
     <p>
     {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-      <a href="{% url auslan.views.index %}{{flavour}}/search?query={{letter}}{% ifequal flavour "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
+      <a href="{% url signbank.views.index %}{{flavour}}/search?query={{letter}}{% ifequal flavour "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
    {% endfor %}
    </p>
 
     {% ifequal flavour "medical" %}
 
-    <p style="text-align: center; font-size: large">Please help us improve the Medical SignBank. See <a href="{% url auslan.views.index %}research/medicalhelp/">how you can help</a>.</p>
+    <p style="text-align: center; font-size: large">Please help us improve the Medical SignBank. See <a href="{% url signbank.views.index %}research/medicalhelp/">how you can help</a>.</p>
     
     {% endifequal %}
 
