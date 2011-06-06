@@ -41,6 +41,12 @@ def update_gloss(request, glossid, flavour='dictionary'):
                 thisgloss.healthtf = clean['healthtf']
             else:
                 thisgloss.healthtf = False
+                
+            if clean.has_key('bsltf'):
+                thisgloss.bsltf = clean['bsltf']
+            else:
+                thisgloss.bsltf = False
+ 
             
             thisgloss.save()
         

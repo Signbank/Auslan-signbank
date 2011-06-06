@@ -297,16 +297,9 @@
             <fieldset class="glossupdate">
             <legend>Quick Updates</legend>
               {# update form for this gloss #}
-                <p>
-                 Include in the Web dictionary? {{ update_form.inWeb }}
-                  {{ update_form.glossid }}
-                  {{ update_form.keyword }}
-                  {{ update_form.n }}
-                </p>
-                <p>Problematic Medical Sign? {{ update_form.inMedLex }}</p>
-                
-                <p>Health Sign? {{ update_form.healthtf }}</p>
-                
+              <table>
+              {{update_form.as_table}}
+              </table>     
                 <p><input type="submit" value="Update"/></p>
             </fieldset>     
         </form>
