@@ -33,6 +33,14 @@
   </p>
 
 
+  <p>
+  {% if gloss.bsltf %}
+  This gloss is now marked as being a BSL sign.
+  {% else %}
+  This gloss is now <strong>not</strong> marked as being a BSL sign. 
+  {% endif %}
+  </p>
+
   <p>Return to <a href="{{referer}}">the gloss page</a></p>
   
 {% else %}

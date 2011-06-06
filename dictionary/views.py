@@ -76,6 +76,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                  'keyword': keyword,
                  'n': n,
                  'healthtf': trans.gloss.healthtf,
+                 'bsltf': trans.gloss.bsltf,
                   })
         
     return render_to_response("dictionary/word.html",
@@ -146,6 +147,7 @@ def gloss(request, idgloss, flavour='dictionary'):
                 {'inWeb': gloss.inWeb,
                  'inMedLex': gloss.InMedLex,
                  'healthtf': gloss.healthtf,
+                 'bsltf': gloss.bsltf,
                   })    
     
     # get the last match keyword if there is one passed along as a form variable
