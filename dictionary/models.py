@@ -10,6 +10,8 @@ from django.db.models import Q
 from django.db import models
 from django.conf import settings
 from django.http import Http404
+import filters
+
 
 import sys, os
 
@@ -208,7 +210,6 @@ secLocationChoices = (
                     )
 
 
-
     
 class Gloss(models.Model):
     
@@ -239,7 +240,6 @@ class Gloss(models.Model):
     asloantf = models.NullBooleanField("ASL loan sign", null=True, blank=True)
     asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
-    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
     begindirtf = models.NullBooleanField("Begin directional sign", null=True, blank=True)
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
@@ -387,7 +387,9 @@ class Gloss(models.Model):
     #
     # usage of the sign in various states
     #
-    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania    
+    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
+    auslextf.list_filter_dialect = True
+    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania
     victf = models.NullBooleanField("Victoria", null=True, blank=True) # used in Victoria
     watf = models.NullBooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
     satf = models.NullBooleanField("South Australia", null=True, blank=True)  # used in South Australia
@@ -399,7 +401,10 @@ class Gloss(models.Model):
     worktf = models.NullBooleanField(null=True, blank=True)
     
     sense = models.IntegerField("Sense Number", null=True, blank=True) 
-    sn = models.IntegerField("Sign Number", null=True, blank=True)   # this is a sign number - was trying
+    sense.list_filter_sense = True
+    
+    
+    sn = models.IntegerField("Sign Number", null=True, blank=True, unique=True)   # this is a sign number - was trying
             # to be a primary key, also defines a sequence - need to keep the sequence
             # and allow gaps between numbers for inserting later signs
             
