@@ -248,8 +248,21 @@
           {% endfor %} 
           </ol>
         {% endif %}
+
+	    {% if gloss.CorrectionsAdditionsComments %}
+	    <div id="commentsfield">
+	    <h3>Corrections and Comments</h3>
+	    
+	      <p>{{ gloss.CorrectionsAdditionsComments }}</p>
+	    
+	    </div>
+	    
+	    {% endif %}
+
     </div>
-           
+    
+    
+
 
 
     {% if user.is_authenticated and user.is_staff %}
