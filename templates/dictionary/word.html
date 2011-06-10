@@ -251,7 +251,7 @@
 
 	    {% if gloss.CorrectionsAdditionsComments %}
 	    <div id="commentsfield">
-	    <h3>Corrections and Comments</h3>
+	    <h3>Notes</h3>
 	    
 	      <p>{{ gloss.CorrectionsAdditionsComments }}</p>
 	    
@@ -269,9 +269,10 @@
     <div id="staffinfo">
         
         <h2>Staff</h2>
-        
+                    <p>Sign Number: <strong>{{gloss.sn}}</strong></p>
         <table id="staffops">
           <tr>
+
             <td>Annotation ID Gloss:<br> <strong>{{gloss.annotation_idgloss}}</strong></td>
             <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit the 
           gloss <em>'{{ gloss.idgloss}}'</em></a></td>
