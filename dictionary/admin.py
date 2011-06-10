@@ -23,12 +23,12 @@ class RelationInline(admin.TabularInline):
     extra = 1
 
 class GlossAdmin(admin.ModelAdmin):
-    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn', 'StemSN', )}, ),
+    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn', 'StemSN', 'bsltf', 'comptf', 'compound', )}, ),
               ('Publication Status', {'fields': ('inWeb', 'InMedLex', 
                                                  'isNew',  ), 
-                                       'classes': ('collapse',)}, ), 
+                                       'classes': ('collapse',)}, ),
               ('Lexis & Register: Borrowing', {'fields': ('aslgloss', 'asloantf', 'asltf', 
-                                                           'bslgloss', 'bslloantf', 'bsltf', ), 'classes': ('collapse',)}, ), 
+                                                           'bslgloss', 'bslloantf', ), 'classes': ('collapse',)}, ), 
               ('Lexis & Register: States', {'fields': ('auslextf', 'reglextf', 'nthtf', 'tastf', 'victf', 
                                                        'watf', 'satf', 'qldtf', 'nswtf', 'sthtf', 'stateschtf', ), 
                                             'classes': ('collapse',)}, ), 
@@ -38,7 +38,7 @@ class GlossAdmin(admin.ModelAdmin):
                                              'classes': ('collapse',)}, ), 
               ('Lexis & Register: Other', {'fields': ('marginaltf', 'obsoletetf', 'varlextf', 
                                                       'doubtlextf', 'propernametf', 'fingersptf', 'gensigntf', 
-                                                      'comptf', 'compound', 'blendtf', 'blend', 'inittf', 'inittext', 
+                                                       'blendtf', 'blend', 'inittf', 'inittext', 
                                                       'restricttf', 'techtf', 'crudetf', 'setf',
                                                       'segloss', 'seonlytf', 'sedefinetf',), 'classes': ('collapse',)}, ), 
               ('Phonology', {'fields': ('handedness', 'onehand', 'doublehnd', 'twohand', 'domonly', 
@@ -57,13 +57,13 @@ class GlossAdmin(admin.ModelAdmin):
                                                'sensestf', 'sextf', 'shapestf', 'shoppingtf', 'sporttf', 
                                                'telecomtf', 'timetf', 'traveltf', 'utensilstf', 
                                                'weathertf', 'worktf', ), 'classes': ('collapse',)}, ), 
-              ('Other', {'fields': ('general', 'comp', 'CorrectionsAdditionsComments', 'queries', 
+              ('Other', {'fields': ('general',  'CorrectionsAdditionsComments', 'queries', 
                                     'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
-              ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb',), 'classes': ('collapse',)}),
+              ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', ), 'classes': ('collapse',)}),
               )
     save_on_top = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
-    search_fields = ['^idgloss', '=sn']
+    search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
     list_filter = ['InMedLex', 'healthtf', 'inWeb', 'bsltf', 'sense', 'auslextf', 'domhndsh']
     inlines = [ RelationInline, DefinitionInline, TranslationInline ]
 
