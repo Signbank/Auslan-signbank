@@ -113,6 +113,7 @@ defn_role_choices = (('noun', 'Noun'),
                      ('question', 'Question'),
                      ('popexplain', 'Popular Explanation'),
                      ('augment', 'Augment'),
+                     ('note', 'Note'),
                      )
 
 
