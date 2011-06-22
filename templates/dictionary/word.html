@@ -249,15 +249,14 @@
           </ol>
         {% endif %}
 
-	    {% if gloss.CorrectionsAdditionsComments %}
-	    <div id="commentsfield">
-	    <h3>Corrections and Comments</h3>
-	    
-	      <p>{{ gloss.CorrectionsAdditionsComments }}</p>
-	    
-	    </div>
-	    
-	    {% endif %}
+        {% if definitions.note %} 
+          <h3>Note</h3> 
+          <ol>
+          {% for def in definitions.note %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
 
     </div>
     
