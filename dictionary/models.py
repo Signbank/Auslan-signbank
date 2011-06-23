@@ -113,7 +113,7 @@ defn_role_choices = (('noun', 'Noun'),
                      ('question', 'Question'),
                      ('popexplain', 'Popular Explanation'),
                      ('augment', 'Augment'),
-                     ('note', 'Note'),
+                     ('note', 'Note') 
                      )
 
 
@@ -266,7 +266,6 @@ class Gloss(models.Model):
     compound = models.CharField("Compound of", max_length=100, blank=True) # This field type is a guess.
     comptf = models.NullBooleanField("Compound", null=True, blank=True)
     cookingtf = models.NullBooleanField(null=True, blank=True)
-    CorrectionsAdditionsComments = models.TextField(null=True, blank=True) # This field type is a guess.
     crudetf = models.NullBooleanField(null=True, blank=True)
     daystf = models.NullBooleanField(null=True, blank=True)
     deaftf = models.NullBooleanField(null=True, blank=True)
