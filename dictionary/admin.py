@@ -57,7 +57,7 @@ class GlossAdmin(admin.ModelAdmin):
                                                'sensestf', 'sextf', 'shapestf', 'shoppingtf', 'sporttf', 
                                                'telecomtf', 'timetf', 'traveltf', 'utensilstf', 
                                                'weathertf', 'worktf', ), 'classes': ('collapse',)}, ), 
-              ('Other', {'fields': ('general',  'CorrectionsAdditionsComments', 'queries', 
+              ('Other', {'fields': ('general', 'queries', 
                                     'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
               ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', ), 'classes': ('collapse',)}),
               )
