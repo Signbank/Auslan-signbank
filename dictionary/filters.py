@@ -47,15 +47,15 @@ class DialectFilterSpec(BooleanFieldFilterSpec):
         self.params = params
         
         self.filterfields =  [
-                      (_("Australia Wide"), 'auslextf__exact'),
-                      (_('Regional'), 'reglextf__exact'),
+                      (_("Australia Wide"), 'auslextf__exact'), 
+                      (_('North'), 'nthtf__exact'),
+                      (_('South'), 'sthtf__exact'), 
                       (_('NSW'), 'nswtf__exact'),
+                      (_('QLD'), 'qldtf__exact'),
+                      (_('SA'),  'satf__exact'),
                       (_('TAS'), 'tastf__exact'),
                       (_('VIC'), 'victf__exact'),
                       (_('WA'),  'watf__exact'),
-                      (_('SA'),  'satf__exact'),
-                      (_('QLD'), 'qldtf__exact'),
-                      (_('South'), 'sthtf__exact'),
                       ]
         terms = [t[1] for t in self.filterfields]
         self.ourparams = filter(lambda p: p in terms, params.keys())
