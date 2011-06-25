@@ -7,18 +7,18 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        """Move notes from the CorrectionsAdditionsComments field to definitions with role 'Note'"""
+        """Move notes from the CorrectionsAdditionsComments field to definitions with role 'Private Note'"""
         
         for gloss in orm.Gloss.objects.filter(CorrectionsAdditionsComments__isnull=False).exclude(CorrectionsAdditionsComments__exact=""):
             comment = gloss.CorrectionsAdditionsComments
-            defn = orm.Definition(gloss=gloss, text=comment, role="note", count=1)
+            defn = orm.Definition(gloss=gloss, text=comment, role="privatenote", count=1)
             defn.save()
             print "Converting comment for ", gloss.idgloss, "as", comment
             
     def backwards(self, orm):
-        """Add CorrectionsAdditionsComments field back from 'Note' definitions"""
+        """Add CorrectionsAdditionsComments field back from 'Private Note' definitions"""
          
-        for defn in orm.Definition.objects.filter(role='note'):
+        for defn in orm.Definition.objects.filter(role='privatenote'):
             comment = defn.text
             defn.gloss.CorrectionsAdditionsComments = defn.text
             defn.delete()
