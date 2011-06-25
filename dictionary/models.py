@@ -138,7 +138,15 @@ class Definition(models.Model):
         list_filter = ['role']
         search_fields = ['gloss__idgloss']
         
+class Language(models.Model):
+    """A sign language name"""
     
+    name = models.CharField(max_length=20)
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.name
+            
   
 handshapeChoices = (('0.1', 'Round'),
                     ('0.2', 'Okay'),
@@ -228,21 +236,32 @@ class Gloss(models.Model):
     idgloss = models.CharField(max_length=50)    
   
     annotation_idgloss = models.CharField(blank=True, max_length=30) 
-        # the idgloss used in transcription, may be shared between many signs
+    # the idgloss used in transcription, may be shared between many signs
 
+    # languages that this gloss is part of
+    language = models.ManyToManyField(Language)
+
+    # these language fields are subsumed by the language field above
+    bsltf = models.NullBooleanField("BSL sign", null=True, blank=True)
+    asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
+    # these fields should be reviewed - do we put them in another class too?
+    aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss
+    asloantf = models.NullBooleanField("ASL loan sign", null=True, blank=True)
+ 
+    # loans from british sign language
+    bslgloss = models.CharField("BSL gloss", max_length=50, blank=True) 
+    bslloantf = models.NullBooleanField("BSL loan sign", null=True, blank=True)
+ 
+    ########
+ 
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
     angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
     animalstf = models.NullBooleanField(null=True, blank=True)
 
-    
     arithmetictf = models.NullBooleanField(null=True, blank=True)
     artstf = models.NullBooleanField(null=True, blank=True)
-    
-    aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss
-    asloantf = models.NullBooleanField("ASL loan sign", null=True, blank=True)
-    asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
-    
+     
     begindirtf = models.NullBooleanField("Begin directional sign", null=True, blank=True)
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
@@ -252,11 +271,7 @@ class Gloss(models.Model):
     bodyprtstf = models.NullBooleanField(null=True, blank=True)
     BookProb = models.NullBooleanField(null=True, blank=True)
     
-    # loans from british sign language
-    bslgloss = models.CharField("BSL gloss", max_length=50, blank=True) 
-    bslloantf = models.NullBooleanField("BSL loan sign", null=True, blank=True)
-    bsltf = models.NullBooleanField("BSL sign", null=True, blank=True)
-    
+  
     carstf = models.NullBooleanField(null=True, blank=True)
     catholictf = models.NullBooleanField("Catholic Sign", null=True, blank=True)
     cathschtf = models.NullBooleanField("Catholic School", null=True, blank=True) 
