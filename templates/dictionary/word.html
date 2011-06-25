@@ -182,6 +182,16 @@
     <div id="definition">
         <h2>Sign Definition</h2>
  
+        {% if definitions.general %} 
+          <h3>General Definition</h3>
+         
+          <ol>
+          {% for def in definitions.general %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+ 
         {% if definitions.noun %} 
           <h3>As a Noun</h3>
          
@@ -283,7 +293,7 @@
 
                     
         {% if definitions.popexplain %} 
-          <h2>Popular Explanation</h2> 
+          <h3>Popular Explanation</h3> 
           <ol>
           {% for def in definitions.popexplain %}
               <li> {{ def }}</li>
@@ -291,12 +301,16 @@
           </ol>
         {% endif %}
         
-        {% if gloss.general %}
-          <h2>As a General Sign</h2>
-          
-          <p>{{gloss.general}}</p>
+        {% if definitions.privatenote %} 
+          <h3>Private Notes</h3> 
+          <ol>
+          {% for def in definitions.privatenote %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
         {% endif %}
-      
+        
+        
         {% if gloss.queries %}
           <h2>Notes</h2>
           <ol>
