@@ -105,7 +105,8 @@ class Keyword(models.Model):
         return (trans, len(alltrans))
     
     
-defn_role_choices = (('noun', 'Noun'),
+defn_role_choices = (('general', 'General Definition'),
+                     ('noun', 'Noun'),
                      ('verb', 'Verb'), 
                      ('deictic', 'Deictic'),
                      ('interact', 'Interact'),
@@ -296,7 +297,6 @@ class Gloss(models.Model):
     fingersptf = models.NullBooleanField(null=True, blank=True)
     foodstf = models.NullBooleanField(null=True, blank=True)
     furntf = models.NullBooleanField(null=True, blank=True)
-    general = models.TextField(null=True, blank=True)  
     gensigntf = models.NullBooleanField(null=True, blank=True)
     govtf = models.NullBooleanField(null=True, blank=True)
     groomtf = models.NullBooleanField(null=True, blank=True)
