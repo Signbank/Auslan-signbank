@@ -23,7 +23,8 @@ class RelationInline(admin.TabularInline):
     extra = 1
 
 class GlossAdmin(admin.ModelAdmin):
-    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn', 'StemSN', 'bsltf', 'comptf', 'compound', )}, ),
+    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
+                                    'sn', 'StemSN', 'comptf', 'compound', 'language' )}, ),
               ('Publication Status', {'fields': ('inWeb', 'InMedLex', 
                                                  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
@@ -63,7 +64,7 @@ class GlossAdmin(admin.ModelAdmin):
     save_on_top = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
     search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
-    list_filter = ['InMedLex', 'healthtf', 'inWeb', 'bsltf', 'sense', 'auslextf', 'domhndsh']
+    list_filter = ['InMedLex', 'healthtf', 'inWeb', 'language', 'sense', 'auslextf', 'domhndsh']
     inlines = [ RelationInline, DefinitionInline, TranslationInline ]
 
 
@@ -71,8 +72,10 @@ class RegistrationProfileAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'activation_key_expired', )
     search_fields = ('user__username', 'user__first_name', )
  
- 
-   
+class LanguageAdmin(admin.ModelAdmin):
+    model = Language
+    
+admin.site.register(Language, LanguageAdmin) 
 admin.site.register(Gloss, GlossAdmin) 
 admin.site.register(Keyword, KeywordAdmin) 
 
