@@ -62,6 +62,7 @@ class GlossAdmin(admin.ModelAdmin):
               ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', ), 'classes': ('collapse',)}),
               )
     save_on_top = True
+    save_as = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
     search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
     list_filter = ['InMedLex', 'healthtf', 'inWeb', 'language', 'sense', 'auslextf', 'domhndsh']
