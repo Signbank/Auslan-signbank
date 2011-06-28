@@ -24,7 +24,7 @@ class RelationInline(admin.TabularInline):
 
 class GlossAdmin(admin.ModelAdmin):
     fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
-                                    'sn', 'StemSN', 'comptf', 'compound', 'language' )}, ),
+                                    'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
               ('Publication Status', {'fields': ('inWeb', 'InMedLex', 
                                                  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
