@@ -146,7 +146,15 @@ class Language(models.Model):
     
     def __str__(self):
         return self.name
-            
+
+class Dialect(models.Model):
+    """A dialect name - a regional dialect"""
+    
+    name = models.CharField(max_length=20)
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.name    
   
 handshapeChoices = (('0.1', 'Round'),
                     ('0.2', 'Okay'),
@@ -245,6 +253,8 @@ class Gloss(models.Model):
     bsltf = models.NullBooleanField("BSL sign", null=True, blank=True)
     asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
+    #general = models.CharField(max_length=200)
+    
     # these fields should be reviewed - do we put them in another class too?
     aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss
     asloantf = models.NullBooleanField("ASL loan sign", null=True, blank=True)
@@ -254,6 +264,24 @@ class Gloss(models.Model):
     bslloantf = models.NullBooleanField("BSL loan sign", null=True, blank=True)
  
     ########
+    
+    # one or more regional dialects that this gloss is used in
+    dialect = models.ManyToManyField(Dialect)
+    
+    # will replace the following boolean fields
+    #
+    # usage of the sign in various states
+    #
+    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
+    auslextf.list_filter_dialect = True
+    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania
+    victf = models.NullBooleanField("Victoria", null=True, blank=True) # used in Victoria
+    watf = models.NullBooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
+    satf = models.NullBooleanField("South Australia", null=True, blank=True)  # used in South Australia
+    qldtf = models.NullBooleanField("Queensland", null=True, blank=True) # used in Queensland 
+    nswtf = models.NullBooleanField("NSW", null=True, blank=True) # used in NSW
+    nthtf = models.NullBooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
+        
  
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
     angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
@@ -400,19 +428,7 @@ class Gloss(models.Model):
     
     varlextf = models.NullBooleanField(null=True, blank=True)
     
-    #
-    # usage of the sign in various states
-    #
-    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
-    auslextf.list_filter_dialect = True
-    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania
-    victf = models.NullBooleanField("Victoria", null=True, blank=True) # used in Victoria
-    watf = models.NullBooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
-    satf = models.NullBooleanField("South Australia", null=True, blank=True)  # used in South Australia
-    qldtf = models.NullBooleanField("Queensland", null=True, blank=True) # used in Queensland 
-    nswtf = models.NullBooleanField("NSW", null=True, blank=True) # used in NSW
-    nthtf = models.NullBooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
-    
+
     weathertf = models.NullBooleanField(null=True, blank=True)
     worktf = models.NullBooleanField(null=True, blank=True)
     
