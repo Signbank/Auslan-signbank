@@ -456,7 +456,18 @@ class Gloss(models.Model):
             result['next'] = self.next_dictionary_gloss(is_staff)
             result['prev'] = self.prev_dictionary_gloss(is_staff)
         return result
+    
+    def admin_next_gloss(self):
+        """next gloss in the admin view, shortcut for next_dictionary_gloss with staff=True"""
 
+        return self.next_dictionary_gloss(True)
+        
+    def admin_prev_gloss(self):
+        """previous gloss in the admin view, shortcut for prev_dictionary_gloss with staff=True"""
+
+        return self.prev_dictionary_gloss(True)
+
+        
     def next_dictionary_gloss(self, staff=False):
         """Find the next gloss in dictionary order"""
         if staff:

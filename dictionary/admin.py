@@ -7,7 +7,7 @@ class KeywordAdmin(admin.ModelAdmin):
     
 class TranslationInline(admin.TabularInline):
     model = Translation
-    extra = 1    
+    extra = 1
     raw_id_fields = ['translation']
     
     
