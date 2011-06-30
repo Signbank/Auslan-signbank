@@ -80,6 +80,19 @@ body {
    margin-bottom: 0px;
 }
 
+#extrasigninfo {
+	font-size: 120%;
+	margin: 0px;
+	text-align: right;
+	padding-left: 4px;
+	padding-right: 4px;
+	border-bottom: 1px solid #ccc;
+}
+#extrasigninfo table {
+	width: 100%;
+}
+
+
 #signinfo h2 {
    margin: 0px;
    padding-left: 6px;

@@ -45,6 +45,11 @@ html {
 }
 
 /* style for the layout of word definitions */
+#extrasigninfo {
+   background-color: #1B1D1F;
+   color: #FFF; 
+}
+
 #signinfo {
    background-color: #1B1D1F;
    color: #FFF; 
