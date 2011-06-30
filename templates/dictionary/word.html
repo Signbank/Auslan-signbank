@@ -38,6 +38,17 @@
 </div>
 {% endif %}
 
+{% if user.is_authenticated and user.is_staff %}
+  <div id="extrasigninfo">
+  <table>
+	   <tr>
+	     <td style="text-align: left">Sign Number: <strong>{{gloss.sn}}</strong></td>
+	     <td style="text-align: right">Annotation ID Gloss: <strong>{{gloss.annotation_idgloss}}</strong></td>
+	   </tr>
+  </table>
+  </div>
+{% endif %} 
+
 <div id="signinfo">
     <div id="signs">
         <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
@@ -71,6 +82,7 @@
             <h2><a href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
             <div>&nbsp;</div>
         {% endifequal %}
+        
     </div>
 </div>
 
@@ -276,11 +288,6 @@
 
         
         <table id="staffops">
-          <tr>
-	        <td>Sign Number: <strong>{{gloss.sn}}</strong></td>
-            <td>Annotation ID Gloss:<strong>{{gloss.annotation_idgloss}}</strong></td>
-          </tr>
-            
           <tr>
             <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
             </td>
