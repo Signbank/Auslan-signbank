@@ -73,9 +73,18 @@ class RegistrationProfileAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'activation_key_expired', )
     search_fields = ('user__username', 'user__first_name', )
  
+class DialectInline(admin.TabularInline):
+    
+    model = Dialect
+
+class DialectAdmin(admin.ModelAdmin):
+    model = Dialect
+ 
 class LanguageAdmin(admin.ModelAdmin):
     model = Language
+    inlines = [DialectInline]
     
+admin.site.register(Dialect, DialectAdmin)
 admin.site.register(Language, LanguageAdmin) 
 admin.site.register(Gloss, GlossAdmin) 
 admin.site.register(Keyword, KeywordAdmin) 
