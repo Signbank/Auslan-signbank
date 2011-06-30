@@ -103,7 +103,6 @@
             <div>
                 <img src="{% auslan_static_prefix %}images/maps/allstates.gif" alt="States"></img>
             </div>                     
-            <span>Sign Distribution: All States</span>
 
             {% else %}
             
@@ -155,18 +154,17 @@
             </div>             
             {% endif %}
             
-            <span>Sign Distribution: 
-                
-                {% if gloss.qldtf %}QLD{% endif %}
-                {% if gloss.nswtf %}NSW{% endif %} 
-                {% if gloss.victf %}VIC{% endif %} 
-                {% if gloss.watf %}WA{% endif %} 
-                {% if gloss.satf %}SA{% endif %} 
-                {% if gloss.tastf %}TAS{% endif %} 
-            </span>    
+  
             {% endif %} {# gloss.sthtf #}
             {% endif %} {# gloss.nthtf #}
             {% endif %} {# gloss.austlex #}
+            <span>Sign Distribution: 
+                
+                {% for dialect in gloss.dialect.all %}
+                  {{ dialect.name }}
+                {% endfor %}
+            </span>  
+            
         </div>
 
     </div>
@@ -275,20 +273,23 @@
     <div id="staffinfo">
         
         <h2>Staff</h2>
-                    <p>Sign Number: <strong>{{gloss.sn}}</strong></p>
+
+        
         <table id="staffops">
           <tr>
-
-            <td>Annotation ID Gloss:<br> <strong>{{gloss.annotation_idgloss}}</strong></td>
-            <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit the 
-          gloss <em>'{{ gloss.idgloss}}'</em></a></td>
-          <td>
-            <a href="javascript:window.open('{% url signbank.views.index %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
-          </td>
+	        <td>Sign Number: <strong>{{gloss.sn}}</strong></td>
+            <td>Annotation ID Gloss:<strong>{{gloss.annotation_idgloss}}</strong></td>
+          </tr>
+            
+          <tr>
+            <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
+            </td>
+            <td>
+             <a href="javascript:window.open('{% url signbank.views.index %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+            </td>
           </tr>
         </table>
 
-                    
         {% if definitions.popexplain %} 
           <h3>Popular Explanation</h3> 
           <ol>
