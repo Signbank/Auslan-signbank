@@ -148,13 +148,14 @@ class Language(models.Model):
         return self.name
 
 class Dialect(models.Model):
-    """A dialect name - a regional dialect"""
+    """A dialect name - a regional dialect of a given Language"""
     
+    language = models.ForeignKey(Language)
     name = models.CharField(max_length=20)
     description = models.TextField()
     
     def __str__(self):
-        return self.name    
+        return self.language.name+"/"+self.name  
   
 handshapeChoices = (('0.1', 'Round'),
                     ('0.2', 'Okay'),
@@ -253,7 +254,9 @@ class Gloss(models.Model):
     bsltf = models.NullBooleanField("BSL sign", null=True, blank=True)
     asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
+    # deleted fields (need to uncomment to load old fixtures)
     #general = models.CharField(max_length=200)
+    #CorrectionsAdditionsComments = models.CharField(max_length=200)
     
     # these fields should be reviewed - do we put them in another class too?
     aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss
@@ -281,7 +284,7 @@ class Gloss(models.Model):
     qldtf = models.NullBooleanField("Queensland", null=True, blank=True) # used in Queensland 
     nswtf = models.NullBooleanField("NSW", null=True, blank=True) # used in NSW
     nthtf = models.NullBooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
-        
+    sthtf = models.NullBooleanField("Southern Dialect", null=True, blank=True)        
  
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
     angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
@@ -413,7 +416,6 @@ class Gloss(models.Model):
     SpecialCore = models.TextField(null=True, blank=True) # This field type is a guess.
     sporttf = models.NullBooleanField("Sport", null=True, blank=True)
     stateschtf = models.NullBooleanField("State School", null=True, blank=True)
-    sthtf = models.NullBooleanField("Southern Dialect", null=True, blank=True)
     sym = models.NullBooleanField("Symetrical", null=True, blank=True) 
     
     

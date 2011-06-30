@@ -1,38 +1,67 @@
 # encoding: utf-8
 import datetime
 from south.db import db
-from south.v2 import SchemaMigration
+from south.v2 import DataMigration
 from django.db import models
 
-class Migration(SchemaMigration):
+class Migration(DataMigration):
 
     def forwards(self, orm):
+        """Move any dialect flags from the model to Dialect objects"""
         
-        # Adding model 'Dialect'
-        db.create_table('dictionary_dialect', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['dictionary.Language'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('dictionary', ['Dialect'])
+        auslan = orm.Language.objects.get(name="Auslan")
+        if not auslan:
+            auslan = orm.Language(name="Auslan")
+            auslan.save()
+        tas = orm.Dialect(name="Tasmania", language=auslan)
+        tas.save()
+        vic = orm.Dialect(name="Victoria", language=auslan)
+        vic.save()
+        wa =  orm.Dialect(name="Western Australia", language=auslan)
+        wa.save()
+        sa =  orm.Dialect(name="South Australia", language=auslan)
+        sa.save()
+        qld = orm.Dialect(name="Queensland", language=auslan)
+        qld.save()
+        nsw = orm.Dialect(name="New South Wales", language=auslan)
+        nsw.save()
+        nth = orm.Dialect(name="Northern Dialect", language=auslan)
+        nth.save()
+        sth = orm.Dialect(name="Southern Dialect", language=auslan)
+        sth.save()
+        
+        
+        for gloss in orm.Gloss.objects.all():
+            
+            if gloss.tastf:
+                gloss.dialect.add(tas)
+            if gloss.victf:
+                gloss.dialect.add(vic)
+            if gloss.watf:
+                gloss.dialect.add(wa)
+            if gloss.satf:
+                gloss.dialect.add(sa)  
+            if gloss.qldtf:
+                gloss.dialect.add(qld)  
+            if gloss.nswtf:
+                gloss.dialect.add(nsw)  
+            if gloss.nthtf:
+                gloss.dialect.add(nth)     
+            if gloss.sthtf:
+                gloss.dialect.add(sth)
+            if gloss.auslextf:
+                # this is all dialects
+                for d in [tas, vic, wa, sa, qld, nsw, nth, sth]:
+                    gloss.dialect.add(d)     
 
-        # Adding M2M table for field dialect on 'Gloss'
-        db.create_table('dictionary_gloss_dialect', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('gloss', models.ForeignKey(orm['dictionary.gloss'], null=False)),
-            ('dialect', models.ForeignKey(orm['dictionary.dialect'], null=False))
-        ))
-        db.create_unique('dictionary_gloss_dialect', ['gloss_id', 'dialect_id'])
-
+            gloss.save()
+            print gloss.idgloss, ":", gloss.dialect.all()
 
     def backwards(self, orm):
-        
-        # Deleting model 'Dialect'
-        db.delete_table('dictionary_dialect')
+        "Remove all references to dialects"
 
-        # Removing M2M table for field dialect on 'Gloss'
-        db.delete_table('dictionary_gloss_dialect')
+        for gloss in orm.Gloss.objects.all():
+            gloss.dialect.all().delete()
 
 
     models = {
