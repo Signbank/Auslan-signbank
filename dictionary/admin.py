@@ -62,7 +62,7 @@ class GlossAdmin(admin.ModelAdmin):
     save_as = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
     search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
-    list_filter = ['InMedLex', 'healthtf', 'inWeb', 'language', 'sense', 'auslextf', 'domhndsh']
+    list_filter = ['language', 'dialect', 'sense', 'InMedLex', 'healthtf', 'inWeb', 'domhndsh']
     inlines = [ RelationInline, DefinitionInline, TranslationInline ]
 
 

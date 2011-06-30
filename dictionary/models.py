@@ -140,7 +140,10 @@ class Definition(models.Model):
         
 class Language(models.Model):
     """A sign language name"""
-    
+        
+    class Meta:
+        ordering = ['name']
+        
     name = models.CharField(max_length=20)
     description = models.TextField()
     
@@ -149,6 +152,9 @@ class Language(models.Model):
 
 class Dialect(models.Model):
     """A dialect name - a regional dialect of a given Language"""
+    
+    class Meta:
+        ordering = ['language', 'name']
     
     language = models.ForeignKey(Language)
     name = models.CharField(max_length=20)
