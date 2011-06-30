@@ -434,16 +434,14 @@ class Gloss(models.Model):
     weathertf = models.NullBooleanField(null=True, blank=True)
     worktf = models.NullBooleanField(null=True, blank=True)
     
-    sense = models.IntegerField("Sense Number", null=True, blank=True) 
+    sense = models.IntegerField("Sense Number", null=True, blank=True, help_text="If there is more than one sense of a sign enter a number here, all signs with sense>1 will use the same video as sense=1") 
     sense.list_filter_sense = True
-    
-    
-    sn = models.IntegerField("Sign Number", null=True, blank=True, unique=True)   # this is a sign number - was trying
+
+    sn = models.IntegerField("Sign Number", help_text="Sign Number must be a unique integer and defines the ordering of signs in the dictionary", null=True, blank=True, unique=True)   
+            # this is a sign number - was trying
             # to be a primary key, also defines a sequence - need to keep the sequence
             # and allow gaps between numbers for inserting later signs
             
-    
-    
     StemSN = models.IntegerField(null=True, blank=True) 
 
     def navigation(self, flavour, is_staff):
