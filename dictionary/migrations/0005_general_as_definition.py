@@ -21,7 +21,7 @@ class Migration(DataMigration):
         for defn in orm.Definition.objects.filter(role='privatenote'):
             defn.gloss.general = defn.text
             defn.delete()
-            print "Reverting general definition for ", defn.gloss.idgloss, ":", comment
+            print "Reverting general definition for ", defn.gloss.idgloss
 
 
     models = {
