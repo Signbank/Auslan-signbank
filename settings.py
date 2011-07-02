@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'signbank.attachments',
     'signbank.video',
     'south',
+    'reversion',
 )
 
 ROOT_URLCONF = 'signbank.urls'
