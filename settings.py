@@ -135,7 +135,10 @@ PAGES_VIDEO_LOCATION = 'pages/'
 # storage location
 VIDEO_UPLOAD_LOCATION = "upload/"
 
-
+# within MEDIA_ROOT we look for videos in these directories, trying them in order
+# and only looking further down the list if the required video isn't found
+# new video uploads are only put in the first of these 
+VIDEO_DIRECTORIES = ["bsl-video", "video"]
 
 # import local settings if present
 try:
