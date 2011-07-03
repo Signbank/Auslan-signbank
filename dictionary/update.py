@@ -21,34 +21,15 @@ def update_gloss(request, glossid, flavour='dictionary'):
     thisgloss = None
     confirm_form = None 
     if request.method == "POST":
-        update_form = GlossUpdateForm(request.POST, request.FILES)
+        
+        thisgloss = get_object_or_404(Gloss, id=glossid)
+        
+        update_form = GlossModelForm(request.POST, instance=thisgloss)
+        
         if update_form.is_valid():
-            clean = update_form.cleaned_data
-            thisgloss = get_object_or_404(Gloss, id=glossid)
             
-            # inWeb is only present if it's selected hence:
-            if clean.has_key('inWeb'):
-                thisgloss.inWeb = clean['inWeb']
-            else:
-                thisgloss.inWeb = False
-                
-            if clean.has_key('inMedLex'):
-                thisgloss.InMedLex = clean['inMedLex']
-            else:
-                thisgloss.InMedLex = False
+            update_form.save()
             
-            if clean.has_key('healthtf'):
-                thisgloss.healthtf = clean['healthtf']
-            else:
-                thisgloss.healthtf = False
-                
-            if clean.has_key('bsltf'):
-                thisgloss.bsltf = clean['bsltf']
-            else:
-                thisgloss.bsltf = False
- 
-            
-            thisgloss.save()
         
         referer = request.META['HTTP_REFERER']
         

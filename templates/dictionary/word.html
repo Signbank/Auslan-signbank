@@ -42,8 +42,11 @@
   <div id="extrasigninfo">
   <table>
 	   <tr>
-	     <td style="text-align: left">Sign Number: <strong>{{gloss.sn}}</strong></td>
-	     <td style="text-align: right">Annotation ID Gloss: <strong>{{gloss.annotation_idgloss}}</strong></td>
+	     <td>Sign Number:</td></tr>
+	   <tr><td><strong>{{gloss.sn}}</strong></td>
+	   </tr><tr>
+	     <td>Annotation ID Gloss:</td></tr>
+	     <tr><td><strong>{{gloss.annotation_idgloss}}</strong></td>
 	   </tr>
   </table>
   </div>
@@ -110,7 +113,7 @@
         
         
         <div id="states">      
-            
+            <!--
              {% if gloss.auslextf %}
             <div>
                 <img src="{% auslan_static_prefix %}images/maps/allstates.gif" alt="States"></img>
@@ -165,11 +168,12 @@
                 <img src="{% auslan_static_prefix %}images/maps/tas.gif" alt="States"></img>
             </div>             
             {% endif %}
-            
+           
   
             {% endif %} {# gloss.sthtf #}
             {% endif %} {# gloss.nthtf #}
             {% endif %} {# gloss.austlex #}
+            -->
             <span>Sign Distribution: 
                 
                 {% for dialect in gloss.dialect.all %}
