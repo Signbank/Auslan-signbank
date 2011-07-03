@@ -532,17 +532,22 @@ minor or insignificant ways that can be ignored.""")
     def get_absolute_url(self):
         return "/dictionary/gloss/%s.html" % self.idgloss
     
-    def get_video_url(self):
-        """return  the url of the video for this gloss which may be that of a homophone"""
-         
-        # first set the default
-        video_num = self.sn
-        # then check if we need to change
+    def get_video_number(self):
+        """Work out the video number for this sign, usually the sign number but
+        if we're a sense>1 then we look at the homophone with sense=1"""
+        
         if self.sense > 1:
             homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
             # should be only zero or one of these
             if len(homophones) > 0:   
-                video_num = homophones[0].target.sn
+                return homophones[0].target.sn
+        return self.sn
+                
+    
+    def get_video_url(self):
+        """return  the url of the video for this gloss which may be that of a homophone"""
+         
+        video_num  = self.get_video_number()
         
         # careful logic for finding the video url since this is used two
         # ways. There might be a video file, in which case we want to know
@@ -570,13 +575,22 @@ minor or insignificant ways that can be ignored.""")
         # if we didn't find the file, return the place we'd like it to
         # be, which is in the first entry in VIDEO_DIRECTORIES with 
         # an mp4 extension
+        return self.get_video_save_location()
+    
+    
+    def get_video_save_location(self):
+        """Return the file location that new uploaded videos should be saved in"""
+ 
+        video_num  = self.get_video_number()
+            
+        # new uploads go in the first entry in VIDEO_DIRECTORIES with 
+        # an mp4 extension
         dir = settings.VIDEO_DIRECTORIES[0]
         videobase = os.path.join(dir, str(video_num)[:2], str(video_num))
-        fileroot = os.path.join(settings.MEDIA_ROOT, videobase) 
-        
-        return videobase+".mp4"
-
     
+        return videobase+".mp4"
+            
+        
     def has_video(self):
         """Test to see if the video for this sign is present"""
         
