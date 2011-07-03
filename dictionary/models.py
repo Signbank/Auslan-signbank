@@ -543,8 +543,6 @@ minor or insignificant ways that can be ignored.""")
             # should be only zero or one of these
             if len(homophones) > 0:   
                 video_num = homophones[0].target.sn
-                
-        videobase = "video/"+str(video_num)[:2]+"/"+str(video_num)
         
         # careful logic for finding the video url since this is used two
         # ways. There might be a video file, in which case we want to know
@@ -554,18 +552,30 @@ minor or insignificant ways that can be ignored.""")
         # an flv and an mp4, we want the mp4. If there is just flv, we'll
         # take that. If there is neither, return the mp4 path so that it
         # can be created there.
+
+        # more complexity, we have a BSL signbank, we want to look in a 
+        # separate video collection first, then fall back to the main one
         
-        fileroot = os.path.join(settings.MEDIA_ROOT, videobase)
+        for dir in settings.VIDEO_DIRECTORIES:
         
+            videobase = os.path.join(dir, str(video_num)[:2], str(video_num))
         
-        if os.path.exists(fileroot+".mp4") and os.path.exists(fileroot+".flv"):
-            return videobase+".mp4"
-        elif os.path.exists(fileroot+".flv"):
-            return videobase+".flv"
-        else: # covers cases where the file is there or not there
-            return videobase+".mp4"
+            fileroot = os.path.join(settings.MEDIA_ROOT, videobase)
+            
+            if os.path.exists(fileroot+".mp4"):
+                return videobase+".mp4"
+            elif os.path.exists(fileroot+".flv"):
+                return videobase+".flv"
         
+        # if we didn't find the file, return the place we'd like it to
+        # be, which is in the first entry in VIDEO_DIRECTORIES with 
+        # an mp4 extension
+        dir = settings.VIDEO_DIRECTORIES[0]
+        videobase = os.path.join(dir, str(video_num)[:2], str(video_num))
+        fileroot = os.path.join(settings.MEDIA_ROOT, videobase) 
         
+        return videobase+".mp4"
+
     
     def has_video(self):
         """Test to see if the video for this sign is present"""
