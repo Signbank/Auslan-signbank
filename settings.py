@@ -100,7 +100,7 @@ DATABASE_HOST = ''
 DATABASE_PORT = '' 
 
 # Absolute path to the directory that holds media. 
-MEDIA_ROOT = '../media/'
+MEDIA_ROOT = 'test-media/'
 # URL that handles the media served from MEDIA_ROOT. 
 MEDIA_URL = '/media/'
 
@@ -118,6 +118,8 @@ TEMPLATE_DIRS = (
     'templates'
 )
 
+# turn on lots of logging or not
+DO_LOGGING = False
 LOG_FILENAME = "debug.log"
 
 # location and URL for uploaded files
