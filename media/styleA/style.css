@@ -81,9 +81,12 @@ body {
 }
 
 #extrasigninfo {
-	font-size: 120%;
+	position: absolute;
+	top: 120px;
+	left: 20px;
+	z-index: -1;
+	width: 150px;
 	margin: 0px;
-	text-align: right;
 	padding-left: 4px;
 	padding-right: 4px;
 	border-bottom: 1px solid #ccc;
@@ -185,6 +188,13 @@ body {
    margin-left: 338px;
    padding-left: 6px;
 }
+
+#staffinfo .helptext {
+	font-size: smaller;
+	font-style: italic;
+	color: #ccc;
+}
+
 
 #numbersigns {
    border-top: 10px solid black;

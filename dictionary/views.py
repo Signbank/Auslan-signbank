@@ -70,14 +70,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     # the gloss update form for staff
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
-        update_form = GlossUpdateForm(
-                {'inWeb': trans.gloss.inWeb,
-                 'inMedLex': trans.gloss.InMedLex,
-                 'keyword': keyword,
-                 'n': n,
-                 'healthtf': trans.gloss.healthtf,
-                 'bsltf': trans.gloss.bsltf,
-                  })
+        update_form = GlossModelForm(instance=trans.gloss)
         
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
@@ -143,12 +136,8 @@ def gloss(request, idgloss, flavour='dictionary'):
     # the gloss update form for staff
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
-        update_form = GlossUpdateForm(
-                {'inWeb': gloss.inWeb,
-                 'inMedLex': gloss.InMedLex,
-                 'healthtf': gloss.healthtf,
-                 'bsltf': gloss.bsltf,
-                  })    
+
+        update_form = GlossModelForm(instance=trans.gloss)
     
     # get the last match keyword if there is one passed along as a form variable
     if request.GET.has_key('lastmatch'):
