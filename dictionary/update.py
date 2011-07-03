@@ -85,7 +85,7 @@ def update_video(request, glossid, flavour='dictionary'):
                     status = "cancelled"
             else: 
                 # copy video to proper location
-                newlocation = os.path.join(settings.MEDIA_ROOT, thisgloss.get_video_url())
+                newlocation = os.path.join(settings.MEDIA_ROOT, thisgloss.get_video_save_location())
                 # backup existing file if any
                 if os.access(newlocation, os.F_OK):
                     backup = newlocation + ".bak"
