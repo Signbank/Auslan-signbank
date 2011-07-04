@@ -93,6 +93,9 @@ body {
 #extrasigninfo table {
 	width: 100%;
 }
+#extrasigninfo a:link, #extrasigninfo a:visited {
+	color: yellow;	
+}
 
 
 #signinfo h2 {
