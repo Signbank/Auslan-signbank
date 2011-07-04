@@ -532,6 +532,24 @@ minor or insignificant ways that can be ignored.""")
     def get_absolute_url(self):
         return "/dictionary/gloss/%s.html" % self.idgloss
     
+    
+    def homophones(self):
+        """Return the set of homophones for this gloss ordered by sense number"""
+        
+        if self.sense == 1:
+            relations = Relation.objects.filter(role="homophone", target__exact=self).order_by('source__sense')
+            homophones = [rel.source for rel in relations]
+            homophones.insert(0,self)
+            return homophones
+        elif self.sense > 1:
+            # need to find the root and see how many senses it has
+            homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
+            if len(homophones) > 0:   
+                root = homophones[0].target
+                return root.homophones()
+        return []
+
+
     def get_video_number(self):
         """Work out the video number for this sign, usually the sign number but
         if we're a sense>1 then we look at the homophone with sense=1"""
