@@ -41,13 +41,24 @@
 {% if user.is_authenticated and user.is_staff %}
   <div id="extrasigninfo">
   <table>
-	   <tr>
-	     <td>Sign Number:</td></tr>
-	   <tr><td><strong>{{gloss.sn}}</strong></td>
-	   </tr><tr>
-	     <td>Annotation ID Gloss:</td></tr>
-	     <tr><td><strong>{{gloss.annotation_idgloss}}</strong></td>
-	   </tr>
+	   <tr><td><strong>Sign Number:</strong></td></tr>
+	   <tr><td>{{gloss.sn}}</td></tr>
+	   <tr><td><strong>Annotation ID Gloss:</strong></td></tr>
+	   <tr><td>{{gloss.annotation_idgloss}}</td></tr>
+	   {% if gloss.sense %}
+	   <tr><td><strong>Homonyms/Homophones:</strong></td></tr>
+	   <tr><td>
+	   <ol>
+	   {% for h in gloss.homophones %}
+	     {% if h == gloss %}
+	     <li>{{h.idgloss}}</li>
+	     {% else %}	     
+	     <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
+	     {% endif %}
+	   {% endfor %}
+	   </ol>
+	   </td></tr>
+	   {% endif %}
   </table>
   </div>
 {% endif %} 
