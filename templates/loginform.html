@@ -22,7 +22,8 @@
     <input type="hidden" name="next" value="{{ next }}" />
 
   </form>
-  
+
+{% if allow_registration %}
   <fieldset id='register'>
      <legend>Register</legend>
      
@@ -32,6 +33,7 @@
     </a>
     </p>
     </fieldset>
+{% endif %}
     
     <fieldset id='lostpw'>
       <legend>Lost Password</legend>

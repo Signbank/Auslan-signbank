@@ -131,6 +131,7 @@ def mylogin(request, template_name='registration/login.html', redirect_field_nam
         redirect_field_name: redirect_to,
         'site': current_site,
         'site_name': current_site.name,
+        'allow_registration': settings.ALLOW_REGISTRATION,
     }, context_instance=RequestContext(request))
 mylogin = never_cache(mylogin)
     
