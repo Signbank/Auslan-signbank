@@ -5,12 +5,15 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings 
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 import os
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import * 
 from signbank.feedback.models import *
 
+@login_required
 def index(request, flavour='dictionary'):
     """Default view showing a browse/search entry
     point to the dictionary"""
@@ -22,7 +25,7 @@ def index(request, flavour='dictionary'):
                                context_instance=RequestContext(request))
 
 
-
+@login_required
 def word(request, viewname, keyword, n, flavour='dictionary'):
     """View of a single keyword that may have more than one sign"""
 
@@ -97,7 +100,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                },
                                context_instance=RequestContext(request))
   
-    
+@login_required
 def gloss(request, idgloss, flavour='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
@@ -165,6 +168,7 @@ def gloss(request, idgloss, flavour='dictionary'):
 
 from django.core.paginator import Paginator, InvalidPage
 
+@login_required
 def search(request, flavour='dictionary'):
     """Handle keyword search form submission
     flavour is either 'dictionary' or 'medicalsignbank' and determines
