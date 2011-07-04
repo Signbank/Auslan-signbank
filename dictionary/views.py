@@ -140,7 +140,7 @@ def gloss(request, idgloss, flavour='dictionary'):
     update_form = None
     if request.user.is_authenticated() and request.user.is_staff:
 
-        update_form = GlossModelForm(instance=trans.gloss)
+        update_form = GlossModelForm(instance=gloss)
     
     # get the last match keyword if there is one passed along as a form variable
     if request.GET.has_key('lastmatch'):
