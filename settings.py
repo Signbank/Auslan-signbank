@@ -24,6 +24,9 @@ LOGIN_URL = '/accounts/login/'
 ## Settings for the registration module
 ACCOUNT_ACTIVATION_DAYS = 2
 
+# do we show the registration form or not
+ALLOW_REGISTRATION = True
+
 ## User session cookies should expire on closing the browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
