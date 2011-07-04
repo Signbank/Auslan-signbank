@@ -7,39 +7,7 @@
 
 {% if update_form.is_valid %}
   <p>The update to the gloss {{ gloss }} was successful.</p>
-  
-  <p>
-  {% if gloss.inWeb %}
-  This gloss will now be included in the web version of the dictionary.
-  {% else %}
-  This gloss will now <strong>not</strong> be included in the web version of the dictionary. 
-  {% endif %}
-  </p>
 
-  <p>
-  {% if gloss.InMedLex %}
-  This gloss is now marked as a problematic medical sign.
-  {% else %}
-  This gloss is now <strong>not</strong> marked as a problematic medical sign. 
-  {% endif %}
-  </p>
-
-  <p>
-  {% if gloss.healthtf %}
-  This gloss is now marked as being in the Health domain.
-  {% else %}
-  This gloss is now <strong>not</strong> marked as being in the Health domain. 
-  {% endif %}
-  </p>
-
-
-  <p>
-  {% if gloss.bsltf %}
-  This gloss is now marked as being a BSL sign.
-  {% else %}
-  This gloss is now <strong>not</strong> marked as being a BSL sign. 
-  {% endif %}
-  </p>
 
   <p>Return to <a href="{{referer}}">the gloss page</a></p>
   
