@@ -140,6 +140,9 @@ VIDEO_UPLOAD_LOCATION = "upload/"
 # new video uploads are only put in the first of these 
 VIDEO_DIRECTORIES = ["bsl-video", "video"]
 
+# which fields from the Gloss model should be included in the quick update form on the sign view
+QUICK_UPDATE_GLOSS_FIELDS = ['language', 'dialect']
+
 # import local settings if present
 try:
     from settings_local import *
