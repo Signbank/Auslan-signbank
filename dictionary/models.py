@@ -269,8 +269,8 @@ minor or insignificant ways that can be ignored.""")
     asltf = models.NullBooleanField("ASL sign", null=True, blank=True)
     
     # deleted fields (need to uncomment to load old fixtures)
-    #general = models.CharField(max_length=200)
-    #CorrectionsAdditionsComments = models.CharField(max_length=200)
+    general = models.CharField(max_length=200)
+    CorrectionsAdditionsComments = models.CharField(max_length=200)
     
     # these fields should be reviewed - do we put them in another class too?
     aslgloss = models.CharField("ASL gloss", blank=True, max_length=50) # American Sign Language gloss

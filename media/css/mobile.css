@@ -1,0 +1,87 @@
+#header h1 {
+	color: #FFFF66;
+	font-family: "Arial Rounded MT Bold", "Arial Rounded", serif;
+}
+
+#footer {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#footer .btn-feedback {
+	/* Cheating/shortcut */
+	/*
+	float: right;
+	position: relative;
+	left: -2.4em;*/
+	margin-bottom: 1.6em;
+	margin-top: 0.7em;
+}
+
+#copyright {
+	float: left;
+	clear: both;
+	font-weight: normal;
+	margin-right: 1em;
+}
+
+/* === WORD PAGE === */
+
+#matches h2 {
+	font-weight: normal;
+	font-size: 1em;
+}
+
+#matches ul li a {
+	font-family: "Menlo", monospace;
+}
+
+#signinfo {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.sign-position {
+	color: #777;
+}
+
+.sign-position em {
+	font-style: normal;
+	color: #333;
+}
+
+#video-container {
+	margin: 0 auto;
+	text-align: center;
+	background-color: #333;
+	margin-left: -1em;
+	margin-right: -1em;
+	margin-top: -1em;
+	padding: 1em;
+	padding-bottom: 2em;
+	border-bottom: 1px solid #eee;
+	/*background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666666), to(#525252), color-stop(.6,#333333),color-stop(.8,#242424),color-stop(.9,#080808));*/
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#242424), to(#363636), color-stop(.6,#262626));
+}
+
+#video-container h2 {
+	color: white;
+	text-shadow: 0 -1px 1px #111;
+}
+
+/*
+#info-wrapper, #footer-info-wrapper {
+	max-width: 800px;
+	margin: 0 auto;
+}
+*/
+
+video {
+  image-fit: fill;
+  max-width: 100%;
+  height: auto;
+}
+
+h3 {
+	color: #444;
+}
