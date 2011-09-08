@@ -1,0 +1,145 @@
+
+{% extends "baselayout.html" %}
+ 
+{% block extrahead %}
+
+    <!-- jquery-ui components (slider)-->
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.8.4.custom.min.js"></script>
+
+    <script type="text/javascript">
+    /* base url of fingerspelling images */ 
+    var baseurl = "{% auslan_static_prefix %}images/onehanded/";
+
+    var fsimages = Object()
+    
+    fsimages["A"] = "oh_a.jpg";
+    fsimages["B"] = "oh_b.jpg";
+    fsimages["C"] = "oh_c.jpg";
+    fsimages["D"] = "oh_d.jpg";
+    fsimages["E"] = "oh_e.jpg";
+    fsimages["F"] = "oh_f.jpg";
+    fsimages["G"] = "oh_g.jpg";
+    fsimages["H"] = "oh_h.jpg";
+    fsimages["I"] = "oh_i.jpg";
+    fsimages["J"] = ["oh_j0.jpg","oh_j1.jpg","oh_j2.jpg","oh_j3.jpg"];
+    fsimages["K"] = "oh_k.jpg";
+    fsimages["L"] = "oh_l.jpg";
+    fsimages["M"] = "oh_m.jpg";
+    fsimages["N"] = "oh_n.jpg";
+    fsimages["O"] = "oh_o.jpg";
+    fsimages["P"] = "oh_p.jpg";
+    fsimages["Q"] = "oh_q.jpg";
+    fsimages["R"] = "oh_r.jpg";
+    fsimages["S"] = "oh_s.jpg";
+    fsimages["T"] = "oh_t.jpg";
+    fsimages["U"] = "oh_u.jpg";
+    fsimages["V"] = "oh_v.jpg";
+    fsimages["W"] = "oh_w.jpg";
+    fsimages["X"] = "oh_x.jpg";
+    fsimages["Y"] = "oh_y.jpg";
+    fsimages["Z"] = ["oh_z0.jpg", "oh_z1.jpg", "oh_z2.jpg", "oh_z3.jpg"];
+    fsimages["transition"] = "transition.jpg";    
+    
+    </script>
+    
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+
+{% endblock %}
+
+{% block jqueryready %} 
+
+  $('#inputarea').submit( function() {
+      speed = 1500-$("#slider").slider("option", "value");
+      display_string("#mainimg", $('#text').val(), speed);
+      return false;
+    });
+
+  /* fill out the table of signs */
+  
+  fill_fstable();
+  
+  /* slider is 0-1000, we use 1500-value as the speed value */
+  $("#slider").slider({min: 0, max: 1000, value: 500});
+{% endblock %}
+
+
+{% block content %} 
+<div id="fingerspellblock">
+<div id="leftblock"> 
+  <div id="handcontainer">
+    <div id="handimage">
+      <img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+    </div>
+    <div id="replay">REPLAY</div>
+  </div>
+    
+    
+  <form id="inputarea">
+    <p>Enter text: <input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
+    </p>
+  </form>
+
+  <h2>Speed</h2> 
+  <div id="slider"></div>
+  <p>Adjust the slider for slower or faster playback.</p>
+  
+</div> 
+
+<div id="fingerspellright">
+<table id="fstable">
+ <tr>
+   <td id="A"></td>
+   <td id="B"></td>
+   <td id="C"></td>
+   <td id="D"></td>
+   <td id="E"></td>
+ </tr>
+ <tr>
+   <td id="F"></td>
+   <td id="G"></td>
+   <td id="H"></td>
+   <td id="I"></td>
+   <td id="J"></td>
+ </tr>
+ <tr>
+   <td id="K"></td>
+   <td id="L"></td>
+   <td id="M"></td>
+   <td id="N"></td>
+   <td id="O"></td>
+ </tr>
+ <tr>
+   <td id="P"></td>
+   <td id="Q"></td>
+   <td id="R"></td>
+   <td id="S"></td>
+   <td id="T"></td>
+ </tr>
+ <tr>
+   <td id="U"></td>
+   <td id="V"></td>
+   <td id="W"></td>
+   <td id="X"></td>
+   <td id="Y"></td>
+ </tr>
+ <tr>
+   <td class='blank'></td>
+   <td colspan='3' class='blank'><p>Click on images to view.</p></td>
+   <td id="Z"></td>
+ </tr>
+</table>
+
+  <div id="info">
+    <p>This is the American Sign Language
+    one-handed manual alphabet which is used in the United States and Canada. It
+    is also used in many other countries and regions of the world, but usually
+    with local variations and additions.</p>
+    
+    <p>Return to <a href="twohanded.html">two handed finger spelling</a></p>
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+

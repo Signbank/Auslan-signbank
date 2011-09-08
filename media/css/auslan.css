@@ -1,0 +1,101 @@
+html > body {
+   margin: 0px;
+   padding: 0px;   
+   font-family: verdana,helvetica,sans-serif;
+   font-size: 10pt;  
+}
+
+body.medical {
+   background-color: #FCFC00;
+}
+
+h1, h2, h3 {
+   font-family: Arial Rounded MT Bold, Trebuchet, sans-serif;
+}
+
+#header {
+   background-color: #a4c95a;
+   background-image: url(http://media.stevecassidy.net/media/img/logo_sign-bank.gif);
+   background-repeat: no-repeat;
+   margin: 0px;
+   padding: 0px;
+   height: 50px;
+}
+
+#header h1 {
+    display: none;
+}
+#header #frmSearch {
+   float: right;
+   padding-right: 1em;
+   margin-top: 10px;
+}
+
+#navigation {
+   margin: 0px;
+}
+
+#content {
+   
+   margin: 0px; 
+   padding-left: 1em;
+   padding-right: 1em;
+ /*  background-color: #CCFFFF; */
+   
+}
+
+
+#footer {
+   background-color: #F0FFDF;   
+   margin: 0px;
+   padding: 0px;
+   height: 50px;
+   clear: both;
+}
+
+#footer #copyright {
+  font-size: smaller;
+  text-align: right;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+
+/* style for the layout of word definitions */
+#signinfo {
+   margin: 0px; 
+   background-color: #CCFFFF;
+}
+
+#signcount {
+   background-color: #FFC0C0;
+   float: right;
+   margin-top: -3em;
+}
+
+#signnav {
+   text-align: center;
+}
+
+#videocontainer {
+   float: left; 
+}
+ 
+#keywords {
+   background-color: #CCFFAA;
+   margin-left: -1em; 
+   padding-left: 1em;
+}
+
+#states {
+   background-color: #FCFCCF;
+}
+    
+#definition {
+   margin-left: 320px;
+   padding-left: 1em;
+   background-color: #FFCCAA;
+}
+
+
+ 
