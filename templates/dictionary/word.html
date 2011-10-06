@@ -133,9 +133,13 @@
         <div>
            <h4>Sign Distribution</h4> 
                 <ul>
-                {% for dialect in gloss.dialect.all %}
-                  <li>{{dialect.language.name}}/{{ dialect.name }}</li>
-                {% endfor %}
+                {% ifequal dialect_image "images/maps/allstates.gif" %}
+                  <li>All States</li>
+                {% else %}
+	                {% for dialect in gloss.dialect.all %}
+	                  <li>{{ dialect.name }}</li>
+	                {% endfor %}
+                {% endifequal %}
                 </ul>  
         </div>
 
