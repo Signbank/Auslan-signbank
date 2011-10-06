@@ -122,70 +122,13 @@
             </ul> 
         </div>
         
-        
+        {% if dialect_image %}
         <div id="states">      
-            <!--
-             {% if gloss.auslextf %}
             <div>
-                <img src="{% auslan_static_prefix %}images/maps/allstates.gif" alt="States"></img>
-            </div>                     
-
-            {% else %}
-            
-            {% if gloss.nthtf %}
-            {# northern dialect = NSW, ACT, QLD #}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/nsw-act-qld.gif" alt="States"></img>
-            </div> 
-            <span>Sign Distribution: NSW, ACT, QLD</span>
-            {% else %}
-            
-            {% if gloss.sthtf %}
-            {# southern dialect = VIC, WA, TAS, SA, NT #}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/vic-wa-tas-sa-nt.gif" alt="States"></img>
-            </div> 
-            <span>Sign Distribution: VIC, WA, TAS, SA, NT </span>
-            {% else %}
-            {# individual states turned on #}
-
-            {% if gloss.qldtf and not gloss.nswtf and not gloss.victf and not gloss.watf and not gloss.satf and not gloss.tastf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/qld.gif" alt="States"></img>
-            </div>             
-            {% endif %}
-            {% if gloss.nswtf and not gloss.qldtf and not gloss.victf and not gloss.watf and not gloss.satf and not gloss.tastf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/nsw.gif" alt="States"></img>
-            </div>             
-            {% endif %}
-            {% if gloss.victf and not gloss.nswtf and not gloss.qldtf and not gloss.watf and not gloss.satf and not gloss.tastf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/vic.gif" alt="States"></img>
-            </div>             
-            {% endif %}            
-            {% if gloss.watf and not gloss.nswtf and not gloss.victf and not gloss.qldtf and not gloss.satf and not gloss.tastf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/wa.gif" alt="States"></img>
-            </div>             
-            {% endif %}
-            {% if gloss.satf and not gloss.nswtf and not gloss.victf and not gloss.watf and not gloss.qldtf and not gloss.tastf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/sa.gif" alt="States"></img>
-            </div>             
-            {% endif %}
-            {% if gloss.tastf and not gloss.nswtf and not gloss.victf and not gloss.watf and not gloss.satf and not gloss.qldtf %}
-            <div>
-                <img src="{% auslan_static_prefix %}images/maps/tas.gif" alt="States"></img>
-            </div>             
-            {% endif %}
-           
-  
-            {% endif %} {# gloss.sthtf #}
-            {% endif %} {# gloss.nthtf #}
-            {% endif %} {# gloss.austlex #}
-            -->
-        </div>
+                <img src="{% auslan_static_prefix %}{{dialect_image}}" alt="States"></img>
+            </div>
+        </div> 
+        {% endif %}
         
         <div>
            <h4>Sign Distribution</h4> 

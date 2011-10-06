@@ -146,6 +146,12 @@ VIDEO_DIRECTORIES = ["bsl-video", "video"]
 # which fields from the Gloss model should be included in the quick update form on the sign view
 QUICK_UPDATE_GLOSS_FIELDS = ['language', 'dialect']
 
+# should we always require a login for viewing dictionary content
+ALWAYS_REQUIRE_LOGIN = False
+
+
+
+
 # import local settings if present
 try:
     from settings_local import *
