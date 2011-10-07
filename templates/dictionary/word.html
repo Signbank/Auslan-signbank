@@ -1,0 +1,309 @@
+{% extends "baselayout.html" %}
+
+{% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
+
+
+{% block jqueryready %}
+    config = {
+        plugins: { 
+                controls: null 
+        },
+        play: { opacity: 0 },
+        clip: {
+            url: '{% if videofile %}{% auslan_media_prefix %}{{ videofile }}{% else %}{% auslan_static_prefix %}images/no-video.png{% endif %}',
+            autoplay: true
+        },
+        onBeforeFullscreen: function() {return false;}
+    };
+    flowplayer("player", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config);
+ 
+    $('#feedbackmessage').fadeOut(5000);
+    
+{% endblock %}
+
+{% block script %}
+    function replay() {
+        $f('player').play();
+    }
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if feedbackmessage %}
+<div id="feedbackmessage">
+    <p>{{ feedbackmessage }}</p>
+</div>
+{% endif %}
+
+{% if user.is_authenticated and user.is_staff %}
+  <div id="extrasigninfo">
+  <table>
+	   <tr><td><strong>Sign Number:</strong></td></tr>
+	   <tr><td>{{gloss.sn}}</td></tr>
+	   <tr><td><strong>Annotation ID Gloss:</strong></td></tr>
+	   <tr><td>{{gloss.annotation_idgloss}}</td></tr>
+	   {% if gloss.sense %}
+	   <tr><td><strong>Homonyms/Homophones:</strong></td></tr>
+	   <tr><td>
+	   <ol>
+	   {% for h in gloss.homophones %}
+	     {% if h == gloss %}
+	     <li>{{h.idgloss}}</li>
+	     {% else %}	     
+	     <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
+	     {% endif %}
+	   {% endfor %}
+	   </ol>
+	   </td></tr>
+	   {% endif %}
+  </table>
+  </div>
+{% endif %} 
+
+<div id="signinfo">
+    <div id="signs">
+        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
+            {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
+
+            {% if navigation.prev %}
+            <div class="prev">
+              <a href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
+            </div>
+            {% endif %}
+            {% if navigation.next %}
+            <div class="next">
+             <a href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign &raquo;</a>
+            </div>
+            {% endif %}
+    </div>
+    
+    <div id="matches">
+        {% ifequal viewname "words" %}
+        <h2>Matches for the word <em>{{ translation.translation }}</em></h2>
+        <div>
+        {% for i in matches %}
+            {% ifequal i n %}
+            <span class='match current'>{{i}}</span>
+            {% else %}
+            <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
+            {% endifequal %}
+        {% endfor %} 
+        </div>
+        {% else %}
+            <h2><a href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <div>&nbsp;</div>
+        {% endifequal %}
+        
+    </div>
+</div>
+
+<div id="definitionblock">
+    <div id="leftblock">
+        <div id="videocontainer">
+            <div id="player"></div>            
+            <div id="replay" onclick="replay()">
+               REPLAY
+            </div>
+        </div>
+        
+        <div id="feedback">
+            <ul>
+                {% ifequal viewname "words" %}
+                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{flavour}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                {% else %}
+                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{flavour}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                {% endifequal %}
+                
+                <li><a href="{% url signbank.views.index %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url signbank.views.index %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+            </ul> 
+        </div>
+        
+        {% if dialect_image %}
+        <div id="states">      
+            <div>
+                <img src="{% auslan_static_prefix %}{{dialect_image}}" alt="States"></img>
+            </div>
+        </div> 
+        {% endif %}
+        
+        <div>
+           <h4>Sign Distribution</h4> 
+                <ul>
+                {% ifequal dialect_image "images/maps/allstates.gif" %}
+                  <li>All States</li>
+                {% else %}
+	                {% for dialect in gloss.dialect.all %}
+	                  <li>{{ dialect.name }}</li>
+	                {% endfor %}
+                {% endifequal %}
+                </ul>  
+        </div>
+
+    </div>
+    
+    <div id="keywords"> 
+         <p><strong>Keywords:</strong>
+         {% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+         {% endfor %}
+         </p>
+    </div>
+
+    <div id="definition">
+        <h2>Sign Definition</h2>
+ 
+        {% if definitions.general %} 
+          <h3>General Definition</h3>
+         
+          <ol>
+          {% for def in definitions.general %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+ 
+        {% if definitions.noun %} 
+          <h3>As a Noun</h3>
+         
+          <ol>
+          {% for def in definitions.noun %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.verb %} 
+          <h3>As a Verb or Adjective</h3> 
+          <ol>
+          {% for def in definitions.verb %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.interact %} 
+          <h3>Interactive</h3> 
+          <ol>
+          {% for def in definitions.interact %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.deictic %} 
+          <h3>As a Pointing Sign</h3> 
+          <ol>
+          {% for def in definitions.deictic %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.modifier %} 
+          <h3>As Modifier</h3> 
+          <ol>
+          {% for def in definitions.modifier %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+        
+          
+        {% if definitions.question %} 
+          <h3>As Question</h3> 
+          <ol>
+          {% for def in definitions.question %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.augment %} 
+          <h3>Augmented Meaning</h3> 
+          <ol>
+          {% for def in definitions.augment %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+
+        {% if definitions.note %} 
+          <h3>Note</h3> 
+          <ol>
+          {% for def in definitions.note %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+
+    </div>
+    
+
+    {% if user.is_authenticated and user.is_staff %}
+    <div id="staffinfo">
+        
+        <h2>Staff</h2>
+
+        
+        <table id="staffops">
+          <tr>
+            <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
+            </td>
+            <td>
+             <a href="javascript:window.open('{% url signbank.views.index %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+            </td>
+          </tr>
+        </table>
+
+        {% if definitions.popexplain %} 
+          <h3>Popular Explanation</h3> 
+          <ol>
+          {% for def in definitions.popexplain %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+        
+        {% if definitions.privatenote %} 
+          <h3>Private Notes</h3> 
+          <ol>
+          {% for def in definitions.privatenote %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+        
+        
+        {% if gloss.queries %}
+          <h2>Notes</h2>
+          <ol>
+              <li>{{gloss.queries}}</li>
+          </ol>
+        {% endif %}
+  
+        {%if update_form %}
+        <form action="{% url signbank.views.index %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+       
+            <fieldset class="glossupdate">
+            <legend>Quick Updates</legend>
+              {# update form for this gloss #}
+              <table>
+              {{update_form.as_table}}
+              </table>     
+                <p><input type="submit" value="Update"/></p>
+            </fieldset>     
+        </form>
+        {% endif %}
+    </div>
+    {% endif %}          
+</div>
+
+
+{% endblock %}
+

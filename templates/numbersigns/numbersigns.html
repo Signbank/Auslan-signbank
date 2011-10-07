@@ -1,0 +1,94 @@
+
+
+{% extends "baselayout.html" %}
+
+{% block script %}
+// Currently copied from js/nsscript.js pending a better template structure
+// array of clip and image names
+clips = [ 
+ 'ns_010',       // 0
+ 'ns_011-019',   // 1
+ 'ns_020-090',   // 2
+ 'ns_022-099',   // 3
+ 'ns_200-900',   // 4
+ 'ns_100',       // 5
+ 'ns_1k',        // 6
+ 'ns_1m',        // 7
+ 'ns_1g'         // 8
+]
+
+config = {
+    plugins: { 
+	    controls: null 
+    },
+    play: { opacity: 0 },
+    onBeforeFullscreen: function() {return false;}
+};
+
+flowplayer("player", "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", config);
+ 
+var currentNS = -1;
+
+function playNS(n) { 
+    if (document.getElementById) {
+        
+        // reset the currentNS image to unselected
+        if (currentNS>=0) {
+            img = document.getElementById(clips[currentNS]);
+            img.src = "{% auslan_static_prefix %}img/"+clips[currentNS]+".jpg";
+        }
+        // remember what we're playing and replace the image with selected
+        currentNS = n
+        img = document.getElementById(clips[n]);
+        img.src = "{% auslan_static_prefix %}img/"+clips[n]+"_select.jpg";
+	
+	var player = document.getElementById('player');
+	videourl = "{% auslan_static_prefix %}flash/"+clips[n]+".flv";	
+	flowplayer('player').play(videourl);
+    }
+}
+
+    function replay() {
+        $f('player').play();
+    }
+
+{% endblock %}
+ 
+{% block bodyid %}id='numbersigns'{% endblock %}
+{% block content %}
+
+<div id="numbersigns">
+	<div id="leftblock">
+        <div id="videocontainer">
+            <div id="player"></div>            
+            <div id="replay" onclick="replay()">
+               REPLAY
+            </div>
+        </div>
+	</div>
+
+      <table id="numsigntable" width="470" border="0" cellspacing="0" cellpadding="0">
+        <tr><td colspan="5"><img src="{% auslan_static_prefix %}img/ns_001-009.jpg" width="470" height="129" alt=""></td></tr>
+        <tr>
+          <td><a href="javascript:playNS(0)"><img id='ns_010' src="{% auslan_static_prefix %}img/ns_010.jpg" width="95" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(1)"><img id='ns_011-019' src="{% auslan_static_prefix %}img/ns_011-019.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(2)"><img id='ns_020-090' src="{% auslan_static_prefix %}img/ns_020-090.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(3)"><img id='ns_022-099' src="{% auslan_static_prefix %}img/ns_022-099.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(4)"><img id='ns_200-900' src="{% auslan_static_prefix %}img/ns_200-900.jpg" width="93" height="91" alt="" border="0"></a><br></td>
+        </tr>
+        <tr>
+          <td><a href="javascript:playNS(5)"><img id='ns_100' src="{% auslan_static_prefix %}img/ns_100.jpg" width="95" height="92" alt="" border="0"></a><br></td>    
+          <td><a href="javascript:playNS(6)"><img id='ns_1k' src="{% auslan_static_prefix %}img/ns_1k.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(7)"><img id='ns_1m' src="{% auslan_static_prefix %}img/ns_1m.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(8)"><img id='ns_1g' src="{% auslan_static_prefix %}img/ns_1g.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><img src="{% auslan_static_prefix %}img/ns_empty.gif" width="93" height="92" alt="" border="0"><br></td>
+        </tr>
+      </table>
+     <p>
+        To view signs used to express numbers from ten to 
+        one billion, click a sign          
+        in the table at above right. The corresponding video will 
+        then play in the viewer above.
+      </p>
+</div>
+{% endblock %}

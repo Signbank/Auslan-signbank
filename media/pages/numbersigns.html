@@ -1,0 +1,264 @@
+<html>
+  <head>
+    <title>Auslan - Signbank</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" href="http://media.stevecassidy.net/media/css/core.css" type="text/css">
+    <link rel="stylesheet" href="http://media.stevecassidy.net/media/css/main.css" type="text/css">
+
+    <script language="JavaScript" src="http://media.stevecassidy.net/media/js/browserkit.js"></script>
+    <script language="JavaScript" src="http://media.stevecassidy.net/media/js/abscore.js"></script> 
+    <script>
+      <!--
+
+      var browserKit = new BrowserKit();
+
+      function handleOnLoad() 
+      {
+        MM_preloadImages("http://media.stevecassidy.net/media/img/button_search_select.gif");
+      }
+      
+      
+// Currently copied from js/nsscript.js pending a better template structure
+// array of clip and image names
+clips = [ 
+ 'ns_010',       // 0
+ 'ns_011-019',   // 1
+ 'ns_020-090',   // 2
+ 'ns_022-099',   // 3
+ 'ns_200-900',   // 4
+ 'ns_100',       // 5
+ 'ns_1k',        // 6
+ 'ns_1m',        // 7
+ 'ns_1g'         // 8
+]
+
+// Configuration for the flowplayer instance, we add the video 
+// name to this and call setConfig to play a new video
+fpconfig = { videoFile: 'ns_1k.flv',
+           baseURL: 'http://media.stevecassidy.net/media/flash/',
+           autoPlay: true, 
+           autoBuffering: false, 
+           loop: false, 
+           autoRewind: true,   
+           hideControls: true} 
+
+
+var currentNS = -1;
+
+function playNS(n) { 
+    if (document.getElementById) {
+        
+        // reset the currentNS image to unselected
+        if (currentNS>=0) {
+            img = document.getElementById(clips[currentNS]);
+            img.src = "http://media.stevecassidy.net/media/img/"+clips[currentNS]+".jpg";
+        }
+        // remember what we're playing and replace the image with selected
+        currentNS = n
+        img = document.getElementById(clips[n]);
+        img.src = "http://media.stevecassidy.net/media/img/"+clips[n]+"_select.jpg";
+        
+        fp = document.getElementById("FlowPlayer");
+        fpconfig['videoFile'] = clips[n] + ".flv";
+        fp.setConfig(fpconfig);
+        fp.DoPlay();
+    }
+}
+
+
+      
+      // -->    
+      
+    </script>
+
+  </head>
+
+  <body bgcolor="#FFFFFF" text="#385400" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="handleOnLoad();">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td background="http://media.stevecassidy.net/media/img/bg_top.gif">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+            <!-- BANNER -->
+
+            <tr><td colspan="4"><img src="http://media.stevecassidy.net/media/img/logo_sign-bank.gif" width="249" height="50"><br></td></tr>
+
+            <!-- MAIN MENU -->
+<tr>
+  <td colspan="2" class="menu">
+      <ul class="menuMain">
+        <li class="menu" title="Homepage"><a href="http://www.auslan.org.au/" class="menu">home</a></li
+       ><li class="menu" title="Search signbank"><a href="http://www.auslan.org.au/dictionary/search/" class="menu">sign search</li
+       ><li class="menu" title="Finger spelling"><a href="http://www.auslan.org.au/fingerspellingtwohanded.html" class="menu">fingerspelling</li
+       ><li class="menuselect" title="Number signs"><a href="http://media.stevecassidy.net/media/pages/numbersigns.html" class="menuselect">numbersigns</li
+       ><li class="menu" title="Feedback"><a href="http://www.auslan.org.au/feedback/" class="menu">feedback</li
+       ><li class="menu" title="Help"><a href="http://www.auslan.org.au/help.html" class="menu">help</li
+       >
+     
+       &nbsp;&nbsp;&nbsp;
+      </ul>
+  </td>  
+</tr>            
+
+            <!-- SUBMENU -->
+           <tr>
+              <td></td>
+              <td colspan="3" class="asbMenuL2">
+                &nbsp;
+              </td>
+
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    
+    
+    
+    <!-- TITLEBAR -->
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td><img src="http://media.stevecassidy.net/media/img/obj_null.gif" width="1" height="1"><br></td>
+        <td class="asbCFrameTopUpperRowCnr"><img src="http://media.stevecassidy.net/media/img/border_ul.gif" width="10" height="30" alt="" border="0"><br></td>
+        <td class="asbCFrameTopUpperRow" width="100%" nowrap> Number Signs &nbsp; </td>
+      </tr>
+    </table>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+        <td><img src="http://media.stevecassidy.net/media/img/obj_null.gif" width="1" height="1"><br></td>
+        <td valign="top">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td class="asbCFrameTopLowerRowLeft" nowrap>
+
+   <span id="asbNsCaption">&nbsp;</span>
+
+            </td></tr>
+
+            <!-- SIDEBAR CONTENT -->            
+            <tr><td class="asbCFrameLeftUpperBlock" style="padding:0px;">
+
+
+
+
+    <div align="center" class="asbCFrameLeftUpperBlockSearch" style="border:0px;">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="asbSignPreview">
+                <div id="asbSignVideoContainer" class="asbVideoContainer">
+
+                       
+                      <object type="application/x-shockwave-flash" 
+                              data="http://media.stevecassidy.net/media/flowplayer/FlowPlayer.swf" 
+                              width="192" height="144" id="FlowPlayer">
+                          <param name="allowScriptAccess" value="always" />
+                          <param name="movie" value="http://media.stevecassidy.net/media/flowplayer/FlowPlayer.swf" />
+                          <param name="quality" value="high" />
+                          <param name="scale" value="noScale" />
+                          <param name="wmode" value="transparent" />  
+                          <param name="flashvars"
+                                value="config={ 
+                                                baseURL: 'http://media.stevecassidy.net/media/flash/', 
+                                                autoPlay: true, 
+                                                autoBuffering: false, 
+                                                loop: false, 
+                                                autoRewind: true,   
+                                                hideControls: true}" 
+                          />
+                       </object> 
+                      </div>
+
+          </td>
+        </tr>
+        <tr>
+           <td class="videoReplayMessage">
+              <p>Click on image to replay</p>
+           </td>
+        </tr>
+
+      </table>
+    </div>
+
+            </td></tr>
+            <tr><td class="asbCFrameLeftLowerBlock">
+
+      <p class="asbCFrameLeftText">
+        To view signs used to express numbers from ten to 
+        one billion, click a play button 
+        (<img src="http://media.stevecassidy.net/media/img/button_play.gif" width="17" height="13" alt="" align="middle" border="0">) 
+        in the table at right. The corresponding video will 
+        then play in the viewer above.
+      </p>
+      <p>&nbsp;</p>
+
+            </td></tr>
+
+            <tr><td><img src="http://media.stevecassidy.net/media/img/border_lm.gif" width="229" height="10" alt="" border="0"><br></td></tr>
+            <tr>
+              <td style="padding-top:10px;">
+                <img src="http://media.stevecassidy.net/media/img/logo_institute.gif" width="216" height="39" alt="" border="0">
+                <p class="asbCopyright">&copy; RIDBC 2004. All rights reserved.</p>
+              </td>
+
+            </tr>
+            <tr><td><img src="http://media.stevecassidy.net/media/img/obj_null.gif" width="1" height="232"><br></td></tr>
+          </table>
+        </td>
+        <td valign="top" width="100%">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td class="asbCFrameTopLowerRowRight" nowrap>
+
+      Key
+
+            </td></tr>
+
+	    <tr>
+              <td class="asbBodyCell">
+                <table width="450" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td>
+
+                      <!-- CONTENT -->
+
+
+
+
+      <table width="470" border="0" cellspacing="0" cellpadding="0">
+        <tr><td colspan="5"><img src="http://media.stevecassidy.net/media/img/ns_001-009.jpg" width="470" height="129" alt=""></td></tr>
+        <tr>
+          <td><a href="javascript:playNS(0)"><img id='ns_010' src="http://media.stevecassidy.net/media/img/ns_010.jpg" width="95" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(1)"><img id='ns_011-019' src="http://media.stevecassidy.net/media/img/ns_011-019.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(2)"><img id='ns_020-090' src="http://media.stevecassidy.net/media/img/ns_020-090.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(3)"><img id='ns_022-099' src="http://media.stevecassidy.net/media/img/ns_022-099.jpg" width="94" height="91" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(4)"><img id='ns_200-900' src="http://media.stevecassidy.net/media/img/ns_200-900.jpg" width="93" height="91" alt="" border="0"></a><br></td>
+        </tr>
+
+        <tr>
+          <td><a href="javascript:playNS(5)"><img id='ns_100' src="http://media.stevecassidy.net/media/img/ns_100.jpg" width="95" height="92" alt="" border="0"></a><br></td>    
+          <td><a href="javascript:playNS(6)"><img id='ns_1k' src="http://media.stevecassidy.net/media/img/ns_1k.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(7)"><img id='ns_1m' src="http://media.stevecassidy.net/media/img/ns_1m.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><a href="javascript:playNS(8)"><img id='ns_1g' src="http://media.stevecassidy.net/media/img/ns_1g.jpg" width="94" height="92" alt="" border="0"></a><br></td>
+          <td><img src="http://media.stevecassidy.net/media/img/ns_empty.gif" width="93" height="92" alt="" border="0"><br></td>
+        </tr>
+      </table>
+      
+
+
+                    </td>
+
+                  </tr>
+                </table>
+                
+              </td>
+            </tr>
+          </table>
+        </td>			
+      </tr>
+    </table>
+
+
+  </body>
+</html>

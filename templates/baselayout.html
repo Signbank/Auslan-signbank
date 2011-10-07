@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.4.2.min.js"></script> 
+    
+
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">        
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish-navbar.css" />
+    
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
+    <!--
+    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
+    -->
+
+   <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
+{% ifequal flavour "medical" %}
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" type="text/css">
+{% else %} 
+    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/green.css" type="text/css">
+<!--    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" type="text/css"> -->
+{% endifequal %}
+
+    <link type="text/css" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-darkness/jquery-ui-1.8.4.custom.css" rel="stylesheet" />   
+    
+    <script type="text/javascript" src="{% auslan_static_prefix %}flowplayer/jquery.tools.min.js"></script> 
+
+{% block extrahead %}
+
+{% endblock %}
+
+    
+    <script type="text/javascript">
+      <!--
+      
+      
+$(document).ready(function(){
+  
+  /* initialise navigation menus */
+  $('.sf-menu').superfish({
+        pathLevels: 1,
+        dropShadows: false,
+        pathClass: 'current',
+        delay: 1000
+        });
+  
+  {% block jqueryready %}
+  
+  {% endblock %}
+  
+});
+      {% block script %}
+      // more scripts go here
+      {% endblock %}
+      
+      // -->    
+      
+    </script>
+    <!-- google analytics code --> 
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3928964-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script> 
+
+  </head>
+ 
+  <body {% block bodyid %}{% endblock %}>
+  
+    <div id="leftcontentborder"></div>
+    <div id="rightcontentborder"></div>
+    <div id="header">
+       <h1>Auslan - Signbank</h1>
+       <form id="frmSearch" name="frmSearch" method="get" action="{% url signbank.views.index %}{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
+          <input type="Text" name="query" value="{{ query }}" maxlength="50">
+          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>
+          <br>Medical Signs only<input type="checkbox" name="msb" value="1" {% ifequal flavour "medical" %}checked='1'{% endifequal %}>      
+       </form> 
+    </div>
+
+    <div id="navigation"> 
+     {% include "menu.html" %}
+    </div>
+    
+    
+
+    <div id="content"> 
+    {% block content %}
+    <p>PAGE CONTENT</p>
+    {% endblock %} 
+    </div>    
+
+    
+    
+    <div id="footer"> 
+     
+          <div id="copyright">
+              &copy; 2009, Trevor Johnston, Macquarie University. All rights reserved.<br>
+              <a href="{% url signbank.feedback.views.generalfeedback %}">Provide feedback on the site</a> 
+          </div>
+    </div>
+     
+  
+  </body>
+</html>
