@@ -60,7 +60,7 @@ def map_image_for_dialects(dialects):
         return 
     
     # all states 
-    if len(dialects) == 8:
+    if dialects.filter(name__exact="Australia Wide"):
         return STATE_IMAGES['auslan_all']
     
     if dialects.filter(name__exact="Southern Dialect"):
