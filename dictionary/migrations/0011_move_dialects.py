@@ -29,6 +29,7 @@ class Migration(DataMigration):
         nth.save()
         sth = orm.Dialect(name="Southern Dialect", language=auslan)
         sth.save()
+
         
         
         for gloss in orm.Gloss.objects.all():
