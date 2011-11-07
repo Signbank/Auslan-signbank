@@ -39,11 +39,18 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     word = get_object_or_404(Keyword, text=keyword)
     # returns (matching translation, number of matches) 
     (trans, total) =  word.match_request(request, n, flavour)
+
+    print "(trans, total) = ", trans, total
     
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
+
+    print "allkwds = ", allkwds
         
     videourl = trans.gloss.get_video_url()
+    
+    print "Video URL = " + videourl
+
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
         

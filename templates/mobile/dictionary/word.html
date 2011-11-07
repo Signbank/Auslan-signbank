@@ -3,40 +3,8 @@
 {% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
 
 {% block extrahead %}
-<!-- VideoJS Stuff -->
-<script src="{% auslan_static_prefix %}js/video.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="{% auslan_static_prefix %}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
 
-<script type="text/javascript">
-// Add VideoJS to all video tags on the page when the DOM is ready
-VideoJS.DOMReady(function(){
-      
-	// Using the video's ID or element
-	var myPlayer = VideoJS.setup("video");
-
-	$("#replay-video").click(function(e) {
-		myPlayer.currentTime(0);
-		myPlayer.play();
-	});
-	  
-});
-
-
-$(document).ready(function() {
-
-
-}); // End document.ready
-</script>
-
-<style type="text/css">
-.video-js-box {
-	margin: 0 auto;
-	text-align: center;
-}
-</style>
 {% endblock %}
-
-
 
 
 {% block content %}
@@ -55,10 +23,8 @@ $(document).ready(function() {
     <div class="video-js-box">
       <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
       <!--<video id="video" class="video-js" width="320" height="132" poster="http://video-js.zencoder.com/oceans-clip.png" controls preload>-->
-      <video id="video" class="video-js" poster="http://video-js.zencoder.com/oceans-clip.png" controls="controls" preload="auto" poster="http://video-js.zencoder.com/oceans-clip.png">
-        <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-        <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm; codecs="vp8, vorbis"' />
-        <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg; codecs="theora, vorbis"' />
+      <video id="video" class="video-js" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg" controls="controls" preload="auto" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg">
+        <source src="http://new.auslan.org.au/video/mp4video/60/60440.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
         <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
         <object id="flash_fallback_1" class="vjs-flash-fallback" width="320" height="132" type="application/x-shockwave-flash"
           data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
@@ -70,7 +36,8 @@ $(document).ready(function() {
             title="No video playback capabilities." />
         </object>
       </video>
-	  <a data-role="button" data-icon="refresh" data-inline="true" href="#" id="replay-video">Replay</a>
+      <div class="clear"></div>
+	  <button data-role="button" data-icon="refresh" data-inline="true"  id="replay-video">Replay</a>
       <!-- Download links provided for devices that can't play video in the browser. -->
 	  <!--
       <p class="vjs-no-video"><strong>Download Video:</strong>

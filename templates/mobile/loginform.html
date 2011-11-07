@@ -3,50 +3,50 @@
 {% if not user.is_authenticated %}
 
   <div id="loginforms">
+
+	<h2>Sign In</h2>
+<div class="ui-body ui-body-c">
   
   <form id="loginform" name="login" method="post" action="/accounts/login/">
-    <fieldset id='signin'>
-    <legend>Sign In</legend>
-    <table width='100%'>
     {% if form.errors %} 
-      <tr><td colspan='2' style="background: red">Login Error, {{form.errors}}.</td>
+      <div class="ui-body ui-body-e">
+        <h3>Login Error</h3>
+        <p>{{form.errors}}</p>
+      </div>
     {% endif %}
-    <tr><td><label for="email">Email:</label></td><td><input  class="boxed" type="text" name="email" /></td></tr>
-    <tr><td><label for="password">Password:</label></td><td><input  class="boxed" type="password" name="password" /></td></tr>
-    <tr><td colspan='2' align='right'>
-          <input id="gobutton" type="image" src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="submit form">
-        </td>
-    </tr>
-    </table>
-    </fieldset>
-    <input type="hidden" name="next" value="{{ next }}" />
+    <div data-role="fieldcontain">
+    <label for="email" class="ui-input-text">Email:</label>
+    <input class="boxed" type="text" name="email" />
+    </div>
 
+    <div data-role="fieldcontain">
+    <label for="password" class="ui-input-text">Password:</label>
+    <input class="boxed" type="password" name="password" />
+    </div>
+
+    <button type="submit" name="submit">Log In</button></div>
+    <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
 {% if allow_registration %}
-  <fieldset id='register'>
-     <legend>Register</legend>
+    <h2>Register</h2>
      
+    <div class="ui-body ui-body-c">
     <p>Register for free to provide feedback on the Auslan dictionary of signs.</p>
-    <p align='right'><a href="/accounts/register/">
-       <img src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="" border="0">
-    </a>
-    </p>
-    </fieldset>
+    <a data-role="button" href="/accounts/register/">Register</a>
+    </div>
 {% endif %}
     
-    <fieldset id='lostpw'>
-      <legend>Lost Password</legend>
+      <h2>Lost Password</h2>
+<div class="ui-body ui-body-c">
       <p>If you've lost or forgotten your password, enter your email 
       address here and we'll reset it and send you a reminder.</p>
 
       <form id="passwordresetform" action="/accounts/password/reset/" method="POST">
-      <p align='center'><input class="boxed" type="text" name="email" /></p>
-      <p align='right'>
-      <input id="gobutton" type="image" src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="submit password reset form">
-      </p>
+      <label for="email" class="ui-input-text">Email:</label>
+      <input class="boxed" type="text" name="email" /></p>
+      <button type="submit">Reset Password</button></div>
       </form>
-    </fieldset>
     </div>
 
 
