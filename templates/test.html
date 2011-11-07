@@ -1,0 +1,40 @@
+<html>
+ <head><title>Video Test</title></head> 
+ <body>
+   <h1>Video Test</h1>
+
+    <video width="640" height="480" controls autoplay>
+            <source src="{% auslan_media_prefix %}{{params.videofile}}.ogv" type="video/ogg"></source>
+            <source src="{% auslan_media_prefix %}{{params.videofile}}.mp4" type="video/mp4"></source><!--[if gt IE 6]>
+            <object width="640" height="495" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"><!
+            [endif]--><!--[if !IE]><!-->
+            <object width="640" height="495" type="video/quicktime" data="{% auslan_static_prefix %}{{params.videofile}}.mp4">
+            <!--<![endif]-->
+                <param name="src" value="{% auslan_media_prefix %}{{params.videofile}}.mp4" />
+                <param name="showlogo" value="false" />
+                <param name="autoplay" value="false" />
+                
+                <object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' width='640' height='480' id='player1' name='player1'>
+                    <param name='movie' value='/static/mediaplayer/player.swf'>
+                    <param name='allowfullscreen' value='false'> 
+                    <param name='allowscriptaccess' value='always'>
+                    <param name='flashvars' value='file=/{% auslan_media_prefix %}{{params.videofile}}.mp4&autostart=true&controlbar=none'>
+                    <embed id='player1'
+                           name='player1'
+                           src='/static/mediaplayer/player.swf'
+                           width='640'
+                           height='480'
+                           allowscriptaccess='always'
+                           allowfullscreen='true'
+                           flashvars="file=/{% auslan_media_prefix %}{{params.videofile}}.mp4&autostart=true&controlbar=none"
+                    />
+                
+                 <img src="__POSTER__.JPG" width="640" height="360" alt="__Title of video__"
+                         title="No video playback capabilities, please download the video below" />
+             
+            </object><!--[if gt IE 6]><!--></object><!--<![endif]-->
+    </video>
+
+    <p>Download Video: <a href="{% auslan_media_prefix %}{{ params.videofile }}.mp4">Apple iTunes "MP4"</a> | <a href="{% auslan_media_prefix %}{{params.videofile}}.ogv">Open Format "OGG"</a></p>
+ 
+</html>

@@ -1,0 +1,214 @@
+{% extends "baselayout.html" %}
+
+{% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+
+{% block content %}
+
+    {% if feedbackmessage %}
+    <div id="feedbackmessage">
+        <p>{{ feedbackmessage }}</p>
+    </div>
+    {% endif %}
+
+    <div id="video-container">
+	  	  <h2>{% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}{{ kwd.translation }}{% endifequal %}
+         {% endfor %}</h2>
+    <!-- Begin VideoJS -->
+    <div class="video-js-box">
+      <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
+      <!--<video id="video" class="video-js" width="320" height="132" poster="http://video-js.zencoder.com/oceans-clip.png" controls preload>-->
+      <video id="video" class="video-js" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg" controls="controls" preload="auto" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg">
+        <source src="http://new.auslan.org.au/video/mp4video/60/60440.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+        <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
+        <object id="flash_fallback_1" class="vjs-flash-fallback" width="320" height="132" type="application/x-shockwave-flash"
+          data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+          <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
+          <param name="allowfullscreen" value="true" />
+          <param name="flashvars" value='config={"playlist":["http://video-js.zencoder.com/oceans-clip.png", {"url": "http://video-js.zencoder.com/oceans-clip.mp4","autoPlay":false,"autoBuffering":true}]}' />
+          <!-- Image Fallback. Typically the same as the poster image. -->
+          <img src="http://video-js.zencoder.com/oceans-clip.png" width="640" height="264" alt="Poster Image"
+            title="No video playback capabilities." />
+        </object>
+      </video>
+      <div class="clear"></div>
+	  <button data-role="button" data-icon="refresh" data-inline="true"  id="replay-video">Replay</a>
+      <!-- Download links provided for devices that can't play video in the browser. -->
+	  <!--
+      <p class="vjs-no-video"><strong>Download Video:</strong>
+        <a href="http://video-js.zencoder.com/oceans-clip.mp4">MP4</a>,
+        <a href="http://video-js.zencoder.com/oceans-clip.webm">WebM</a>,
+        <a href="http://video-js.zencoder.com/oceans-clip.ogv">Ogg</a><br>
+      </p>
+	  -->
+    </div>
+    <!-- End VideoJS -->
+	</div>
+
+
+
+<div id="signinfo">
+    <p class="sign-position">Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em> in the Auslan {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</p>
+
+    <div id="signs">
+            <div data-role="controlgroup" data-type="horizontal">
+            {% if navigation.prev %}
+              <a data-iconpos="notext" data-role="button" data-inline="true" data-icon="arrow-l" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
+            {% endif %}
+            {% if navigation.next %}
+             <a data-iconpos="notext" data-role="button" data-inline="true" data-icon="arrow-r" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
+            {% endif %}
+            </div>
+    </div><!-- End #signs -->
+
+	<div id="keywords"> 
+         <p><strong>Keywords:</strong>
+         {% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+         {% endfor %}
+         </p>
+    </div>
+    
+    <div id="matches">
+        {% ifequal viewname "words" %}
+        <h2>Matches for the word &ldquo;<em>{{ translation.translation }}</em>&rdquo;</h2>
+        <div data-role="controlgroup" data-type="horizontal">
+        {% for i in matches %}
+            {% ifequal i n %}
+            <a href="#" data-role="button" data-inline="true" data-theme="a" class='match current'>{{i}}</a>
+            {% else %}
+            <a data-role="button" data-inline="true" href="{{translation.translation}}-{{i}}.html">{{i}}</a>
+            {% endifequal %}
+        {% endfor %} 
+        </div>
+        {% else %}
+            <h2><a href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <div>&nbsp;</div>
+        {% endifequal %}
+        
+    </div><!-- End #matches -->
+</div><!-- End #signinfo -->
+
+
+
+
+<div id="word-info-wrapper">
+
+    <div id="definition">
+        <h2>Sign Definition</h2>
+ 
+        {% if definitions.general %} 
+          <h3>General Definition</h3>
+         
+          <ol>
+          {% for def in definitions.general %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+ 
+        {% if definitions.noun %} 
+          <h3>As a Noun</h3>
+         
+          <ol>
+          {% for def in definitions.noun %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.verb %} 
+          <h3>As a Verb or Adjective</h3> 
+          <ol>
+          {% for def in definitions.verb %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.interact %} 
+          <h3>Interactive</h3> 
+          <ol>
+          {% for def in definitions.interact %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.deictic %} 
+          <h3>As a Pointing Sign</h3> 
+          <ol>
+          {% for def in definitions.deictic %}
+            <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+          
+        {% if definitions.modifier %} 
+          <h3>As Modifier</h3> 
+          <ol>
+          {% for def in definitions.modifier %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+        
+          
+        {% if definitions.question %} 
+          <h3>As Question</h3> 
+          <ol>
+          {% for def in definitions.question %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+          
+        {% if definitions.augment %} 
+          <h3>Augmented Meaning</h3> 
+          <ol>
+          {% for def in definitions.augment %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+
+        {% if definitions.note %} 
+          <h3>Note</h3> 
+          <ol>
+          {% for def in definitions.note %}
+              <li> {{ def }}</li>
+          {% endfor %} 
+          </ol>
+        {% endif %}
+
+    </div>
+
+
+
+	<h2>Feedback</h2>
+
+	     <div id="feedback">
+            <ul data-role="listview" data-inset="true">
+                {% ifequal viewname "words" %}
+                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{flavour}}/words/{{translation.translation}}-{{n}}.html">Give sign feedback</a></li>
+                {% else %}
+                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{flavour}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Give sign feedback</a></li>
+                {% endifequal %}
+                
+                <li><a href="{% url signbank.views.index %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url signbank.views.index %}feedback/generalfeedback.html">Give general feedback</a></li>
+            </ul> 
+        </div>
+    
+
+
+</div><!-- End #word-info-wrapper -->
+{% endblock %}
+

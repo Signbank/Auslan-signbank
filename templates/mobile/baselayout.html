@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
+    <link rel="stylesheet" href="{% auslan_static_prefix %}css/mobile.css" />
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+    
+    
+    <!-- Word page specific stuff -->
+    
+    <!-- VideoJS Stuff -->
+	<script src="{% auslan_static_prefix %}js/video.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="{% auslan_static_prefix %}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
+	
+	<script type="text/javascript">
+	$( 'div.page' ).live( 'pageinit', function(event){
+		
+		// Add VideoJS to all video tags on the page when the DOM is ready
+		//VideoJS.DOMReady(function(){
+	      
+			// Using the video's ID or element
+			var myPlayer = VideoJS.setup("video");
+			
+			/*
+			$("#precede-replay-button-hook").append('<button data-role="button" data-icon="refresh" data-inline="true"  id="replay-video">Replay</a>');
+			
+			$("#replay-video").live("click", function(e) {
+				myPlayer.currentTime(0);
+				myPlayer.play();
+			});
+			*/
+				  
+		//});
+	});
+
+
+	
+	
+	
+	$(document).ready(function() {
+		
+	
+	}); // End document.ready
+	</script>
+	
+	
+	
+	
+	
+	<style type="text/css">
+	.video-js-box {
+		margin: 0 auto;
+		text-align: center;
+	}
+	</style>
+    
+    <!-- End Word page specific stuff -->
+    
+
+{% block extrahead %}
+
+{% endblock %}
+
+    <!-- google analytics code --> 
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3928964-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script> 
+
+  </head>
+ 
+  <body {% block bodyid %}{% endblock %}>
+
+  <div data-role="page" class="page"> 
+    <div id="header" data-role="header">
+      <a href="/" data-role="button" data-icon="home" data-iconpos="notext">Home</a>
+      <h1>Auslan - Signbank</h1>
+      <div data-role="navbar">
+        {% include "menu.html" %}
+      </div>
+      <a href="{% url signbank.dictionary.views.index flavour="dictionary"%}" data-role="button" data-icon="search" data-iconpos="notext">Search</a>
+    </div>
+
+    <div data-role="content">
+      <div>{% block content %}<p>Content</p>{% endblock %}</div>
+    </div> 
+    <div id="footer" data-role="footer" data-theme="c">
+    <div id="footer-info-wrapper">
+      <p id="copyright" style="font-size: smaller; position: relative; top: 3px;">&copy; 2011, Trevor Johnston, Macquarie University. All rights reserved.</p>
+      <a href="{% url signbank.feedback.views.generalfeedback %}" class="btn-feedback ui-btn-right" data-role="button" data-inline="true" data-icon="arrow-r">Provide feedback</a> 
+    </div> 
+    </div> 
+  </div> 
+
+  </body>
+</html>

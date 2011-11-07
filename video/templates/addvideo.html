@@ -1,0 +1,46 @@
+{% extends "baselayout.html" %}
+
+{% block script %}
+
+{% endblock %}
+
+{% block content %}
+
+{% if flvfile %}
+
+<p>Uploaded to: {{ MEDIA_URL}}{{ flvfile }}</p>
+
+
+<object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+                              width="192" height="144" id="FlowPlayer">
+      <param name="allowScriptAccess" value="always" />
+      <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayerLight.swf" />
+
+      <param name="quality" value="high" />
+      <param name="scale" value="noScale" />
+      <param name="wmode" value="transparent" /> 
+      <param name="flashvars"
+            value="config={ playList: [ { url: '{{MEDIA_URL}}{{ flvfile }}' }  ], 
+                            autoPlay: true, 
+                            autoBuffering: false, 
+                            loop: false, 
+                            autoRewind: true,   
+                            hideControls: true}" 
+      />
+</object>
+                       
+
+{% else %}
+<form action="/video/upload/" method="post" enctype="multipart/form-data">
+{{form}}
+<input type='submit' value='submit'/>
+</form>
+
+
+{% endif %}
+
+{% if error %}
+<p>Error: {{error}}</p>
+{% endif %}
+
+{% endblock %}
