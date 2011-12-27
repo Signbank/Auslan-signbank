@@ -41,6 +41,7 @@
       address here and we'll reset it and send you a reminder.</p>
 
       <form id="passwordresetform" action="/accounts/password/reset/" method="POST">
+      {% csrf_token %}
       <p align='center'><input class="boxed" type="text" name="email" /></p>
       <p align='right'>
       <input id="gobutton" type="image" src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="submit password reset form">

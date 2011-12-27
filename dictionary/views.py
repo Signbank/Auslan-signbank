@@ -13,7 +13,17 @@ from signbank.dictionary.models import *
 from signbank.dictionary.forms import * 
 from signbank.feedback.models import *
 
-@login_required
+def login_required_config(f):
+    """like @login_required if the ALWAYS_REQUIRE_LOGIN setting is True"""
+
+    if settings.ALWAYS_REQUIRE_LOGIN:
+        return login_required(f)
+    else:
+        return f
+
+
+
+@login_required_config
 def index(request, flavour='dictionary'):
     """Default view showing a browse/search entry
     point to the dictionary"""
@@ -24,8 +34,63 @@ def index(request, flavour='dictionary'):
                                },
                                context_instance=RequestContext(request))
 
+STATE_IMAGES = {'auslan_all': "images/maps/allstates.gif",
+                'auslan_nsw_act_qld': "images/maps/nsw-act-qld.gif",
+                'auslan_nsw': "images/maps/nsw.gif",
+                'auslan_nt':  "images/maps/nt.gif",
+                'auslan_qld': "images/maps/qld.gif",
+                'auslan_sa': "images/maps/sa.gif",
+                'auslan_tas': "images/maps/tas.gif",
+                'auslan_south': "images/maps/vic-wa-tas-sa-nt.gif",
+                'auslan_vic': "images/maps/vic.gif",
+                'auslan_wa': "images/maps/wa.gif",
+                }
 
-@login_required
+def map_image_for_dialects(dialects):
+    """Get the right map image for this dialect set
+    
+    
+    Relies on database contents, which is bad. This should
+    be in the database
+    """
+    # we only work for Auslan just now
+    dialects = dialects.filter(language__name__exact="Auslan")
+
+    if len(dialects) == 0:
+        return 
+    
+    # all states 
+    if dialects.filter(name__exact="Australia Wide"):
+        return STATE_IMAGES['auslan_all']
+    
+    if dialects.filter(name__exact="Southern Dialect"):
+        return STATE_IMAGES['auslan_south']
+    
+    if dialects.filter(name__exact="Northern Dialect"):
+        return STATE_IMAGES['auslan_nsw_act_qld']
+    
+    if dialects.filter(name__exact="New South Wales"):
+        return STATE_IMAGES['auslan_nsw']    
+    
+    if dialects.filter(name__exact="Queensland"):
+        return STATE_IMAGES['auslan_qld']    
+    
+    if dialects.filter(name__exact="Western Australia"):
+        return STATE_IMAGES['auslan_wa']
+
+    if dialects.filter(name__exact="South Australia"):
+        return STATE_IMAGES['auslan_sa']
+    
+    if dialects.filter(name__exact="Tasmania"):
+        return STATE_IMAGES['auslan_tas']    
+    
+    if dialects.filter(name__exact="Victoria"):
+        return STATE_IMAGES['auslan_vic']
+
+    return None
+
+
+@login_required_config
 def word(request, viewname, keyword, n, flavour='dictionary'):
     """View of a single keyword that may have more than one sign"""
 
@@ -39,22 +104,15 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     word = get_object_or_404(Keyword, text=keyword)
     # returns (matching translation, number of matches) 
     (trans, total) =  word.match_request(request, n, flavour)
-
-    print "(trans, total) = ", trans, total
     
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
-
-    print "allkwds = ", allkwds
         
     videourl = trans.gloss.get_video_url()
-    
-    print "Video URL = " + videourl
-
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
         
-        
+    
     trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
 
     # work out the number of this gloss and the total number    
@@ -93,6 +151,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                'total': total, 
                                'matches': range(1, total+1),
                                'navigation': nav,
+                               'dialect_image': map_image_for_dialects(gloss.dialect.all()),
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
@@ -107,7 +166,7 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
                                },
                                context_instance=RequestContext(request))
   
-@login_required
+@login_required_config
 def gloss(request, idgloss, flavour='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
@@ -159,6 +218,7 @@ def gloss(request, idgloss, flavour='dictionary'):
                               {'translation': trans,
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
+                               'dialect_image': map_image_for_dialects(gloss.dialect.all()),
                                'flavour': flavour,
                                'lastmatch': lastmatch,
                                'videofile': videourl,
@@ -175,7 +235,7 @@ def gloss(request, idgloss, flavour='dictionary'):
 
 from django.core.paginator import Paginator, InvalidPage
 
-@login_required
+@login_required_config
 def search(request, flavour='dictionary'):
     """Handle keyword search form submission
     flavour is either 'dictionary' or 'medicalsignbank' and determines
