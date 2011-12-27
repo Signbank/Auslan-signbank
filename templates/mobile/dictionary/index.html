@@ -1,0 +1,44 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
+    <h2>Search the Dictionary</h2>
+    <div>
+    <form id="frmSearch" name="frmSearch" method="get" action="{% url signbank.views.index %}{% if flavour %}{{flavour}}{% else %}dictionary{% endif %}/search/">
+      <input type="search" name="query" value="" maxlength="50">
+      <button type="submit" data-theme="a" data-icon="search" data-inline="true">Sign Search</button>
+      <div data-role="fieldcontain">
+ 	<fieldset data-role="controlgroup">
+		<input id="msb" type="checkbox" name="msb" value="1" class="custom" />
+		<label for="msb">Search medical signs only</label>
+        </fieldset>
+      </div>
+
+    </form> 
+    </div>
+    
+    <h2>Browse Keywords</h2>
+    {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+      <a data-role="button" data-inline="true" href="{% url signbank.views.index %}{{flavour}}/search?query={{letter}}{% ifequal flavour "medical"%}&msb=1{% endifequal %}" style="font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;" >{{letter}}</a>
+   {% endfor %}
+
+<!--
+    <h2>Browse Keywords</h2>
+    <ul data-inset="true" data-role="listview">
+    {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+      <li><a href="{% url signbank.views.index %}{{flavour}}/search?query={{letter}}{% ifequal flavour "medical"%}&msb=1{% endifequal %}">{{letter}}</a></li>
+   {% endfor %}
+   </ul>
+-->
+
+    {% ifequal flavour "medical" %}
+
+    <p style="text-align: center; font-size: large">Please help us improve the Medical SignBank. See <a href="{% url signbank.views.index %}research/medicalhelp/">how you can help</a>.</p>
+    
+    {% endifequal %}
+
+
+{% endblock %}
+
+
+
+

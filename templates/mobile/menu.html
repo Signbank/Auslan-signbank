@@ -1,0 +1,17 @@
+
+<ul>
+{# add in the top level menu items from pages #}
+{% for item in menu %}
+  <li><a {% if item.current %}class='ui-btn-active'{% endif %} href="{{item.url}}">{{item.title}}</a>
+  {% if item.children %} 
+    <ul class="sf-submenu">
+    {% for subitem in item.children %}
+      <li {% if subitem.current %}class='current'{% endif %}><a href="{{subitem.url}}">{{subitem.title}}</a></li>
+    {% endfor %} 
+    </ul> 
+  {% endif %}
+  </li>
+{% endfor %}
+
+
+</ul>

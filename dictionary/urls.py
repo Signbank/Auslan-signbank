@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     # and and alternate view for direct display of a gloss
     (r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss'),
    
-    (r'^search/$', 'signbank.dictionary.views.search'),
+    url(r'^search/$', 'signbank.dictionary.views.search', name="dictionary-search"),
     (r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss'),
     (r'^update/video/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_video'),
     
