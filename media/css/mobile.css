@@ -1,3 +1,4 @@
+
 #header h1 {
 	color: #FFFF66;
 	font-family: "Arial Rounded MT Bold", "Arial Rounded", serif;
@@ -64,6 +65,10 @@
 .sign-position em {
 	font-style: normal;
 	color: #333;
+}
+
+#states {
+	text-align: center;
 }
 
 #video-container {
