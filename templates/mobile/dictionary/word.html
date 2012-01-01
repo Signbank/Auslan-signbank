@@ -21,11 +21,11 @@
 	            <h2>Search: <em>{{translation.translation}}</em></h2>
 	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">
 		        {% if n > 1 %}
-		        <a data-role="button" data-inline="true" data-icon="arrow-l" href="{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
+		        <a data-role="button" data-icon="arrow-l" href="{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
 		        {% endif %}
-				<span data-role='button' data-inline='true'>Match {{n}} of {{matches|length}}</span>
+				<span data-role='button'>Match {{n}} of {{matches|length}}</span>
 		        {% if n < matches|length %}
-		        <a data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" href="{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
+		        <a data-role="button" data-icon="arrow-r" data-iconpos="right" href="{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
 		        {% endif %}		  
 		        </div>      
 		        
@@ -68,11 +68,11 @@
 	    <div id="signs">
 	        <div data-role="controlgroup" data-type="horizontal">
 	            {% if navigation.prev %}
-	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="/{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	            <span data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></span>
 	            {% if navigation.next %}
-	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="/{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	        </div>
 	    </div><!-- End #signs -->
@@ -178,6 +178,27 @@
 
     </div>
 
+
+        <div>
+           <h4>Sign Distribution</h4> 
+                <ul>
+                {% ifequal dialect_image "images/maps/allstates.gif" %}
+                  <li>All States</li>
+                {% else %}
+	                {% for dialect in gloss.dialect.all %}
+	                  <li>{{ dialect.name }}</li>
+	                {% endfor %}
+                {% endifequal %}
+                </ul>  
+        </div>
+
+    {% if dialect_image %}
+    <div id="states">      
+        <div>
+            <img src="{% auslan_static_prefix %}{{dialect_image}}" alt="States"></img>
+        </div>
+    </div> 
+    {% endif %}
 
 
 	<h2>Feedback</h2>

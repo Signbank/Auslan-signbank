@@ -111,7 +111,6 @@ def word(request, viewname, keyword, n, flavour='dictionary'):
     videourl = trans.gloss.get_video_url()
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
-        
     
     trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
 
