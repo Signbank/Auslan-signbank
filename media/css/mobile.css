@@ -28,15 +28,31 @@
 /* === WORD PAGE === */
 
 #matches h2 {
-	font-weight: normal;
+	font-weight: bold;
 	font-size: 1em;
+	text-align: center;
+	margin: 0px 0px 5px 0px;
 }
 
 #matches ul li a {
 	font-family: "Menlo", monospace;
 }
 
+#matcheslinks {
+	font-size: small;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#keywords {
+	text-align: center;
+}
+#keywords p {
+	margin: 0.5em 0px 1em 0px;
+}
+
 #signinfo {
+	font-size: small;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -52,16 +68,11 @@
 
 #video-container {
 	margin: 0 auto;
-	text-align: center;
-	background-color: #333;
-	margin-left: -1em;
-	margin-right: -1em;
-	margin-top: -1em;
-	padding: 1em;
-	padding-bottom: 2em;
+	text-align: center; 
+	margin: 0px 0px 0px 0px;
+	padding: 0em;
+	padding-bottom: 0em;
 	border-bottom: 1px solid #eee;
-	/*background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666666), to(#525252), color-stop(.6,#333333),color-stop(.8,#242424),color-stop(.9,#080808));*/
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#242424), to(#363636), color-stop(.6,#262626));
 }
 
 #video-container h2 {

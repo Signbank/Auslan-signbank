@@ -15,84 +15,72 @@
     </div>
     {% endif %}
 
-    <div id="video-container">
-	  	  <h2>{% for kwd in allkwds %}
-           {% ifequal translation.translation kwd.translation %}{{ kwd.translation }}{% endifequal %}
-         {% endfor %}</h2>
-    <!-- Begin VideoJS -->
+
+	    <div id="matches">
+	        {% ifequal viewname "words" %}
+	            <h2>Search: <em>{{translation.translation}}</em></h2>
+	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">
+		        {% if n > 1 %}
+		        <a data-role="button" data-inline="true" data-icon="arrow-l" href="{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
+		        {% endif %}
+				<span data-role='button' data-inline='true'>Match {{n}} of {{matches|length}}</span>
+		        {% if n < matches|length %}
+		        <a data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="right" href="{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
+		        {% endif %}		  
+		        </div>      
+		        
+	        {% else %}
+	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">	            
+	             <a  data-role='button' data-inline='true' href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a>
+	            </div>
+	        {% endifequal %}
+	        
+	    </div><!-- End #matches -->
+
+		<div id="keywords"> 
+	         <p><strong>Keywords:</strong>
+	         {% for kwd in allkwds %}
+	           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+	         {% endfor %}
+	         </p>
+	    </div>
+	     
+    <div id="video-container">             
+    {% if videofile %}
     <div class="video-js-box">
-      <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
-      <!--<video id="video" class="video-js" width="320" height="132" poster="http://video-js.zencoder.com/oceans-clip.png" controls preload>-->
-      <video id="video" class="video-js" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg" controls="controls" preload="auto" poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg">
-        <source src="http://new.auslan.org.au/video/mp4video/60/60440.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-        <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
-        <object id="flash_fallback_1" class="vjs-flash-fallback" width="320" height="132" type="application/x-shockwave-flash"
-          data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
-          <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
-          <param name="allowfullscreen" value="true" />
-          <param name="flashvars" value='config={"playlist":["http://video-js.zencoder.com/oceans-clip.png", {"url": "http://video-js.zencoder.com/oceans-clip.mp4","autoPlay":false,"autoBuffering":true}]}' />
-          <!-- Image Fallback. Typically the same as the poster image. -->
-          <img src="http://video-js.zencoder.com/oceans-clip.png" width="640" height="264" alt="Poster Image"
-            title="No video playback capabilities." />
-        </object>
+     <video id="video" 
+            class="video-js" 
+            {# TODO: make thumbnail images for all videos and use here #}
+            poster="{% auslan_static_prefix %}images/60440-thumb.mp4.jpg" 
+            controls="controls"
+            preload="auto">
+        <source src="{% auslan_media_prefix %}{{ videofile }}'" 
+                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
       </video>
-      <div class="clear"></div>
-	  <button data-role="button" data-icon="refresh" data-inline="true"  id="replay-video">Replay</a>
-      <!-- Download links provided for devices that can't play video in the browser. -->
-	  <!--
-      <p class="vjs-no-video"><strong>Download Video:</strong>
-        <a href="http://video-js.zencoder.com/oceans-clip.mp4">MP4</a>,
-        <a href="http://video-js.zencoder.com/oceans-clip.webm">WebM</a>,
-        <a href="http://video-js.zencoder.com/oceans-clip.ogv">Ogg</a><br>
-      </p>
-	  -->
+    {% else %} 
+    <img src='{% auslan_static_prefix %}images/no-video.png'>
+    {% endif %}
     </div>
     <!-- End VideoJS -->
 	</div>
+	
+	<div id="signinfo">
+	    <div id="signs">
+	        <div data-role="controlgroup" data-type="horizontal">
+	            {% if navigation.prev %}
+	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	            {% endif %}
+	            <span data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></span>
+	            {% if navigation.next %}
+	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	            {% endif %}
+	        </div>
+	    </div><!-- End #signs -->
+	
 
+	    
 
-
-<div id="signinfo">
-    <p class="sign-position">Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em> in the Auslan {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</p>
-
-    <div id="signs">
-            <div data-role="controlgroup" data-type="horizontal">
-            {% if navigation.prev %}
-              <a data-iconpos="notext" data-role="button" data-inline="true" data-icon="arrow-l" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
-            {% endif %}
-            {% if navigation.next %}
-             <a data-iconpos="notext" data-role="button" data-inline="true" data-icon="arrow-r" href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
-            {% endif %}
-            </div>
-    </div><!-- End #signs -->
-
-	<div id="keywords"> 
-         <p><strong>Keywords:</strong>
-         {% for kwd in allkwds %}
-           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
-         {% endfor %}
-         </p>
-    </div>
-    
-    <div id="matches">
-        {% ifequal viewname "words" %}
-        <h2>Matches for the word &ldquo;<em>{{ translation.translation }}</em>&rdquo;</h2>
-        <div data-role="controlgroup" data-type="horizontal">
-        {% for i in matches %}
-            {% ifequal i n %}
-            <a href="#" data-role="button" data-inline="true" data-theme="a" class='match current'>{{i}}</a>
-            {% else %}
-            <a data-role="button" data-inline="true" href="{{translation.translation}}-{{i}}.html">{{i}}</a>
-            {% endifequal %}
-        {% endfor %} 
-        </div>
-        {% else %}
-            <h2><a href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
-            <div>&nbsp;</div>
-        {% endifequal %}
-        
-    </div><!-- End #matches -->
-</div><!-- End #signinfo -->
+	</div><!-- End #signinfo -->
 
 
 
