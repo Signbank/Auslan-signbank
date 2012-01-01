@@ -89,15 +89,39 @@ pageTracker._trackPageview();
       <a href="/" data-role="button" data-icon="home" data-iconpos="notext">Home</a>
       <h1>Auslan - Signbank</h1>
       <div data-role="navbar">
-        {% include "menu.html" %}
+        <ul>
+	      {% for item in menu %}
+	         {# don't include Home, since we have a link for that in the header #}
+	         {% ifnotequal item.url "/" %}
+	         <li><a {% if item.current %}class='ui-btn-active'{% endif %} href="{{item.url}}">{{item.title}}</a></li>
+	         {% endifnotequal %}
+	      {% endfor %}
+        </ul>
       </div>
       <a href="{% url signbank.dictionary.views.index flavour="dictionary"%}" data-role="button" data-icon="search" data-iconpos="notext">Search</a>
     </div>
 
     <div data-role="content">
       <div>{% block content %}<p>Content</p>{% endblock %}</div>
-    </div> 
-    <div id="footer" data-role="footer" data-theme="c">
+    
+    </div>
+    
+    
+    {# add child pages as a list of links #}
+    {% for item in menu %}
+      {% if item.current and item.children %}
+      <div>
+	      <ul data-role="listview">
+		      {% for subitem in item.children %}
+		        <li><a href="{{subitem.url}}">{{subitem.title}}</a></li>
+		      {% endfor %} 
+	      </ul>
+	  </div>
+      {% endif %}
+    {% endfor %}
+      
+  
+    <div id="footer" data-role="footer" data-theme="c">    
     <div id="footer-info-wrapper">
       <p id="copyright" style="font-size: smaller; position: relative; top: 3px;">&copy; 2011, Trevor Johnston, Macquarie University. All rights reserved.</p>
       <a href="{% url signbank.feedback.views.generalfeedback %}" class="btn-feedback ui-btn-right" data-role="button" data-inline="true" data-icon="arrow-r">Provide feedback</a> 
