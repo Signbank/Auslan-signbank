@@ -66,16 +66,16 @@
 <div id="signinfo">
     <div id="signs">
         <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
-            {% ifequal flavour "medical" %} Medical {% endifequal %}Dictionary</h2>
+            {% ifequal version "medical" %} Medical {% endifequal %}Dictionary</h2>
 
             {% if navigation.prev %}
             <div class="prev">
-              <a href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal flavour "medical" %} Medical {% endifequal %}Sign</a>
+              <a href="{% url signbank.views.index %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal version "medical" %} Medical {% endifequal %}Sign</a>
             </div>
             {% endif %}
             {% if navigation.next %}
             <div class="next">
-             <a href="{% url signbank.views.index %}{{flavour}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal flavour "medical" %} Medical {% endifequal %}Sign &raquo;</a>
+             <a href="{% url signbank.views.index %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal version "medical" %} Medical {% endifequal %}Sign &raquo;</a>
             </div>
             {% endif %}
     </div>
@@ -93,7 +93,7 @@
         {% endfor %} 
         </div>
         {% else %}
-            <h2><a href="{% url signbank.views.index %}{{flavour}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <h2><a href="{% url signbank.views.index %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
             <div>&nbsp;</div>
         {% endifequal %}
         
@@ -112,9 +112,9 @@
         <div id="feedback">
             <ul>
                 {% ifequal viewname "words" %}
-                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{flavour}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
                 {% else %}
-                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{flavour}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
                 {% endifequal %}
                 
                 <li><a href="{% url signbank.views.index %}feedback/missingsign.html">Report a missing sign</a></li>

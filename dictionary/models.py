@@ -72,7 +72,7 @@ class Keyword(models.Model):
         
         
         
-    def match_request(self, request, n, flavour='dictionary'):
+    def match_request(self, request, n, version='dictionary'):
         """Find the translation matching a keyword request given an index 'n'
         response depends on login status and whether we're searching the
         medical dictionary.
@@ -80,13 +80,13 @@ class Keyword(models.Model):
         of matches."""
         
         if request.user.is_authenticated() and request.user.is_staff:
-            if flavour == 'medical':
+            if version == 'medical':
                 # needs to match the condition in views.search 
                 alltrans = self.translation_set.filter(Q(gloss__InMedLex__exact=True)|Q(gloss__healthtf__exact=True))
             else:
                 alltrans = self.translation_set.all()
         else:
-            if flavour == 'medical':
+            if version == 'medical':
                 alltrans = self.translation_set.filter(gloss__inWeb__exact=True, gloss__healthtf__exact=True)
             else:
                 alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
@@ -458,12 +458,12 @@ minor or insignificant ways that can be ignored.""")
             
     StemSN = models.IntegerField(null=True, blank=True) 
 
-    def navigation(self, flavour, is_staff):
+    def navigation(self, version, is_staff):
         """Return a gloss navigation structure that can be used to
         generate next/previous links from within a template page"""
     
         result = dict() 
-        if flavour == 'medical':
+        if version == 'medical':
             result['next'] = self.next_medical_gloss(is_staff)
             result['prev'] = self.prev_medical_gloss(is_staff)
         else:

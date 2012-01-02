@@ -155,6 +155,7 @@ QUICK_UPDATE_GLOSS_FIELDS = ['language', 'dialect']
 ALWAYS_REQUIRE_LOGIN = False
 
 
+# settings for django-mobile
 
 
 # import local settings if present

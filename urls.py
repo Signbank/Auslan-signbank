@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 
     (r'^$', 'signbank.views.index'),
     
-    (r'^(?P<flavour>dictionary|medical)/', include('signbank.dictionary.urls')),
+    (r'^(?P<version>dictionary|medical)/', include('signbank.dictionary.urls')),
     (r'^feedback/', include('signbank.feedback.urls')),
     (r'^attachments/', include('signbank.attachments.urls')),
 
