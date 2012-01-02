@@ -5,6 +5,7 @@
   <div id="loginforms">
   
   <form id="loginform" name="login" method="post" action="/accounts/login/">
+    {% csrf_token %}
     <fieldset id='signin'>
     <legend>Sign In</legend>
     <table width='100%'>
