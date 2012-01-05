@@ -54,7 +54,7 @@ $(document).ready(function(){
          to include the new sign.</p>
 
 <form method="post" enctype="multipart/form-data" name="missingsign">
-
+    {% csrf_token %}
     <p>You may either upload a video that shows the missing sign or
     fill in details in a form.  In either case, you should
     enter a meaning and any comments you might have in the text 

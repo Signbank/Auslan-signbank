@@ -11,7 +11,8 @@
 <p>Uploaded to: {{ MEDIA_URL}}{{ flvfile }}</p>
 
 
-<object type="application/x-shockwave-flash" data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
+<object type="application/x-shockwave-flash" 
+        data="{% auslan_static_prefix %}flowplayer/FlowPlayer.swf" 
                               width="192" height="144" id="FlowPlayer">
       <param name="allowScriptAccess" value="always" />
       <param name="movie" value="{% auslan_static_prefix %}flowplayer/FlowPlayerLight.swf" />
@@ -32,6 +33,7 @@
 
 {% else %}
 <form action="/video/upload/" method="post" enctype="multipart/form-data">
+{% csrf_token %}
 {{form}}
 <input type='submit' value='submit'/>
 </form>

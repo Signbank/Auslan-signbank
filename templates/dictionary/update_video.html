@@ -70,6 +70,7 @@ td .player {
   <tr>
     <td colspan="2">
     <form method="POST">
+    {% csrf_token %}
     <input type="hidden" name="confirmvideofile" value="{{videofile}}"/> 
     Confirm update of this video:
     <input type="submit" value="Confirm"/> 
@@ -84,6 +85,7 @@ td .player {
 {% else %}
 
 <form method="POST" enctype="multipart/form-data">
+ {% csrf_token %}
  <ul>
   {{form.as_ul}}
  </ul>

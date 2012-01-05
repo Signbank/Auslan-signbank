@@ -4,6 +4,7 @@
 {% block content %}
    <h1>User Registration</h1>
     <form method="post" action="">
+    {% csrf_token %}
     <div id='registrationform'> 
     
       <fieldset id="userdetails">
