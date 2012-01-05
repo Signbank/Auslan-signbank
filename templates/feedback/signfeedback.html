@@ -10,6 +10,7 @@
 <form id="signfeedback" method="post">
   <input type='hidden' name='sourcepage' value='{{sourcepage}}'>
 
+  {% csrf_token %}
   <p> <span class="feedbackQuestion"> Please give us your comments about this sign. For example:
   do you think there are other keywords that belong with this sign?
   Please write your comments or new keyword/s below. </span> <br/>
