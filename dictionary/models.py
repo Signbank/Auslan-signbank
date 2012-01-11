@@ -279,21 +279,7 @@ minor or insignificant ways that can be ignored.""")
     
     # one or more regional dialects that this gloss is used in
     dialect = models.ManyToManyField(Dialect)
-    
-    # will replace the following boolean fields
-    #
-    # usage of the sign in various states
-    #
-    auslextf = models.NullBooleanField("Australia Wide", null=True, blank=True)
-    auslextf.list_filter_dialect = True
-    tastf = models.NullBooleanField("Tasmania", null=True, blank=True) # used in Tasmania
-    victf = models.NullBooleanField("Victoria", null=True, blank=True) # used in Victoria
-    watf = models.NullBooleanField("Western Australia", null=True, blank=True)  # used in Western Australia
-    satf = models.NullBooleanField("South Australia", null=True, blank=True)  # used in South Australia
-    qldtf = models.NullBooleanField("Queensland", null=True, blank=True) # used in Queensland 
-    nswtf = models.NullBooleanField("NSW", null=True, blank=True) # used in NSW
-    nthtf = models.NullBooleanField("Northern Dialect", null=True, blank=True) # used in Northern Territory
-    sthtf = models.NullBooleanField("Southern Dialect", null=True, blank=True)        
+         
  
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
     angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
