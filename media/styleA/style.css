@@ -430,7 +430,7 @@ body {
 #fingerspellright {
    width: 470px; /* 847 - 320 - 20 - fiddle factor */
    float: left;
-   padding-left: 20px;
+   padding-left: 20px;or
 }
 
 #fstable td {
@@ -451,6 +451,30 @@ body {
 }
 
 
+/* styles for tags */
+
+.tag a {
+	background: black;
+	color: white;
+	text-decoration: none;
+	padding: 2px 4px 2px 4px;
+}
+.tag {
+	display: inline-block;
+	background: white;
+	margin: 3px;	
+	background: black;
+	color: white;
+}
+#activetag {
+	background: #ccc;
+}
+.tag .tagcount {
+	background: white;
+	color: black;
+	padding: 1px;
+	border: 1px solid black;
+}
 
 
 

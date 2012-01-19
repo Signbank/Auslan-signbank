@@ -1,7 +1,7 @@
 from django.contrib import admin 
 from signbank.dictionary.models import *
 from reversion.admin import VersionAdmin
-
+from tagging.models import TaggedItem
 
 class KeywordAdmin(VersionAdmin):
     search_fields = ['^text']
@@ -24,8 +24,9 @@ class RelationInline(admin.TabularInline):
     verbose_name_plural = "Relations to other Glosses"
     extra = 1
 
+    
 class GlossAdmin(VersionAdmin):
-    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
+    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'tags', 'morph', 'sense', 
                                     'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
               ('Publication Status', {'fields': ('inWeb', 'InMedLex', 
                                                  'isNew',  ), 

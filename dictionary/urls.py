@@ -12,7 +12,9 @@ urlpatterns = patterns('',
     # definition, the first component of the path is word or feedback in each case
     (r'^(?P<viewname>(words|feedback))/(?P<keyword>.+)-(?P<n>\d+).html$', 
             'signbank.dictionary.views.word'),
-            
+    
+    url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.views.taglist'),
+                
     # and and alternate view for direct display of a gloss
     (r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss'),
    
@@ -23,6 +25,7 @@ urlpatterns = patterns('',
     (r'^ajax/keyword/(?P<prefix>.*)$', 'signbank.dictionary.views.keyword_value_list'),
     
     (r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
+
 
 )
 

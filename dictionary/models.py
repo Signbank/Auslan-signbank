@@ -11,8 +11,10 @@ from django.db import models
 from django.conf import settings
 from django.http import Http404
 import filters
+from tagging.fields import TagField
 
 import sys, os
+
 
 #from models_legacy import Sign
 
@@ -260,6 +262,10 @@ have the same 'Annotation Idgloss' that means they differ in form in only
 minor or insignificant ways that can be ignored.""") 
     # the idgloss used in transcription, may be shared between many signs
 
+
+    tags = TagField()
+
+
     # languages that this gloss is part of
     language = models.ManyToManyField(Language)
 
@@ -279,40 +285,57 @@ minor or insignificant ways that can be ignored.""")
     
     # one or more regional dialects that this gloss is used in
     dialect = models.ManyToManyField(Dialect)
-         
+    
+    # fields being replaced by tags
+    angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
+    catholictf = models.NullBooleanField("Catholic Sign", null=True, blank=True)
+    cathschtf = models.NullBooleanField("Catholic School", null=True, blank=True) 
+    religiontf = models.NullBooleanField("Religious Sign", null=True, blank=True)
+    jwtf = models.NullBooleanField("Jehova's Witness", null=True, blank=True)
+    otherreltf = models.NullBooleanField("Other Religion", null=True, blank=True)
+    
+    cookingtf = models.NullBooleanField(null=True, blank=True)
+    crudetf = models.NullBooleanField(null=True, blank=True)
+    daystf = models.NullBooleanField(null=True, blank=True)
+    deaftf = models.NullBooleanField(null=True, blank=True)
+    animalstf = models.NullBooleanField(null=True, blank=True)
+    arithmetictf = models.NullBooleanField(null=True, blank=True)
+    artstf = models.NullBooleanField(null=True, blank=True)   
+    bodyloctf = models.NullBooleanField("Body Locating sign", null=True, blank=True)
+    bodyprtstf = models.NullBooleanField(null=True, blank=True)    
+    carstf = models.NullBooleanField(null=True, blank=True)
+    citiestf = models.NullBooleanField(null=True, blank=True)
+    clothingtf = models.NullBooleanField(null=True, blank=True)
+    colorstf = models.NullBooleanField(null=True, blank=True)
+    doubtlextf = models.NullBooleanField(null=True, blank=True)
+    drinkstf = models.NullBooleanField(null=True, blank=True)
+    eductf = models.NullBooleanField(null=True, blank=True)
+    familytf = models.NullBooleanField(null=True, blank=True)
+    feeltf = models.NullBooleanField(null=True, blank=True)
+    fingersptf = models.NullBooleanField(null=True, blank=True)
+    foodstf = models.NullBooleanField(null=True, blank=True)
+    furntf = models.NullBooleanField(null=True, blank=True)
+    gensigntf = models.NullBooleanField(null=True, blank=True)
+    govtf = models.NullBooleanField(null=True, blank=True)
+    groomtf = models.NullBooleanField(null=True, blank=True)
+ 
+ 
+ 
  
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
-    angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
-    animalstf = models.NullBooleanField(null=True, blank=True)
 
-    arithmetictf = models.NullBooleanField(null=True, blank=True)
-    artstf = models.NullBooleanField(null=True, blank=True)
      
     begindirtf = models.NullBooleanField("Begin directional sign", null=True, blank=True)
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
     
-    bodyloctf = models.NullBooleanField("Body Locating sign", null=True, blank=True)
-    bodyprtstf = models.NullBooleanField(null=True, blank=True)
+
     BookProb = models.NullBooleanField(null=True, blank=True)
     
-  
-    carstf = models.NullBooleanField(null=True, blank=True)
-    catholictf = models.NullBooleanField("Catholic Sign", null=True, blank=True)
-    cathschtf = models.NullBooleanField("Catholic School", null=True, blank=True) 
-    
-    citiestf = models.NullBooleanField(null=True, blank=True)
-    clothingtf = models.NullBooleanField(null=True, blank=True)
-    colorstf = models.NullBooleanField(null=True, blank=True)
     comp = models.NullBooleanField(null=True, blank=True) 
     compound = models.CharField("Compound of", max_length=100, blank=True) # This field type is a guess.
     comptf = models.NullBooleanField("Compound", null=True, blank=True)
-    cookingtf = models.NullBooleanField(null=True, blank=True)
-    crudetf = models.NullBooleanField(null=True, blank=True)
-    daystf = models.NullBooleanField(null=True, blank=True)
-    deaftf = models.NullBooleanField(null=True, blank=True)
-    
     
     dirtf = models.NullBooleanField("Directional Sign", null=True, blank=True)
     
@@ -328,19 +351,10 @@ minor or insignificant ways that can be ignored.""")
     locsecond = models.IntegerField("Secondary Location", choices=secLocationChoices, null=True, blank=True) 
     
     
-    doubtlextf = models.NullBooleanField(null=True, blank=True)
-    drinkstf = models.NullBooleanField(null=True, blank=True)
-    eductf = models.NullBooleanField(null=True, blank=True)
+
     enddirtf = models.NullBooleanField("End directional sign", null=True, blank=True)
        
-    familytf = models.NullBooleanField(null=True, blank=True)
-    feeltf = models.NullBooleanField(null=True, blank=True)
-    fingersptf = models.NullBooleanField(null=True, blank=True)
-    foodstf = models.NullBooleanField(null=True, blank=True)
-    furntf = models.NullBooleanField(null=True, blank=True)
-    gensigntf = models.NullBooleanField(null=True, blank=True)
-    govtf = models.NullBooleanField(null=True, blank=True)
-    groomtf = models.NullBooleanField(null=True, blank=True)
+
     
 
     healthtf = models.NullBooleanField("Health Related Sign", null=True, blank=True) 
@@ -359,7 +373,6 @@ minor or insignificant ways that can be ignored.""")
 
     
     judgetf = models.NullBooleanField(null=True, blank=True)
-    jwtf = models.NullBooleanField("Jehova's Witness", null=True, blank=True)
     langactstf = models.NullBooleanField(null=True, blank=True)
     lawtf = models.NullBooleanField(null=True, blank=True)
     locdirtf = models.NullBooleanField("Locational and directional", null=True, blank=True)
@@ -381,7 +394,6 @@ minor or insignificant ways that can be ignored.""")
     opaquetf = models.NullBooleanField("Opaque", null=True, blank=True)
     ordertf = models.NullBooleanField(null=True, blank=True)
     orienttf = models.NullBooleanField("Orientating sign", null=True, blank=True)
-    otherreltf = models.NullBooleanField("Other Religion", null=True, blank=True)
     Palm_orientation = models.CharField(max_length=10, blank=True) # only used twice = Left
     para = models.NullBooleanField("Parallel", null=True, blank=True) 
     peopletf = models.NullBooleanField("People", null=True, blank=True)
@@ -396,7 +408,6 @@ minor or insignificant ways that can be ignored.""")
     questsigntf = models.NullBooleanField("Questions", null=True, blank=True)
     recreationtf = models.NullBooleanField("Recreation", null=True, blank=True)
     reglextf = models.NullBooleanField("Regional", null=True, blank=True)
-    religiontf = models.NullBooleanField("Religious Sign", null=True, blank=True)
     restricttf = models.NullBooleanField("Restricted Lexeme", null=True, blank=True)
     roomstf = models.NullBooleanField("Rooms", null=True, blank=True)
     saluttf = models.NullBooleanField("Salutation", null=True, blank=True)
@@ -693,6 +704,12 @@ minor or insignificant ways that can be ignored.""")
           
             )
 
+
+# register Gloss for tags
+#try:
+#    tagging.register(Gloss)
+#except tagging.AlreadyRegistered:
+#    pass
 
 RELATION_ROLE_CHOICES = (('variant', 'Variant'),
                          ('antonym', 'Antonym'),

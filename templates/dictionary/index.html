@@ -12,6 +12,22 @@
       <a href="{% url signbank.views.index %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
    {% endfor %}
    </p>
+   
+<div id='tags'>
+ <h2>Tags</h2>
+ <p>Select a tag below to view signs with that tag.</p>
+ 
+ {% load tagging_tags %}
+ 
+ {% tags_for_model dictionary.Gloss as glosstags with counts %}
+
+ {% for t in glosstags %}
+   <span class='tag' {% ifequal t tag %}id='activetag'{% endifequal %}><a href="/{{version}}/tag/{{t}}/">{{t}}</a><span class='tagcount'>{{t.count}}</span></span>
+ {% endfor %}
+</div>
+        
+</div>
+
 
     {% ifequal version "medical" %}
 

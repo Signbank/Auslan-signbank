@@ -1,0 +1,62 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
+{% load tagging_tags %}
+
+{% if tag %}
+<h2>Signs tagged with {{tag}}</h2>
+{% else %}
+<h2>Tags</h2>
+{% endif %}
+
+<div id='tags'>
+ {% tags_for_model dictionary.Gloss as glosstags with counts %}
+
+ {% for t in glosstags %}
+   <span class='tag' {% ifequal t tag %}id='activetag'{% endifequal %}><a href="/{{version}}/tag/{{t}}/">{{t}}</a><span class='tagcount'>{{t.count}}</span></span>
+ {% endfor %}
+</div>
+        
+        {% if user.is_staff %}
+        <p>Items marked * below are not in the web version of the dictionary and would not
+        appear in a regular (non staff) search.</p>
+        {% endif %}
+        
+      <div id="searchresults">
+         <table width="90%">
+            <tr>
+               <td valign="top">
+          {% for gloss in gloss_list %}
+            <p>
+              <a href="{% url signbank.views.index %}dictionary/gloss/{{ gloss.idgloss }}.html">{{ gloss.idgloss }}</a>
+              {% if not gloss.inWeb %}*{% endif %}  
+            </p>
+
+            {% if forloop.counter|divisibleby:"10" %}
+            </td> 
+            <td valign="top">
+            {% endif %}
+            
+          {% endfor %}
+           </td>
+          </tr>
+         </table>
+   
+          {% if page.has_next or page.has_previous %} 
+          <p>Jump to results page: 
+          {% for p in paginator.page_range %}
+             {% ifequal p page.number %}
+             <strong>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</strong>
+             {% else %}
+             <a href='?query={{query}}&page={{p}}{% ifequal version "medical" %}&msb=1{% endifequal %}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
+             {% endifequal %}
+          {% endfor %}
+          </p>
+
+          {% endif %}
+
+{% endblock %}
+
+
+
+

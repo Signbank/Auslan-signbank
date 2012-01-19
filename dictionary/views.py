@@ -6,12 +6,14 @@ from django.core.urlresolvers import reverse
 from django.conf import settings 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from tagging.models import Tag, TaggedItem
 
 import os
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import * 
 from signbank.feedback.models import *
+
 
 def login_required_config(f):
     """like @login_required if the ALWAYS_REQUIRE_LOGIN setting is True"""
@@ -33,6 +35,26 @@ def index(request, version='dictionary'):
                               {'version': version,
                                },
                                context_instance=RequestContext(request))
+
+
+def taglist(request, tag=None, version='dictionary'):
+    """View of a list of tags or a list of signs with a given tag"""
+
+    
+    if tag:
+        # get the glosses with this tag
+        tagobj = get_object_or_404(Tag, name=tag)
+        gloss_list = TaggedItem.objects.get_by_model(Gloss, tagobj)
+        
+        return render_to_response('dictionary/gloss_list.html',
+                                  {'gloss_list': gloss_list,
+                                   'tag': tag,
+                                   'version': version} )
+    else:
+        return render_to_response('dictionary/gloss_list.html',
+                                  {'version': version,
+                                   })
+
 
 STATE_IMAGES = {'auslan_all': "images/maps/allstates.gif",
                 'auslan_nsw_act_qld': "images/maps/nsw-act-qld.gif",
@@ -316,7 +338,7 @@ def search(request, version='dictionary'):
 from django.db.models.loading import get_model, get_apps, get_models
 from django.core import serializers
 
-def keyword_value_list(request, prefix):
+def keyword_value_list(request, prefix=None, version='dictionary'):
     """View to generate a list of possible values for 
     a keyword given a prefix."""
    
