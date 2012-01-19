@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'south',
     'reversion',
     'django_mobile',
+    'tagging',
 )
 
 ROOT_URLCONF = 'signbank.urls'
@@ -157,6 +158,9 @@ ALWAYS_REQUIRE_LOGIN = False
 
 # settings for django-mobile
 
+# settings for django-tagging
+
+FORCE_LOWERCASE_TAGS = True
 
 # import local settings if present
 try:

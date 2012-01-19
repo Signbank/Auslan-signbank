@@ -102,14 +102,13 @@
         <source src="{% auslan_media_prefix %}{{ videofile }}" 
                 type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
       </video>
+    <!-- End VideoJS --> 
+    </div>
     {% else %} 
     <img src='{% auslan_static_prefix %}images/no-video.png'>
     {% endif %}
     </div>
-    <!-- End VideoJS -->
-	</div>
 	
-        </div>
         
         <div id="feedback">
             <ul>
@@ -145,6 +144,19 @@
                 </ul>  
         </div>
 
+	<div id='tags'>
+	  <h2>Tags</h2>
+	  {% load tagging_tags %}
+	  {% tags_for_object gloss as tag_list %}
+	  {% if tag_list %}
+	  <ul id='taglist'>
+	  {% for tag in tag_list %}
+	    <li class='tag'><a href="/{{version}}/tag/{{tag}}/">{{tag}}</a><span class='tagcount'>&nbsp;</span></li>
+	  {% endfor %}
+	  </ul>
+	  {% endif %}
+	</div>
+	
     </div>
     
     <div id="keywords"> 
