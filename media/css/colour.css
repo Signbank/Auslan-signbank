@@ -1,6 +1,6 @@
 
 /* main colour styles for pages, variants (black, red2) are in separate files
-   that import this */
+   that are loaded after this */
 
 html {
   background-color: #fff;

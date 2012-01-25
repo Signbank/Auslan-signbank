@@ -4,36 +4,28 @@
     <title>{% block pagetitle %}Auslan - Signbank{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.4.2.min.js"></script> 
-    
-
     <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish.css">        
     <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}superfish/css/superfish-navbar.css" />
     
-    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script>
-    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script>
-    <!--
-    <script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/supersubs.js"></script>
-    -->
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}css/textstyles.css">
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="{% auslan_static_prefix %}css/colour.css">
 
-   <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/style.css" type="text/css">
 {% ifequal version "medical" %}
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/red2.css" type="text/css">
+    <link rel="stylesheet" href="{% auslan_static_prefix %}css/auslan-medical.css" type="text/css">
 {% else %} 
-    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/green.css" type="text/css">
-<!--    <link rel="stylesheet" href="{% auslan_static_prefix %}styleA/black.css" type="text/css"> -->
+    <link rel="stylesheet" href="{% auslan_static_prefix %}css/{% primary_css %}.css" type="text/css">
 {% endifequal %}
 
-    <link type="text/css" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-darkness/jquery-ui-1.8.4.custom.css" rel="stylesheet" />   
-    
-    <script type="text/javascript" src="{% auslan_static_prefix %}flowplayer/jquery.tools.min.js"></script> 
-
-    <!-- VideoJS Stuff -->
-	<script src="{% auslan_static_prefix %}js/video.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-darkness/jquery-ui-1.8.4.custom.css" type="text/css" />    
 	<link rel="stylesheet" href="{% auslan_static_prefix %}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
 	
-
-
+	
+	<!-- Javascript -->
+	<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.4.2.min.js"></script> 
+	
 {% block extrahead %}
 
 {% endblock %}
@@ -53,6 +45,13 @@ $(document).ready(function(){
         delay: 1000
         });
   
+  /* load more javascript */
+  	$.getScript("{% auslan_static_prefix %}superfish/js/hoverIntent.js");
+	$.getScript("{% auslan_static_prefix %}superfish/js/superfish.js");
+	$.getScript("{% auslan_static_prefix %}flowplayer/jquery.tools.min.js");
+	$.getScript("{% auslan_static_prefix %}js/video.js");
+  
+  
   {% block jqueryready %}
   
   {% endblock %}
@@ -68,13 +67,18 @@ $(document).ready(function(){
     <!-- google analytics code --> 
 
 <script type="text/javascript">
+/*
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+*/
 </script>
+
 <script type="text/javascript">
+/*
 var pageTracker = _gat._getTracker("UA-3928964-1");
 pageTracker._initData();
 pageTracker._trackPageview();
+*/
 </script> 
 
   </head>
@@ -113,7 +117,8 @@ pageTracker._trackPageview();
               <a href="{% url signbank.feedback.views.generalfeedback %}">Provide feedback on the site</a> 
           </div>
     </div>
-     
+  
+  
   
   </body>
 </html>

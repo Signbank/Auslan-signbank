@@ -1,11 +1,4 @@
 
-@import "fonts.css";
-/* styles used in pages */
-@import "../css/textstyles.css";
-/* styles for the main navigation menu */
-@import "navigation.css";
-
-
 /* layout */
 body {
    margin-left: auto;
