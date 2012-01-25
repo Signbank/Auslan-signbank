@@ -94,8 +94,10 @@
     {% if videofile %}
     <div class="video-js-box">
      <video id="video" 
-            class="video-js"             
+            class="video-js vjs-default-skin"             
             {# TODO: make thumbnail images for all videos and use here #}
+            width="320"
+            height="240"
             poster="{% auslan_media_prefix %}video/47/47070.jpg" 
             controls="controls"
             preload="auto">

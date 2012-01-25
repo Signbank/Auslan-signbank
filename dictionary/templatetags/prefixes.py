@@ -10,9 +10,9 @@ def auslan_media_prefix():
     """
     try:
         from django.conf import settings
-    except ImportError:
+        return settings.MEDIA_URL
+    except:
         return ''
-    return settings.MEDIA_URL
  
     
 @register.simple_tag
@@ -22,8 +22,18 @@ def auslan_static_prefix():
     """
     try:
         from django.conf import settings
-    except ImportError:
+        return settings.AUSLAN_STATIC_PREFIX 
+    except:
         return ''
-    return settings.AUSLAN_STATIC_PREFIX 
+    
+@register.simple_tag
+def primary_css():
+    """Return the primary css file basename from PRIMARY_CSS"""
+    
+    try:
+        from django.conf import settings
+        return settings.PRIMARY_CSS 
+    except:
+        return ''    
     
     
