@@ -60,11 +60,16 @@
     </div>
 {% endif %}
 
+{% block topcontent %}
+{% endblock %}
+
 {% block pagecontent %}
    {{ page.content }}
 {% endblock %}
 
-  {% block bottomcontent %}
-  {% endblock %}
+
+{% block bottomcontent %}
+{% endblock %}
+
 
 {% endblock %}
