@@ -36,8 +36,16 @@ SECRET_KEY = 'svyc8#was2(t$(fw=a&f8i+1o7n(pgubh=le*j-tg-0uwmaxl3'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django_mobile.loader.Loader',
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source', 
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader', 
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -46,18 +54,20 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'signbank.middleware.UserBasedExceptionMiddleware',
+    'middleware.UserBasedExceptionMiddleware',
     'signbank.pages.middleware.PageFallbackMiddleware',
     'django_mobile.middleware.MobileDetectionMiddleware',
     'django_mobile.middleware.SetFlavourMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
+    "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
-    "django.core.context_processors.request",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
     "signbank.pages.context_processors.menu",
     "django_mobile.context_processors.flavour", 
 )
@@ -101,12 +111,12 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 EMAIL_HOST = "mail.exetel.com.au" 
 
-DATABASE_ENGINE = 'sqlite3'          
-DATABASE_NAME = 'signbank.db'          
-DATABASE_USER = ''            
-DATABASE_PASSWORD = ''        
-DATABASE_HOST = ''             
-DATABASE_PORT = '' 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'signbank.db',                 
+    }
+}
 
 # Absolute path to the directory that holds media. 
 MEDIA_ROOT = 'test-media/'

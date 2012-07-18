@@ -28,7 +28,7 @@
                <td valign="top">
           {% for gloss in gloss_list %}
             <p>
-              <a href="{% url signbank.views.index %}dictionary/gloss/{{ gloss.idgloss }}.html">{{ gloss.idgloss }}</a>
+              <a href="{% url root_page %}dictionary/gloss/{{ gloss.idgloss }}.html">{{ gloss.idgloss }}</a>
               {% if not gloss.inWeb %}*{% endif %}  
             </p>
 

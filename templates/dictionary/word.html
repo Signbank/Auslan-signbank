@@ -58,12 +58,12 @@
 
             {% if navigation.prev %}
             <div class="prev">
-              <a href="{% url signbank.views.index %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal version "medical" %} Medical {% endifequal %}Sign</a>
+              <a href="{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal version "medical" %} Medical {% endifequal %}Sign</a>
             </div>
             {% endif %}
             {% if navigation.next %}
             <div class="next">
-             <a href="{% url signbank.views.index %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal version "medical" %} Medical {% endifequal %}Sign &raquo;</a>
+             <a href="{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal version "medical" %} Medical {% endifequal %}Sign &raquo;</a>
             </div>
             {% endif %}
     </div>
@@ -81,7 +81,7 @@
         {% endfor %} 
         </div>
         {% else %}
-            <h2><a href="{% url signbank.views.index %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <h2><a href="{% url root_page %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
             <div>&nbsp;</div>
         {% endifequal %}
         
@@ -115,13 +115,13 @@
         <div id="feedback">
             <ul>
                 {% ifequal viewname "words" %}
-                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                <li><a href="{% url root_page %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
                 {% else %}
-                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
                 {% endifequal %}
                 
-                <li><a href="{% url signbank.views.index %}feedback/missingsign.html">Report a missing sign</a></li>
-                <li><a href="{% url signbank.views.index %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+                <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url root_page %}feedback/generalfeedback.html">Provide general site feedback</a></li>
             </ul> 
         </div>
         
@@ -269,10 +269,10 @@
         
         <table id="staffops">
           <tr>
-            <td><a href="{% url signbank.views.index %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
+            <td><a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
             </td>
             <td>
-             <a href="javascript:window.open('{% url signbank.views.index %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
+             <a href="javascript:window.open('{% url root_page %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
             </td>
           </tr>
         </table>
@@ -304,7 +304,7 @@
         {% endif %}
   
         {%if update_form %}
-        <form action="{% url signbank.views.index %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+        <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
        
             <fieldset class="glossupdate">
             <legend>Quick Updates</legend>

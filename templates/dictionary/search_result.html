@@ -41,7 +41,7 @@
                <td valign="top">
           {% for word in page.object_list %}
             <p>
-              <a href="{% url signbank.views.index %}{{version}}/words/{{ word.text }}-1.html">{{ word.text }}</a>
+              <a href="{% url root_page %}{{version}}/words/{{ word.text }}-1.html">{{ word.text }}</a>
               {% if not word.inWeb %}*{% endif %}  
             </p>
 

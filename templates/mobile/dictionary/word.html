@@ -31,7 +31,7 @@
 		        
 	        {% else %}
 	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">	            
-	             <a  data-role='button' data-inline='true' href="{% url signbank.views.index %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a>
+	             <a  data-role='button' data-inline='true' href="{% url root_page %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a>
 	            </div>
 	        {% endifequal %}
 	        
@@ -68,11 +68,11 @@
 	    <div id="signs">
 	        <div data-role="controlgroup" data-type="horizontal">
 	            {% if navigation.prev %}
-	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="/{% url signbank.views.index %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="/{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	            <span data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></span>
 	            {% if navigation.next %}
-	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="/{% url signbank.views.index %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="/{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	        </div>
 	    </div><!-- End #signs -->
@@ -206,13 +206,13 @@
 	     <div id="feedback">
             <ul data-role="listview" data-inset="true">
                 {% ifequal viewname "words" %}
-                <li><a href="{% url signbank.views.index %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Give sign feedback</a></li>
+                <li><a href="{% url root_page %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Give sign feedback</a></li>
                 {% else %}
-                <li><a href="{% url signbank.views.index %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Give sign feedback</a></li>
+                <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Give sign feedback</a></li>
                 {% endifequal %}
                 
-                <li><a href="{% url signbank.views.index %}feedback/missingsign.html">Report a missing sign</a></li>
-                <li><a href="{% url signbank.views.index %}feedback/generalfeedback.html">Give general feedback</a></li>
+                <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url root_page %}feedback/generalfeedback.html">Give general feedback</a></li>
             </ul> 
         </div>
     
