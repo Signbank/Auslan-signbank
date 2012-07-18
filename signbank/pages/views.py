@@ -8,7 +8,7 @@ from django.utils.safestring import mark_safe
 
 DEFAULT_TEMPLATE = 'pages/default.html'
 
-def page(request, url):
+def page(request, url='/'):
     """
     Flat page view.
 

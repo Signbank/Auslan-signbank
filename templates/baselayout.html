@@ -89,7 +89,7 @@ pageTracker._trackPageview();
     <div id="rightcontentborder"></div>
     <div id="header">
        <h1>Auslan - Signbank</h1>
-       <form id="frmSearch" name="frmSearch" method="get" action="{% url signbank.views.index %}{% if version %}{{version}}{% else %}dictionary{% endif %}/search/">
+       <form id="frmSearch" name="frmSearch" method="get" action="{% url root_page %}{% if version %}{{version}}{% else %}dictionary{% endif %}/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50">
           <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>
           <br>Medical Signs only<input type="checkbox" name="msb" value="1" {% ifequal version "medical" %}checked='1'{% endifequal %}>      
