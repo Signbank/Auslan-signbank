@@ -9,8 +9,7 @@ manageable.
 from django.db.models import Q
 from django.db import models
 from django.conf import settings
-from django.http import Http404
-#import filters
+from django.http import Http404 
 from tagging.fields import TagField
 
 import sys, os
