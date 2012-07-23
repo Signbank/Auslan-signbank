@@ -11,7 +11,9 @@
     {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
       <a href="{% url root_page %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
    {% endfor %}
-   </p>     
+   </p>
+   
+        
 </div>
 
 
