@@ -446,27 +446,31 @@ body {
 
 /* styles for tags */
 
-.tag a {
-	background: black;
-	color: white;
+div.tag {
+	background: white; 
 	text-decoration: none;
-	padding: 2px 4px 2px 4px;
+	border: 1px solid #ccc; 
+	display: inline-block; 
+	margin: 3px;	 
 }
-.tag {
-	display: inline-block;
-	background: white;
-	margin: 3px;	
-	background: black;
-	color: white;
+div.tag a {
+	text-decoration: none;
+	color: black;
+	
+}
+.tag .tagname {
+	padding: 1px 2px 1px 5px;
 }
 #activetag {
 	background: #ccc;
 }
+#activetag .tagcount {
+	border-left: 1px solid #fff;
+}
 .tag .tagcount {
-	background: white;
-	color: black;
-	padding: 1px;
-	border: 1px solid black;
+	padding: 2px 4px 2px 4px;
+	margin: 0px;
+	border-left: 1px solid #ccc;
 }
 
 

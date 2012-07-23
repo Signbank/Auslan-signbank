@@ -285,6 +285,9 @@ minor or insignificant ways that can be ignored.""")
     # one or more regional dialects that this gloss is used in
     dialect = models.ManyToManyField(Dialect)
     
+    
+    
+    
     # fields being replaced by tags
     angcongtf = models.NullBooleanField("Anglican", null=True, blank=True)
     catholictf = models.NullBooleanField("Catholic Sign", null=True, blank=True)
@@ -364,19 +367,22 @@ minor or insignificant ways that can be ignored.""")
     varlextf = models.NullBooleanField(null=True, blank=True)
     weathertf = models.NullBooleanField(null=True, blank=True)
     worktf = models.NullBooleanField(null=True, blank=True)
-
-
-    # fields that could be tags, but not sure
-    # healthtf is used to define the medical signbank, changing it has implications but might be a good idea
-    healthtf = models.NullBooleanField("Health Related Sign", null=True, blank=True) 
- 
     alternate = models.NullBooleanField("Alternating", null=True, blank=True)
-
     # are these related in some way?
     dirtf = models.NullBooleanField("Directional Sign", null=True, blank=True) 
     begindirtf = models.NullBooleanField("Begin directional sign", null=True, blank=True)
     enddirtf = models.NullBooleanField("End directional sign", null=True, blank=True)
+
+    domonly = models.NullBooleanField("Dominant hand only", null=True, blank=True) 
+    twohand = models.NullBooleanField("Two handed", null=True, blank=True) 
+    doublehnd = models.NullBooleanField("Double handed", null=True, blank=True) 
+       
     
+    
+    # fields that could be tags, but not sure
+    # healthtf is used to define the medical signbank, changing it has implications but might be a good idea
+    healthtf = models.NullBooleanField("Health Related Sign", null=True, blank=True) 
+
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
@@ -392,10 +398,7 @@ minor or insignificant ways that can be ignored.""")
     handedness = models.CharField("Handedness", max_length=10, choices=handedness_choices, blank=True)  
     domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
-    domonly = models.NullBooleanField("Dominant hand only", null=True, blank=True) 
-    twohand = models.NullBooleanField("Two handed", null=True, blank=True) 
-    doublehnd = models.NullBooleanField("Double handed", null=True, blank=True) 
-    
+ 
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
     locsecond = models.IntegerField("Secondary Location", choices=secLocationChoices, null=True, blank=True) 
     

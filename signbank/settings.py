@@ -127,7 +127,7 @@ AUSLAN_STATIC_PREFIX = "/static/"
 #STATIC_ROOT = ''
 
 # URL prefix for static files. 
-STATIC_URL = '/static/'
+STATIC_URL = '/statics/'
 
 # List of finder classes that know how to find static files in
 # various locations.
