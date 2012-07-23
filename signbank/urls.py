@@ -5,8 +5,6 @@ import registration.forms
 from django.views.generic.simple import direct_to_template
 from signbank.dictionary.models import Gloss
 
-from tagging.views import tagged_object_list
-
 from django.contrib import admin
 admin.autodiscover()
 
