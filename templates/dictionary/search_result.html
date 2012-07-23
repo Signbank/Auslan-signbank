@@ -2,16 +2,20 @@
 
 {% block content %}
  
-    {# if we have no search term, include a bit of prompt text #}
+    {# if we have no search term, include a bit of prompt text and the letter list #}
     {% ifequal query '' %}
+    
+    <p>Welcome to the Sign Search section of the Auslan SignBank. Here
+     you can search for a sign using an English keyword in the search box
+     above, or browse keywords starting with any letter below.</p>	
+    
     <p>
-                Hello and welcome to the sign search section. 
-                Here you will find the most comprehensive database of words 
-                and their definitions existing on the web. Simply type a word 
-                or a letter into the field on the left side of the screen, press 
-                search and the corresponding sign will appear.
-   </p>
-     
+      {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+        <a href="{% url root_page %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
+      {% endfor %}
+    </p>
+    
+    {% if user.is_staff %}View signs <a href="{% url root_page %}{{version}}/tag/">according to their tags</a>{% endif %}
     
     {% else %}
       <p>

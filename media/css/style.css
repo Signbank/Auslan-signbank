@@ -447,6 +447,7 @@ body {
 /* styles for tags */
 
 div.tag {
+	font-size: smaller;
 	background: white; 
 	text-decoration: none;
 	border: 1px solid #ccc; 

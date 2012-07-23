@@ -31,8 +31,9 @@ def index(request, version='dictionary'):
     point to the dictionary"""
     
     
-    return render_to_response("dictionary/index.html",
+    return render_to_response("dictionary/search_result.html",
                               {'version': version,
+                               'query': '',
                                },
                                context_instance=RequestContext(request))
 
@@ -50,17 +51,27 @@ def taglist(request, tag=None, version='dictionary'):
             taginfo = tag.split(':')
         else:
             taginfo = ('None', tag)
+    
+        if request.GET.has_key('page'):
+            page = int(request.GET['page'])
+        else:
+            page = 1
+        
+        paginator = Paginator(gloss_list, 50) 
         
         return render_to_response('dictionary/gloss_list.html',
-                                  {'gloss_list': gloss_list,
+                                  {'paginator': paginator,
+                                   'page': paginator.page(page),
                                    'thistag': taginfo,
                                    'tagdict': tag_dict(),
-                                   'version': version} )
+                                   'version': version},
+                                   context_instance=RequestContext(request) )
     else:
         return render_to_response('dictionary/gloss_list.html',
                                   {'version': version,
                                    'tagdict': tag_dict(),
-                                   })
+                                   },
+                                   context_instance=RequestContext(request))
 
 
 def tag_dict():
