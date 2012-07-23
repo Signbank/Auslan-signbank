@@ -3,20 +3,18 @@
 {% block content %}
 {% load tagging_tags %}
 
-{% if tag %}
-<h2>Signs tagged with {{tag}}</h2>
-{% else %}
-<h2>Tags</h2>
-{% endif %}
-
 <div id='tags'>
- {% tags_for_model dictionary.Gloss as glosstags with counts %}
-
- {% for t in glosstags %}
-   <span class='tag' {% ifequal t tag %}id='activetag'{% endifequal %}><a href="/{{version}}/tag/{{t}}/">{{t}}</a><span class='tagcount'>{{t.count}}</span></span>
- {% endfor %}
+  {% for cat, tags in tagdict.items %}
+   <strong>{{cat}}</strong>
+    {% for tag in tags %} 
+      <div class='tag' {% if tag.0 == thistag.1 and cat == thistag.0 %}id='activetag'{% endif %}>
+        <span class='tagname'><a href="/{{version}}/tag/{{cat}}:{{tag.0}}">{{tag.0}}</a></span>
+        <span class='tagcount'>{{tag.1}}</span>
+      </div>
+    {% endfor %}
+  {% endfor %}
 </div>
-        
+ 
         {% if user.is_staff %}
         <p>Items marked * below are not in the web version of the dictionary and would not
         appear in a regular (non staff) search.</p>

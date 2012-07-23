@@ -146,6 +146,8 @@
                 </ul>  
         </div>
 
+
+    {% if user.is_authenticated and user.is_staff %}
 	<div id='tags'>
 	  <h2>Tags</h2>
 	  {% load tagging_tags %}
@@ -153,12 +155,16 @@
 	  {% if tag_list %}
 	  <ul id='taglist'>
 	  {% for tag in tag_list %}
-	    <li class='tag'><a href="/{{version}}/tag/{{tag}}/">{{tag}}</a><span class='tagcount'>&nbsp;</span></li>
+	    <li class='tag'>
+           <div class='tag'>
+             <span class='tagname'><a href="/{{version}}/tag/{{tag}}">{{tag}}</a></span> 
+            </div>
+        </li>
 	  {% endfor %}
 	  </ul>
 	  {% endif %}
 	</div>
-	
+	{% endif %}
     </div>
     
     <div id="keywords"> 
