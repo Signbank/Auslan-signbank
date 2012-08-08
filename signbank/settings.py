@@ -45,6 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'middleware.UserBasedExceptionMiddleware',
     'signbank.pages.middleware.PageFallbackMiddleware',
@@ -112,7 +113,7 @@ DATABASES = {
 }
 
 # Absolute path to the directory that holds media. 
-MEDIA_ROOT = 'test-media/'
+MEDIA_ROOT = 'test-media'
 # URL that handles the media served from MEDIA_ROOT. 
 MEDIA_URL = '/media/'
 
@@ -159,13 +160,13 @@ UPLOAD_ROOT = MEDIA_ROOT + "upload/"
 UPLOAD_URL = MEDIA_URL + "upload/"
 
 # Location for comment videos relative to MEDIA_ROOT
-COMMENT_VIDEO_LOCATION = "comments/"
+COMMENT_VIDEO_LOCATION = "comments"
 # Location for videos associated with pages
-PAGES_VIDEO_LOCATION = 'pages/'
+PAGES_VIDEO_LOCATION = 'pages'
 # location for upload of videos relative to MEDIA_ROOT
 # videos are stored here prior to copying over to the main
 # storage location
-VIDEO_UPLOAD_LOCATION = "upload/"
+VIDEO_UPLOAD_LOCATION = "upload"
 
 # within MEDIA_ROOT we look for videos in these directories, trying them in order
 # and only looking further down the list if the required video isn't found

@@ -542,6 +542,19 @@ minor or insignificant ways that can be ignored.""")
                 return homophones[0].target.sn
         return self.sn
                 
+    def get_video(self):
+        """Return the video object for this gloss"""
+        
+        video_num = self.get_video_number()
+        print "video number: ", video_num
+        
+        from signbank.video.models import GlossVideo
+        
+        video = GlossVideo.objects.get(gloss_sn=video_num)
+        print "got video", video
+        return video
+        
+        
     
     def get_video_url(self):
         """return  the url of the video for this gloss which may be that of a homophone"""

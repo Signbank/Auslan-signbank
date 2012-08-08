@@ -71,6 +71,15 @@ def ffmpeg(sourcefile, targetfile, timeout=60, options=[]):
     # return the error output - messages from ffmpeg
     return err
 
+def extract_frame(sourcefile, targetfile):
+    """Extract a single frame from the source video and 
+    write it to the target file"""
+    
+    options = ["-s", "320x240", "-r", "1", "-f", "mjpeg"]
+    
+    err = ffmpeg(sourcefile, targetfile, options=options)
+
+
 def probe_format(file):
     """Find the format of a video file via ffmpeg,
     return a format name, eg mpeg4, h264"""
