@@ -45,18 +45,12 @@
 	         </p>
 	    </div>
 	     
-    <div id="video-container">             
+    <div id="videocontainer">             
     {% if videofile %}
-    <div class="video-js-box">
-     <video id="video" 
-            class="video-js" 
-            {# TODO: make thumbnail images for all videos and use here #}
-            poster="{% auslan_media_prefix %}video/47/47070.jpg" 
-            controls="controls"
-            preload="auto">
-        <source src="{% auslan_media_prefix %}{{ videofile }}" 
-                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-      </video>
+    <div class="video">
+          <iframe scrolling="no" frameborder='0' 
+          src="{% url signbank.video.views.iframe gloss.get_video_number %}">
+      </iframe>
     {% else %} 
     <img src='{% auslan_static_prefix %}images/no-video.png'>
     {% endif %}
@@ -67,23 +61,20 @@
 	<div id="signinfo">
 	    <div id="signs">
 	        <div data-role="controlgroup" data-type="horizontal">
+                {# we prefetch the previous and next pages to speed up performance #}
 	            {% if navigation.prev %}
-	              <a data-role="button" data-inline="true" data-icon="arrow-l" href="/{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	              <a data-role="button" data-inline="true" data-icon="arrow-l" data-direction='reverse' data-prefetch
+                     href="{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	            <span data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></span>
 	            {% if navigation.next %}
-	             <a data-role="button" data-inline="true" data-icon="arrow-r" href="/{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
+	             <a data-role="button" data-inline="true" data-icon="arrow-r" data-prefetch
+                    href="{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
 	        </div>
 	    </div><!-- End #signs -->
-	
-
-	    
 
 	</div><!-- End #signinfo -->
-
-
-
 
 <div id="word-info-wrapper">
 

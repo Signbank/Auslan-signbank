@@ -16,7 +16,8 @@ urlpatterns = patterns('',
     url(r'^(?P<version>dictionary|medical)/', include('signbank.dictionary.urls')),
     url(r'^feedback/', include('signbank.feedback.urls')),
     url(r'^attachments/', include('signbank.attachments.urls')),
-
+    url(r'^video/', include('signbank.video.urls')),
+    
     #(r'^register.html', 'signbank.views.index'), 
     url(r'^logout.html', 'django.contrib.auth.views.logout',
                        {'next_page': "/"}, "logout"),
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
     url(r'^spell/onehanded.html$', direct_to_template, {'template': 'fingerspell/fingerspellingonehanded.html'}),
     url(r'^numbersigns.html$', direct_to_template, {'template': 'numbersigns/numbersigns.html'}),
 
- 
+    
     
     # compatibility with old links - intercept and return 401
     url(r'^index.cfm', direct_to_template, {'template': 'compat.html',}),

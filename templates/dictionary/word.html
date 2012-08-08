@@ -90,22 +90,16 @@
 
 <div id="definitionblock">
     <div id="leftblock">
-    <div id="video-container">             
-    {% if videofile %}
-    <div class="video-js-box">
-     <video id="video" 
-            class="video-js vjs-default-skin"             
-            {# TODO: make thumbnail images for all videos and use here #}
-            width="320"
-            height="240"
-            poster="{% auslan_media_prefix %}video/47/47070.jpg" 
-            controls="controls"
-            preload="auto">
-        <source src="{% auslan_media_prefix %}{{ videofile }}" 
-                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-      </video>
-    <!-- End VideoJS --> 
+    <div id="videocontainer">             
+    {% if gloss.get_video %}
+
+    <div id="player">
+      <iframe width="320" height="240" scrolling="no" frameborder='0' 
+          src="{% url signbank.video.views.iframe gloss.get_video_number %}">
+      </iframe>
     </div>
+      <div id="replay"></div>
+
     {% else %} 
     <img src='{% auslan_static_prefix %}images/no-video.png'>
     {% endif %}

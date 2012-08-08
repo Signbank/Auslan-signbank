@@ -4,115 +4,132 @@ keep track of uploaded videos and converted versions
  
 from django.db import models
 from django.conf import settings
-from django.http import Http404
-from subprocess import Popen, PIPE
-
 import sys, os, time
 
+from convertvideo import extract_frame, convert_video
 
-class Video(models.Model):
-    """An uploaded video that will be converted to a form suitable for
-    web delivery and then associated with either a sign or a comment on the site"""
+from django.core.files.storage import FileSystemStorage
 
-    geometry = models.CharField("Target geometry for converted files", max_length="20", default="320x240")
+
+class VideoPosterMixin:
+    """Base class for video models that adds a method
+    for generating poster images
     
-    original = models.FileField("Original uploaded file", upload_to=settings.MEDIA_ROOT)
-    h264 = models.FileField("h264 (mp4) version of file", upload_to=settings.MEDIA_ROOT)
-    ogg = models.FileField("ogg theora version of file", upload_to=settings.MEDIA_ROOT)
-    
-    def __repr__(self):
-        """Generate an HTML fragment to display this video"""
+    Concrete class should have fields 'videofile' and 'poster'
+    """
+
+    def poster_path(self, create=True):
+        """Return the path of the poster image for this
+        video, if create=True, create the image if needed
+        Return None if create=False and the file doesn't exist"""
         
-        return "<video>video goes here</video>"
+        vidpath, ext = os.path.splitext(self.videofile.path)
+        poster_path = vidpath + ".jpg"
+        
+        if not os.path.exists(poster_path):
+            # need to create the image
+            extract_frame(self.videofile.path, poster_path)
+        
+        return poster_path
+
+    def poster_url(self):
+        """Return the URL of the poster image for this video"""
+        
+        # generate the poster image if needed
+        path = self.poster_path()
+        
+        # splitext works on urls too!
+        vidurl, ext = os.path.splitext(self.videofile.url)
+        poster_url = vidurl + ".jpg"
+        
+        return poster_url
     
-    def ensure_converted(self):
-        """Make sure that the converted versions of the original
-        video have been generated."""
+    def get_absolute_url(self):
+        
+        return self.videofile.url
+    
+    def ensure_mp4(self):
+        """Ensure that the video file is an h264 format
+        video, convert it if necessary"""
         
         pass
     
 
-class VideoSet(models.Model):
-    """A set of videos in alternate formats"""
-    
-    geometry = models.CharField("Target geometry for converted files", max_length="20", default="320x240")
-    
-    
-      
-
-class VideoFile(models.Model):
-    """A video file in some format"""
-    
-    file = models.FileField("Video file", upload_to=settings.MEDIA_ROOT)
-    mimetype = models.CharField("Mime type", max_length=50)
-    videoset = models.ForeignKey(VideoSet)
-    
-    
-    
-    
+    def delete_files(self):
+        """Delete the files associated with this object"""
         
-        
-    
-def ffmpeg(sourcefile, format, geometry, targetfile):
-    """Convert video to some new format via ffmpeg
-    
-    Raises ValidationError if there is some problem with file
-    conversion.
-    
-    If conversion works, just exits quietly, targetfile should
-    be the newly converted file.
-    
-    """
+        try:
+            os.unlink(self.videofile.path)
+            poster_path = self.poster_path(create=False)
+            if poster_path:
+                os.unlink(poster_path)
+        except:
+            pass
 
-    errormsg = ""
+
+class Video(models.Model, VideoPosterMixin):
+    """A video file stored on the site"""
     
-    # ffmpeg command options:
-    #  -y  answer yes to all queries
-    #  -v -1 be less verbose
-    # -i sourcefile   input file
-    # -f <format> output format
-    # -an no audio in output
-    # -s <geometry> set size of output
-    # 
-    ffmpeg = [settings.FFMPEG_PROGRAM, "-y", "-v", "-1", "-i", sourcefile, "-f", format, "-an", "-s", geometry, targetfile]
- 
-    #debug(ffmpeg)
+    # video file name relative to MEDIA_ROOT
+    videofile = models.FileField("Video file in h264 mp4 format", upload_to=settings.VIDEO_UPLOAD_LOCATION)
     
-    process =  Popen(ffmpeg, stdout=PIPE, stderr=PIPE)
-    start = time.time()
-    
-    while process.poll() == None: 
-        if time.time()-start > settings.FFMPEG_TIMEOUT:
-            # we've gone over time, kill the process  
-            os.kill(process.pid, signal.SIGKILL)
-            debug("Killing ffmpeg process")
-            errormsg = "Conversion of video took too long.  This site is only able to host relatively short videos."
+    def __unicode__(self):
+        return self.videofile.name
     
 
-    status = process.poll()
-    #out,err = process.communicate()
+import shutil
 
-    # Check if file exists and is > 0 Bytes
-    try:
-        s = os.stat(targetfile) 
-        fsize = s.st_size
-        if (fsize == 0):
-            os.remove(targetfile)
-            errormsg = "Conversion of video failed: please try to use a diffent format"
-    except:
-        errormsg = "Conversion of video failed: please try to use a different video format"
+class GlossVideoStorage(FileSystemStorage):
+    """Implement our shadowing video storage system"""
+    
+    def __init__(self, location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL):
+        super(GlossVideoStorage, self).__init__(location, base_url)
+        self.directories = settings.VIDEO_DIRECTORIES
+    
+    
+    def get_valid_name(self, name):
+    
+        (targetdir, basename) = os.path.split(name)
         
-    if errormsg:
-        # we have a conversion error
-        # notify the admins, attaching the offending file
-        msgtxt = "Error: %s\n\nCommand: %s\n\n" % (errormsg, " ".join(ffmpeg))
+        path = os.path.join(str(basename)[:2], str(basename))
         
-        message = EmailMessage("Video conversion failed on Auslan",
-                               msgtxt,
-                               to=[a[1] for a in settings.ADMINS])
-        message.attach_file(sourcefile)
-        message.send(fail_silently=False)
+        # new files always go in the first of our directories
+        dirname = self.directories[0]
+                
+        result = os.path.join(targetdir, dirname, path)
+        print "Valid name: ", result
+        return result
         
-        
-        # and raise a validation error for the caller
-        raise ValidationError(errormsg)
+    def get_available_name(self, name):
+        """Return an available file name, map the name to
+        a subdirectory named for the first two characters of the
+        name"""
+     
+        fullpath = os.path.join(settings.MEDIA_ROOT, name)
+        # check that this file doesn't already exist
+        if os.path.exists(fullpath):
+            # if it does...we make a backup of the current file
+            # and allow the new file to take this name
+            shutil.move(fullpath, fullpath+".bak")
+            
+        print "available name", name
+        return name
+
+    
+    
+    
+storage = GlossVideoStorage(location=settings.MEDIA_ROOT)
+
+class GlossVideo(models.Model, VideoPosterMixin):
+    """A video that represents a particular idgloss"""
+    
+    videofile = models.FileField("video file", upload_to='.', storage=storage)
+    gloss_sn = models.CharField("Gloss SN", max_length=20)
+    
+    def __unicode__(self):
+        return self.videofile.name
+    
+    
+
+
+    

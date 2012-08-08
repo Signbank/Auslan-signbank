@@ -5,9 +5,14 @@
 	font-family: "Arial Rounded MT Bold", "Arial Rounded", serif;
 }
 
+#content {
+	margin: 0em;
+	padding: 0em;
+}
+
 #footer {
-	padding-left: 1em;
-	padding-right: 1em;
+	padding-left: 0em;
+	padding-right: 0em;
 }
 
 #footer .btn-feedback {
@@ -18,13 +23,15 @@
 	left: -2.4em;*/
 	margin-bottom: 1.6em;
 	margin-top: 0.7em;
+	margin-left: 1em;
 }
 
 #copyright {
 	float: left;
 	clear: both;
 	font-weight: normal;
-	margin-right: 1em;
+	margin-left: 1em;
+	margin-right: 0em;
 }
 
 /* === WORD PAGE === */
@@ -72,18 +79,16 @@
 	text-align: center;
 }
 
-#video-container {
-	margin: 0 auto;
-	text-align: center; 
-	margin: 0px 0px 0px 0px;
+#videocontainer {
+	/* moving block 15px left to tune android display - check on other devices */
+	margin: auto;
+	text-align: center;
 	padding: 0em;
-	padding-bottom: 0em;
-	border-bottom: 1px solid #eee;
 }
 
-#video-container h2 {
-	color: white;
-	text-shadow: 0 -1px 1px #111;
+#videocontainer iframe {
+    height: 240px;
+    width: 320px;
 }
 
 /*
