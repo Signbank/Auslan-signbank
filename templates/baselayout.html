@@ -20,11 +20,10 @@
 {% endifequal %}
 
     <link rel="stylesheet" href="{% auslan_static_prefix %}js/jquery-ui/css/ui-darkness/jquery-ui-1.8.4.custom.css" type="text/css" />    
-	<link rel="stylesheet" href="{% auslan_static_prefix %}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
 	
-	
-	<!-- Javascript -->
-	<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.4.2.min.js"></script> 
+	<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/superfish.js"></script> 
+	<script type="text/javascript" src="{% auslan_static_prefix %}superfish/js/hoverIntent.js"></script> 
 	
 {% block extrahead %}
 
@@ -45,12 +44,7 @@ $(document).ready(function(){
         delay: 1000
         });
   
-  /* load more javascript */
-  	$.getScript("{% auslan_static_prefix %}superfish/js/hoverIntent.js");
-	$.getScript("{% auslan_static_prefix %}superfish/js/superfish.js");
-	$.getScript("{% auslan_static_prefix %}flowplayer/jquery.tools.min.js");
-	$.getScript("{% auslan_static_prefix %}js/video.js");
-  
+
   
   {% block jqueryready %}
   

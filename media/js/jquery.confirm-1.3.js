@@ -1,5 +1,5 @@
 /**
- * Confirm plugin 1.2
+ * Confirm plugin 1.3
  *
  * Copyright (c) 2007 Nadia Alramli (http://nadiana.com/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
@@ -43,7 +43,11 @@ jQuery.fn.confirm = function(options) {
     var timer;
     var saveHandlers = function() {
       var events = jQuery.data(target, 'events');
-      if (!events) {
+      if (!events && target.href) {
+        // No handlers but we have href
+        $target.bind('click', function() {document.location = target.href});
+        events = jQuery.data(target, 'events');
+      } else if (!events) {
         // There are no handlers to save.
         return;
       }
@@ -67,7 +71,7 @@ jQuery.fn.confirm = function(options) {
       // Rebind the saved handlers.
       if (target._handlers != undefined) {
         jQuery.each(target._handlers, function() {
-          $target.click(this);
+          $target.click(this.handler);
         });
       }
       // Trigger click event.
