@@ -18,7 +18,8 @@
 
 	    <div id="matches">
 	        {% ifequal viewname "words" %}
-	            <h2>Search: <em>{{translation.translation}}</em></h2>
+	            <h2>Search: <em>{{translation.translation}}</em></h2> 
+             
 	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">
 		        {% if n > 1 %}
 		        <a data-role="button" data-icon="arrow-l" href="{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
@@ -27,8 +28,7 @@
 		        {% if n < matches|length %}
 		        <a data-role="button" data-icon="arrow-r" data-iconpos="right" href="{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
 		        {% endif %}		  
-		        </div>      
-		        
+		        </div>    
 	        {% else %}
 	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">	            
 	             <a  data-role='button' data-inline='true' href="{% url root_page %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a>

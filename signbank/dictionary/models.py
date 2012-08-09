@@ -546,12 +546,11 @@ minor or insignificant ways that can be ignored.""")
         """Return the video object for this gloss"""
         
         video_num = self.get_video_number()
-        print "video number: ", video_num
         
         from signbank.video.models import GlossVideo
         
         video = GlossVideo.objects.get(gloss_sn=video_num)
-        print "got video", video
+        
         return video
         
         

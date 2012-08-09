@@ -36,10 +36,19 @@
 
 /* === WORD PAGE === */
 
+/* force centering of control group buttons (needed for jq-mobile 1.1.1) */
+.ui-controlgroup-horizontal {
+  display: table;
+  margin: 0 auto;
+}
+
+#matches {
+	text-align: center;
+}
+
 #matches h2 {
 	font-weight: bold;
 	font-size: 1em;
-	text-align: center;
 	margin: 0px 0px 5px 0px;
 }
 
@@ -49,8 +58,8 @@
 
 #matcheslinks {
 	font-size: small;
-	margin: 0 auto;
-	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #keywords {
@@ -79,8 +88,7 @@
 	text-align: center;
 }
 
-#videocontainer {
-	/* moving block 15px left to tune android display - check on other devices */
+#videocontainer { 
 	margin: auto;
 	text-align: center;
 	padding: 0em;
@@ -107,4 +115,71 @@ video {
 h3 {
 	color: #444;
 }
+
+
+/* styles for finger spelling pages */
+
+#fingerspellblock {
+}
+
+#handcontainer {
+}
+
+#handcontainer #handimage {
+   margin: auto;
+   width: 192px;
+   height:144px;
+   border: 6px solid black;
+}
+
+#replay {
+	display: none;
+}
+ 
+#handimage {
+  position: relative;
+  height: 192px;
+  width:  144px;
+  background-color: #4b62ae; 
+}
+
+
+/* images are 192x144 centre them in the above div */
+#mainimg {
+  position: absolute;
+  top: 0px; /* (240 - 144)/2  */
+  left: 0px;  /* (300 - 192)/2 */
+  display: block;
+  margin: auto;
+}
+
+#fingerspellright {
+   float: left;
+}
+
+#fstable td {
+  margin-right: -1em;
+}
+#fstable img {
+  width: 50px;
+}
+#fstable td div {
+  margin-top: -1.4em; 
+  font-size: large;
+  color: #fff;
+  text-align: center;
+}
+
+#info { 
+   clear: both;
+}
+
+
+/* special style for numbersigns page */
+
+#numbersigns #videocontainer { 
+	width: 0px;
+	height: 0px;
+}
+
 
