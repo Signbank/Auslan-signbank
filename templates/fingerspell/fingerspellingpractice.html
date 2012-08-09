@@ -3,10 +3,6 @@
  
 {% block extrahead %}
 
-    <!-- jquery-ui components (slider)-->
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-ui/js/jquery-ui-1.8.4.custom.min.js"></script>
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/fspractice.js"></script>
-
     <script type="text/javascript">
     /* base url of fingerspelling images */ 
     var baseurl = "{% auslan_static_prefix %}images/twohanded/";
@@ -43,6 +39,7 @@
     </script>
     
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+    <script type="text/javascript" src="{% auslan_static_prefix %}js/fspractice.js"></script>
 
 {% endblock %}
 
@@ -51,13 +48,12 @@
   current_word = "albatros";
 
   function fingerspell_play() {
-      speed = 1500-$("#slider").slider("option", "value");
-      display_string("#mainimg", current_word, speed);
+      speed = $('input:radio[name=speed]:checked').val(); 
+      display_string("#mainimg", $('#answer').html(), speed); 
       return false;
-  }
+    }
 
   function new_word() {
-  
     current_word = get_word();
     $("#answer").hide().html(current_word);
     fingerspell_play();   
@@ -76,11 +72,7 @@
   $('#replay').click( fingerspell_play );
   
   /* fill out the table of signs */
-  fill_fstable();  
-
-  /* slider is 0-1000, we use 1500-value as the speed value */
-  $("#slider").slider({min: 0, max: 1000, value: 500});
-  
+  fill_fstable();   
   
 {% endblock %}
 
@@ -103,13 +95,20 @@
       <p id="answerpara">The word is: <span id="answer"></span></p>
     </form>
    
-    <div id="slider"></div>
+   <form name='speedform'>
+   <fieldset data-role="controlgroup" data-type="horizontal" >
+   <legend>Playback Speed</legend>
+      <input type='radio' name='speed' id='speed-slow' value='1500'><label for='speed-slow'>Slow</label>
+      <input type='radio' name='speed' id='speed-medium' value='1000' checked><label for='speed-medium'>Medium</label>
+      <input type='radio' name='speed' id='speed-fast' value='500'><label for='speed-fast'>Fast</label>      
+   </fieldset>
+   </form>
+   
     <p>
     Click <em>New Word</em>
    on the left to have a word spelled out; <em>Replay</em>
    will play the word again. Click <em>Reveal Answer</em>
-   to check your answer.
-   Adjust the slider for slower or faster playback.
+   to check your answer. 
     </p>
   </div> 
 

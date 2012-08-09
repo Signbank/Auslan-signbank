@@ -45,7 +45,7 @@
 {% block jqueryready %} 
 
   $('#inputarea').submit( function() {
-      speed = 1500-$("#slider").slider("option", "value");
+      speed = $('input:radio[name=speed]:checked').val();
       display_string("#mainimg", $('#text').val(), speed);
       return false;
     });
@@ -54,8 +54,6 @@
   
   fill_fstable();
   
-  /* slider is 0-1000, we use 1500-value as the speed value */
-  $("#slider").slider({min: 0, max: 1000, value: 500});
 {% endblock %}
 
 
@@ -75,9 +73,7 @@
     </p>
   </form>
 
-  <h2>Speed</h2> 
-  <div id="slider"></div>
-  <p>Adjust the slider for slower or faster playback.</p>
+<form name='speedform'>   <fieldset data-role="controlgroup" data-type="horizontal" >   <legend>Playback Speed</legend>      <input type='radio' name='speed' id='speed-slow' value='1500'><label for='speed-slow'>Slow</label>      <input type='radio' name='speed' id='speed-medium' value='1000' checked><label for='speed-medium'>Medium</label>      <input type='radio' name='speed' id='speed-fast' value='500'><label for='speed-fast'>Fast</label>         </fieldset>   </form>
   </div>
 </div> 
 
