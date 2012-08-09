@@ -45,9 +45,9 @@
 	         </p>
 	    </div>
 	     
-    <div id="videocontainer">             
+    <div id="videocontainer">    
+    <div class="video">         
     {% if videofile %}
-    <div class="video">
           <iframe scrolling="no" frameborder='0' 
           src="{% url signbank.video.views.iframe gloss.get_video_number %}">
       </iframe>
