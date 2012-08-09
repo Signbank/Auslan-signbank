@@ -8,10 +8,6 @@ togglecomment = function() {
     $(this).children('.commentbody').hide();
     $(this).removeClass('showing');
     $(this).find('.indicator').removeClass('ui-icon-minus').addClass('ui-icon-plus');
-    /* remove any flowplayer instances */
-    $(this).find('.feedbackvideo').each(function(){ 
-	$(this).find('object').remove(); 
-    });
     
   } else {
     $(this).children('.commentbody').show();
@@ -22,10 +18,7 @@ togglecomment = function() {
 	  div = $(this).children('.video');
 	  id = div.attr('id');
 	  url = div.text();
-	  /* why do I need to do this twice!!! */
-	  /* player doesn't appear until the second time with only one call */
-	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
-	  flowplayer(id, "{% auslan_static_prefix %}flowplayer/flowplayer-3.1.5.swf", url);
+      /* activate the video playback */
 	});
     
     
@@ -73,12 +66,7 @@ jQuery(document).ready(function(){
    .comment .head { 
     }
     
-
-.video { 
-   width:320px;
-   height:240px; 
-}
-    
+   
 </style>
 {% endblock %}
 
