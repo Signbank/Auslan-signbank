@@ -7,7 +7,7 @@
    <script type="text/javascript">
          $(document).ready(function() {
                projekktor('.projekktor', { 
-                autoplay: false, 
+                autoplay: true, 
                 iframe: true,
                 addplugins: ['controlbar'],
                 playerFlashMP4: "{% auslan_static_prefix %}projekktor/jarisplayer.swf",
@@ -20,7 +20,8 @@
                   poster: "{{posterurl}}",
                   controls: true,
                   fixedVolume: true,
-                  volume: 0
+                  volume: 0,
+                  autoplay: true
                  }
                 }]
                });
