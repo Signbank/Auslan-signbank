@@ -36,7 +36,7 @@ function fill_fstable () {
 	$(this).append(image); 
         $(this).append("<div>"+letter+"</div>");
 	$(this).click(function() {
-	    display_letter("#mainimg", $(this).attr("id"), 1500-$("#slider").slider('option', 'value'));
+	    display_letter("#mainimg", $(this).attr("id"), 1500);
 	});
       }
   });
