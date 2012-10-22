@@ -155,6 +155,7 @@ body {
    height:240px;
    border-left: 6px solid black;
    border-right: 6px solid black;
+   background-color: #000;
 }
 
 /* style for the answer in the fingerspelling practice page */
