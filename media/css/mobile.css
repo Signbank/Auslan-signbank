@@ -189,10 +189,26 @@ h3 {
 
 
 /* special style for numbersigns page */
-
+/*
 #numbersigns #videocontainer { 
 	width: 0px;
 	height: 0px;
 }
+*/
 
+
+#numbersigns #numsigntable { 
+   float: left;
+   margin-left: 20px;
+   border-collapse: collapse;
+   border-spacing: 0px;
+
+}
+#numsigntable td, #numsigntable tr {
+	margin: 0;
+	padding: 0;
+	border: 1px solid black;  
+	/* bg colour matches that of images */
+    background-color: #d5dab2;
+}
 
