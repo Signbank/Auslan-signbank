@@ -210,11 +210,22 @@ body {
 }
 
 
-
 #numbersigns #numsigntable { 
    float: left;
    margin-left: 20px;
+   border-collapse: collapse;
+   border-spacing: 0px;
+
 }
+#numsigntable td, #numsigntable tr {
+	margin: 0;
+	padding: 0;
+	border: 1px solid black;  
+	/* bg colour matches that of images */
+    background-color: #d5dab2;
+}
+
+
 #numbersigns p {
    float: left;
 }
