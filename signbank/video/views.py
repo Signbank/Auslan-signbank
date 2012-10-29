@@ -25,6 +25,9 @@ def addvideo(request):
             video = GlossVideo(videofile=vfile, gloss_sn=sn)
             video.save()
             
+            
+            # TODO: provide some feedback that it worked (if
+            # immediate display of video isn't working)
             return redirect(redirect_url)
     
     # if we can't process the form, just redirect back to the 
@@ -37,8 +40,28 @@ def addvideo(request):
         url = '/'
     return redirect(url)
 
-        
 
+def deletevideo(request, videoid):
+    """Remove the video for this gloss, if there is an older version
+    then reinstate that as the current video (act like undo)"""
+    
+    if request.method == "POST":
+        # deal with any existing video for this sign
+        vids = GlossVideo.objects.filter(gloss_sn=videoid)
+        for v in vids:
+            # this will remove the most recent video, ie it's equivalent
+            # to delete if version=0
+            v.reversion(revert=True)
+            
+    # TODO: provide some feedback that it worked (if
+    # immediate non-display of video isn't working)
+    
+    # return to referer
+    if request.META.has_key('HTTP_REFERER'):
+        url = request.META['HTTP_REFERER']
+    else:
+        url = '/'
+    return redirect(url)
 
     
 def poster(request, videoid):
