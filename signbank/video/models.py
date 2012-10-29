@@ -4,12 +4,14 @@ keep track of uploaded videos and converted versions
  
 from django.db import models
 from django.conf import settings
-import sys, os, time
+import sys, os, time, shutil
 
-from convertvideo import extract_frame, convert_video
+from convertvideo import extract_frame, convert_video, ffmpeg
 
 from django.core.files.storage import FileSystemStorage
 
+# qtfaststart optimises video for http streaming
+from qtfaststart import processor
 
 class VideoPosterMixin:
     """Base class for video models that adds a method
@@ -17,6 +19,17 @@ class VideoPosterMixin:
     
     Concrete class should have fields 'videofile' and 'poster'
     """
+    
+    def process(self):
+        """The clean method will try to validate the video
+        file format, optimise for streaming and generate
+        the poster image"""
+        
+        print "Cleaning", self.videofile.path
+        print self.poster_path()
+        self.ensure_mp4()
+        self.faststart()
+        
 
     def poster_path(self, create=True):
         """Return the path of the poster image for this
@@ -27,8 +40,11 @@ class VideoPosterMixin:
         poster_path = vidpath + ".jpg"
         
         if not os.path.exists(poster_path):
-            # need to create the image
-            extract_frame(self.videofile.path, poster_path)
+            if create:
+                # need to create the image
+                extract_frame(self.videofile.path, poster_path)
+            else:
+                return None
         
         return poster_path
 
@@ -52,9 +68,27 @@ class VideoPosterMixin:
         """Ensure that the video file is an h264 format
         video, convert it if necessary"""
         
-        pass
-    
+        # convert video to use the right size and iphone/net friendly bitrate
+        # create a temporary copy in the new format
+        # then move it into place
+        
+        (basename, ext) = os.path.splitext(self.videofile.path)
+        tmploc = basename + "-conv.mp4"
+        err = ffmpeg(self.videofile.path, tmploc, options=settings.FFMPEG_OPTIONS)
+        print tmploc
+        #shutil.move(tmploc, self.videofile.path)
+        
+    def faststart(self):
+        """Run faststart over the video file to make it suitable
+        for http streaming, modifies the file in place"""
 
+        (basename, ext) = os.path.splitext(self.videofile.path)
+        tmploc = basename + "-fstrt.mp4"   
+        processor.process(self.videofile.path, tmploc)
+        print tmploc
+        #shutil.move(tmploc, self.videofile.path)
+        
+        
     def delete_files(self):
         """Delete the files associated with this object"""
         
@@ -84,47 +118,50 @@ class GlossVideoStorage(FileSystemStorage):
     
     def __init__(self, location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL):
         super(GlossVideoStorage, self).__init__(location, base_url)
-        self.directories = settings.VIDEO_DIRECTORIES
     
     
     def get_valid_name(self, name):
-    
+        """Generate a valid name, we use directories named for the
+        first two digits in the filename to partition the videos"""
+
         (targetdir, basename) = os.path.split(name)
         
         path = os.path.join(str(basename)[:2], str(basename))
-        
-        # new files always go in the first of our directories
-        dirname = self.directories[0]
                 
-        result = os.path.join(targetdir, dirname, path)
-        print "Valid name: ", result
+        result = os.path.join(targetdir, path)
         return result
-        
-    def get_available_name(self, name):
-        """Return an available file name, map the name to
-        a subdirectory named for the first two characters of the
-        name"""
-     
-        fullpath = os.path.join(settings.MEDIA_ROOT, name)
-        # check that this file doesn't already exist
-        if os.path.exists(fullpath):
-            # if it does...we make a backup of the current file
-            # and allow the new file to take this name
-            shutil.move(fullpath, fullpath+".bak")
-            
-        print "available name", name
-        return name
-
-    
-    
     
 storage = GlossVideoStorage(location=settings.MEDIA_ROOT)
 
 class GlossVideo(models.Model, VideoPosterMixin):
     """A video that represents a particular idgloss"""
     
-    videofile = models.FileField("video file", upload_to='.', storage=storage)
+    videofile = models.FileField("video file", upload_to=settings.GLOSS_VIDEO_DIRECTORY, storage=storage)
     gloss_sn = models.CharField("Gloss SN", max_length=20)
+    ## video version, version = 0 is always the one that will be displayed
+    # we will increment the version (via reversion) if a new video is added
+    # for this gloss
+    version = models.IntegerField("Version", default=0)
+    
+    def reversion(self):
+        """We have a new version of this video so increase
+        the version count here and rename the video 
+        to video.mp4.bak.V where V is the version number"""
+        
+        # find a name for the backup, a filename that isn't used already
+        newname = self.videofile.name
+        while os.path.exists(os.path.join(settings.MEDIA_ROOT, newname)):
+            self.version += 1
+            newname = newname + ".bak"
+        
+        os.rename(os.path.join(settings.MEDIA_ROOT, self.videofile.name), os.path.join(settings.MEDIA_ROOT, newname))
+        # also remove the post image if present, it will be regenerated
+        poster = self.poster_path(create=False)
+        if poster != None:
+            os.unlink(poster)
+        self.videofile.name = newname
+        self.save()
+    
     
     def __unicode__(self):
         return self.videofile.name

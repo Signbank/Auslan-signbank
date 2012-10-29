@@ -14,6 +14,8 @@ from signbank.dictionary.models import *
 from signbank.dictionary.forms import * 
 from signbank.feedback.models import *
 
+from signbank.video.forms import VideoUploadForGlossForm
+
 
 def login_required_config(f):
     """like @login_required if the ALWAYS_REQUIRE_LOGIN setting is True"""
@@ -197,9 +199,15 @@ def word(request, viewname, keyword, n, version='dictionary'):
     nav = gloss.navigation(version, request.user.is_staff)
     
     # the gloss update form for staff
-    update_form = None
+
     if request.user.is_authenticated() and request.user.is_staff:
         update_form = GlossModelForm(instance=trans.gloss)
+        video_form = VideoUploadForGlossForm(initial={'gloss_sn': trans.gloss.sn,
+                                                      'redirect': request.path})
+    else:
+        update_form = None
+        video_form = None
+
         
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
@@ -219,6 +227,7 @@ def word(request, viewname, keyword, n, version='dictionary'):
                                'lastmatch': str(trans.translation)+"-"+str(n),
                                'videofile': videourl,  
                                'update_form': update_form,
+                               'videoform': video_form,
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
@@ -265,9 +274,16 @@ def gloss(request, idgloss, version='dictionary'):
 
     # the gloss update form for staff
     update_form = None
+    
     if request.user.is_authenticated() and request.user.is_staff:
-
         update_form = GlossModelForm(instance=gloss)
+        video_form = VideoUploadForGlossForm(initial={'gloss_sn': gloss.sn,
+                                                      'redirect': request.get_full_path()})
+    else:
+        update_form = None
+        video_form = None
+    
+    
     
     # get the last match keyword if there is one passed along as a form variable
     if request.GET.has_key('lastmatch'):
@@ -290,6 +306,7 @@ def gloss(request, idgloss, version='dictionary'):
                                'glossposn': glossposn,
                                'navigation': nav,
                                'update_form': update_form,
+                               'videoform': video_form,
                                },
                                context_instance=RequestContext(request))
 

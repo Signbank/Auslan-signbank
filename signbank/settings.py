@@ -168,10 +168,11 @@ PAGES_VIDEO_LOCATION = 'pages'
 # storage location
 VIDEO_UPLOAD_LOCATION = "upload"
 
-# within MEDIA_ROOT we look for videos in these directories, trying them in order
-# and only looking further down the list if the required video isn't found
-# new video uploads are only put in the first of these 
-VIDEO_DIRECTORIES = ["bsl-video", "video"]
+# within MEDIA_ROOT we store newly uploaded videos in this directory
+# although existing videos may be sourced from other locations 
+# - that is we can ingest other locations offline but we only upload
+#   new videos to here
+GLOSS_VIDEO_DIRECTORY = "bsl-video"
 
 # which fields from the Gloss model should be included in the quick update form on the sign view
 QUICK_UPDATE_GLOSS_FIELDS = ['language', 'dialect']

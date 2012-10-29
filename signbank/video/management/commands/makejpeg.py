@@ -15,11 +15,9 @@ class Command(BaseCommand):
         
         # just access the poster path for each video
         for vid in GlossVideo.objects.all():
-            p = vid.poster_path()
-            print p
+            print vid.videofile
+            vid.process()
      
-        else:
-            print "Usage makejpeg"
 
 
     

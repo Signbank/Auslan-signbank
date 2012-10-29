@@ -26,7 +26,7 @@ AUSLAN_STATIC_PREFIX = "http://www.auslan.org.au/media/auslan-static/"
 # location of ffmpeg, used to convert uploaded videos
 FFMPEG_PROGRAM = "/home/stevecassidy/bin/ffmpeg.sh"
 FFMPEG_TIMEOUT = 60
-FFMPEG_OPTIONS = ["-vcodec", "libx264", "-an", "-vpre", "hq", "-crf", "22", "-threads", "0"]
+FFMPEG_OPTIONS = ["-vcodec", "libx264", "-an", "-vpre", "hq", "-crf", "22", "-threads", "0", "-s", "320x240", "-maxrate", "256k", "-bufsize", "256k"]
 
 TEMPLATE_DIRS = (
     '/home/stevecassidy/webapps/bsl_signbank/signbank/templates'
