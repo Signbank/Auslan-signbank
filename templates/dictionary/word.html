@@ -313,6 +313,11 @@
                   <td>{{videoform.gloss_sn}}  {{videoform.redirect}} <input type='submit' value='Upload'/></td>
               </tr>
             </form>
+            {% if gloss.get_video %}
+            <form action="/video/delete/{{gloss.sn}}" method='post'>
+            <tr><td>{% csrf_token %}<input type='submit' value='Delete/Revert this video'></td></tr>
+            </form>
+            {% endif %}
            </table>
           </fieldset>
   

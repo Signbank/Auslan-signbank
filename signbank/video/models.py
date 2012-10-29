@@ -143,16 +143,38 @@ class GlossVideo(models.Model, VideoPosterMixin):
     # for this gloss
     version = models.IntegerField("Version", default=0)
     
-    def reversion(self):
+    def reversion(self, revert=False):
         """We have a new version of this video so increase
         the version count here and rename the video 
-        to video.mp4.bak.V where V is the version number"""
+        to video.mp4.bak.V where V is the version number
         
-        # find a name for the backup, a filename that isn't used already
-        newname = self.videofile.name
-        while os.path.exists(os.path.join(settings.MEDIA_ROOT, newname)):
-            self.version += 1
-            newname = newname + ".bak"
+        unless revert=True, in which case we go the other
+        way and decrease the version number, if version=0
+        we delete ourselves"""
+        
+        
+        if revert:
+            print "REVERT VIDEO", self.videofile.name, self.version
+            if self.version==0:
+                print "DELETE VIDEO VIA REVERSION", self.videofile.name
+                self.delete_files()
+                self.delete()
+                return
+            else:
+                # remove .bak from filename and decrement the version
+                (newname, bak) = os.path.splitext(self.videofile.name)
+                if bak != '.bak':
+                    # hmm, something bad happened
+                    raise Http500()
+                self.version -= 1
+        else:
+            # find a name for the backup, a filename that isn't used already
+            newname = self.videofile.name
+            while os.path.exists(os.path.join(settings.MEDIA_ROOT, newname)):
+                self.version += 1
+                newname = newname + ".bak"
+        
+        # now do the renaming
         
         os.rename(os.path.join(settings.MEDIA_ROOT, self.videofile.name), os.path.join(settings.MEDIA_ROOT, newname))
         # also remove the post image if present, it will be regenerated
@@ -161,7 +183,7 @@ class GlossVideo(models.Model, VideoPosterMixin):
             os.unlink(poster)
         self.videofile.name = newname
         self.save()
-    
+
     
     def __unicode__(self):
         return self.videofile.name
