@@ -189,12 +189,11 @@ h3 {
 
 
 /* special style for numbersigns page */
-/*
+
 #numbersigns #videocontainer { 
-	width: 0px;
-	height: 0px;
+	height: 1px;
 }
-*/
+
 
 
 #numbersigns #numsigntable { 

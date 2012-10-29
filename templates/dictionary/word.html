@@ -1,3 +1,4 @@
+
 {% extends "baselayout.html" %}
 
 {% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
@@ -266,16 +267,6 @@
         
         <h2>Staff</h2>
 
-        
-        <table id="staffops">
-          <tr>
-            <td><a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
-            </td>
-            <td>
-             <a href="javascript:window.open('{% url root_page %}dictionary/update/video/{{gloss.id}}','', 'width=800,height=400,toolbar=0,location=0,menubar=0,status=0');False">Upload/update video</a>
-            </td>
-          </tr>
-        </table>
 
         {% if definitions.popexplain %} 
           <h3>Popular Explanation</h3> 
@@ -302,6 +293,28 @@
               <li>{{gloss.queries}}</li>
           </ol>
         {% endif %}
+
+        
+        <table id="staffops">
+          <tr>
+            <td></td>
+            <td><a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a></td>
+            <td></td>
+          </tr>
+          </table>
+          
+          <fieldset>
+            <legend>Upload New Video</legend>
+           <table id="staffops">
+            <form action="/video/upload/" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <tr>
+                  <td>{{videoform.videofile}}</td>
+                  <td>{{videoform.gloss_sn}}  {{videoform.redirect}} <input type='submit' value='Upload'/></td>
+              </tr>
+            </form>
+           </table>
+          </fieldset>
   
         {%if update_form %}
         <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">

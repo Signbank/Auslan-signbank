@@ -15,37 +15,30 @@ def addvideo(request):
             sn = form.cleaned_data['gloss_sn']
             vfile = form.cleaned_data['videofile']
             vfile.name = sn+".mp4"
+            redirect_url = form.cleaned_data['redirect']
+                        
+            # deal with any existing video for this sign
+            oldvids = GlossVideo.objects.filter(gloss_sn=sn)
+            for v in oldvids:
+                v.reversion()
+
             video = GlossVideo(videofile=vfile, gloss_sn=sn)
             video.save()
+            
+            return redirect(redirect_url)
+    
+    # if we can't process the form, just redirect back to the 
+    # referring page, should just be the case of hitting
+    # Upload without choosing a file but could be 
+    # a malicious request, if no referrer, go back to root
+    if request.META.has_key('HTTP_REFERER'):
+        url = request.META['HTTP_REFERER']
     else:
-        form = VideoUploadForGlossForm()
-        video = None
-        
-    return render_to_response("addvideo.html",
-                              {'form': form,
-                              'video': video,
-                              'error': None
-                              }, context_instance=RequestContext(request) )
+        url = '/'
+    return redirect(url)
 
-def add_video_for_gloss(request): 
-    """View to present a video upload form for adding a new video to a gloss"""
-       
-    if request.method == 'POST':
         
-        form = VideoUploadForGlossForm(request.POST, request.FILES)
-        if form.is_valid():
-            video = form.save() 
-    else:
-        form = VideoUploadForm()
-        video = None
-        
-    return render_to_response("addvideo.html",
-                              {'form': form,
-                              'video': video,
-                              'error': None
-                              }, context_instance=RequestContext(request) )
-    
-    
+
 
     
 def poster(request, videoid):
@@ -67,7 +60,7 @@ def video(request, videoid):
 def iframe(request, videoid):
     """Generate an iframe with a player for this video"""
     
-    video = get_object_or_404(GlossVideo, gloss_sn=videoid)
+    video = get_object_or_404(GlossVideo, gloss_sn=videoid, version=0)
     
     return render_to_response("iframe.html",
                               {'videourl': video.get_absolute_url(),

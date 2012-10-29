@@ -543,72 +543,33 @@ minor or insignificant ways that can be ignored.""")
         return self.sn
                 
     def get_video(self):
-        """Return the video object for this gloss"""
+        """Return the video object for this gloss or None if no video available"""
         
         video_num = self.get_video_number()
         
         from signbank.video.models import GlossVideo
         
-        video = GlossVideo.objects.get(gloss_sn=video_num)
-        
-        return video
-        
+        try:
+            video = GlossVideo.objects.get(gloss_sn=video_num, version=0)
+            return video
+        except:
+            return None
         
     
     def get_video_url(self):
         """return  the url of the video for this gloss which may be that of a homophone"""
          
-        video_num  = self.get_video_number()
-        
-        # careful logic for finding the video url since this is used two
-        # ways. There might be a video file, in which case we want to know
-        # where it is, but there might not be one, in which case we want
-        # to know where to put it.
-        # Since we're switching to mp4, this gets complicated. If there is
-        # an flv and an mp4, we want the mp4. If there is just flv, we'll
-        # take that. If there is neither, return the mp4 path so that it
-        # can be created there.
-
-        # more complexity, we have a BSL signbank, we want to look in a 
-        # separate video collection first, then fall back to the main one
-        
-        for dir in settings.VIDEO_DIRECTORIES:
-        
-            videobase = os.path.join(dir, str(video_num)[:2], str(video_num))
-        
-            fileroot = os.path.join(settings.MEDIA_ROOT, videobase)
-            
-            if os.path.exists(fileroot+".mp4"):
-                return videobase+".mp4"
-            elif os.path.exists(fileroot+".flv"):
-                return videobase+".flv"
-        
-        # if we didn't find the file, return the place we'd like it to
-        # be, which is in the first entry in VIDEO_DIRECTORIES with 
-        # an mp4 extension
-        return self.get_video_save_location()
-    
-    
-    def get_video_save_location(self):
-        """Return the file location that new uploaded videos should be saved in"""
- 
-        video_num  = self.get_video_number()
-            
-        # new uploads go in the first entry in VIDEO_DIRECTORIES with 
-        # an mp4 extension
-        dir = settings.VIDEO_DIRECTORIES[0]
-        videobase = os.path.join(dir, str(video_num)[:2], str(video_num))
-    
-        return videobase+".mp4"
-            
+         
+        video = self.get_video()
+        if video != None:
+            return video.get_absolute_url()
+        else:
+            return ""
         
     def has_video(self):
         """Test to see if the video for this sign is present"""
         
-        video = self.get_video_url()
-        # where's it supposed to be?
-        video = os.path.join(settings.MEDIA_ROOT, video)
-        return os.path.exists(video)
+        return self.get_video() != None
     
     def definitions(self):
         """gather together the definitions for this gloss"""

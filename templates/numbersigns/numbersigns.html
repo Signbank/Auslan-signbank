@@ -51,7 +51,7 @@ function playNS(n) {
         img = document.getElementById(clips[n]);
         img.src = "{% auslan_static_prefix %}numbersigns/"+clips[n]+"_select.jpg";
 
-        var player = projekktor('#projekktor');
+        var player = projekktor('#projekktor', {height: 1, minheight: 1});
         player.setFile(make_playlist(n)); 
 }
 

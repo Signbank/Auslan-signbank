@@ -51,7 +51,7 @@ def ffmpeg(sourcefile, targetfile, timeout=60, options=[]):
     ffmpeg += options
     ffmpeg += [targetfile]
  
-    #debug(" ".join(ffmpeg))
+    print " ".join(ffmpeg)
     
     process =  Popen(ffmpeg, stdout=PIPE, stderr=PIPE)
     start = time.time()
@@ -60,9 +60,10 @@ def ffmpeg(sourcefile, targetfile, timeout=60, options=[]):
         if time.time()-start > timeout:
             # we've gone over time, kill the process  
             os.kill(process.pid, signal.SIGKILL)
-            debug("Killing ffmpeg process")
+            print "Killing ffmpeg process for", sourcefile
             errormsg = "Conversion of video took too long.  This site is only able to host relatively short videos."
-    
+            return errormsg
+        
     status = process.poll()
     out,err = process.communicate()
     
@@ -91,6 +92,8 @@ def probe_format(file):
     r = parse_ffmpeg_output(b)
      
     return r['inputvideoformat']
+
+
 
 def convert_video(sourcefile, targetfile):
     """convert a video to h264 format"""
