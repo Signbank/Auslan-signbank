@@ -8,6 +8,11 @@
 
     $('#feedbackmessage').fadeOut(5000);
     
+    $('#delete_video').confirm({
+	    msg:'Delete this video?',
+	    timeout:3000
+	});
+    
 {% endblock %}
 
 {% block script %}
@@ -294,17 +299,14 @@
           </ol>
         {% endif %}
 
-        
-        <table id="staffops">
-          <tr>
-            <td></td>
-            <td><a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a></td>
-            <td></td>
-          </tr>
-          </table>
+       
+          <p>
+            <a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
+          </p>
           
           <fieldset>
             <legend>Upload New Video</legend>
+              <p>We have {{gloss.count_videos}} videos for this gloss.</p>
            <table id="staffops">
             <form action="/video/upload/" method="post" enctype="multipart/form-data">
               {% csrf_token %}
@@ -313,13 +315,21 @@
                   <td>{{videoform.gloss_sn}}  {{videoform.redirect}} <input type='submit' value='Upload'/></td>
               </tr>
             </form>
+            </table>
+            </fieldset>
+            
             {% if gloss.get_video %}
+            <fieldset>
+             <legend>Delete/Revert Video</legend>
+            <table>
             <form action="/video/delete/{{gloss.sn}}" method='post'>
-            <tr><td>{% csrf_token %}<input type='submit' value='Delete/Revert this video'></td></tr>
+            <tr><td>{% csrf_token %}<input id='delete_video' type='submit' value='Delete/Revert this video'></td>
+            <td><em>This will delete the most recent upload and restore the most recent earlier version.</em></td>
+            </tr>
             </form>
-            {% endif %}
            </table>
           </fieldset>
+            {% endif %}
   
         {%if update_form %}
         <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">

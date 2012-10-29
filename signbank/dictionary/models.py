@@ -15,6 +15,8 @@ from tagging.fields import TagField
 import sys, os
 
 
+from signbank.video.models import GlossVideo
+
 #from models_legacy import Sign
 
 handedness_choices = (("One", "One"),("Two", "Two"), ("Double", "Double"))
@@ -547,14 +549,21 @@ minor or insignificant ways that can be ignored.""")
         
         video_num = self.get_video_number()
         
-        from signbank.video.models import GlossVideo
-        
         try:
             video = GlossVideo.objects.get(gloss_sn=video_num, version=0)
             return video
         except:
             return None
         
+    def count_videos(self):
+        """Return a count of the number of videos we have 
+        for this video - ie. the number of versions stored"""
+        
+        
+        video_num = self.get_video_number()
+        
+        return GlossVideo.objects.filter(gloss_sn=video_num).count()
+    
     
     def get_video_url(self):
         """return  the url of the video for this gloss which may be that of a homophone"""
