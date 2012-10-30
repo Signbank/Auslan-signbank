@@ -40,7 +40,7 @@
 	     
     <div id="videocontainer">    
     <div class="video">         
-    {% if videofile %}
+    {% if gloss.get_video %}
           <iframe scrolling="no" frameborder='0' 
           src="{% url signbank.video.views.iframe gloss.get_video_number %}">
       </iframe>
