@@ -10,8 +10,6 @@ from convertvideo import extract_frame, convert_video, ffmpeg
 
 from django.core.files.storage import FileSystemStorage
 
-# qtfaststart optimises video for http streaming
-from qtfaststart import processor
 
 class VideoPosterMixin:
     """Base class for video models that adds a method
@@ -25,10 +23,8 @@ class VideoPosterMixin:
         file format, optimise for streaming and generate
         the poster image"""
         
-        print "Cleaning", self.videofile.path
         print self.poster_path()
         self.ensure_mp4()
-        self.faststart()
         
 
     def poster_path(self, create=True):
@@ -75,16 +71,6 @@ class VideoPosterMixin:
         (basename, ext) = os.path.splitext(self.videofile.path)
         tmploc = basename + "-conv.mp4"
         err = ffmpeg(self.videofile.path, tmploc, options=settings.FFMPEG_OPTIONS)
-        print tmploc
-        #shutil.move(tmploc, self.videofile.path)
-        
-    def faststart(self):
-        """Run faststart over the video file to make it suitable
-        for http streaming, modifies the file in place"""
-
-        (basename, ext) = os.path.splitext(self.videofile.path)
-        tmploc = basename + "-fstrt.mp4"   
-        processor.process(self.videofile.path, tmploc)
         print tmploc
         #shutil.move(tmploc, self.videofile.path)
         
