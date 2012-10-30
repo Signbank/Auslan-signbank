@@ -333,7 +333,7 @@
   
         {%if update_form %}
         <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
-       
+            {% csrf_token %}
             <fieldset class="glossupdate">
             <legend>Quick Updates</legend>
               {# update form for this gloss #}
