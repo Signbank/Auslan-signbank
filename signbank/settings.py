@@ -50,6 +50,8 @@ MIDDLEWARE_CLASSES = (
     'signbank.pages.middleware.PageFallbackMiddleware',
     'django_mobile.middleware.MobileDetectionMiddleware',
     'django_mobile.middleware.SetFlavourMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'reversion.middleware.RevisionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
