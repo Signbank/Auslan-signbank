@@ -101,6 +101,13 @@
     width: 290px;
 }
 
+/* ditto for the 'no video' image */
+#videocontainer img {
+    height: 218px;
+    width: 290px;
+}
+
+
 /*
 #info-wrapper, #footer-info-wrapper {
 	max-width: 800px;
