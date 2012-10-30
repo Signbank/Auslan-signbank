@@ -15,7 +15,7 @@
     <tr><td><label for="email">Email:</label></td><td><input  class="boxed" type="text" name="email" /></td></tr>
     <tr><td><label for="password">Password:</label></td><td><input  class="boxed" type="password" name="password" /></td></tr>
     <tr><td colspan='2' align='right'>
-          <input id="gobutton" type="image" src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="submit form">
+          <input type="submit" value="Login">
         </td>
     </tr>
     </table>
@@ -29,9 +29,7 @@
      <legend>Register</legend>
      
     <p>Register for free to provide feedback on the Auslan dictionary of signs.</p>
-    <p align='right'><a href="/accounts/register/">
-       <img src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="" border="0">
-    </a>
+    <p align='right'><a href="/accounts/register/">Register    </a>
     </p>
     </fieldset>
 {% endif %}
@@ -45,7 +43,7 @@
       {% csrf_token %}
       <p align='center'><input class="boxed" type="text" name="email" /></p>
       <p align='right'>
-      <input id="gobutton" type="image" src="{% auslan_static_prefix %}img/button_go.gif" width="32" height="18" alt="submit password reset form">
+      <input type="submit" value="reset password">
       </p>
       </form>
     </fieldset>

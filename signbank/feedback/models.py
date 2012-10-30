@@ -307,7 +307,7 @@ class MissingSignFeedbackForm(forms.Form):
     
     meaning = forms.CharField(label='Sign Meaning', 
         widget=forms.Textarea(attrs={'cols':'55', 'rows':'8'}))
-    video = VideoUploadToFLVField(required=False, 
+    video = forms.FileField(required=False, 
         widget=forms.FileInput(attrs={'size':'60'}))
     comments = forms.CharField(label='Further Details', 
         widget=forms.Textarea(attrs={'cols':'55', 'rows':'8'}), required=False)
@@ -329,7 +329,7 @@ class MissingSignFeedback(models.Model):
     repetition = models.IntegerField(choices=repetitionChoices, blank=True, default=0)
     meaning = models.TextField()
     comments = models.TextField(blank=True)
-    video = models.FileField(upload_to=settings.UPLOAD_ROOT, blank=True, default='')
+    video = models.FileField(upload_to=settings.COMMENT_VIDEO_LOCATION, blank=True) 
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='unread')
 

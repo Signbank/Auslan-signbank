@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import Context, RequestContext
+from django.contrib.auth.decorators import login_required 
 from models import Video, GlossVideo
 from forms import VideoUploadForm, VideoUploadForGlossForm
 from convertvideo import extract_frame
@@ -40,14 +41,14 @@ def addvideo(request):
         url = '/'
     return redirect(url)
 
-
+@login_required
 def deletevideo(request, videoid):
     """Remove the video for this gloss, if there is an older version
     then reinstate that as the current video (act like undo)"""
     
     if request.method == "POST":
         # deal with any existing video for this sign
-        vids = GlossVideo.objects.filter(gloss_sn=videoid)
+        vids = GlossVideo.objects.filter(gloss_sn=videoid).order_by('version')
         for v in vids:
             # this will remove the most recent video, ie it's equivalent
             # to delete if version=0

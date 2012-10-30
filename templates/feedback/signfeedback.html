@@ -8,6 +8,7 @@
  
   
 <form id="signfeedback" method="post">
+{% csrf_token %}
   <input type='hidden' name='sourcepage' value='{{sourcepage}}'>
 
   <p> <span class="feedbackQuestion"> Please give us your comments about this sign. For example:

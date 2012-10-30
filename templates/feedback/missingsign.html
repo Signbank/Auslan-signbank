@@ -54,7 +54,7 @@ $(document).ready(function(){
          to include the new sign.</p>
 
 <form method="post" enctype="multipart/form-data" name="missingsign">
-
+   {% csrf_token %}
     <p>You may either upload a video that shows the missing sign or
     fill in details in a form.  In either case, you should
     enter a meaning and any comments you might have in the text 
@@ -86,7 +86,7 @@ $(document).ready(function(){
     
     <div id="{{form.handshape.name}}div">
         <label>{{form.handshape.label}} *
-        <a href="{% auslan_static_prefix %}img/guide_handshapes.gif" target="guide">Show Guide</a>
+        <a href="{% auslan_static_prefix %}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
         </label>
         {%if form.handshape.errors %}{{form.handshape.errors}}{% endif %}
         {{form.handshape}}
@@ -94,7 +94,7 @@ $(document).ready(function(){
     
     <div id="{{form.althandshape.name}}div">
         <label>{{form.althandshape.label}} *  
-          <a href="{% auslan_static_prefix %}img/guide_handshapes.gif" target="guide">Show Guide</a>
+          <a href="{% auslan_static_prefix %}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
         </label>
         {%if form.althandshape.errors %}{{form.althandshape.errors}}{% endif %}
         {{form.althandshape}}
@@ -102,7 +102,7 @@ $(document).ready(function(){
     
     <div id="{{form.location.name}}div">
         <label>{{form.location.label}} *
-         <a href="{% auslan_static_prefix %}img/guide_signpos.gif" target="guide">Show Guide</a>
+         <a href="{% auslan_static_prefix %}images/feedback/guide_signpos.gif" target="guide">Show Guide</a>
         </label>
         {%if form.location.errors %}{{form.location.errors}}{% endif %}
         {{form.location}}
@@ -110,7 +110,7 @@ $(document).ready(function(){
     
     <div id="{{form.relativelocation.name}}div">
         <label>{{form.relativelocation.label}} *
-         <a href="{% auslan_static_prefix %}img/guide_relativesignpos.gif" target="guide">Show Guide</a>
+         <a href="{% auslan_static_prefix %}images/feedback/guide_relativesignpos.gif" target="guide">Show Guide</a>
         </label>
         {%if form.relativelocation.errors %}{{form.relativelocation.errors}}{% endif %}
         {{form.relativelocation}}
@@ -122,35 +122,35 @@ $(document).ready(function(){
     
     <div id="{{form.handbodycontact.name}}div">
       <label>{{form.handbodycontact.label}}</label>
-      <img src="{% auslan_static_prefix %}img/guide_movecontact.gif" class="formguide" />
+      <img src="{% auslan_static_prefix %}images/feedback/guide_movecontact.gif" class="formguide" />
     {%if form.handbodycontact.errors %}{{form.handbodycontact.errors}}{% endif %}
     {{form.handbodycontact}}
     </div>
     
     <div id="{{form.handinteraction.name}}div">
     <label>{{form.handinteraction.label}}</label>
-    <img src="{% auslan_static_prefix %}img/guide_moveinteraction.gif" class="formguide" />
+    <img src="{% auslan_static_prefix %}images/feedback/guide_moveinteraction.gif" class="formguide" />
     {%if form.handinteraction.errors %}{{form.handinteraction.errors}}{% endif %}
     {{form.handinteraction}}
     </div>
     
     <div id="{{form.direction.name}}div">
     <label>{{form.direction.label}}</label>
-    <img src="{% auslan_static_prefix %}img/guide_movedirection.gif" class="formguide" />
+    <img src="{% auslan_static_prefix %}images/feedback/guide_movedirection.gif" class="formguide" />
     {%if form.direction.errors %}{{form.direction.errors}}{% endif %}
     {{form.direction}}
     </div>
     
     <div id="{{form.movementtype.name}}div">
     <label>{{form.movementtype.label}}</label>
-    <img src="{% auslan_static_prefix %}img/guide_movetype.gif" class="formguide" />
+    <img src="{% auslan_static_prefix %}images/feedback/guide_movetype.gif" class="formguide" />
     {%if form.movementtype.errors %}{{form.movementtype.errors}}{% endif %}
     {{form.movementtype}}
     </div>
     
     <div id="{{form.smallmovement.name}}div">
     <label>{{form.smallmovement.label}}</label>
-    <img src="{% auslan_static_prefix %}img/guide_movehands.gif" class="formguide" />
+    <img src="{% auslan_static_prefix %}images/feedback/guide_movehands.gif" class="formguide" />
     {%if form.smallmovement.errors %}{{form.smallmovement.errors}}{% endif %}
     {{form.smallmovement}}
     </div>

@@ -18,7 +18,7 @@
    "submit" to send your feedback to us. We value your contributions and comments.</p>
    
   <form method="post" name="general" enctype="multipart/form-data">
-    
+    {% csrf_token %}
     <div id="{{form.comment.name}}Div" class="formcomponent">
       <label>{{form.comment.label}} *</label>
       <p>General comments, suggestions, or anything you feel like telling us.</p>
@@ -30,7 +30,7 @@
       <label>{{form.video.label}}</label>
       <p>Upload your feedback as a video.</p>
       {%if form.video.errors %}{{form.video.errors}}{% endif %}
-      {{form.video}}   
+      {{form.video}}
       <p>NOTE: Video files can be quite large, and may take a long time to send. Please be patient when submitting this feedback.</p>
     </div>
 

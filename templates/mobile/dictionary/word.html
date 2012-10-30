@@ -9,13 +9,6 @@
 
 {% block content %}
 
-    {% if feedbackmessage %}
-    <div id="feedbackmessage">
-        <p>{{ feedbackmessage }}</p>
-    </div>
-    {% endif %}
-
-
 	    <div id="matches">
 	        {% ifequal viewname "words" %}
 	            <h2>Search: <em>{{translation.translation}}</em></h2> 
@@ -193,18 +186,8 @@
 
 	<h2>Feedback</h2>
 
-	     <div id="feedback">
-            <ul data-role="listview" data-inset="true">
-                {% ifequal viewname "words" %}
-                <li><a href="{% url root_page %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Give sign feedback</a></li>
-                {% else %}
-                <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Give sign feedback</a></li>
-                {% endifequal %}
-                
-                <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
-                <li><a href="{% url root_page %}feedback/generalfeedback.html">Give general feedback</a></li>
-            </ul> 
-        </div>
+	<p>If you wish to provide feedback, please visit the site
+     on a desktop computer.</p>
     
 
 

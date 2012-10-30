@@ -14,26 +14,15 @@
 	margin: 0em;
 	padding: 0em;	
 }
+ 
 
 #footer {
-	padding-left: 0em;
-	padding-right: 0em;
-}
-
-#footer .btn-feedback {
-	/* Cheating/shortcut */
-	/*
-	float: right;
-	position: relative;
-	left: -2.4em;*/
-	margin-bottom: 1.6em;
-	margin-top: 0.7em;
-	margin-left: 1em;
-}
-
-#copyright {
+	padding: 1em;
 	float: left;
 	clear: both;
+	font-size: smaller; 
+	position: relative; 
+	top: 3px;
 	font-weight: normal;
 	margin-left: 1em;
 	margin-right: 0em;
