@@ -339,21 +339,21 @@ body {
 /* definition lists in feedback view */
 
 
-.comment dl
+.commentbody dl
 {
    width: 41.1em;
    margin: 2em 0;
    padding: 0; 
 }
 
-.comment dt
+.commentbody dt
 {
    font-weight: bold;
    float: left;
    width: 15em;
 }
 
-.comment dd
+.commentbody dd
 {
 }
 
@@ -387,6 +387,13 @@ body {
 }
 
 #footer #copyright {
+  font-size: smaller;
+  text-align: right;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+#footer #flavour {
   font-size: smaller;
   text-align: right;
   padding-right: 1em;

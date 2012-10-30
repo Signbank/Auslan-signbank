@@ -1,115 +1,80 @@
 {% extends "baselayout.html" %}
 
+{% block extrahead %}
+<script type="text/javascript" src="{% auslan_static_prefix %}projekktor/projekktor-1.0.29r105.min.js"></script>
+<link rel="stylesheet" href="{% auslan_static_prefix %}projekktor/theme/style.css" type="text/css" media="screen" />
+<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.confirm-1.3.js"></script>
+
+{% endblock %}
 {% block script %}
 
 /* reveal a comment, possibly including a video */
 togglecomment = function() {
   if ($(this).hasClass('showing')) {
-    $(this).children('.commentbody').hide();
+    $(this).next('.commentbody').hide();
     $(this).removeClass('showing');
     $(this).find('.indicator').removeClass('ui-icon-minus').addClass('ui-icon-plus');
-    
   } else {
-    $(this).children('.commentbody').show();
+    $(this).next('.commentbody').show();
     $(this).addClass('showing');
     $(this).find('.indicator').removeClass('ui-icon-plus').addClass('ui-icon-minus');
-    
-    $(this).find('.feedbackvideo').each(function(){ 
-	  div = $(this).children('.video');
-	  id = div.attr('id');
-	  url = div.text();
-      /* activate the video playback */
-	});
-    
-    
   }
 }
 
 jQuery(document).ready(function(){
  
-	$('.comment').click(togglecomment);
+    $('.commenthead').click(togglecomment);
 	
 	$('.commentbody').hide();
-	
-	$('.delete').click(function() { 
-	  parent = $(this).parents(".head");
-	  parts = parent.attr("id").split("-");
-	  kind = parts[0];
-	  id = parts[1];
-	  url = "/feedback/"+kind+"/delete/"+id;
-	  /* perform the deletion with a get request */
-	  $.get(url, function(data) {
-	     $(parent).parents("li").remove();
-	  })
-	})
+ 
 	$('.delete').confirm({
 	    msg:'Delete this comment?',
 	    timeout:3000
 	});	
-	
+ 
 });
 
 {% endblock %}
 
-{% block extrahead %}
-<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.confirm-1.3.js"></script>
 
-<style type='text/css'> 
-   .ui-icon {
-       display: inline-block;
-       background-color: #fff;
-       border: 1px solid black;
-   }
-   ul {
-    list-style: none;
-   }
-   .comment .head { 
-    }
-    
-   
-</style>
-{% endblock %}
 
 
 {% block content %}
 
   <h3>General Feedback</h3>
-  <ul>
-  {% for fb in general %}
-    <li class="comment">
-	
-      <div class="head" id="general-{{fb.id}}">
-	<span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
-	{{fb.date|date:"d M Y"}}: 
-	{{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
-	<span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
-      </div>
-      
-      <div class="commentbody">
-	{% if fb.video %}
-	 <div class="feedbackvideo">
-	   <div class='video' id="general-video-{{fb.id}}">{% auslan_media_prefix %}{{fb.video}}</div>
-	 </div>
-	{% endif %} 
-      
-	<p>{{fb.comment}}</p>
-      
-       </div>
-    </li>    
-  {% endfor %}
-  </ul>
   
-  <h3>Sign Feedback</h3>
-  <ul>
-  {% for fb in signfb %}
-    <li class="comment">
-    <div class="head" id="sign-{{fb.id}}">
-      <span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
-      {{fb.date|date:"d M Y"}}: 
-      {{fb.user.first_name}} {{fb.user.last_name}} (<a href="mailto:{{fb.user.email}}">Email</a>)
-      on <a href="{{fb.translation.get_absolute_url}}">{{fb.translation}}</a> 
-      <span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
-    </div>
+  {% for fb in general %}
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+     <div class="commentbody">
+        {% if fb.video %}  
+        <div class="videocontainer">
+           <video width=400 controls="controls" src='{% auslan_media_prefix %}{{ fb.video }}'></video>
+        </div>
+        {% endif %}
+      
+	    <p>{{fb.comment}}</p>
+     
+       <p><form action="/feedback/general/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+      
+       </div> 
+  {% endfor %} 
+  
+  <h3>Sign Feedback</h3> 
+  
+  {% for fb in signfb %} 
+    
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+    
+    
+    
     <div class="commentbody">
     <p><strong>Comment:</strong>{{fb.comment}}</p>
     <p><strong>Don't Belong:</strong>{{fb.kwnotbelong}}</p>
@@ -123,30 +88,27 @@ jQuery(document).ready(function(){
 	<li>Correct: {{fb.get_correct_display}}</li>
     
     </ul>
-    -->
-    </div>
-    </li>
+    --> 
+    <p><form action="/feedback/sign/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+     
+    </div> 
   {% endfor %}
-  
-  </ul>
-  
-  <h3>Missing Sign Feedback</h3>
-  <ul>
-  {% for fb in missing %}
-    <li class="comment">
+   
+  <h3>Missing Sign Feedback</h3> 
+  {% for fb in missing %} 
     
-    <div class="head" id="missingsign-{{fb.id}}">
-      <span class="indicator ui-icon ui-icon-plus" title="Show Message">&nbsp;</span>
-       {{fb.date|date:"d M Y"}}: 
-       {{fb.user.first_name}} {{fb.user.last_name}} 
-       (<a href="mailto:{{fb.user.email}}">Email</a>) 
-      <span class="delete ui-icon ui-icon-trash" title="Delete Message"></span>
-    </div>
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+    
+    
     <div class="commentbody">
     {% if fb.video %}  
-	 <div class="feedbackvideo">
-	   <div class='video' id="missing-video-{{fb.id}}">{% auslan_media_prefix %}{{fb.video}}</div>
-	 </div>
+         <div class="videocontainer">
+            <video width=400 controls="controls" src='{% auslan_media_prefix %}{{ fb.video }}'></video>
+       </div>
     {% endif %}
      <dl>
       <dt>Handform</dt><dd>{{fb.get_handform_display}}</dd>
@@ -163,10 +125,11 @@ jQuery(document).ready(function(){
       <dt>Meaning</dt><dd>{{fb.meaning}}</dd>
       <dt>Comments</dt><dd>{{fb.comments}}</dd>
      </dl>
+     
+       <p><form action="/feedback/missingsign/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+ 
     </div>
-    
-    </li>          
-  {% endfor %}
-  </ul>
+          
+  {% endfor %} 
 
 {% endblock %}

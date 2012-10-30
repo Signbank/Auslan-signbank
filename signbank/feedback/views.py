@@ -2,7 +2,7 @@
 import os
 from models import *
 from django import forms
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import Context, RequestContext, loader
 from django.conf import settings 
 from django.core.mail import send_mail
@@ -32,17 +32,8 @@ def generalfeedback(request):
                 feedback.comment = form.cleaned_data['comment'] 
             
             if form.cleaned_data.has_key('video') and form.cleaned_data['video'] != None:
-                video = form.cleaned_data['video']
-                # copy to comment video location
-                basename = os.path.split(video.name)[-1]
-                # make sure the target directory is there
-                targetdir = os.path.join(settings.MEDIA_ROOT, settings.COMMENT_VIDEO_LOCATION)
-                if not os.path.exists(targetdir):
-                    os.mkdir(targetdir)
-                commentloc = os.path.join(targetdir, basename)
-                video.rename(commentloc)
+                feedback.video = form.cleaned_data['video']
                 
-                feedback.video = os.path.join(settings.COMMENT_VIDEO_LOCATION, basename)
             feedback.save()
             valid = True
     else:
@@ -75,17 +66,8 @@ def missingsign(request):
             # description via the form
             
             if form.cleaned_data.has_key('video') and form.cleaned_data['video'] != None:
-                video = form.cleaned_data['video']
-                # copy to comment video location
-                basename = os.path.split(video.name)[-1]
-                # make sure the target directory is there
-                targetdir = os.path.join(settings.MEDIA_ROOT, settings.COMMENT_VIDEO_LOCATION)
-                if not os.path.exists(targetdir):
-                    os.mkdir(targetdir)
-                commentloc = os.path.join(targetdir, basename)
-                video.rename(commentloc)
-                # put the video pathname to the feedback object
-                fb.video = os.path.join(settings.COMMENT_VIDEO_LOCATION, basename)
+                fb.video = form.cleaned_data['video']
+
             else:
                 # get sign details from the form 
                 fb.handform = form.cleaned_data['handform'] 
@@ -234,7 +216,7 @@ def recordsignfeedback(request, trans, n, total):
 #--------------------
 #  deleting feedback
 #--------------------
-
+@login_required
 def delete(request, kind, id):
     """Mark a feedback item as deleted, kind 'signfeedback', 'generalfeedback' or 'missingsign'"""
     
@@ -251,6 +233,13 @@ def delete(request, kind, id):
     # mark as deleted
     item.status = 'deleted'
     item.save()
-    return HttpResponse("deleted "+str(item), content_type='text/plain')
+
+    # return to referer
+    if request.META.has_key('HTTP_REFERER'):
+        url = request.META['HTTP_REFERER']
+    else:
+        url = '/'
+    return redirect(url)
+    
 
 
