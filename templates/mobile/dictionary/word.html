@@ -15,11 +15,11 @@
              
 	            <div id='matcheslinks' data-role="controlgroup" data-type="horizontal">
 		        {% if n > 1 %}
-		        <a data-role="button" data-icon="arrow-l" href="{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
+		        <a data-role="button" data-icon="arrow-l" href="{% url root_page %}{{version}}/words/{{translation.translation}}-{{n|add:"-1"}}.html">&nbsp;</a>
 		        {% endif %}
 				<span data-role='button'>Match {{n}} of {{matches|length}}</span>
 		        {% if n < matches|length %}
-		        <a data-role="button" data-icon="arrow-r" data-iconpos="right" href="{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
+		        <a data-role="button" data-icon="arrow-r" data-iconpos="right" href="{% url root_page %}{{version}}/words/{{translation.translation}}-{{n|add:"1"}}.html">&nbsp;</a>
 		        {% endif %}		  
 		        </div>
 	        {% else %}
