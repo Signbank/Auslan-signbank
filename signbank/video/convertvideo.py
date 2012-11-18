@@ -95,10 +95,15 @@ def probe_format(file):
 
 
 
-def convert_video(sourcefile, targetfile):
-    """convert a video to h264 format"""
+def convert_video(sourcefile, targetfile, force=False):
+    """convert a video to h264 format
+    if force=True, do the conversion even if the video is already
+    h264 encoded, if False, then just copy the file in this case"""
     
-    format = probe_format(sourcefile) 
+    if not force:
+        format = probe_format(sourcefile)
+    else:
+        format = 'force'
     
     if format == "h264":
         # just do a copy of the file
