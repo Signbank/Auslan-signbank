@@ -38,8 +38,9 @@ def convert_video_collection(sourcedir, destdir):
                 if ext in ['.mp4', '.flv']:
                     sourcefile = os.path.join(sourcedir, dir, f)
                     destfile = os.path.join(destdir, dir, name+".mp4")
-                    print sourcefile, destfile
-                    convert_video(sourcefile, destfile, force=True)
+                    if not os.path.exists(destfile):
+                        print sourcefile, destfile  
+                        convert_video(sourcefile, destfile, force=True)
                     
 
 
