@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError  
 from signbank.video.convertvideo import convert_video
 
-import os
+import os, time
 
 class Command(BaseCommand):
      
@@ -41,6 +41,8 @@ def convert_video_collection(sourcedir, destdir):
                     if not os.path.exists(destfile):
                         print sourcefile, destfile  
                         convert_video(sourcefile, destfile, force=True)
+                        # wait a while before the next one
+                        time.sleep(60)
                     
 
 
