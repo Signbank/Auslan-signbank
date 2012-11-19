@@ -15,8 +15,7 @@ class Command(BaseCommand):
         
         # just access the poster path for each video
         for vid in GlossVideo.objects.all():
-            print vid.videofile
-            vid.process()
+            print vid.poster_path()
             time.sleep(20)
 
 
