@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError  
 from django.conf import settings
 from signbank.video.models import GlossVideo
-import os
+import os, time
 
 class Command(BaseCommand):
      
@@ -17,7 +17,7 @@ class Command(BaseCommand):
         for vid in GlossVideo.objects.all():
             print vid.videofile
             vid.process()
-     
+            time.sleep(20)
 
 
     
