@@ -28,6 +28,9 @@ def import_existing_gloss_videos(path):
     
     cursor = connection.cursor()
     
+    # delete all existing videos
+    GlossVideo.objects.all().delete()
+    
     # find the largest currently used id 
     id = GlossVideo.objects.all().aggregate(Max('id'))['id__max']
     if id==None:
@@ -44,8 +47,9 @@ def import_existing_gloss_videos(path):
                     id += 1
                     fullpath = os.path.join(path, dir, videofile)
                     gloss_sn = name
+                    version = 0
                     print id, fullpath, gloss_sn
-                    cursor.execute("insert into video_glossvideo (id, videofile, gloss_sn) values (%s, %s, %s)", [id, fullpath, gloss_sn])
+                    cursor.execute("insert into video_glossvideo (id, videofile, gloss_sn, version) values (%s, %s, %s, %s)", [id, fullpath, gloss_sn, version])
                 else:
                     print 'skipping ', videofile
     
