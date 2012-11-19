@@ -23,8 +23,8 @@ class VideoPosterMixin:
         file format, optimise for streaming and generate
         the poster image"""
         
-        print self.poster_path()
-        self.ensure_mp4()
+        self.poster_path()
+        #self.ensure_mp4()
         
 
     def poster_path(self, create=True):
