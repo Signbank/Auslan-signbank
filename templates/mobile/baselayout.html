@@ -22,11 +22,16 @@
 {% endblock %}
    <script type="text/javascript">
       <!--
-{# http://markdalgleish.com/2011/04/document-ready-for-jquery-mobile/ #}
-function pageScript(func) {
-   var $context = $("div:jqmData(role='page'):last");
-   func($context);
-}      
+
+      $(document).ready(function() {
+       {% block jqueryready %}
+    	  
+       {% endblock %}
+      });
+
+      {% block script %}
+      // more scripts go here
+      {% endblock %}
 
 
       // -->    
@@ -52,20 +57,7 @@ function pageScript(func) {
   <body {% block bodyid %}{% endblock %}>
 
   <div data-role="page" class="page"> 
-  <script type='text/javascript'>
-  
-  {# mobile version of document.ready #}
-  pageScript(function($context){
-   {% block jqueryready %}
-	  
-   {% endblock %}
-  });
 
-  {% block script %}
-  // more scripts go here
-  {% endblock %}   
-  </script>
-  
   
   
     <div id="header" data-role="header">

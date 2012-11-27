@@ -6,8 +6,8 @@
 
 {% block jqueryready %} 
 
-  $('#inputarea').submit( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded)} );
-  $('#replay').click( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded)} );
+  $('#inputarea').submit( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded);} );
+  $('#replay').click( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded);} );
   
   /* fill out the table of signs */
   $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", twohanded);
@@ -91,10 +91,10 @@
 
   <div id="info">
   <p>One handed fingerspelling signs for American Sign Language
-  are also available: <a href="onehanded.html">link</a></p>
+  are also available: <a href="onehanded.html" data-ajax='false'>link</a></p>
   </div>
 </div>
- <p><a href="practice.html">Practice your fingerspelling</a> with randomly generated words.</p>
+ <p><a href="practice.html" data-ajax='false'>Practice your fingerspelling</a> with randomly generated words.</p>
 
 </div>
   
