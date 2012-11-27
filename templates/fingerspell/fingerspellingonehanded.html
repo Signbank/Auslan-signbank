@@ -2,41 +2,6 @@
 {% extends "baselayout.html" %}
  
 {% block extrahead %}
-    <script type="text/javascript">
-    /* base url of fingerspelling images */ 
-    var baseurl = "{% auslan_static_prefix %}images/onehanded/";
-
-    var fsimages = Object()
-    
-    fsimages["A"] = "oh_a.jpg";
-    fsimages["B"] = "oh_b.jpg";
-    fsimages["C"] = "oh_c.jpg";
-    fsimages["D"] = "oh_d.jpg";
-    fsimages["E"] = "oh_e.jpg";
-    fsimages["F"] = "oh_f.jpg";
-    fsimages["G"] = "oh_g.jpg";
-    fsimages["H"] = "oh_h.jpg";
-    fsimages["I"] = "oh_i.jpg";
-    fsimages["J"] = ["oh_j0.jpg","oh_j1.jpg","oh_j2.jpg","oh_j3.jpg"];
-    fsimages["K"] = "oh_k.jpg";
-    fsimages["L"] = "oh_l.jpg";
-    fsimages["M"] = "oh_m.jpg";
-    fsimages["N"] = "oh_n.jpg";
-    fsimages["O"] = "oh_o.jpg";
-    fsimages["P"] = "oh_p.jpg";
-    fsimages["Q"] = "oh_q.jpg";
-    fsimages["R"] = "oh_r.jpg";
-    fsimages["S"] = "oh_s.jpg";
-    fsimages["T"] = "oh_t.jpg";
-    fsimages["U"] = "oh_u.jpg";
-    fsimages["V"] = "oh_v.jpg";
-    fsimages["W"] = "oh_w.jpg";
-    fsimages["X"] = "oh_x.jpg";
-    fsimages["Y"] = "oh_y.jpg";
-    fsimages["Z"] = ["oh_z0.jpg", "oh_z1.jpg", "oh_z2.jpg", "oh_z3.jpg"];
-    fsimages["transition"] = "transition.jpg";    
-    
-    </script>
     
     <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
 
@@ -50,9 +15,7 @@
       return false;
     });
 
-  /* fill out the table of signs */
-  
-  fill_fstable();
+  /* fill out the table of signs */  $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", onehanded);
   
 {% endblock %}
 
