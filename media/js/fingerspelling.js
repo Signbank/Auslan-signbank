@@ -195,7 +195,8 @@ function display_string(imageid, letter, speed, baseurl, images) {
 }
 
 function fingerspell_play(baseurl, images) {
-    $.mobile.silentScroll(0);  
+    $.mobile.silentScroll(0);
+    $('#text').blur();  /* remove focus from the text box to force closing keyboard on iphone */
     speed = $('input:radio[name=speed]:checked').val();
     display_string("#mainimg", $('#text').val(), speed, baseurl, images); 
     return false;
