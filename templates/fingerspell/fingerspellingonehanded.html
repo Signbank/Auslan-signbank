@@ -9,13 +9,7 @@
 
 {% block jqueryready %} 
 
-  $('#inputarea').submit( function() {
-      speed = $('input:radio[name=speed]:checked').val();
-      display_string("#mainimg", $('#text').val(), speed);
-      return false;
-    });
-
-  /* fill out the table of signs */  $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", onehanded);
+  $('#inputarea').submit( function() {     fingerspell_play("{% auslan_static_prefix %}images/", onehanded);     return false;    });     $('#replay').click( function() { fingerspell_play("{% auslan_static_prefix %}images/", onehanded);} );    /* fill out the table of signs */  $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", onehanded);
   
 {% endblock %}
 

@@ -6,7 +6,11 @@
 
 {% block jqueryready %} 
 
-  $('#inputarea').submit( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded);} );
+  $('#inputarea').submit( function() { 
+    fingerspell_play("{% auslan_static_prefix %}images/", twohanded); 
+    return false; 
+   });
+   
   $('#replay').click( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded);} );
   
   /* fill out the table of signs */

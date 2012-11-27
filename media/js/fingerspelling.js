@@ -195,6 +195,7 @@ function display_string(imageid, letter, speed, baseurl, images) {
 }
 
 function fingerspell_play(baseurl, images) {
+    $.mobile.silentScroll(0);  
     speed = $('input:radio[name=speed]:checked').val();
     display_string("#mainimg", $('#text').val(), speed, baseurl, images); 
     return false;

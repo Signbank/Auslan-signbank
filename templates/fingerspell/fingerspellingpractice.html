@@ -13,8 +13,9 @@
   current_word = "albatros";
 
   function fingerspell_play() {
+      $.mobile.silentScroll(0);
       speed = $('input:radio[name=speed]:checked').val(); 
-      display_string("#mainimg", $('#answer').html(), speed); 
+      display_string("#mainimg", $('#answer').html(), speed, "{% auslan_static_prefix %}images/", twohanded); 
       return false;
     }
 
