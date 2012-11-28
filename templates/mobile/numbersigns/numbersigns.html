@@ -15,8 +15,8 @@
 var player = projekktor('#projekktor', { 
                 autoplay: false, 
                 iframe: false,
-                width: 340,
-                height: 280,
+                width: 34,
+                height: 28,
                 addplugins: ['controlbar'],
                 playerFlashMP4: "{% auslan_static_prefix %}projekktor/jarisplayer.swf",
                 plugin_controlbar: {
@@ -105,7 +105,14 @@ function replay() {
         </tr>
       </table>
 
- <div id="leftblock">
+      <div id="leftblock">
+                   <p>
+        To view signs used to express numbers from ten to 
+        one billion, click a sign          
+        in the table, the corresponding video will 
+        then play.
+      </p>
+      
         <div id="videocontainer">
           <div id="player">
             <div id="projekktor"></div>  
@@ -114,13 +121,8 @@ function replay() {
                REPLAY
             </div>
         </div>
-             <p>
-        To view signs used to express numbers from ten to 
-        one billion, click a sign          
-        in the table, the corresponding video will 
-        then play.
-      </p>
- </div>
+
+     </div>
 
 
 </div>

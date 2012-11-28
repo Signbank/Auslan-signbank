@@ -186,14 +186,24 @@ h3 {
 
 /* special style for numbersigns page */
 
+/* we can't do without the rectangle for the video
+   player but we can make it small and white */
 #numbersigns #videocontainer {  
+	width: 10px;
+	background-color: white;
 }
 
-
+#numbersigns  .projekktor {
+    background-color:#fff;
+}
+    
+#numbersigns #leftblock {
+	clear: both;
+}
 
 #numbersigns #numsigntable { 
    float: left;
-   margin-left: 20px;
+   margin-left: 0px;
    border-collapse: collapse;
    border-spacing: 0px;
 
