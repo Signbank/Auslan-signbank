@@ -20,7 +20,11 @@
     {% else %}
       <p>
         {% ifequal wordcount 0 %}
-            No words matched your query.
+            There is no exact match to the word you typed. You might increase your 
+            chances of a match by only typing the first few letters of a word 
+            and then selecting from the matches, or by only typing singular forms for nouns 
+            (e.g. with no final 's') or plain form for verbs (e.g. with 
+            no grammatical endings like 'ing', 'ed', or 's').
         {% else %}
          {% ifequal wordcount 1 %}
             There is one word that fully or partially match your query. Please select the word below.        
