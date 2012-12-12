@@ -384,6 +384,7 @@ def search(request, version='dictionary'):
     return render_to_response("dictionary/search_result.html",
                               {'query' : term, 
                                'paginator' : paginator, 
+                               'wordcount' : len(words),
                                'page' : paginator.page(page), 
                                'menuid' : 2,
                                'version': version,
