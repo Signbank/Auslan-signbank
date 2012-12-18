@@ -103,6 +103,7 @@ class Migration(DataMigration):
             for field in fields.keys():
                 if gloss.__dict__[field] == True:
                     tags.append(fields[field])
+                    
             gloss.tags = ",".join(tags)
             gloss.save()
             if tags != []: 
