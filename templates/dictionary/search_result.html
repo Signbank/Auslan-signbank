@@ -15,7 +15,14 @@
       {% endfor %}
     </p>
     
-    {% if user.is_staff %}View signs <a href="{% url root_page %}{{version}}/tag/">according to their tags</a>{% endif %}
+    {% if user.is_staff %}
+    <ul>
+     <li>View signs <a href="{% url root_page %}{{version}}/tag/">according to their tags</a></li>
+     <li>Export <a href="{% url root_page %}{{version}}/export.csv">dictionary as CSV</a></li>
+    </ul>
+    {% endif %}
+    
+    
     
     {% else %}
       <p>

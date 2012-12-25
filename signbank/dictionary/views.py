@@ -424,3 +424,33 @@ def missing_video_view(request, version):
                               {'glosses': glosses})
 
 
+## csv export
+import csv
+
+def csv_export(request, version):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="dictionary-export.csv"'
+
+
+    fields = ['sn', 'idgloss', 'annotation_idgloss', 'morph', 'tags']
+
+    writer = csv.writer(response)
+    header = [Gloss._meta.get_field(f).verbose_name for f in fields]
+    header.append("Translations")
+    writer.writerow(header)
+    
+    for gloss in Gloss.objects.all():
+        row = []
+        for f in fields:
+            row.append(getattr(gloss, f))
+            
+        trans = [t.translation.text for t in gloss.translation_set.all()]
+        row.append(", ".join(trans))
+            
+        writer.writerow(row)
+
+    return response
+
+
+
