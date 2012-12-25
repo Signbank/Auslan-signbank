@@ -264,7 +264,7 @@ minor or insignificant ways that can be ignored.""")
     # the idgloss used in transcription, may be shared between many signs
 
 
-    tags = TagField()
+    tags = TagField('Tags')
 
 
     # languages that this gloss is part of

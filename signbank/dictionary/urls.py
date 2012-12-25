@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     
     (r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 
+    (r'^export.csv', 'signbank.dictionary.views.csv_export'),
 
 )
 
