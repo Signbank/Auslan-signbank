@@ -13,6 +13,7 @@
 
 
         <form enctype="multipart/form-data" method="post" action="/attachments/upload/">
+         {% csrf_token %}
             <fieldset id="attachmentform">
                 <legend>Upload File</legend>
             <table>
