@@ -241,7 +241,15 @@ def gloss(request, idgloss, version='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
 
-    gloss = get_object_or_404(Gloss, idgloss=idgloss) 
+    # we should only be able to get a single gloss, but since the URL 
+    # pattern could be spoofed, we might get zero or many
+    # so we filter first and raise a 404 if we don't get one
+    glosses = Gloss.objects.filter(idgloss=idgloss)
+    
+    if len(glosses) != 1:
+        raise Http404
+
+    gloss = glosses[0]
     
     # and all the keywords associated with this sign
     allkwds = gloss.translation_set.all()
