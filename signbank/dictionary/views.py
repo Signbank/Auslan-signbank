@@ -241,7 +241,7 @@ def gloss(request, idgloss, version='dictionary'):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
 
-    gloss = Gloss.objects.get(idgloss=idgloss) 
+    gloss = get_object_or_404(Gloss, idgloss=idgloss) 
     
     # and all the keywords associated with this sign
     allkwds = gloss.translation_set.all()
