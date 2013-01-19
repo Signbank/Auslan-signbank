@@ -58,7 +58,7 @@ class Keyword(models.Model):
     def __str__(self):
         return self.text
     
-    text = models.CharField(max_length=50)
+    text = models.CharField(max_length=50, unique=True)
     
     def inWeb(self):
         """Return True if some gloss associated with this
