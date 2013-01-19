@@ -166,6 +166,7 @@ def word(request, viewname, keyword, n, version='dictionary'):
         feedbackmessage = False
 
     word = get_object_or_404(Keyword, text=keyword)
+      
     # returns (matching translation, number of matches) 
     (trans, total) =  word.match_request(request, n, version)
     
