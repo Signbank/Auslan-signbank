@@ -28,7 +28,7 @@
                  controlsTemplate: '<ul class="left"><li><div %{play}></div><div %{pause}></div></li><li><div %{title}></div></li></ul><ul class="bottom"><li><div %{scrubber}><div %{loaded}></div><div %{playhead}></div><div %{scrubberdrag}></div></div></li></ul>'
                 },
                 playlist: [{
-                 0: {src: "/{{params.videofile}}", type: "video/mp4"},
+                 0: {src: "http://video.auslan.org.au:22794/auslan/28/28600.mp4", type: "video/mp4"},
                  config: {
                   controls: true,
                   fixedVolume: true,
@@ -43,27 +43,30 @@
  </head>
  <body>
 
-<h1>Test video: '{{params.videofile}}'</h1>
+<h1>Video Test page for Auslan Signbank</h1>
+
+<p>This page shows the same video using different video player tools
+to help us work out what the best tool to use on the website is.</p>
 
 <h2>HTML5 video tag</h2>
 
-     <video width=320 height=240 src='/{{params.videofile}}' type='video/mp4'  preload>
+     <video width=320 height=240 src='http://video.auslan.org.au:22794/auslan/28/28600.mp4' type='video/mp4'  preload>
      </video>
 
 <h2>Projekktor</h2>
 
-     <video class='projekktor' width=320 height=240 src='/{{params.videofile}}'></video>
+     <video class='projekktor' width=320 height=240 src='http://video.auslan.org.au:22794/auslan/28/28600.mp4'></video>
 
 <h2>Flowplayer</h2>
 
    <div class="flowplayer">
-      <video type="video/mp4" src='/{{params.videofile}}'/></video>
+      <video type="video/mp4" src='http://video.auslan.org.au:22794/auslan/28/28600.mp4'/></video>
    </div>
 
 <h2>Flowplayer Flash</h2>
 
    <div class="flowplayer" data-engine='flash'>
-      <video type="video/mp4" src='/{{params.videofile}}'/></video>
+      <video type="video/mp4" src='http://video.auslan.org.au:22794/auslan/28/28600.mp4'/></video>
    </div>
 
 
