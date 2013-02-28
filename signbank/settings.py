@@ -160,6 +160,9 @@ PAGES_VIDEO_LOCATION = 'pages'
 # storage location
 VIDEO_UPLOAD_LOCATION = "upload"
 
+# path to store uploaded attachments relative to MEDIA_ROOT
+ATTACHMENT_LOCATION = 'attachments'
+
 # within MEDIA_ROOT we store newly uploaded videos in this directory
 GLOSS_VIDEO_DIRECTORY = "bsl-video"
 
