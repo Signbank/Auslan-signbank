@@ -114,7 +114,7 @@ DATABASES = {
 }
 
 # Absolute path to the directory that holds media.
-MEDIA_ROOT = 'test-media'
+MEDIA_ROOT = 'test-media/'
 # URL that handles the media served from MEDIA_ROOT.
 MEDIA_URL = '/media/'
 # URL for serving MEDIA_ROOT to mobile platforms
