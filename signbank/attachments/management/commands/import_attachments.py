@@ -10,20 +10,24 @@ import os
 class Command(BaseCommand):
 
     help = 'import any files in the attachments folder that we don\'t already have'
-    args = 'username'
+    args = '<username>'
 
     def handle(self, *args, **options):
 
-        user = args[0]
-        user = User.objects.get(username=user)
+        if len(args) != 1:
+            print "Usage: import_attachments", self.args
+        try:
+            user = args[0]
+            user = User.objects.get(username=user)
+        except:
+            print "unknown user", user
+            return
 
         dirname = os.path.join(settings.MEDIA_ROOT, settings.ATTACHMENT_LOCATION)
         for f in os.listdir(dirname):
             if not os.path.isdir(f):
                 path = os.path.join(settings.ATTACHMENT_LOCATION, f)
-
                 existing = Attachment.objects.filter(file=path)
-                print existing
                 if len(existing) == 0:
                     a = Attachment(file=path, uploader=user, description=f)
                     a.save()
