@@ -17,7 +17,7 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 
-# URL for login, used by automatic redirects to login 
+# URL for login, used by automatic redirects to login
 # for views marked with the login required decorator
 LOGIN_URL = '/accounts/login/'
 
@@ -37,7 +37,7 @@ SECRET_KEY = 'svyc8#was2(t$(fw=a&f8i+1o7n(pgubh=le*j-tg-0uwmaxl3'
 TEMPLATE_LOADERS = (
     'django_mobile.loader.Loader',
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader', 
+    'django.template.loaders.app_directories.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,7 +63,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "signbank.pages.context_processors.menu",
-    "django_mobile.context_processors.flavour", 
+    "django_mobile.context_processors.flavour",
 )
 
 
@@ -81,7 +81,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.admin', 
+    'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
     'signbank.dictionary',
@@ -101,24 +101,26 @@ LOGIN_REDIRECT_URL = '/feedback/'
 
 
 
-# these settings might be over-ridden by settings_local.py 
+# these settings might be over-ridden by settings_local.py
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-EMAIL_HOST = "mail.exetel.com.au" 
+EMAIL_HOST = "mail.exetel.com.au"
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'signbank.db',                 
+        'NAME': 'signbank.db',
     }
 }
 
-# Absolute path to the directory that holds media. 
+# Absolute path to the directory that holds media.
 MEDIA_ROOT = 'test-media'
-# URL that handles the media served from MEDIA_ROOT. 
+# URL that handles the media served from MEDIA_ROOT.
 MEDIA_URL = '/media/'
+# URL for serving MEDIA_ROOT to mobile platforms
+MEDIA_MOBILE_URL = MEDIA_URL
 
-# Ditto for static files from the Auslan site (css, etc) with trailing slash 
+# Ditto for static files from the Auslan site (css, etc) with trailing slash
 AUSLAN_STATIC_PREFIX = "/static/"
 
 # Django 1.4 provides support for static files, should port the above to this...
@@ -128,19 +130,8 @@ AUSLAN_STATIC_PREFIX = "/static/"
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = ''
 
-# URL prefix for static files. 
+# URL prefix for static files.
 STATIC_URL = '/statics/'
-
-# List of finder classes that know how to find static files in
-# various locations.
-#STATICFILES_FINDERS = (
-#    'django.contrib.staticfiles.finders.FileSystemFinder',
-#    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-#)
-
-
-
 
 
 # location of ffmpeg, used to convert uploaded videos
@@ -157,7 +148,7 @@ DO_LOGGING = False
 LOG_FILENAME = "debug.log"
 
 # location and URL for uploaded files
-UPLOAD_ROOT = MEDIA_ROOT + "upload/" 
+UPLOAD_ROOT = MEDIA_ROOT + "upload/"
 UPLOAD_URL = MEDIA_URL + "upload/"
 
 # Location for comment videos relative to MEDIA_ROOT
@@ -170,9 +161,6 @@ PAGES_VIDEO_LOCATION = 'pages'
 VIDEO_UPLOAD_LOCATION = "upload"
 
 # within MEDIA_ROOT we store newly uploaded videos in this directory
-# although existing videos may be sourced from other locations 
-# - that is we can ingest other locations offline but we only upload
-#   new videos to here
 GLOSS_VIDEO_DIRECTORY = "bsl-video"
 
 # which fields from the Gloss model should be included in the quick update form on the sign view
