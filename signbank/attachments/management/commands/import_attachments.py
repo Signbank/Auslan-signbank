@@ -16,6 +16,7 @@ class Command(BaseCommand):
 
         if len(args) != 1:
             print "Usage: import_attachments", self.args
+            return
         try:
             user = args[0]
             user = User.objects.get(username=user)
