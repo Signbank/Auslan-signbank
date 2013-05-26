@@ -7,12 +7,12 @@
 {% block jqueryready %}
 
     $('#feedbackmessage').fadeOut(5000);
-    
+
     $('#delete_video').confirm({
 	    msg:'Delete this video?',
 	    timeout:3000
 	});
-    
+
 {% endblock %}
 
 {% block script %}
@@ -46,7 +46,7 @@
 	   {% for h in gloss.homophones %}
 	     {% if h == gloss %}
 	     <li>{{h.idgloss}}</li>
-	     {% else %}	     
+	     {% else %}
 	     <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
 	     {% endif %}
 	   {% endfor %}
@@ -55,7 +55,7 @@
 	   {% endif %}
   </table>
   </div>
-{% endif %} 
+{% endif %}
 
 <div id="signinfo">
     <div id="signs">
@@ -73,7 +73,7 @@
             </div>
             {% endif %}
     </div>
-    
+
     <div id="matches">
         {% ifequal viewname "words" %}
         <h2>Matches for the word <em>{{ translation.translation }}</em></h2>
@@ -84,34 +84,34 @@
             {% else %}
             <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
             {% endifequal %}
-        {% endfor %} 
+        {% endfor %}
         </div>
         {% else %}
             <h2><a href="{% url root_page %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
             <div>&nbsp;</div>
         {% endifequal %}
-        
+
     </div>
 </div>
 
 <div id="definitionblock">
     <div id="leftblock">
-    <div id="videocontainer">             
+    <div id="videocontainer">
     {% if gloss.get_video %}
 
     <div id="player">
-      <iframe width="320" height="240" scrolling="no" frameborder='0' 
+      <iframe width="320" height="240" scrolling="no" frameborder='0'
           src="{% url signbank.video.views.iframe gloss.get_video_number %}">
       </iframe>
     </div>
       <div id="replay"></div>
 
-    {% else %} 
+    {% else %}
     <img src='{% auslan_static_prefix %}images/no-video.png'>
     {% endif %}
     </div>
-	
-        
+
+
         <div id="feedback">
             <ul>
                 {% ifequal viewname "words" %}
@@ -119,22 +119,22 @@
                 {% else %}
                 <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
                 {% endifequal %}
-                
+
                 <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
                 <li><a href="{% url root_page %}feedback/generalfeedback.html">Provide general site feedback</a></li>
-            </ul> 
+            </ul>
         </div>
-        
+
         {% if dialect_image %}
-        <div id="states">      
+        <div id="states">
             <div>
                 <img src="{% auslan_static_prefix %}{{dialect_image}}" alt="States"></img>
             </div>
-        </div> 
+        </div>
         {% endif %}
-        
+
         <div>
-           <h4>Sign Distribution</h4> 
+           <h4>Sign Distribution</h4>
                 <ul>
                 {% ifequal dialect_image "images/maps/allstates.gif" %}
                   <li>All States</li>
@@ -143,7 +143,7 @@
 	                  <li>{{ dialect.name }}</li>
 	                {% endfor %}
                 {% endifequal %}
-                </ul>  
+                </ul>
         </div>
 
 
@@ -157,17 +157,29 @@
 	  {% for tag in tag_list %}
 	    <li class='tag'>
            <div class='tag'>
-             <span class='tagname'><a href="/{{version}}/tag/{{tag}}">{{tag}}</a></span> 
+             <span class='tagname'><a href="/{{version}}/tag/{{tag}}">{{tag}}</a></span>
+             <span class='tagcount'>
+             <form action="{% url root_page %}dictionary/update/tag/{{gloss.id}}" method="post" enctype="multipart/form-data">
+               {% csrf_token %}
+               <input type='hidden' name='tag' value='{{tag.id}}'>
+               <input type='hidden' name='delete' value='True'>
+               <input type='submit' value='X'>
+               </form>
+             </span>
             </div>
         </li>
 	  {% endfor %}
 	  </ul>
 	  {% endif %}
+      <form action="{% url root_page %}dictionary/update/tag/{{gloss.id}}" method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+       {{tagform.tag}} {{tagform.delete}} <input type='submit' value='Add Tag'>
+      </form>
 	</div>
 	{% endif %}
     </div>
-    
-    <div id="keywords"> 
+
+    <div id="keywords">
          <p><strong>Keywords:</strong>
          {% for kwd in allkwds %}
            {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
@@ -177,121 +189,121 @@
 
     <div id="definition">
         <h2>Sign Definition</h2>
- 
-        {% if definitions.general %} 
+
+        {% if definitions.general %}
           <h3>General Definition</h3>
-         
+
           <ol>
           {% for def in definitions.general %}
             <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
- 
-        {% if definitions.noun %} 
-          <h3>As a Noun</h3>
-         
-          <ol>
-          {% for def in definitions.noun %}
-            <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-          
-        {% if definitions.verb %} 
-          <h3>As a Verb or Adjective</h3> 
-          <ol>
-          {% for def in definitions.verb %}
-            <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-          
-          
-        {% if definitions.interact %} 
-          <h3>Interactive</h3> 
-          <ol>
-          {% for def in definitions.interact %}
-              <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-          
-        {% if definitions.deictic %} 
-          <h3>As a Pointing Sign</h3> 
-          <ol>
-          {% for def in definitions.deictic %}
-            <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-          
-          
-        {% if definitions.modifier %} 
-          <h3>As Modifier</h3> 
-          <ol>
-          {% for def in definitions.modifier %}
-              <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-        
-          
-        {% if definitions.question %} 
-          <h3>As Question</h3> 
-          <ol>
-          {% for def in definitions.question %}
-              <li> {{ def }}</li>
-          {% endfor %} 
-          </ol>
-        {% endif %}
-          
-        {% if definitions.augment %} 
-          <h3>Augmented Meaning</h3> 
-          <ol>
-          {% for def in definitions.augment %}
-              <li> {{ def }}</li>
-          {% endfor %} 
+          {% endfor %}
           </ol>
         {% endif %}
 
-        {% if definitions.note %} 
-          <h3>Note</h3> 
+        {% if definitions.noun %}
+          <h3>As a Noun</h3>
+
+          <ol>
+          {% for def in definitions.noun %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.verb %}
+          <h3>As a Verb or Adjective</h3>
+          <ol>
+          {% for def in definitions.verb %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.interact %}
+          <h3>Interactive</h3>
+          <ol>
+          {% for def in definitions.interact %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.deictic %}
+          <h3>As a Pointing Sign</h3>
+          <ol>
+          {% for def in definitions.deictic %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.modifier %}
+          <h3>As Modifier</h3>
+          <ol>
+          {% for def in definitions.modifier %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.question %}
+          <h3>As Question</h3>
+          <ol>
+          {% for def in definitions.question %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.augment %}
+          <h3>Augmented Meaning</h3>
+          <ol>
+          {% for def in definitions.augment %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.note %}
+          <h3>Note</h3>
           <ol>
           {% for def in definitions.note %}
               <li> {{ def }}</li>
-          {% endfor %} 
+          {% endfor %}
           </ol>
         {% endif %}
 
     </div>
-    
+
 
     {% if user.is_authenticated and user.is_staff %}
     <div id="staffinfo">
-        
+
         <h2>Staff</h2>
 
 
-        {% if definitions.popexplain %} 
-          <h3>Popular Explanation</h3> 
+        {% if definitions.popexplain %}
+          <h3>Popular Explanation</h3>
           <ol>
           {% for def in definitions.popexplain %}
               <li> {{ def }}</li>
-          {% endfor %} 
+          {% endfor %}
           </ol>
         {% endif %}
-        
-        {% if definitions.privatenote %} 
-          <h3>Private Notes</h3> 
+
+        {% if definitions.privatenote %}
+          <h3>Private Notes</h3>
           <ol>
           {% for def in definitions.privatenote %}
               <li> {{ def }}</li>
-          {% endfor %} 
+          {% endfor %}
           </ol>
         {% endif %}
-        
-        
+
+
         {% if gloss.queries %}
           <h2>Notes</h2>
           <ol>
@@ -299,11 +311,11 @@
           </ol>
         {% endif %}
 
-       
+
           <p>
             <a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
           </p>
-          
+
           <fieldset>
             <legend>Upload New Video</legend>
               <p>We have {{gloss.count_videos}} videos for this gloss.</p>
@@ -317,7 +329,7 @@
             </form>
             </table>
             </fieldset>
-            
+
             {% if gloss.get_video %}
             <fieldset>
              <legend>Delete/Revert Video</legend>
@@ -330,7 +342,7 @@
            </table>
           </fieldset>
             {% endif %}
-  
+
         {%if update_form %}
         <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -339,13 +351,13 @@
               {# update form for this gloss #}
               <table>
               {{update_form.as_table}}
-              </table>     
+              </table>
                 <p><input type="submit" value="Update"/></p>
-            </fieldset>     
+            </fieldset>
         </form>
         {% endif %}
     </div>
-    {% endif %}          
+    {% endif %}
 </div>
 
 
