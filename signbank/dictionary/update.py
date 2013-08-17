@@ -61,7 +61,8 @@ def add_tag(request, glossid, version='dictionary'):
                 ti.delete()
                 response = HttpResponse('deleted', {'content-type': 'text/plain'})
             else:
-                Tag.objects.add_tag(thisgloss, tag)
+                # we need to wrap the tag name in quotes since it might contain spaces
+                Tag.objects.add_tag(thisgloss, '"%s"' % tag)
                 # response is new HTML for the tag list and form
                 response = render_to_response('dictionary/glosstags.html',
                                               {'gloss': thisgloss,
