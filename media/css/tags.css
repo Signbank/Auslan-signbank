@@ -28,6 +28,14 @@
 	border-left: 1px solid #ccc;
 }
 
-.tag form {
+#tags .taglist {
+    display: block;
+}
+#tags .tagli {
     display: inline-block;
 }
+
+.tagcount .tagdelete {
+    color: red;
+}
+

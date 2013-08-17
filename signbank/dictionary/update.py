@@ -66,7 +66,8 @@ def add_tag(request, glossid, version='dictionary'):
                 response = render_to_response('dictionary/glosstags.html',
                                               {'gloss': thisgloss,
                                                'tagform': TagUpdateForm(),
-                                               })
+                                               },
+                                              context_instance=RequestContext(request))
                 
     return response
 
