@@ -1,0 +1,30 @@
+    <div id='tags'>
+      <h2>Tags</h2>
+      {% load tagging_tags %}
+      {% tags_for_object gloss as tag_list %}
+      {% if tag_list %}
+          <ul id='taglist'>
+          {% for tag in tag_list %}
+            <li class='tagli'>
+               <div class='tag'>
+                 <span class='tagname'><a href="/{{version}}/tag/{{tag}}">{{tag}}</a></span>
+                 <span class='tagcount'>
+                     <a class='tagdelete'
+                        id='{{tag.id}}'
+                        href='{% url root_page %}dictionary/update/tag/{{gloss.id}}' 
+                        title='delete this tag'>X</a>
+                 </span>
+                </div>
+            </li>
+          {% endfor %}
+          </ul>
+      {% endif %}
+      
+      <form id='tagaddform' 
+            action="{% url root_page %}dictionary/update/tag/{{gloss.id}}" 
+            method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+       {{tagform.tag}}
+       <input type='submit' value='Add Tag'>
+      </form>
+    </div>
