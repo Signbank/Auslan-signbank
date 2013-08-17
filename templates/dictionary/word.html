@@ -30,31 +30,7 @@
         }
     });
 
-    /* ajax form submission for tag deletion */
-    $('.tagdelete').click(function() {
-        var action = $(this).attr('href');
-        var tagid = $(this).attr('id');
-        var tagelement = $(this).parents('.tagli');
-        
-        $.post(action, {tag: tagid, delete: "True" }, 
-               function(data) {
-                    if (data == 'deleted') {
-                        /* remove the tag from the page */
-                       tagelement.remove();
-                    }
-               });
-        
-        return false;
-    });
-    
-    $('#tagaddform').submit(function(){
-        $.post($(this).attr('action'), $(this).serialize(),
-                function(data) {
-                   /* response is a new tag list */
-                   $('#tags').replaceWith(data);
-               })
-        return false;
-    });
+    ajaxifyTagForm();
 
 {% endblock %}
 
@@ -67,7 +43,7 @@
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
         var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
+        for (var i = 0; i < cookies.length; i++) { // >
             var cookie = jQuery.trim(cookies[i]);
             // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
@@ -79,6 +55,34 @@
     return cookieValue;
 }
     
+    function ajaxifyTagForm() {
+        /* ajax form submission for tag addition and deletion */
+        $('.tagdelete').click(function() {
+            var action = $(this).attr('href');
+            var tagid = $(this).attr('id');
+            var tagelement = $(this).parents('.tagli');
+            
+            $.post(action, {tag: tagid, delete: "True" }, 
+                   function(data) {
+                        if (data == 'deleted') {
+                            /* remove the tag from the page */
+                           tagelement.remove();
+                        }
+                   });
+            
+            return false;
+        });
+        
+        $('#tagaddform').submit(function(){
+            $.post($(this).attr('action'), $(this).serialize(),
+                    function(data) {
+                       /* response is a new tag list */
+                       $('#tags').replaceWith(data);
+                       ajaxifyTagForm();
+                   })
+            return false;
+        });
+    }
     
     
 {% endblock %}
