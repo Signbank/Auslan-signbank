@@ -44,13 +44,14 @@ def update_gloss(request, glossid, version='dictionary'):
 def add_tag(request, glossid, version='dictionary'):
     """View to add a tag to a gloss"""
 
-    print "add_tag"
+    # default response
+    response = HttpResponse('invalid', {'content-type': 'text/plain'})
+
     if request.method == "POST":
         thisgloss = get_object_or_404(Gloss, id=glossid)
 
         form = TagUpdateForm(request.POST)
         if form.is_valid():
-            print form.cleaned_data
 
             tag = form.cleaned_data['tag']
 
@@ -58,14 +59,16 @@ def add_tag(request, glossid, version='dictionary'):
                 # get the relevant TaggedItem
                 ti = get_object_or_404(TaggedItem, object_id=thisgloss.id, tag=tag)
                 ti.delete()
+                response = HttpResponse('deleted', {'content-type': 'text/plain'})
             else:
                 Tag.objects.add_tag(thisgloss, tag)
-        else:
-            print "form not valid"
-
-
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
+                # response is new HTML for the tag list and form
+                response = render_to_response('dictionary/glosstags.html',
+                                              {'gloss': thisgloss,
+                                               'tagform': TagUpdateForm(),
+                                               })
+                
+    return response
 
 
 

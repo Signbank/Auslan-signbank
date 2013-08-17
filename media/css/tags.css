@@ -1,6 +1,6 @@
 /* styles for tags */
 
-div.tag {
+.tag {
 	font-size: smaller;
 	background: white; 
 	text-decoration: none;
@@ -8,7 +8,7 @@ div.tag {
 	display: inline-block; 
 	margin: 3px;	 
 }
-div.tag a {
+.tag a {
 	text-decoration: none;
 	color: black;
 	
@@ -26,4 +26,8 @@ div.tag a {
 	padding: 2px 4px 2px 4px;
 	margin: 0px;
 	border-left: 1px solid #ccc;
+}
+
+.tag form {
+    display: inline-block;
 }
