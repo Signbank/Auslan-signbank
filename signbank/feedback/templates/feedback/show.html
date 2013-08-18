@@ -1,0 +1,135 @@
+{% extends "baselayout.html" %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{% auslan_static_prefix %}projekktor/projekktor-1.0.29r105.min.js"></script>
+<link rel="stylesheet" href="{% auslan_static_prefix %}projekktor/theme/style.css" type="text/css" media="screen" />
+<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery.confirm-1.3.js"></script>
+
+{% endblock %}
+{% block script %}
+
+/* reveal a comment, possibly including a video */
+togglecomment = function() {
+  if ($(this).hasClass('showing')) {
+    $(this).next('.commentbody').hide();
+    $(this).removeClass('showing');
+    $(this).find('.indicator').removeClass('ui-icon-minus').addClass('ui-icon-plus');
+  } else {
+    $(this).next('.commentbody').show();
+    $(this).addClass('showing');
+    $(this).find('.indicator').removeClass('ui-icon-plus').addClass('ui-icon-minus');
+  }
+}
+
+jQuery(document).ready(function(){
+ 
+    $('.commenthead').click(togglecomment);
+	
+	$('.commentbody').hide();
+ 
+	$('.delete').confirm({
+	    msg:'Delete this comment?',
+	    timeout:3000
+	});	
+ 
+});
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+  <h3>General Feedback</h3>
+  
+  {% for fb in general %}
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+     <div class="commentbody">
+        {% if fb.video %}  
+        <div class="videocontainer">
+           <video width=400 controls="controls" src='{% auslan_media_prefix %}{{ fb.video }}'></video>
+        </div>
+        {% endif %}
+      
+	    <p>{{fb.comment}}</p>
+     
+       <p><form action="/feedback/general/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+      
+       </div> 
+  {% endfor %} 
+  
+  <h3>Sign Feedback</h3> 
+  
+  {% for fb in signfb %} 
+    
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+    
+    
+    
+    <div class="commentbody">
+    <p><strong>Comment:</strong>{{fb.comment}}</p>
+    <p><strong>Don't Belong:</strong>{{fb.kwnotbelong}}</p>
+    <!--
+    <ul>  
+	<li>Auslan Sign: {{fb.get_isAuslan_display}}</li>
+	<li>Where Used: {{fb.get_whereused_display}}</li>
+	<li>Liked: {{fb.get_like_display}}</li>
+	<li>Used: {{fb.get_use_display}}</li>
+	<li>Use Suggested: {{fb.get_suggested_display}}</li>
+	<li>Correct: {{fb.get_correct_display}}</li>
+    
+    </ul>
+    --> 
+    <p><form action="/feedback/sign/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+     
+    </div> 
+  {% endfor %}
+   
+  <h3>Missing Sign Feedback</h3> 
+  {% for fb in missing %} 
+    
+    <h4 class="commenthead">
+      <span class="indicator" title="Show Message">>></span>
+       {{fb.date|date:"d M Y"}}: {{fb.user.first_name}} {{fb.user.last_name}} 
+       (<a href="mailto:{{fb.user.email}}">Email {{fb.user.email}}</a>) 
+    </h4>
+    
+    
+    <div class="commentbody">
+    {% if fb.video %}  
+         <div class="videocontainer">
+            <video width=400 controls="controls" src='{% auslan_media_prefix %}{{ fb.video }}'></video>
+       </div>
+    {% endif %}
+     <dl>
+      <dt>Handform</dt><dd>{{fb.get_handform_display}}</dd>
+      <dt>Handshape</dt><dd>{{fb.get_handshape_display}}</dd>
+      <dt>Alternate Handshape</dt><dd>{{fb.get_althandshape_display}}</dd>
+      <dt>Location</dt><dd>{{fb.get_location_display}}</dd>
+      <dt>Relative Location</dt><dd>{{fb.get_relativelocation_display}}</dd>
+      <dt>Hand Body Contact</dt><dd>{{fb.get_handbodycontact_display}}</dd>
+      <dt>Hand Interaction</dt><dd>{{fb.get_handinteraction_display}}</dd>
+      <dt>Direction</dt><dd>{{fb.get_direction_display}}</dd>
+      <dt>Movement Type</dt><dd>{{fb.movementtype}}</dd>
+      <dt>Small Movement</dt><dd>{{fb.smallmovement}}</dd>
+      <dt>Repetition</dt><dd>{{fb.repetition}}</dd>
+      <dt>Meaning</dt><dd>{{fb.meaning}}</dd>
+      <dt>Comments</dt><dd>{{fb.comments}}</dd>
+     </dl>
+     
+       <p><form action="/feedback/missingsign/delete/{{fb.id}}" method="post">{% csrf_token %}<input class='delete' type='submit' value='Delete Comment'></form></p>
+ 
+    </div>
+          
+  {% endfor %} 
+
+{% endblock %}

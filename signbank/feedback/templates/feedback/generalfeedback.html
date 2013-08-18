@@ -1,0 +1,44 @@
+{# Parameters #}
+{# username (string) #}
+{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
+{# title (string #}
+{#   The title of the page, appears in horizontal span above content. #}
+
+{% extends "baselayout.html" %}
+
+     
+
+{% block content %}
+
+
+{% if valid %}
+  <p>Thanks for your comment. We value your contribution.</p>
+{% else %}
+   <p>Please enter any comments you may have about this site and click
+   "submit" to send your feedback to us. We value your contributions and comments.</p>
+   
+  <form method="post" name="general" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div id="{{form.comment.name}}Div" class="formcomponent">
+      <label>{{form.comment.label}} *</label>
+      <p>General comments, suggestions, or anything you feel like telling us.</p>
+      {%if form.comment.errors %}{{form.comment.errors}}{% endif %}
+      {{form.comment}}
+    </div>
+
+    <div id="{{form.video.name}}Div" class="formcomponent">
+      <label>{{form.video.label}}</label>
+      <p>Upload your feedback as a video.</p>
+      {%if form.video.errors %}{{form.video.errors}}{% endif %}
+      {{form.video}}
+      <p>NOTE: Video files can be quite large, and may take a long time to send. Please be patient when submitting this feedback.</p>
+    </div>
+
+    <hr />
+    <div class="formbuttons">
+      <input type="submit" value="Submit" class="submit" />
+      <input type="button" name="reset" value="Reset" class="reset" />
+    </div>
+  </form>
+{% endif %}
+{% endblock %}

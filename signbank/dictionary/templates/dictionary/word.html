@@ -1,0 +1,404 @@
+
+{% extends "baselayout.html" %}
+
+{% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
+
+
+{% block jqueryready %}
+
+    $('#feedbackmessage').fadeOut(5000);
+
+    $('#delete_video').confirm({
+	    msg:'Delete this video?',
+	    timeout:3000
+	});
+
+    var csrftoken = getCookie('csrftoken');
+    
+    // setup requried for Ajax POST
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            } 
+        }
+    });
+
+    ajaxifyTagForm();
+
+{% endblock %}
+
+{% block script %}
+    function replay() {
+        $f('player').play();
+    }
+    
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) { // >
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    
+    function ajaxifyTagForm() {
+        /* ajax form submission for tag addition and deletion */
+        $('.tagdelete').click(function() {
+            var action = $(this).attr('href');
+            var tagid = $(this).attr('id');
+            var tagelement = $(this).parents('.tagli');
+            
+            $.post(action, {tag: tagid, delete: "True" }, 
+                   function(data) {
+                        if (data == 'deleted') {
+                            /* remove the tag from the page */
+                           tagelement.remove();
+                        }
+                   });
+            
+            return false;
+        });
+        
+        $('#tagaddform').submit(function(){
+            $.post($(this).attr('action'), $(this).serialize(),
+                    function(data) {
+                       /* response is a new tag list */
+                       $('#tags').replaceWith(data);
+                       ajaxifyTagForm();
+                   })
+            return false;
+        });
+    }
+    
+    
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if feedbackmessage %}
+<div id="feedbackmessage">
+    <p>{{ feedbackmessage }}</p>
+</div>
+{% endif %}
+
+{% if user.is_authenticated and user.is_staff %}
+  <div id="extrasigninfo">
+  <table>
+	   <tr><td><strong>Sign Number:</strong></td></tr>
+	   <tr><td>{{gloss.sn}}</td></tr>
+	   <tr><td><strong>Annotation ID Gloss:</strong></td></tr>
+	   <tr><td>{{gloss.annotation_idgloss}}</td></tr>
+	   {% if gloss.sense %}
+	   <tr><td><strong>Homonyms/Homophones:</strong></td></tr>
+	   <tr><td>
+	   <ol>
+	   {% for h in gloss.homophones %}
+	     {% if h == gloss %}
+	     <li>{{h.idgloss}}</li>
+	     {% else %}
+	     <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
+	     {% endif %}
+	   {% endfor %}
+	   </ol>
+	   </td></tr>
+	   {% endif %}
+  </table>
+  </div>
+{% endif %}
+
+<div id="signinfo">
+    <div id="signs">
+        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
+            {% ifequal version "medical" %} Medical {% endifequal %}Dictionary</h2>
+
+            {% if navigation.prev %}
+            <div class="prev">
+              <a href="{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal version "medical" %} Medical {% endifequal %}Sign</a>
+            </div>
+            {% endif %}
+            {% if navigation.next %}
+            <div class="next">
+             <a href="{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal version "medical" %} Medical {% endifequal %}Sign &raquo;</a>
+            </div>
+            {% endif %}
+    </div>
+
+    <div id="matches">
+        {% ifequal viewname "words" %}
+        <h2>Matches for the word <em>{{ translation.translation }}</em></h2>
+        <div>
+        {% for i in matches %}
+            {% ifequal i n %}
+            <span class='match current'>{{i}}</span>
+            {% else %}
+            <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
+            {% endifequal %}
+        {% endfor %}
+        </div>
+        {% else %}
+            <h2><a href="{% url root_page %}{{version}}/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <div>&nbsp;</div>
+        {% endifequal %}
+
+    </div>
+</div>
+
+<div id="definitionblock">
+    <div id="leftblock">
+    <div id="videocontainer">
+    {% if gloss.get_video %}
+
+    <div id="player">
+      <iframe width="320" height="240" scrolling="no" frameborder='0'
+          src="{% url signbank.video.views.iframe gloss.get_video_number %}">
+      </iframe>
+    </div>
+      <div id="replay"></div>
+
+    {% else %}
+    <img src='{% auslan_static_prefix %}images/no-video.png'>
+    {% endif %}
+    </div>
+
+
+        <div id="feedback">
+            <ul>
+                {% ifequal viewname "words" %}
+                <li><a href="{% url root_page %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/{{version}}/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                {% else %}
+                <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/{{version}}/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                {% endifequal %}
+
+                <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url root_page %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+            </ul>
+        </div>
+
+        {% if dialect_image %}
+        <div id="states">
+            <div>
+                <img src="{% auslan_static_prefix %}{{dialect_image}}" alt="States">
+            </div>
+        </div>
+        {% endif %}
+
+        <div>
+           <h4>Sign Distribution</h4>
+                <ul>
+                {% ifequal dialect_image "images/maps/allstates.gif" %}
+                  <li>All States</li>
+                {% else %}
+	                {% for dialect in gloss.dialect.all %}
+	                  <li>{{ dialect.name }}</li>
+	                {% endfor %}
+                {% endifequal %}
+                </ul>
+        </div>
+
+
+    {% if user.is_authenticated and user.is_staff %}
+    {% include "dictionary/glosstags.html" %}
+	{% endif %}
+</div>
+
+    <div id="keywords">
+         <p><strong>Keywords:</strong>
+         {% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+         {% endfor %}
+         </p>
+    </div>
+
+    <div id="definition">
+        <h2>Sign Definition</h2>
+
+        {% if definitions.general %}
+          <h3>General Definition</h3>
+
+          <ol>
+          {% for def in definitions.general %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.noun %}
+          <h3>As a Noun</h3>
+
+          <ol>
+          {% for def in definitions.noun %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.verb %}
+          <h3>As a Verb or Adjective</h3>
+          <ol>
+          {% for def in definitions.verb %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.interact %}
+          <h3>Interactive</h3>
+          <ol>
+          {% for def in definitions.interact %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.deictic %}
+          <h3>As a Pointing Sign</h3>
+          <ol>
+          {% for def in definitions.deictic %}
+            <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.modifier %}
+          <h3>As Modifier</h3>
+          <ol>
+          {% for def in definitions.modifier %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if definitions.question %}
+          <h3>As Question</h3>
+          <ol>
+          {% for def in definitions.question %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.augment %}
+          <h3>Augmented Meaning</h3>
+          <ol>
+          {% for def in definitions.augment %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.note %}
+          <h3>Note</h3>
+          <ol>
+          {% for def in definitions.note %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+    </div>
+
+
+    {% if user.is_authenticated and user.is_staff %}
+    <div id="staffinfo">
+
+        <h2>Staff</h2>
+
+
+        {% if definitions.popexplain %}
+          <h3>Popular Explanation</h3>
+          <ol>
+          {% for def in definitions.popexplain %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+        {% if definitions.privatenote %}
+          <h3>Private Notes</h3>
+          <ol>
+          {% for def in definitions.privatenote %}
+              <li> {{ def }}</li>
+          {% endfor %}
+          </ol>
+        {% endif %}
+
+
+        {% if gloss.queries %}
+          <h2>Notes</h2>
+          <ol>
+              <li>{{gloss.queries}}</li>
+          </ol>
+        {% endif %}
+
+
+          <p>
+            <a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
+          </p>
+
+          <fieldset>
+            <legend>Upload New Video</legend>
+              <p>We have {{gloss.count_videos}} videos for this gloss.</p>
+           <table id="staffops">
+            <form action="/video/upload/" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <tr>
+                  <td>{{videoform.videofile}}</td>
+                  <td>{{videoform.gloss_sn}}  {{videoform.redirect}} <input type='submit' value='Upload'/></td>
+              </tr>
+            </form>
+            </table>
+            </fieldset>
+
+            {% if gloss.get_video %}
+            <fieldset>
+             <legend>Delete/Revert Video</legend>
+            <table>
+            <form action="/video/delete/{{gloss.sn}}" method='post'>
+            <tr><td>{% csrf_token %}<input id='delete_video' type='submit' value='Delete/Revert this video'></td>
+            <td><em>This will delete the most recent upload and restore the most recent earlier version.</em></td>
+            </tr>
+            </form>
+           </table>
+          </fieldset>
+            {% endif %}
+
+        {%if update_form %}
+        <form action="{% url root_page %}dictionary/update/gloss/{{gloss.id}}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="glossupdate">
+            <legend>Quick Updates</legend>
+              {# update form for this gloss #}
+              <table>
+              {{update_form.as_table}}
+              </table>
+                <p><input type="submit" value="Update"/></p>
+            </fieldset>
+        </form>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}
+
