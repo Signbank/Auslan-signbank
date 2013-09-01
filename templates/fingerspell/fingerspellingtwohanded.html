@@ -1,20 +1,20 @@
 {% extends "baselayout.html" %}
  
 {% block extrahead %}
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/fingerspelling.js"></script>
 {% endblock %}
 
 {% block jqueryready %} 
 
   $('#inputarea').submit( function() { 
-    fingerspell_play("{% auslan_static_prefix %}images/", twohanded); 
+    fingerspell_play("{{ STATIC_URL }}images/", twohanded); 
     return false; 
    });
    
-  $('#replay').click( function() { fingerspell_play("{% auslan_static_prefix %}images/", twohanded);} );
+  $('#replay').click( function() { fingerspell_play("{{ STATIC_URL }}images/", twohanded);} );
   
   /* fill out the table of signs */
-  $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", twohanded);
+  $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", twohanded);
   
 {% endblock %}
 
@@ -25,7 +25,7 @@
   <div id="leftblock"> 
     <div id="handcontainer">
       <div id="handimage">
-	<img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+	<img id="mainimg" src="{{ STATIC_URL }}images/twohanded/transition.jpg" alt=""> 
       </div>
       <div id="replay">REPLAY</div>
     </div>
