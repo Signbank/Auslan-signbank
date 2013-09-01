@@ -9,13 +9,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{% auslan_static_prefix %}jquery-mobile/jquery.mobile-1.1.1.min.css" />
-    <link rel="stylesheet" href="{% auslan_static_prefix %}jquery-mobile/jquery.mobile.structure-1.1.1.min.css" />
-    <link rel="stylesheet" href="{% auslan_static_prefix %}jquery-mobile/jquery.mobile.theme-1.1.1.min.css" />
-    <link rel="stylesheet" href="{% auslan_static_prefix %}css/mobile.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}jquery-mobile/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}jquery-mobile/jquery.mobile.structure-1.1.1.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}jquery-mobile/jquery.mobile.theme-1.1.1.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/mobile.css" />
 
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="{% auslan_static_prefix %}jquery-mobile/jquery.mobile-1.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-mobile/jquery.mobile-1.1.1.min.js"></script>
 
 {% block extrahead %}
 

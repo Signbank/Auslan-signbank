@@ -1,10 +1,10 @@
 {% extends "admin/change_form.html" %} 
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="{% auslan_static_prefix %}js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/jquery.wymeditor.pack.js"></script>
-<script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js"></script>
-<script type="text/javascript" src="{% auslan_static_prefix %}wymeditor/plugins/resizable/jquery.wymeditor.resizable.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}wymeditor/jquery.wymeditor.pack.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}wymeditor/plugins/resizable/jquery.wymeditor.resizable.js"></script>
 
 <script type="text/javascript">
 
@@ -13,7 +13,7 @@ $(document).ready(function() {
         updateSelector: "input:submit",
         updateEvent:    "click", 
         skin: 'silver',
-        stylesheet: '{% auslan_static_prefix %}css/textstyles.css', 
+        stylesheet: '{{ STATIC_URL }}css/textstyles.css', 
     });
 });
 

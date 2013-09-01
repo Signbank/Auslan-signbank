@@ -3,8 +3,8 @@
  
 {% block extrahead %}
     
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/fingerspelling.js"></script>
-    <script type="text/javascript" src="{% auslan_static_prefix %}js/fspractice.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/fingerspelling.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/fspractice.js"></script>
 
 {% endblock %}
 
@@ -17,7 +17,7 @@
          $.mobile.silentScroll(0);
       }
       speed = $('input:radio[name=speed]:checked').val(); 
-      display_string("#mainimg", $('#answer').html(), speed, "{% auslan_static_prefix %}images/", twohanded); 
+      display_string("#mainimg", $('#answer').html(), speed, "{{ STATIC_URL }}images/", twohanded); 
       return false;
     }
 
@@ -40,7 +40,7 @@
   $('#replay').click( fingerspell_play );
   
   /* fill out the table of signs */
-  $("#fstable td").fingerspellimage("{% auslan_static_prefix %}images/", twohanded);
+  $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", twohanded);
   
 {% endblock %}
 
@@ -51,7 +51,7 @@
   <div id="leftblock"> 
     <div id="handcontainer">
       <div id="handimage">
-	<img id="mainimg" src="{% auslan_static_prefix %}images/twohanded/transition.jpg" alt=""> 
+	<img id="mainimg" src="{{ STATIC_URL }}images/twohanded/transition.jpg" alt=""> 
       </div>
       <div id="replay">REPLAY</div>
     </div>

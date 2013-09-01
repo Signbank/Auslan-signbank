@@ -47,7 +47,7 @@ urlpatterns = patterns('',
 
 # location for static media
 # this should be removed in a production system
-if settings.DEBUG:
+if False and settings.DEBUG:
     urlpatterns += patterns('',
         (r'^static/(?P<path>.*)$', 'django.views.static.serve',
              {'document_root': 'media'}),
