@@ -63,7 +63,7 @@ class SenseNumberListFilter(SimpleListFilter):
         
 
 class GlossAdmin(VersionAdmin):
-    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'tags', 'morph', 'sense', 
+    fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
                                     'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
               ('Publication Status', {'fields': ('inWeb', 'InMedLex',  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
