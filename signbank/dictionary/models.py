@@ -264,7 +264,7 @@ minor or insignificant ways that can be ignored.""")
     # the idgloss used in transcription, may be shared between many signs
 
 
-    tags = TagField('Tags')
+#    tags = TagField('Tags')
 
 
     # languages that this gloss is part of
@@ -584,12 +584,12 @@ minor or insignificant ways that can be ignored.""")
           
             )
 
-
-# register Gloss for tags
-#try:
-#    tagging.register(Gloss)
-#except tagging.AlreadyRegistered:
-#    pass
+import tagging
+#register Gloss for tags
+try:
+    tagging.register(Gloss)
+except tagging.AlreadyRegistered:
+    pass
 
 RELATION_ROLE_CHOICES = (('variant', 'Variant'),
                          ('antonym', 'Antonym'),
