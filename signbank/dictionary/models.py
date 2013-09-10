@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.db import models
 from django.conf import settings
 from django.http import Http404 
-from tagging.fields import TagField
+import tagging
 
 import sys, os
 
@@ -262,9 +262,6 @@ more entries (each with their own 'Sign Entry Name'). If two sign entries
 have the same 'Annotation Idgloss' that means they differ in form in only
 minor or insignificant ways that can be ignored.""") 
     # the idgloss used in transcription, may be shared between many signs
-
-
-    tags = TagField('Tags')
 
 
     # languages that this gloss is part of
@@ -586,10 +583,10 @@ minor or insignificant ways that can be ignored.""")
 
 
 # register Gloss for tags
-#try:
-#    tagging.register(Gloss)
-#except tagging.AlreadyRegistered:
-#    pass
+try:
+    tagging.register(Gloss)
+except tagging.AlreadyRegistered:
+    pass
 
 RELATION_ROLE_CHOICES = (('variant', 'Variant'),
                          ('antonym', 'Antonym'),

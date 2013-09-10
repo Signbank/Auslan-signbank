@@ -1,0 +1,5 @@
+django==1.4.5
+south
+django-tagging
+django-mobile
+django-reversion
