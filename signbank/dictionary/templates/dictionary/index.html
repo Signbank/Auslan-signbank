@@ -1,0 +1,31 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
+
+    <p>Welcome to the Sign Search section of the Auslan SignBank. Here
+    you can search for a sign using an English keyword in the search box
+    above, or browse keywords starting with any letter below. 
+   </p>
+    
+    <p>
+    {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+      <a href="{% url root_page %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
+   {% endfor %}
+   </p>
+   
+        
+</div>
+
+
+    {% ifequal version "medical" %}
+
+    <p style="text-align: center; font-size: large">Please help us improve the Medical SignBank. See <a href="{% url root_page %}research/medicalhelp/">how you can help</a>.</p>
+    
+    {% endifequal %}
+
+
+{% endblock %}
+
+
+
+

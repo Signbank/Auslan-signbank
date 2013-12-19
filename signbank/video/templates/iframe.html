@@ -1,0 +1,34 @@
+<html>
+ <head>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}projekktor/projekktor-1.0.29r105.min.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}projekktor/theme/style.css" type="text/css" media="screen" />
+
+   <script type="text/javascript">
+         $(document).ready(function() {
+               projekktor('.projekktor', { 
+                autoplay: true, 
+                iframe: true,
+                addplugins: ['controlbar'],
+                playerFlashMP4: "{{ STATIC_URL }}projekktor/jarisplayer.swf",
+                plugin_controlbar: {
+                 controlsTemplate: '<ul class="left"><li><div %{play}></div><div %{pause}></div></li><li><div %{title}></div></li></ul><ul class="bottom"><li><div %{scrubber}><div %{loaded}></div><div %{playhead}></div><div %{scrubberdrag}></div></div></li></ul>'                 
+                },
+                playlist: [{
+                 0: {src: "{{videourl}}", type: "video/mp4"},
+                 config: {
+                  poster: "{{posterurl}}",
+                  controls: true,
+                  fixedVolume: true,
+                  volume: 0,
+                  autoplay: true
+                 }
+                }]
+               });
+         });
+    </script>
+ </head> 
+ <body>
+     <video class='projekktor' src='{{videourl}}'></video>
+</body>
+</html>
