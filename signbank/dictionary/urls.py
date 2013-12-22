@@ -2,6 +2,8 @@ from django.conf.urls.defaults import *
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
+from signbank.dictionary.adminviews import GlossListView
+
 
 urlpatterns = patterns('',
 
@@ -28,6 +30,10 @@ urlpatterns = patterns('',
     (r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 
     (r'^export.csv', 'signbank.dictionary.views.csv_export'),
+
+    # Admin views
+    url(r'^list/$', GlossListView.as_view(), name='admin-gloss-list'),
+
 
 )
 
