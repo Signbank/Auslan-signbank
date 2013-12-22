@@ -1,0 +1,75 @@
+<nav class="navbar navbar-default" role="navigation">
+
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Signbank</a>
+  </div>
+
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+    <ul class="nav navbar-nav">
+    
+{# add in the top level menu items from pages #}
+{% for item in menu %}
+    {% if item.children %} 
+    <li class='dropdown'>
+     <a {% if item.current %}class='active'{% endif %} href="{{item.url}}">{{item.title}}</a>
+     <ul class="dropdown-menu">
+     {% for subitem in item.children %}
+        <li {% if subitem.current %}class='active'{% endif %}><a href="{{subitem.url}}">{{subitem.title}}</a></li>
+     {% endfor %} 
+    </ul> 
+  {% else %}
+    <li {% if item.current %}class='active'{% endif %}><a href="{{item.url}}">{{item.title}}</a>
+  {% endif %}
+  </li>
+{% endfor %}
+  </ul>
+
+{% if user.is_staff %}
+  <ul class='nav navbar-nav'>
+  
+   <li class='dropdown'>
+         <a href="#" {% if '/feedback/show.html' in request.path %}class="active"{% endif %}
+            {% if '/attachments/' in request.path %}class="active"{% endif %}>
+            Staff
+         </a>
+         <ul class='dropdown-menu'> 
+            <li><a href="{% url admin:index %}">Admin</a></li>
+            <li {% if '/feedback/show.html' in request.path %}class="active"{% endif %}>
+                  <a href="{% url signbank.feedback.views.showfeedback %}">View Feedback</a></li>
+            <li {% if '/attachments/' in request.path %}class="active"{% endif %}>
+                  <a href="{% url attachments %}">File Attachments</a></li>
+         </ul>
+    </li>
+
+</ul>
+{% endif %}
+
+
+{% if user.is_authenticated %}
+<ul class='nav navbar-nav'>
+  <li><a href="{% url logout %}">Logout</a></li>
+  <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
+</ul>
+{% endif %} 
+
+    <form class="navbar-form navbar-right" role="search" id="frmSearch" name="frmSearch" method="get" action="{% url root_page %}dictionary/search/">
+       <div class="form-group">
+          <input type="Text" name="query" value="{{ query }}" maxlength="50">
+       </div>
+       
+       <button type="submit" class="btn btn-default">Sign Search</button>
+    </form> 
+    
+  </div><!-- /.navbar-collapse -->
+</nav>
+
