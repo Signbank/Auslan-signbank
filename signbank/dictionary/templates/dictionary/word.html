@@ -98,31 +98,6 @@
 </div>
 {% endif %}
 
-{% if user.is_authenticated and user.is_staff %}
-  <div id="extrasigninfo">
-  <table>
-	   <tr><td><strong>Sign Number:</strong></td></tr>
-	   <tr><td>{{gloss.sn}}</td></tr>
-	   <tr><td><strong>Annotation ID Gloss:</strong></td></tr>
-	   <tr><td>{{gloss.annotation_idgloss}}</td></tr>
-	   {% if gloss.sense %}
-	   <tr><td><strong>Homonyms/Homophones:</strong></td></tr>
-	   <tr><td>
-	   <ol>
-	   {% for h in gloss.homophones %}
-	     {% if h == gloss %}
-	     <li>{{h.idgloss}}</li>
-	     {% else %}
-	     <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
-	     {% endif %}
-	   {% endfor %}
-	   </ol>
-	   </td></tr>
-	   {% endif %}
-  </table>
-  </div>
-{% endif %}
-
 <div id="signinfo">
     <div id="signs">
         <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
@@ -351,6 +326,26 @@
         {% endif %}
 
 
+        <dl>
+            <dt>Sign Number: </dt><dd>{{gloss.sn}}</dd>
+            <dt>Annotation ID Gloss:</dt><dd>{{gloss.annotation_idgloss}}</dd>
+            {% if gloss.sense %}
+            <dt>Homonyms/Homophones:</dt>
+            <dd>
+               <ol>
+               {% for h in gloss.homophones %}
+                 {% if h == gloss %}
+                 <li>{{h.idgloss}}</li>
+                 {% else %}
+                 <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
+                 {% endif %}
+               {% endfor %}
+               </ol>
+            </dd>
+            {% endif %}
+        </dl>
+        
+    
           <p>
             <a href="{% url root_page %}admin/dictionary/gloss/{{gloss.id}}">Edit this gloss </a>
           </p>

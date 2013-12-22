@@ -1,0 +1,26 @@
+{% extends "baselayout.html" %}
+
+
+{% block content %}
+
+{# show the edit button if the user has permission to change pages #}
+{% if perms.pages.change %}
+<div id="editbutton">
+    <a href="/admin/pages/page/{{page.id}}/">[Edit]</a>
+</div>
+{% endif %}
+
+
+{% block topcontent %}
+{% endblock %}
+
+{% block pagecontent %}
+   {{ page.content }}
+{% endblock %}
+
+
+{% block bottomcontent %}
+{% endblock %}
+
+
+{% endblock %}

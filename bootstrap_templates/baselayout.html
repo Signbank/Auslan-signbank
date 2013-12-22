@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load bootstrap3 %}
+<html>
+  <head>
+    <title>{% block bootstrap3_title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap_css/style.css">
+  </head>
+  <body>
+
+    <div id='wrap'>
+        <div class="container">
+
+        {% include 'menu.html' %}  
+    
+        {% bootstrap_messages %}
+
+        {% block content %}(no content){% endblock %}
+        </div>
+    </div>
+
+    <div id="footer"> 
+       <div class='container'>
+          <div id="copyright">
+              &copy; 2009, Trevor Johnston, Macquarie University. All rights reserved.<br>
+              <a href="{% url signbank.feedback.views.generalfeedback %}">Provide feedback on the site</a>
+          </div>
+       </div>
+    </div>
+    
+    <script src='{% bootstrap_jquery_url %}'></script>
+    {% bootstrap_javascript jquery=True %}
+
+  </body>
+</html>
+    
+
+  

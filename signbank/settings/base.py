@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
+    'bootstrap3',
     'signbank.dictionary',
     'signbank.feedback',
     'signbank.registration',
