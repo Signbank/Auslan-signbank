@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'signbank.pages.views.page', name='root_page'),
 
-    url(r'^(?P<version>dictionary|medical)/', include('signbank.dictionary.urls')),
+    url(r'^(?P<version>dictionary|medical)/', include('signbank.dictionary.urls', namespace='dictionary')),
     url(r'^feedback/', include('signbank.feedback.urls')),
     url(r'^attachments/', include('signbank.attachments.urls')),
     url(r'^video/', include('signbank.video.urls')),

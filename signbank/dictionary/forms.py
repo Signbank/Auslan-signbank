@@ -22,3 +22,20 @@ class TagUpdateForm(forms.Form):
 
     tag = forms.ModelChoiceField(queryset=Tag.objects.all())
     delete = forms.BooleanField(required=False, widget=forms.HiddenInput)
+    
+    
+class GlossSearchForm(forms.ModelForm):
+    
+    search = forms.CharField(label="Search Gloss/SN")
+    tags = forms.CharField(label="Tags")
+    
+    class Meta:
+        model = Gloss
+        fields = ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
+                   'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect',
+                   'inWeb', 'InMedLex',  'isNew', 
+                   'handedness', 'Palm_orientation', 'domhndsh', 'subhndsh', 'locprim', 'locsecond',
+                   )
+    
+
+

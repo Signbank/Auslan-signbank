@@ -3,3 +3,4 @@ south
 django-tagging
 django-mobile
 django-reversion
+django-bootstrap3
