@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% bootstrap_css %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap_css/style.css">
+    {% block extrahead %}{% endblock %}
   </head>
   <body>
 
@@ -31,7 +32,11 @@
     
     <script src='{% bootstrap_jquery_url %}'></script>
     {% bootstrap_javascript jquery=True %}
+    
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 
+    {% block extrajs %}{% endblock %}
   </body>
 </html>
     

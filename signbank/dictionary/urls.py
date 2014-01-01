@@ -29,11 +29,10 @@ urlpatterns = patterns('',
 
     (r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 
-    (r'^export.csv', 'signbank.dictionary.views.csv_export'),
+    url(r'^export.csv', 'signbank.dictionary.views.csv_export', name='export'),
 
     # Admin views
-    url(r'^list/$', GlossListView.as_view(), name='admin-gloss-list'),
-
+    url(r'^list/$', GlossListView.as_view(), name='admin_gloss_list'),
 
 )
 
