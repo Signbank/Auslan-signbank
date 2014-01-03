@@ -212,6 +212,8 @@ ALWAYS_REQUIRE_LOGIN = False
 PRIMARY_CSS = "test-server"
 
 
+# do we allow people to register for the site
+ALLOW_REGISTRATION = True
 
 
 LOGIN_REDIRECT_URL = '/feedback/'
