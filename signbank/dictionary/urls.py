@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     # we use the same view for a definition and for the feedback form on that
     # definition, the first component of the path is word or feedback in each case
-    (r'^(?P<viewname>(words|feedback))/(?P<keyword>.+)-(?P<n>\d+).html$',
+    (r'^words/(?P<keyword>.+)-(?P<n>\d+).html$',
             'signbank.dictionary.views.word'),
 
     url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.views.taglist'),

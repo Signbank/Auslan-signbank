@@ -169,7 +169,7 @@ def map_image_for_dialects(dialects):
 
 
 @login_required_config
-def word(request, viewname, keyword, n, version='dictionary'):
+def word(request, keyword, n, version='dictionary'):
     """View of a single keyword that may have more than one sign"""
 
     n = int(n)
