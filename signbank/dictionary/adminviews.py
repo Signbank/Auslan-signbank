@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.db.models import Q
 
 from signbank.dictionary.models import *
@@ -71,3 +72,11 @@ class GlossListView(ListView):
             
         return qs
 
+
+
+
+class GlossDetailView(DetailView):
+    
+    model = Gloss
+    context_object_name = 'gloss'
+    

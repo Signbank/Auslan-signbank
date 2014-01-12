@@ -1,0 +1,158 @@
+{% extends 'baselayout.html' %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.mini.js"></script>
+    <script type='text/javascript'>
+     $(document).ready(function() {
+     $('.edit').editable('/foobar/', {
+         submitdata  : {'gloss': '{{gloss.id}}'},
+         indicator : 'Saving...',
+         tooltip   : 'Click to edit...'
+     });
+     $('.edit_area').editable('/foobar/', { 
+         submitdata  : {'gloss': '{{gloss.id}}'},
+         type      : 'textarea',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         tooltip   : 'Click to edit...'
+     });
+     $('.edit_language').editable('/foobar/', { 
+         submitdata  : {'gloss': '{{gloss.id}}'},
+         type      : 'select',
+         data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         tooltip   : 'Click to edit...'
+     });
+     
+      });
+    </script>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div id="signinfo">
+    <div id="signs">
+            {% if navigation.prev %}
+            <div class="prev">
+              <a href="{% url root_page %}{{version}}/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous {% ifequal version "medical" %} Medical {% endifequal %}Sign</a>
+            </div>
+            {% endif %}
+            {% if navigation.next %}
+            <div class="next">
+             <a href="{% url root_page %}{{version}}/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next {% ifequal version "medical" %} Medical {% endifequal %}Sign &raquo;</a>
+            </div>
+            {% endif %}
+    </div>
+</div>
+
+<div id="definitionblock">
+    <div id="leftblock">
+    <div id="videocontainer">
+    {% if gloss.get_video %}
+
+    <div id="player">
+      <iframe width="320" height="240" scrolling="no" frameborder='0'
+          src="{% url signbank.video.views.iframe gloss.get_video_number %}">
+      </iframe>
+    </div>
+      <div id="replay"></div>
+
+    {% else %}
+    <img src='{{ STATIC_URL }}images/no-video.png'>
+    {% endif %}
+    </div>
+
+    {% include "dictionary/glosstags.html" %}
+</div>
+
+    <div id="keywords">
+         <h2>Keywords</h2>
+         {% for trn in gloss.translation_set.all %}
+           {{ trn.translation }}{% if not forloop.last %},{% endif %}
+         {% endfor %}
+         </p>
+    </div>
+
+    <div id="definition">
+        <h2>Sign Definition</h2>
+
+    {% regroup gloss.definition_set.all by role as roles %}
+    
+    {% for role in roles %}
+    
+    <h3>{{role.list.0.get_role_display}}</h3>
+      
+      <ol>
+      {% for def in role.list %}     
+        <li><div class='edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
+      {% endfor %}
+      </ol>
+
+    {% endfor %}
+  
+    <h2>Properties</h2>  
+  
+    <dl class='dl-horizontal'>
+        <dt>Sign Number: </dt><dd class='edit' id='sn'>{{gloss.sn}}</dd>
+        <dt>Annotation ID Gloss:</dt><dd class='edit'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</dd>
+        {% if gloss.sense %}
+            <dt>Sense Number</dt><dd class='edit'  id='sense'>{{gloss.sense}}</dd>
+            <dt>Homonyms/Homophones</dt>
+            <dd>
+               <ol>
+               {% for h in gloss.homophones %}
+                 {% if h == gloss %}
+                 <li>{{h.idgloss}}</li>
+                 {% else %}
+                 <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
+                 {% endif %}
+               {% endfor %}
+               </ol>
+            </dd>
+        {% endif %}
+        <dt>Morphology</dt><dd class='edit' id='morph'>{{gloss.morph}}</dd>
+        <dt>Health Related</dt><dd class='edit' id='healthtf'>{{gloss.healthtf}}</dd>
+        <dt>Stem Sign Number</dt><dd class='edit' id='stemsn'>{{gloss.StemSN}}</dd>
+        <dt>Compound</dt><dd>{% if gloss.comptf %}yes{% else %}no{% endif %}</dd>
+        {% if gloss.comptf %}
+        <dt>Compound of</dt><dd>{{gloss.compound}}</dd>
+        {% endif %}
+        <dt>Language</dt><dd class='edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% endfor %}</dd>
+        <dt>Dialect</dt><dd>{% for dia in gloss.dialect.all %}{{dia.name}}{% endfor %}</dd>
+    </dl>
+    
+    <h3>Publication Status</h3>
+        
+    <dl class='dl-horizontal'>
+        <dt>In Web Dictionary</dt><dd>{{gloss.inWeb}}</dd>
+        <dt>Problematic Medical Sign</dt><dd>{{gloss.InMedLex}}</dd>
+        <dt>Proposed New Sign</dt><dd>{{gloss.isNew}}</dd>
+    </dl>
+    
+    <h3>Phonology</h3>
+        
+    <dl class='dl-horizontal'>
+        <dt>Handedness</dt><dd>{{gloss.handedness}}</dd>
+        <dt>Palm Orientation</dt><dd>{{gloss.Palm_orientation}}</dd>
+        <dt>Dominant Hand Shape</dt><dd>{{gloss.get_domhndsh_display}}</dd>
+        <dt>Subordinate Hand Shape</dt><dd>{{gloss.get_subjndsh_display}}</dd>
+        <dt>Primary Location</dt><dd>{{gloss.get_locprim_display}}</dd>
+        <dt>Secondary Location</dt><dd>{{gloss.get_locsecond_display}}</dd>
+    </dl>
+    
+    <h3>Other</h3>
+    
+    <dl class='dl-horizontal'>
+        <dt>Queries</dt><dd>{{gloss.queries}}</dd>
+        <dt>Special Core</dt><dd>{{gloss.SpecialCore}}</dd>
+        <dt>TJ Speculate</dt><dd>{{gloss.tjspeculate}}</dd>
+    </dl>
+ 
+    </div>
+</div>
+
+
+{% endblock %}
