@@ -47,11 +47,7 @@ class GlossListView(ListView):
         if get.has_key('domhndsh') and get['domhndsh'] != '':
             val = get['domhndsh']
             qs = qs.filter(domhndsh__exact=val)
-                     
-        if get.has_key('handedness') and get['domhndsh'] != '':
-            val = get['handedness'] 
-            qs = qs.filter(handedness__exact=val)
-                 
+             
         vals = get.getlist('dialect', [])
         if vals != []:
             qs = qs.filter(dialect__in=vals)
