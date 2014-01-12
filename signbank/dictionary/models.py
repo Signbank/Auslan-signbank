@@ -19,7 +19,6 @@ from signbank.video.models import GlossVideo
 
 #from models_legacy import Sign
 
-handedness_choices = (("One", "One"),("Two", "Two"), ("Double", "Double"))
 
 class Translation(models.Model):
     """An English translations of Auslan glosses"""
@@ -305,7 +304,6 @@ minor or insignificant ways that can be ignored.""")
 
     # Phonology fields
     
-    handedness = models.CharField("Handedness", max_length=10, choices=handedness_choices, blank=True)  
     domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
@@ -541,7 +539,7 @@ minor or insignificant ways that can be ignored.""")
                 }),               
             ('Phonology', {
                     'classes': 'collapse',
-                    'fields' : ('handedness',  'onehand', 'doublehnd', 'twohand', 'domonly',
+                    'fields' : ( 'onehand', 'doublehnd', 'twohand', 'domonly',
                                  'Palm_orientation','alternate', 'sym', 'para',
                                 'domhndsh', 'subhndsh', 'locprim', 'locsecond')
                    }),                    
