@@ -303,6 +303,8 @@ minor or insignificant ways that can be ignored.""")
     comptf = models.NullBooleanField("Compound", null=True, blank=True)
     
 
+    # Phonology fields
+    
     handedness = models.CharField("Handedness", max_length=10, choices=handedness_choices, blank=True)  
     domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
@@ -346,6 +348,9 @@ minor or insignificant ways that can be ignored.""")
             # and allow gaps between numbers for inserting later signs
             
     StemSN = models.IntegerField(null=True, blank=True) 
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Gloss._meta.fields]
 
     def navigation(self, version, is_staff):
         """Return a gloss navigation structure that can be used to
