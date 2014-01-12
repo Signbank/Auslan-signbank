@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
-from signbank.dictionary.adminviews import GlossListView
+from signbank.dictionary.adminviews import GlossListView, GlossDetailView
 
 
 urlpatterns = patterns('',
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     (r'^words/(?P<keyword>.+)-(?P<n>\d+).html$',
             'signbank.dictionary.views.word'),
 
-    url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.views.taglist'),
+    url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.tagviews.taglist'),
 
     # and and alternate view for direct display of a gloss
     (r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss'),
@@ -33,6 +33,7 @@ urlpatterns = patterns('',
 
     # Admin views
     url(r'^list/$', GlossListView.as_view(), name='admin_gloss_list'),
+    url(r'^gloss/(?P<pk>\d+)', GlossDetailView.as_view(), name='admin_gloss_view'),
 
 )
 

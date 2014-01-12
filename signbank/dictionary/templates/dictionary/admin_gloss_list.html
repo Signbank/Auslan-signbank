@@ -52,7 +52,7 @@
     <tbody>
     {% for gloss in object_list %}
         <tr>
-            <td><a href="{{gloss.get_absolute_url}}">{{gloss.sn}}</a></td>
+            <td><a href="/dictionary/gloss/{{gloss.pk}}/">{{gloss.sn}}</a></td>
             <td>{{gloss.annotation_idgloss}} {% if not gloss.inWeb %}*{% endif %}</td>
             <td>{{gloss.idgloss}}</td>
             <td>{{gloss.morph}}</td>

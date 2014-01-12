@@ -33,7 +33,7 @@ class GlossSearchForm(forms.ModelForm):
         model = Gloss
         fields = ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
                    'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect',
-                   'inWeb', 'InMedLex',  'isNew', 
+                   'inWeb', 'InMedLex',  'isNew', 'healthtf',
                    'handedness', 'Palm_orientation', 'domhndsh', 'subhndsh', 'locprim', 'locsecond',
                    )
     
