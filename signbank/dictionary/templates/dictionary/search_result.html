@@ -11,14 +11,14 @@
     
     <p>
       {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-        <a href="{% url root_page %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
+        <a href="{% url root_page %}dictonary/search?query={{letter}}">{{letter}}</a> | 
       {% endfor %}
     </p>
     
     {% if user.is_staff %}
     <ul>
-     <li>View signs <a href="{% url root_page %}{{version}}/tag/">according to their tags</a></li>
-     <li>Export <a href="{% url root_page %}{{version}}/export.csv">dictionary as CSV</a></li>
+     <li>View signs <a href="{% url root_page %}dictionary/tag/">according to their tags</a></li>
+     <li>Export <a href="{% url root_page %}dictionary/export.csv">dictionary as CSV</a></li>
     </ul>
     {% endif %}
     
@@ -44,10 +44,6 @@
         {% if user.is_staff %}
         <p>Items marked * below are not in the web version of the dictionary and would not
         appear in a regular (non staff) search.</p>
-        {% ifequal version "medical" %}
-        <p>In this medical sign bank search, signs are only shown where they are marked
-        as "Problematic Medical Signs".  For a view of all health related signs, please logout.</p>
-        {% endifequal %}
         {% endif %}
         
       <div id="searchresults">
@@ -56,7 +52,7 @@
                <td valign="top">
           {% for word in page.object_list %}
             <p>
-              <a href="{% url root_page %}{{version}}/words/{{ word.text }}-1.html">{{ word.text }}</a>
+              <a href="{% url root_page %}dictionary/words/{{ word.text }}-1.html">{{ word.text }}</a>
               {% if not word.inWeb %}*{% endif %}  
             </p>
 
@@ -77,7 +73,7 @@
              {% ifequal p page.number %}
              <strong>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</strong>
              {% else %}
-             <a href='?query={{query}}&page={{p}}{% ifequal version "medical" %}&msb=1{% endifequal %}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
+             <a href='?query={{query}}&page={{p}}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
              {% endifequal %}
           {% endfor %}
           </p>

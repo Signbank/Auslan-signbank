@@ -31,14 +31,13 @@ def login_required_config(f):
 
 
 @login_required_config
-def index(request, version='dictionary'):
+def index(request):
     """Default view showing a browse/search entry
     point to the dictionary"""
 
 
     return render_to_response("dictionary/search_result.html",
-                              {'version': version,
-                               'query': '',
+                              {'query': '',
                                },
                                context_instance=RequestContext(request))
 
@@ -101,7 +100,7 @@ def map_image_for_dialects(dialects):
 
 
 @login_required_config
-def word(request, keyword, n, version='dictionary'):
+def word(request, keyword, n):
     """View of a single keyword that may have more than one sign"""
 
     n = int(n)
@@ -114,7 +113,7 @@ def word(request, keyword, n, version='dictionary'):
     word = get_object_or_404(Keyword, text=keyword)
 
     # returns (matching translation, number of matches)
-    (trans, total) =  word.match_request(request, n, version)
+    (trans, total) =  word.match_request(request, n, )
 
     # and all the keywords associated with this sign
     allkwds = trans.gloss.translation_set.all()
@@ -128,22 +127,14 @@ def word(request, keyword, n, version='dictionary'):
     # work out the number of this gloss and the total number
     gloss = trans.gloss
     if request.user.is_staff:
-        if version == 'medical':
-            glosscount = Gloss.objects.filter(Q(healthtf__exact=True) | Q(InMedLex__exact=True)).count()
-            glossposn = Gloss.objects.filter(Q(InMedLex__exact=True) | Q(healthtf__exact=True), sn__lt=gloss.sn).count()+1
-        else:
-            glosscount = Gloss.objects.count()
-            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+        glosscount = Gloss.objects.count()
+        glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
     else:
-        if version == 'medical':
-            glosscount = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True).count()
-            glossposn = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True, sn__lt=gloss.sn).count()+1
-        else:
-            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
+        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
 
     # navigation gives us the next and previous signs
-    nav = gloss.navigation(version, request.user.is_staff)
+    nav = gloss.navigation(request.user.is_staff)
 
     # the gloss update form for staff
 
@@ -159,7 +150,6 @@ def word(request, keyword, n, version='dictionary'):
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'viewname': 'words',
-                               'version': version,
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
@@ -185,7 +175,7 @@ def word(request, keyword, n, version='dictionary'):
                                context_instance=RequestContext(request))
 
 @login_required_config
-def gloss(request, idgloss, version='dictionary'):
+def gloss(request, idgloss):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
 
@@ -211,22 +201,14 @@ def gloss(request, idgloss, version='dictionary'):
         videourl = None
 
     if request.user.is_staff:
-        if version == 'medical':
-            glosscount = Gloss.objects.filter(Q(healthtf__exact=True) | Q(InMedLex__exact=True)).count()
-            glossposn = Gloss.objects.filter(Q(InMedLex__exact=True) | Q(healthtf__exact=True), sn__lt=gloss.sn).count()+1
-        else:
-            glosscount = Gloss.objects.count()
-            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+        glosscount = Gloss.objects.count()
+        glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
     else:
-        if version == 'medical':
-            glosscount = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True).count()
-            glossposn = Gloss.objects.filter(inWeb__exact=True, healthtf__exact=True, sn__lt=gloss.sn).count()+1
-        else:
-            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
+        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
 
     # navigation gives us the next and previous signs
-    nav = gloss.navigation(version, request.user.is_staff)
+    nav = gloss.navigation(request.user.is_staff)
 
     # the gloss update form for staff
     update_form = None
@@ -252,7 +234,6 @@ def gloss(request, idgloss, version='dictionary'):
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
                                'dialect_image': map_image_for_dialects(gloss.dialect.all()),
-                               'version': version,
                                'lastmatch': lastmatch,
                                'videofile': videourl,
                                'viewname': word,
@@ -270,10 +251,8 @@ def gloss(request, idgloss, version='dictionary'):
 
 
 @login_required_config
-def search(request, version='dictionary'):
-    """Handle keyword search form submission
-    version is either 'dictionary' or 'medicalsignbank' and determines
-    which part of the dictionary is searched"""
+def search(request):
+    """Handle keyword search form submission"""
 
 
     if request.GET.has_key('query'):
@@ -282,38 +261,13 @@ def search(request, version='dictionary'):
         try:
             term = smart_unicode(term)
 
-            # check the submitted 'msb' checkbox and change the version
-            # as appropriate, do this by redirecting so that the page
-            # url is correct always
-            if request.GET.has_key('msb') and version == 'dictionary':
-                newurl = request.path.replace('dictionary', 'medical')
-                return HttpResponseRedirect("%s?query=%s&msb=1" % (newurl, term))
-            elif not request.GET.has_key('msb') and version == 'medical':
-                newurl = request.path.replace('medical', 'dictionary')
-                return HttpResponseRedirect(newurl+"?query="+term)
-
-
-
             if request.user.is_authenticated() and request.user.is_staff:
-                # staff get to see all the words, but might be only medical
-                if version == 'medical':
-                    # select InMedLex OR healthtf to get all medical words
-                    # remember InMedLex means 'Problematic Medical Sign'
-                    # NOTE: dependancy with models.Keyword.match_request
-                    words = Keyword.objects.filter(Q(text__istartswith=term),
-                                                   Q(translation__gloss__InMedLex__exact=True) |
-                                                   Q(translation__gloss__healthtf__exact=True)).distinct()
-                else:
-                    words = Keyword.objects.filter(text__istartswith=term)
+                # staff get to see all the words
+                words = Keyword.objects.filter(text__istartswith=term)
             else:
-                # regular users see either everything or health only signs
-                if version == 'medical':
-                    words = Keyword.objects.filter(text__istartswith=term,
-                                                   translation__gloss__inWeb__exact=True,
-                                                   translation__gloss__healthtf__exact=True).distinct()
-                else:
-                    words = Keyword.objects.filter(text__istartswith=term,
-                                                   translation__gloss__inWeb__exact=True).distinct()
+                # regular users see either everything that's published
+                words = Keyword.objects.filter(text__istartswith=term,
+                                                translation__gloss__inWeb__exact=True).distinct()
 
         except:
             # if the encoding didn't work this is
@@ -328,7 +282,7 @@ def search(request, version='dictionary'):
 
     # display the keyword page if there's only one hit
     if len(words) == 1:
-        return HttpResponseRedirect('/'+version+'/words/'+words[0].text+'-1.html' )
+        return HttpResponseRedirect('/dictionary/words/'+words[0].text+'-1.html' )
 
     paginator = Paginator(words, 50)
     if request.GET.has_key('page'):
@@ -352,7 +306,6 @@ def search(request, version='dictionary'):
                                'wordcount' : len(words),
                                'page' : result_page,
                                'menuid' : 2,
-                               'version': version,
                                },
                               context_instance=RequestContext(request))
 
@@ -361,7 +314,7 @@ def search(request, version='dictionary'):
 from django.db.models.loading import get_model, get_apps, get_models
 from django.core import serializers
 
-def keyword_value_list(request, prefix=None, version='dictionary'):
+def keyword_value_list(request, prefix=None):
     """View to generate a list of possible values for
     a keyword given a prefix."""
 
@@ -380,7 +333,7 @@ def missing_video_list():
         if not gloss.has_video():
             yield gloss
 
-def missing_video_view(request, version):
+def missing_video_view(request):
     """A view for the above list"""
 
     glosses = missing_video_list()
@@ -392,7 +345,7 @@ def missing_video_view(request, version):
 ## csv export
 import csv
 
-def csv_export(request, version):
+def csv_export(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename="dictionary-export.csv"'

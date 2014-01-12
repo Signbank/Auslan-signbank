@@ -7,7 +7,7 @@
    <strong>{{cat}}</strong>
     {% for tag in tags %} 
       <div class='tag' {% if tag.0 == thistag.1 and cat == thistag.0 %}id='activetag'{% endif %}>
-        <span class='tagname'><a href="/{{version}}/tag/{{cat}}:{{tag.0}}">{{tag.0}}</a></span>
+        <span class='tagname'><a href="/dictionary/tag/{{cat}}:{{tag.0}}">{{tag.0}}</a></span>
         <span class='tagcount'>{{tag.1}}</span>
       </div>
     {% endfor %}
@@ -44,7 +44,7 @@
              {% ifequal p page.number %}
              <strong>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</strong>
              {% else %}
-             <a href='?query={{query}}&page={{p}}{% ifequal version "medical" %}&msb=1{% endifequal %}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
+             <a href='?query={{query}}&page={{p}}'>{% ifequal p 0 %}Start{% else %}{{p}}{% endifequal %}</a>
              {% endifequal %}
           {% endfor %}
           </p>

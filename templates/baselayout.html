@@ -14,11 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/colour.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tags.css">
 
-{% ifequal version "medical" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/auslan-medical.css" type="text/css">
-{% else %} 
     <link rel="stylesheet" href="{{ STATIC_URL }}css/{% primary_css %}.css" type="text/css">
-{% endifequal %}
 	
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.confirm-1.3.js"></script>
@@ -82,10 +78,9 @@ $(document).ready(function(){
     <div id="rightcontentborder"></div>
     <div id="header">
        <h1>Auslan - Signbank</h1>
-       <form id="frmSearch" name="frmSearch" method="get" action="{% url root_page %}{% if version %}{{version}}{% else %}dictionary{% endif %}/search/">
+       <form id="frmSearch" name="frmSearch" method="get" action="{% url root_page %}dictionary/search/">
           <input type="Text" name="query" value="{{ query }}" maxlength="50">
-          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>
-          <br>Medical Signs only<input type="checkbox" name="msb" value="1" {% ifequal version "medical" %}checked='1'{% endifequal %}>      
+          <a href="javascript:document.forms['frmSearch'].submit();">Sign Search</a>      
        </form> 
     </div>
 
