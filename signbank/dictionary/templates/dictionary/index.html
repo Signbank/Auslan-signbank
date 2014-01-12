@@ -9,19 +9,13 @@
     
     <p>
     {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-      <a href="{% url root_page %}{{version}}/search?query={{letter}}{% ifequal version "medical"%}&msb=1{% endifequal %}">{{letter}}</a> | 
+      <a href="{% url root_page %}dictionary/search?query={{letter}}">{{letter}}</a> | 
    {% endfor %}
    </p>
    
         
 </div>
 
-
-    {% ifequal version "medical" %}
-
-    <p style="text-align: center; font-size: large">Please help us improve the Medical SignBank. See <a href="{% url root_page %}research/medicalhelp/">how you can help</a>.</p>
-    
-    {% endifequal %}
 
 
 {% endblock %}

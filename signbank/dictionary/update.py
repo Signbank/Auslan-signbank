@@ -12,7 +12,7 @@ import os, shutil
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
-def update_gloss(request, glossid, version='dictionary'):
+def update_gloss(request, glossid):
     """View to update a gloss from the form displayed on the staff view"""
 
     if not request.user.has_perm('dictionary.change_gloss'):
@@ -41,7 +41,7 @@ def update_gloss(request, glossid, version='dictionary'):
                                },
                               context_instance=RequestContext(request))
 
-def add_tag(request, glossid, version='dictionary'):
+def add_tag(request, glossid):
     """View to add a tag to a gloss"""
 
     # default response
@@ -74,7 +74,7 @@ def add_tag(request, glossid, version='dictionary'):
 
 
 
-def update_video(request, glossid, version='dictionary'):
+def update_video(request, glossid):
     """View to update the video for a gloss from the form displayed on the staff view"""
 
     if not request.user.has_perm('dictionary.update_video'):

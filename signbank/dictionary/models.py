@@ -73,24 +73,16 @@ class Keyword(models.Model):
         
         
         
-    def match_request(self, request, n, version='dictionary'):
+    def match_request(self, request, n):
         """Find the translation matching a keyword request given an index 'n'
-        response depends on login status and whether we're searching the
-        medical dictionary.
+        response depends on login status
         Returns a tuple (translation, count) where count is the total number
         of matches."""
         
         if request.user.is_authenticated() and request.user.is_staff:
-            if version == 'medical':
-                # needs to match the condition in views.search 
-                alltrans = self.translation_set.filter(Q(gloss__InMedLex__exact=True)|Q(gloss__healthtf__exact=True))
-            else:
-                alltrans = self.translation_set.all()
+            alltrans = self.translation_set.all()
         else:
-            if version == 'medical':
-                alltrans = self.translation_set.filter(gloss__inWeb__exact=True, gloss__healthtf__exact=True)
-            else:
-                alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
+            alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
         
         # if there are no translations, generate a 404
         if len(alltrans) == 0:
@@ -284,13 +276,6 @@ minor or insignificant ways that can be ignored.""")
     dialect = models.ManyToManyField(Dialect)
     
     
-     
-    
-    # fields that could be tags, but not sure
-    # healthtf is used to define the medical signbank, changing it has implications but might be a good idea
-    healthtf = models.NullBooleanField("Health Related Sign", null=True, blank=True) 
-
-    
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
     
@@ -350,17 +335,13 @@ minor or insignificant ways that can be ignored.""")
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Gloss._meta.fields]
 
-    def navigation(self, version, is_staff):
+    def navigation(self, is_staff):
         """Return a gloss navigation structure that can be used to
         generate next/previous links from within a template page"""
     
         result = dict() 
-        if version == 'medical':
-            result['next'] = self.next_medical_gloss(is_staff)
-            result['prev'] = self.prev_medical_gloss(is_staff)
-        else:
-            result['next'] = self.next_dictionary_gloss(is_staff)
-            result['prev'] = self.prev_dictionary_gloss(is_staff)
+        result['next'] = self.next_dictionary_gloss(is_staff)
+        result['prev'] = self.prev_dictionary_gloss(is_staff)
         return result
     
     def admin_next_gloss(self):
@@ -395,32 +376,7 @@ minor or insignificant ways that can be ignored.""")
             return set[0]
         else:
             return None     
-     
-    def next_medical_gloss(self, staff=False):
-        """Find the next gloss in dictionary order within the medical subset"""
-        if staff:
-            all = Gloss.objects.filter(Q(sn__gt=self.sn), Q(healthtf__exact=True) | Q(InMedLex__exact=True)).order_by('sn')
-        else:
-            all = Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('sn')
-
-        if len(all) > 0:
-            return all[0]
-        else:
-            return None
-    
-    def prev_medical_gloss(self, staff=False):
-        """Find the previous gloss in dictionary order within the medical subset"""
-        if staff:
-            all = Gloss.objects.filter(Q(sn__lt=self.sn), Q(healthtf__exact=True) | Q(InMedLex__exact=True)).order_by('-sn')
-        else:
-            all = Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True, healthtf__exact=True).order_by('-sn')
- 
-        if len(all) > 0:
-            return all[0]
-        else:
-            return None           
-        
-
+             
     def get_absolute_url(self):
         return "/dictionary/gloss/%s.html" % self.idgloss
     
@@ -500,90 +456,7 @@ minor or insignificant ways that can be ignored.""")
             defs[d.role].append(d.text)
         return defs
     
-    class Admin:
-        save_on_top = True
-        search_fields = ['^idgloss']
     
-        fields = (
-            (None, {
-                    'fields':  ( 'idgloss', 'annotation_idgloss', 'morph',  'sense', 'sn', 'StemSN')
-
-                   }), 
-                   
-            ('Publication Status', { 
-                    'classes': 'collapse',
-                    'fields' : ('inCD', 'inWeb', 'InMainBook', 'InSuppBook', 'InMedLex', 'isNew', 'NotBkDBOnly', 'BookProb', )
-                   }),
-            ('Lexis & Register: Borrowing', { 
-                   'fields': ('aslgloss', 'asloantf', 'asltf','bslgloss', 'bslloantf', 'bsltf'),
-                   'classes': 'collapse',     
-                   }),
-            ('Lexis & Register: States', {
-                    'classes': 'collapse',
-                    'fields' : ( 'auslextf', 'reglextf', 'nthtf', 'tastf', 'victf', 'watf', 'satf', 'qldtf', 'nswtf','sthtf',  'stateschtf',)
-                   }), 
-            
-            ('Lexis & Register: Religion', {
-                    'classes': 'collapse',
-                    'fields' : (  'religiontf', 'catholictf', 'cathschtf', 'angcongtf', 'jwtf', 'otherreltf', )
-                   }),
-            ('Lexis & Register: Iconicity', {
-                    'classes': 'collapse',
-                    'fields' : (   'setf', 'segloss', 'seonlytf', 'sedefinetf','transptf', 'transltf','obscuretf',  'opaquetf',)
-                   }),               
-            ('Lexis & Register: Other', {
-                'classes': 'collapse',
-                'fields' : ('marginaltf', 'obsoletetf', 'varlextf', 'doubtlextf', 'propernametf',
-                            'fingersptf', 'gensigntf', 'comptf', 'compound', 'blendtf', 'blend',
-                            'inittf', 'inittext',  'restricttf','techtf',  'crudetf', )
-                }),               
-            ('Phonology', {
-                    'classes': 'collapse',
-                    'fields' : ( 'onehand', 'doublehnd', 'twohand', 'domonly',
-                                 'Palm_orientation','alternate', 'sym', 'para',
-                                'domhndsh', 'subhndsh', 'locprim', 'locsecond')
-                   }),                    
-            ('Morpho-Syntax', {
-                'classes': 'collapse',
-                'fields' : ( 'dirtf', 'begindirtf', 'enddirtf', 'orienttf', 'bodyloctf', 'locdirtf',)
-                }),
-         
- 
-             ("Semantic Domains", {
-                    'classes': 'collapse',
-                    'fields':  ( 'animalstf', 'arithmetictf', 'artstf', 
-                        'bodyprtstf', 'carstf',   'citiestf', 'clothingtf', 'colorstf',
-                        'cookingtf','daystf', 'deaftf',  'drinkstf', 'eductf', 
-                                 'familytf', 'feeltf',  'foodstf', 
-                                'furntf',  'govtf', 'groomtf', 'healthtf',
-                                'judgetf',  'langactstf', 'lawtf',
-                                 'materialstf', 'metalgtf', 'mindtf', 'moneytf', 
-                                'naturetf', 'numbertf', 
-                                'ordertf',  
-                                 'peopletf', 'physicalactstf',  'qualitytf', 'quantitytf',
-                                 'questsigntf', 'recreationtf',  
-                                'roomstf', 'saluttf', 
-                                'sensestf',  'sextf', 'shapestf', 'shoppingtf','sporttf',
-                                'telecomtf', 'timetf', 'traveltf',  'utensilstf',   'weathertf', 
-                                'worktf',)
-
-                   }),       
-            
-            ("Other", {
-                    'classes': 'collapse',
-                    'fields':  ( 'general',    
-                                 'comp', 
-                                 'CorrectionsAdditionsComments', 
-                                'queries',  
-                                'SpecialCore', 
-                                 'tjspeculate',  
-                                 )
-
-                   }),       
-                   
-          
-            )
-
 
 # register Gloss for tags
 try:

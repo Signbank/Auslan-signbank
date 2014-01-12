@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from tagging.models import Tag, TaggedItem
 from signbank.dictionary.models import Gloss
 
-def taglist(request, tag=None, version='dictionary'):
+def taglist(request, tag=None):
     """View of a list of tags or a list of signs with a given tag"""
 
 
@@ -42,13 +42,11 @@ def taglist(request, tag=None, version='dictionary'):
                                   {'paginator': paginator,
                                    'page': result_page,
                                    'thistag': taginfo,
-                                   'tagdict': tag_dict(),
-                                   'version': version},
+                                   'tagdict': tag_dict()},
                                    context_instance=RequestContext(request) )
     else:
         return render_to_response('dictionary/gloss_list.html',
-                                  {'version': version,
-                                   'tagdict': tag_dict(),
+                                  {'tagdict': tag_dict(),
                                    },
                                    context_instance=RequestContext(request))
 
