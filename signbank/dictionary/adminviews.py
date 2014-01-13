@@ -39,10 +39,6 @@ class GlossListView(ListView):
         if get.has_key('inWeb') and get['inWeb'] != '1':
             val = get['inWeb'] == '2'
             qs = qs.filter(inWeb__exact=val)
-                     
-        if get.has_key('InMedLex') and get['InMedLex'] != '1':
-            val = get['InMedLex'] == '2'
-            qs = qs.filter(InMedLex__exact=val)
                  
         if get.has_key('domhndsh') and get['domhndsh'] != '':
             val = get['domhndsh']

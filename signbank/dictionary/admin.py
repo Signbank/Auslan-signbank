@@ -65,7 +65,7 @@ class SenseNumberListFilter(SimpleListFilter):
 class GlossAdmin(VersionAdmin):
     fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
                                     'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
-              ('Publication Status', {'fields': ('inWeb', 'InMedLex',  'isNew',  ), 
+              ('Publication Status', {'fields': ('inWeb',  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
               ('Phonology', {'fields': ('Palm_orientation', 'domhndsh', 
                                         'subhndsh', 'locprim', 'locsecond', ), 'classes': ('collapse',)}, ),
@@ -76,7 +76,7 @@ class GlossAdmin(VersionAdmin):
     save_as = True
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
     search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
-    list_filter = ['language', 'dialect', SenseNumberListFilter, 'InMedLex', 'inWeb', 'domhndsh']
+    list_filter = ['language', 'dialect', SenseNumberListFilter, 'inWeb', 'domhndsh']
     inlines = [ RelationInline, DefinitionInline, TranslationInline ]
 
 
