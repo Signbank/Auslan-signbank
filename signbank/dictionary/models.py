@@ -301,7 +301,6 @@ minor or insignificant ways that can be ignored.""")
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)
     InMainBook = models.NullBooleanField("In the main book", null=True, blank=True)
     InSuppBook = models.NullBooleanField("In the supplementary book", null=True, blank=True)  
-    InMedLex = models.NullBooleanField("Problematic Medical Sign", null=True, default=False)  
     isNew = models.NullBooleanField("Is this a proposed new sign?", null=True, default=False)
     
     inittext = models.CharField(max_length="50", blank=True) 
