@@ -40,10 +40,37 @@ class GlossListView(ListView):
             val = get['inWeb'] == '2'
             qs = qs.filter(inWeb__exact=val)
                  
+        ## phonology field filters
         if get.has_key('domhndsh') and get['domhndsh'] != '':
             val = get['domhndsh']
             qs = qs.filter(domhndsh__exact=val)
-             
+            
+        if get.has_key('subhndsh') and get['subhndsh'] != '':
+            val = get['subhndsh']
+            qs = qs.filter(subhndsh__exact=val)
+            
+        if get.has_key('final_domhndsh') and get['final_domhndsh'] != '':
+            val = get['final_domhndsh']
+            qs = qs.filter(final_domhndsh__exact=val)
+            
+        if get.has_key('final_subhndsh') and get['final_subhndsh'] != '':
+            val = get['final_subhndsh']
+            qs = qs.filter(final_subhndsh__exact=val)     
+            
+        if get.has_key('locprim') and get['locprim'] != '':
+            val = get['locprim']
+            qs = qs.filter(locprim__exact=val)
+
+        if get.has_key('locsecond') and get['locsecond'] != '':
+            val = get['locsecond']
+            qs = qs.filter(locsecond__exact=val)       
+
+        if get.has_key('final_loc') and get['final_loc'] != '':
+            val = get['final_loc']
+            qs = qs.filter(final_loc__exact=val)   
+        # end of phonology filters
+        
+        
         vals = get.getlist('dialect', [])
         if vals != []:
             qs = qs.filter(dialect__in=vals)

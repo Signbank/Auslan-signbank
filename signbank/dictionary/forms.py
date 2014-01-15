@@ -35,6 +35,7 @@ class GlossSearchForm(forms.ModelForm):
                    'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect',
                    'inWeb', 'isNew',
                    'Palm_orientation', 'domhndsh', 'subhndsh', 'locprim', 'locsecond',
+                   'final_domhndsh', 'final_subhndsh', 'final_loc'
                    )
     
 
