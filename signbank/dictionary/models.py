@@ -291,9 +291,13 @@ minor or insignificant ways that can be ignored.""")
     
     domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
+    
+    final_domhndsh = models.CharField("Final Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
+    final_subhndsh = models.CharField("Final Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
     locsecond = models.IntegerField("Secondary Location", choices=secLocationChoices, null=True, blank=True) 
+    final_loc = models.IntegerField("Final Location", choices=locationChoices, null=True, blank=True) 
     
     
     # which versions of the dictionary should this gloss appear in

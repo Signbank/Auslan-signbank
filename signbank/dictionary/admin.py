@@ -65,12 +65,12 @@ class SenseNumberListFilter(SimpleListFilter):
 class GlossAdmin(VersionAdmin):
     fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
                                     'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
-              ('Publication Status', {'fields': ('inWeb',  'isNew',  ), 
+                 ('Publication Status', {'fields': ('inWeb',  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
-              ('Phonology', {'fields': ('Palm_orientation', 'domhndsh', 
-                                        'subhndsh', 'locprim', 'locsecond', ), 'classes': ('collapse',)}, ),
-              ('Other', {'fields': ('queries', 'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
-              ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', ), 'classes': ('collapse',)}),
+                 ('Phonology', {'fields': ('Palm_orientation', 'domhndsh', 
+                                        'subhndsh', 'locprim', 'locsecond', 'final_domhndsh', 'final_subhndsh', 'final_loc', ), 'classes': ('collapse',)}, ),
+                 ('Other', {'fields': ('queries', 'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
+                 ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', ), 'classes': ('collapse',)}),
               )
     save_on_top = True
     save_as = True
