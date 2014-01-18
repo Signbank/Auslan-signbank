@@ -148,11 +148,15 @@ class Command(BaseCommand):
             h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
             
             for row in h:
-                #if row['annotation idgloss'].startswith('B'):
-                #    return
+              #  if row['annotation idgloss'].startswith('B'):
+               #     break
                 
                 if row['bsltf']:
-                    print row['annotation idgloss'], row['sn']
+                    
+                    for key in row.keys():
+                        row[key] = row[key].strip()
+                    
+                    print row['annotation idgloss'], row['sn'], row['idgloss']
                     gloss = Gloss()
                     gloss.annotation_idgloss = row['annotation idgloss']
                     gloss.bsltf = True
@@ -171,15 +175,15 @@ class Command(BaseCommand):
                         gloss.domhndsh = row['domhndsh']
                     if row['subhndsh'] != '':
                         gloss.subhndsh = row['subhndsh']
-                    if row['FinaldominantHS'] != '':
+                    if row['FinaldominantHS'] != '' and row['FinaldominantHS'] != '0':
                         gloss.final_domhndsh = row['FinaldominantHS']
-                    if row['FinalSubordinateHS'] != '':
+                    if row['FinalSubordinateHS'] != '' and row['FinalSubordinateHS'] != '0':
                         gloss.final_subhndsh = row['FinalSubordinateHS']
-                    if row['FinalLoc'] != '':   
+                    if row['FinalLoc'] != '' and row['FinalLoc'] != '0':   
                         gloss.final_loc = row['FinalLoc']
-                    if row['locprim'] != '':
+                    if row['locprim'] != '' and row['locprim'] != '0':
                         gloss.locprim = int(row['locprim'])
-                    if row['locsecond'] != '':
+                    if row['locsecond'] != '' and row['locsecond'] != '0':
                         gloss.locsecond = int(row['locsecond'])
                     
                     # need to add new palm fields
@@ -254,11 +258,6 @@ class Command(BaseCommand):
                             #print "Verb: ", count, row[field]
                             count += 1
                             dfn.save()                      
-                        
-                    # relations
-                    
-                    # syn
-                    # var
                     
                     # keywords
                     kwds = row['Combined Keywords'].split(',')
@@ -282,5 +281,50 @@ class Command(BaseCommand):
                     gloss.language.add(lang_bsl)
                     
                     gloss.save()
+                    
+                    
+            # relations need to wait until we've made all glosses
+            print "Ingesting relations..."
+            
+            Relation.objects.all().delete()
+
+            #h = csv.DictReader(codecs.open(csvfile, 'Ur', encoding='iso8859-1'))
+            h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
+            for row in h:                    
+
+               # if row['annotation idgloss'].startswith('B'):
+                #    break
+                
+                if row['bsltf'] and row['idgloss'] != '':
+                    try:
+                        
+                        thisgloss = Gloss.objects.get(idgloss__exact=row['idgloss'])
+                    except:
+                        print "Can't find gloss for ", row['idgloss']
+                        continue
+                    
+                    # syn
+                    # var
+                    generate_relations(thisgloss, row, ['varb', 'varc', 'vard', 'vare'], 'variant')
+                    generate_relations(thisgloss, row, ['syn1', 'syn2', 'syn3'], 'synonym')
+                    
+                    
+                    
+                    
+def generate_relations(thisgloss, row, relfields, role):  
+                     
+    for field in relfields:
+        if row[field] != '':                           
+            try:
+                target = Gloss.objects.get(idgloss__exact=row[field])
+            
+                rel = Relation(source=thisgloss, target=target, role=role)
+                rel.save()
+                                            
+                print thisgloss, "-(%s)->" % role, target
+            except:
+                print "Can't find", role , row[field]
+                    
+                    
                     
                     
