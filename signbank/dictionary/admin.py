@@ -69,7 +69,7 @@ class GlossAdmin(VersionAdmin):
                                        'classes': ('collapse',)}, ),
                  ('Phonology', {'fields': ('Palm_orientation', 'domhndsh', 
                                         'subhndsh', 'locprim', 'locsecond', 'final_domhndsh', 'final_subhndsh', 'final_loc', ), 'classes': ('collapse',)}, ),
-                 ('Other', {'fields': ('queries', 'SpecialCore', 'tjspeculate', ), 'classes': ('collapse',)}, ),
+                 ('Other', {'fields': ('queries', 'SpecialCore', ), 'classes': ('collapse',)}, ),
                  ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', 'inittf', 'inittext',  ), 'classes': ('collapse',)}),
               )
     save_on_top = True
