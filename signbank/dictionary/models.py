@@ -228,7 +228,12 @@ secLocationChoices = (
                     (27, 'Fingertips'),
                     )
 
-
+palmOrientationChoices = (
+                    ('prone','Prone'),
+                    ('neutral', 'Neutral'),
+                    ('supine', 'Supine'),
+                    ('na', 'N/A'),      
+                          )
     
 class Gloss(models.Model):
     
@@ -296,8 +301,12 @@ minor or insignificant ways that can be ignored.""")
     final_subhndsh = models.CharField("Final Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
-    locsecond = models.IntegerField("Secondary Location", choices=secLocationChoices, null=True, blank=True) 
+    locsecond = models.IntegerField("Secondary Location", choices=locationChoices, null=True, blank=True) 
     final_loc = models.IntegerField("Final Location", choices=locationChoices, null=True, blank=True) 
+    
+    initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices) 
+    final_palm_orientation = models.CharField("Final Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices)
+  
     
     
     # which versions of the dictionary should this gloss appear in
@@ -310,13 +319,11 @@ minor or insignificant ways that can be ignored.""")
     inittext = models.CharField(max_length="50", blank=True) 
     inittf = models.NullBooleanField(null=True, blank=True)
 
-
     morph = models.CharField("Morphemic Analysis", max_length=50, blank=True)  
     
     NotBkDBOnly = models.NullBooleanField("Not in book, database only", null=True, blank=True) 
         
-    Palm_orientation = models.CharField(max_length=10, blank=True) # only used twice = Left
-    
+  
     queries = models.TextField(null=True, blank=True) # This field type is a guess.
 
     sedefinetf = models.TextField("Signed English definition available", null=True, blank=True)  # TODO: should be boolean
