@@ -61,7 +61,16 @@
              cancel    : 'Cancel',
              submit    : 'OK',
              tooltip   : 'Click to edit...'
-         });     
+         });
+         $('.edit_relori').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {{gloss.relative_orientation_choices_json|safe}},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         }); 
+                  
       });
     </script>
 {% endblock %}
@@ -171,6 +180,9 @@
     <dl class='dl-horizontal'>
         <dt>Initial Palm Orientation</dt><dd class='edit_palm' id='initial_palm_orientation'>{{gloss.initial_palm_orientation}}</dd>
         <dt>Final Palm Orientation</dt><dd class='edit_palm' id='final_palm_orientation'>{{gloss.final_palm_orientation}}</dd>
+
+        <dt>Initial Relative Orientation</dt><dd class='edit_relori' id='initial_relative_orientation'>{{gloss.initial_relative_orientation}}</dd>
+        <dt>Final Relative Orientation</dt><dd class='edit_relori' id='final_relative_orientation'>{{gloss.final_relative_orientation}}</dd>
 
         <dt>Dominant Hand Shape</dt><dd class='edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</dd>
         <dt>Subordinate Hand Shape</dt><dd class='edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</dd>

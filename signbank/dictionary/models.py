@@ -235,7 +235,17 @@ palmOrientationChoices = (
                     ('supine', 'Supine'),
                     ('na', 'N/A'),      
                           )
-    
+
+relOrientationChoices = (
+                    ('palm', 'Palm'),
+                    ('back', 'Back'),
+                    ('root', 'Root'), 
+                    ('radial', 'Radial'),
+                    ('ulnar', 'Ulnar'),
+                    ('fingertips', 'Fingertips'),
+                    ('0', 'N/A'),  
+                        )
+
 class Gloss(models.Model):
     
     class Meta:
@@ -308,7 +318,9 @@ minor or insignificant ways that can be ignored.""")
     initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices) 
     final_palm_orientation = models.CharField("Final Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices)
   
-
+    initial_relative_orientation = models.CharField("Initial Relative Orientation", max_length=10, blank=True, choices=relOrientationChoices) 
+    final_relative_orientation = models.CharField("Final Relative Orientation", max_length=10, blank=True, choices=relOrientationChoices)
+ 
     
     # which versions of the dictionary should this gloss appear in
     inCD = models.NullBooleanField("In the CDROM dictionary", null=True, blank=True) 
@@ -481,6 +493,11 @@ minor or insignificant ways that can be ignored.""")
         """Return JSON for the palm orientation choice list"""
         
         return json.dumps(dict(palmOrientationChoices))
+
+    def relative_orientation_choices_json(self):
+        """Return JSON for the relative orientation choice list"""
+        
+        return json.dumps(dict(relOrientationChoices))
     
 
 # register Gloss for tags
