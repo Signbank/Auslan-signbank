@@ -13,7 +13,7 @@ from django.http import Http404
 import tagging
 
 import sys, os
-
+import json
 
 from signbank.video.models import GlossVideo
 
@@ -458,6 +458,16 @@ minor or insignificant ways that can be ignored.""")
         return defs
     
     
+    def handshape_choices_json(self):
+        """Return JSON for the handshape choice list"""
+        
+        return json.dumps(dict(handshapeChoices))
+    
+    
+    def location_choices_json(self):
+        """Return JSON for the location choice list"""
+        
+        return json.dumps(dict(locationChoices))    
 
 # register Gloss for tags
 try:
