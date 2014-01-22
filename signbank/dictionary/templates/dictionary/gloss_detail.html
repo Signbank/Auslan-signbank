@@ -2,29 +2,66 @@
 
 {% block extrajs %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.mini.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
     <script type='text/javascript'>
      $(document).ready(function() {
-     $('.edit').editable('/foobar/', {
-         submitdata  : {'gloss': '{{gloss.id}}'},
-         indicator : 'Saving...',
-         tooltip   : 'Click to edit...'
-     });
-     $('.edit_area').editable('/foobar/', { 
-         submitdata  : {'gloss': '{{gloss.id}}'},
-         type      : 'textarea',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         tooltip   : 'Click to edit...'
-     });
-     $('.edit_language').editable('/foobar/', { 
-         submitdata  : {'gloss': '{{gloss.id}}'},
-         type      : 'select',
-         data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         tooltip   : 'Click to edit...'
-     });
-     
+         var edit_post_url = '/fboingr/';
+         
+         $('.edit').editable(edit_post_url, {
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             indicator : 'Saving...',
+             tooltip   : 'Click to edit...',
+             cancel    : 'Cancel',
+             submit    : 'OK'
+         });
+         $('.edit_area').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'textarea',
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });
+         $('.edit_language').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });
+         $('.edit_check').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'checkbox',
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...',
+             checkbox: { trueValue: 'Yes', falseValue: 'No' }
+         });
+         
+         $('.edit_handshape').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {{gloss.handshape_choices_json|safe}},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });
+         $('.edit_location').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {{gloss.location_choices_json|safe}},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });
+         $('.edit_palm').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });     
       });
     </script>
 {% endblock %}
@@ -117,32 +154,31 @@
         <dt>Morphology</dt><dd class='edit' id='morph'>{{gloss.morph}}</dd>
         <dt>Health Related</dt><dd class='edit' id='healthtf'>{{gloss.healthtf}}</dd>
         <dt>Stem Sign Number</dt><dd class='edit' id='stemsn'>{{gloss.StemSN}}</dd>
-        <dt>Compound</dt><dd>{% if gloss.comptf %}yes{% else %}no{% endif %}</dd>
-        {% if gloss.comptf %}
-        <dt>Compound of</dt><dd>{{gloss.compound}}</dd>
-        {% endif %}
+        <dt>Compound of</dt><dd class='edit' id='compound'>{{gloss.compound}}</dd>
         <dt>Language</dt><dd class='edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% endfor %}</dd>
-        <dt>Dialect</dt><dd>{% for dia in gloss.dialect.all %}{{dia.name}}{% endfor %}</dd>
+        <dt>Dialect</dt><dd class='edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% endfor %}</dd>
     </dl>
     
     <h3>Publication Status</h3>
         
     <dl class='dl-horizontal'>
-        <dt>In Web Dictionary</dt><dd>{{gloss.inWeb}}</dd>
-        <dt>Proposed New Sign</dt><dd>{{gloss.isNew}}</dd>
+        <dt>In Web Dictionary</dt><dd class='edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</dd>
+        <dt>Proposed New Sign</dt><dd class='edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</dd>
     </dl>
     
     <h3>Phonology</h3>
         
     <dl class='dl-horizontal'>
-        <dt>Palm Orientation</dt><dd>{{gloss.Palm_orientation}}</dd>
-        <dt>Dominant Hand Shape</dt><dd>{{gloss.get_domhndsh_display}}</dd>
-        <dt>Subordinate Hand Shape</dt><dd>{{gloss.get_subjndsh_display}}</dd>
-        <dt>Final Dominant Hand Shape</dt><dd>{{gloss.get_final_domhndsh_display}}</dd>
-        <dt>Final Subordinate Hand Shape</dt><dd>{{gloss.get_final_subjndsh_display}}</dd>
-        <dt>Primary Location</dt><dd>{{gloss.get_locprim_display}}</dd>
-        <dt>Secondary Location</dt><dd>{{gloss.get_locsecond_display}}</dd>
-        <dt>Final Location</dt><dd>{{gloss.get_final_loc_display}}</dd>
+        <dt>Palm Orientation</dt><dd class='edit_palm' id='Palm_orientation'>{{gloss.Palm_orientation}}</dd>
+
+        <dt>Dominant Hand Shape</dt><dd class='edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</dd>
+        <dt>Subordinate Hand Shape</dt><dd class='edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</dd>
+        <dt>Final Dominant Hand Shape</dt><dd class='edit_handshape' id='final_domhndsh'>{{gloss.get_final_domhndsh_display}}</dd>
+        <dt>Final Subordinate Hand Shape</dt><dd class='edit_handshape' id='final_subhndsh'>{{gloss.get_final_subjndsh_display}}</dd>
+
+        <dt>Primary Location</dt><dd class='edit_location' id='locprim'>{{gloss.get_locprim_display}}</dd>
+        <dt>Secondary Location</dt><dd class='edit_location' id='locsecond'>{{gloss.get_locsecond_display}}</dd>
+        <dt>Final Location</dt><dd class='edit_location' id='final_loc'>{{gloss.get_final_loc_display}}</dd>
     </dl>
     
 
