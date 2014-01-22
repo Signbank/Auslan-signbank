@@ -57,7 +57,7 @@
          $('.edit_palm').editable(edit_post_url, { 
              submitdata  : {'gloss': '{{gloss.id}}'},
              type      : 'select',
-             data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
+             data      : {{gloss.palm_orientation_choices_json|safe}},
              cancel    : 'Cancel',
              submit    : 'OK',
              tooltip   : 'Click to edit...'
@@ -169,7 +169,8 @@
     <h3>Phonology</h3>
         
     <dl class='dl-horizontal'>
-        <dt>Palm Orientation</dt><dd class='edit_palm' id='Palm_orientation'>{{gloss.Palm_orientation}}</dd>
+        <dt>Initial Palm Orientation</dt><dd class='edit_palm' id='initial_palm_orientation'>{{gloss.initial_palm_orientation}}</dd>
+        <dt>Final Palm Orientation</dt><dd class='edit_palm' id='final_palm_orientation'>{{gloss.final_palm_orientation}}</dd>
 
         <dt>Dominant Hand Shape</dt><dd class='edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</dd>
         <dt>Subordinate Hand Shape</dt><dd class='edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</dd>
