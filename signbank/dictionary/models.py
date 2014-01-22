@@ -197,6 +197,7 @@ handshapeChoices = (('0.1', 'Round'),
                      )
                      
 locationChoices = (
+                    (0, 'N/A'),
                     (1, 'Top of head'),
                     (2, 'Forehead'),
                     (3, 'Temple'),
@@ -216,8 +217,6 @@ locationChoices = (
                     (17, 'Below waist'),
                     (18, 'Upper arm'),
                     (19, 'Elbow'),
-                    )
-secLocationChoices = (
                     (20, 'Pronated forearm'),
                     (21, 'Supinated forearm'),
                     (22, 'Pronated wrist'),
@@ -226,6 +225,8 @@ secLocationChoices = (
                     (25, 'Palm'),
                     (26, 'Edge of hand'),
                     (27, 'Fingertips'),
+                    (28, 'High neutral space'),
+                    (29, 'Neutral space'),
                     )
 
 palmOrientationChoices = (
@@ -307,7 +308,7 @@ minor or insignificant ways that can be ignored.""")
     initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices) 
     final_palm_orientation = models.CharField("Final Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices)
   
-    
+
     
     # which versions of the dictionary should this gloss appear in
     inCD = models.NullBooleanField("In the CDROM dictionary", null=True, blank=True) 
@@ -475,6 +476,12 @@ minor or insignificant ways that can be ignored.""")
         """Return JSON for the location choice list"""
         
         return json.dumps(dict(locationChoices))    
+    
+    def palm_orientation_choices_json(self):
+        """Return JSON for the palm orientation choice list"""
+        
+        return json.dumps(dict(palmOrientationChoices))
+    
 
 # register Gloss for tags
 try:

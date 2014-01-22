@@ -67,7 +67,7 @@ class GlossAdmin(VersionAdmin):
                                     'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
                  ('Publication Status', {'fields': ('inWeb',  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
-                 ('Phonology', {'fields': ('Palm_orientation', 'domhndsh', 
+                 ('Phonology', {'fields': ('initial_palm_orientation', 'final_palm_orientation', 'domhndsh', 
                                         'subhndsh', 'locprim', 'locsecond', 'final_domhndsh', 'final_subhndsh', 'final_loc', ), 'classes': ('collapse',)}, ),
                  ('Other', {'fields': ('queries', 'SpecialCore', ), 'classes': ('collapse',)}, ),
                  ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', 'inittf', 'inittext',  ), 'classes': ('collapse',)}),
