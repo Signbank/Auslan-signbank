@@ -70,7 +70,14 @@
              submit    : 'OK',
              tooltip   : 'Click to edit...'
          }); 
-                  
+         $('.edit_sec_location').editable(edit_post_url, { 
+             submitdata  : {'gloss': '{{gloss.id}}'},
+             type      : 'select',
+             data      : {{gloss.secondary_location_choices_json|safe}},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });                   
       });
     </script>
 {% endblock %}
@@ -192,6 +199,10 @@
         <dt>Primary Location</dt><dd class='edit_location' id='locprim'>{{gloss.get_locprim_display}}</dd>
         <dt>Secondary Location</dt><dd class='edit_location' id='locsecond'>{{gloss.get_locsecond_display}}</dd>
         <dt>Final Location</dt><dd class='edit_location' id='final_loc'>{{gloss.get_final_loc_display}}</dd>
+        
+        <dt>Initial Secondary Location (BSL)</dt><dd class='edit_sec_location' id='initial_secondary_loc'>{{gloss.get_initial_secondary_loc_display}}</dd>
+        <dt>Final Secondary Location (BSL)</dt><dd class='edit_sec_location' id='final_secondary_loc'>{{gloss.get_final_secondary_loc_display}}</dd>
+        
     </dl>
     
 
