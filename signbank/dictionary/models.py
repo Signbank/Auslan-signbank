@@ -211,9 +211,11 @@ locationChoices = (
                     (11, 'Chin'),
                     (12, 'Neck'),
                     (13, 'Shoulder'),
-                    (14, 'Chest or high neutral space'),
-                    (15, 'Stomach or middle neutral space'),
-                    (16, 'Waist or low neutral space'),
+                    (14, 'Chest'),
+                    (28, 'High neutral space'),  # should be after 14
+                    (15, 'Stomach'),
+                    (29, 'Neutral space'),  # should be after 15
+                    (16, 'Waist'),
                     (17, 'Below waist'),
                     (18, 'Upper arm'),
                     (19, 'Elbow'),
@@ -225,15 +227,24 @@ locationChoices = (
                     (25, 'Palm'),
                     (26, 'Edge of hand'),
                     (27, 'Fingertips'),
-                    (28, 'High neutral space'),
-                    (29, 'Neutral space'),
+                    )
+
+# these are values for prim2ndloc fin2ndloc introduced for BSL, the names might change
+BSLsecondLocationChoices = (
+                    ('0', 'N/A'),
+                    ('back', 'Back'),
+                    ('palm', 'Palm'),
+                    ('radial', 'Radial'),
+                    ('ulnar', 'Ulnar'),
+                    ('fingertips', 'Fingertips'),
+                    ('root', 'Root')
                     )
 
 palmOrientationChoices = (
                     ('prone','Prone'),
                     ('neutral', 'Neutral'),
                     ('supine', 'Supine'),
-                    ('na', 'N/A'),      
+                    ('0', 'N/A'),      
                           )
 
 relOrientationChoices = (
@@ -312,8 +323,13 @@ minor or insignificant ways that can be ignored.""")
     final_subhndsh = models.CharField("Final Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
-    locsecond = models.IntegerField("Secondary Location", choices=locationChoices, null=True, blank=True) 
     final_loc = models.IntegerField("Final Location", choices=locationChoices, null=True, blank=True) 
+    
+    locsecond = models.IntegerField("Secondary Location", choices=locationChoices, null=True, blank=True) 
+    
+    initial_secondary_loc = models.CharField("Initial Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
+    final_secondary_loc = models.CharField("Final Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
+     
     
     initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices) 
     final_palm_orientation = models.CharField("Final Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices)
@@ -498,6 +514,11 @@ minor or insignificant ways that can be ignored.""")
         """Return JSON for the relative orientation choice list"""
         
         return json.dumps(dict(relOrientationChoices))
+    
+    def secondary_location_choices_json(self):
+        """Return JSON for the secondary location (BSL) choice list"""
+        
+        return json.dumps(dict(BSLsecondLocationChoices))    
     
 
 # register Gloss for tags
