@@ -236,7 +236,7 @@ BSLsecondLocationChoices = (
                     ('palm', 'Palm'),
                     ('radial', 'Radial'),
                     ('ulnar', 'Ulnar'),
-                    ('fingertips', 'Fingertips'),
+                    ('fingertip(s)', 'Fingertips'),
                     ('root', 'Root')
                     )
 
