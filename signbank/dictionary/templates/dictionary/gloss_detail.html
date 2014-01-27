@@ -168,7 +168,6 @@
             </dd>
         {% endif %}
         <dt>Morphology</dt><dd class='edit' id='morph'>{{gloss.morph}}</dd>
-        <dt>Health Related</dt><dd class='edit' id='healthtf'>{{gloss.healthtf}}</dd>
         <dt>Stem Sign Number</dt><dd class='edit' id='stemsn'>{{gloss.StemSN}}</dd>
         <dt>Compound of</dt><dd class='edit' id='compound'>{{gloss.compound}}</dd>
         <dt>Language</dt><dd class='edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% endfor %}</dd>
@@ -185,11 +184,11 @@
     <h3>Phonology</h3>
         
     <dl class='dl-horizontal'>
-        <dt>Initial Palm Orientation</dt><dd class='edit_palm' id='initial_palm_orientation'>{{gloss.initial_palm_orientation}}</dd>
-        <dt>Final Palm Orientation</dt><dd class='edit_palm' id='final_palm_orientation'>{{gloss.final_palm_orientation}}</dd>
+        <dt>Initial Palm Orientation</dt><dd class='edit_palm' id='initial_palm_orientation'>{{gloss.get_initial_palm_orientation_display}}</dd>
+        <dt>Final Palm Orientation</dt><dd class='edit_palm' id='final_palm_orientation'>{{gloss.get_final_palm_orientation_display}}</dd>
 
-        <dt>Initial Relative Orientation</dt><dd class='edit_relori' id='initial_relative_orientation'>{{gloss.initial_relative_orientation}}</dd>
-        <dt>Final Relative Orientation</dt><dd class='edit_relori' id='final_relative_orientation'>{{gloss.final_relative_orientation}}</dd>
+        <dt>Initial Relative Orientation</dt><dd class='edit_relori' id='initial_relative_orientation'>{{gloss.get_initial_relative_orientation_display}}</dd>
+        <dt>Final Relative Orientation</dt><dd class='edit_relori' id='final_relative_orientation'>{{gloss.get_final_relative_orientation_display}}</dd>
 
         <dt>Dominant Hand Shape</dt><dd class='edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</dd>
         <dt>Subordinate Hand Shape</dt><dd class='edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</dd>

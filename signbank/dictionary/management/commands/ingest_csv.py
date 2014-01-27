@@ -128,6 +128,13 @@ class Command(BaseCommand):
                   'varlextf': 'lexis:varlex',
                   'weathertf': 'semantic:weather',
                   'worktf': 'semantic:work',
+                  
+                  'Attested in Corpus': 'workflow:attested',
+                  'Forearm rotation': 'phonology:forearm rotation',
+                  'hschange': 'phonology:handshape change',
+                  'Battinson': 'phonology:battinson',
+                  'B92 reg': 'b92:regional',
+                  'B92 dir': 'b92:directional',
                    }
 
 
@@ -148,8 +155,8 @@ class Command(BaseCommand):
             h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
             
             for row in h:
-              #  if row['annotation idgloss'].startswith('B'):
-               #     break
+                if row['annotation idgloss'].startswith('B'):
+                    break
                 
                 if row['bsltf']:
                     
@@ -179,16 +186,31 @@ class Command(BaseCommand):
                         gloss.final_domhndsh = row['FinaldominantHS']
                     if row['FinalSubordinateHS'] != '' and row['FinalSubordinateHS'] != '0':
                         gloss.final_subhndsh = row['FinalSubordinateHS']
-                    if row['FinalLoc'] != '' and row['FinalLoc'] != '0':   
+                    if row['FinalLoc'] != '':
                         gloss.final_loc = row['FinalLoc']
-                    if row['locprim'] != '' and row['locprim'] != '0':
+                    if row['locprim'] != '':
                         gloss.locprim = int(row['locprim'])
-                    if row['locsecond'] != '' and row['locsecond'] != '0':
+                    if row['locsecond'] != '':
                         gloss.locsecond = int(row['locsecond'])
                     
-                    # need to add new palm fields
-                    #gloss.Palm_orientation = row['Palm orientation']
                     
+                    if row['PalmOriInitial'] != '':
+                        gloss.initial_palm_orientation = row['PalmOriInitial']
+                    if row['PalmOriFinal'] != '':
+                        gloss.final_palm_orientation = row['PalmOriFinal']
+                    
+                    
+                    if row['prim2ndloc'] != '':
+                        gloss.initial_secondary_loc = row['prim2ndloc']
+                    if row['fin2ndloc'] != '':
+                        gloss.final_secondary_loc = row['fin2ndloc']
+                        
+                    if row['Initrelori'] != '':
+                        gloss.initial_relative_orientation = row['Initrelori']
+                    if row['Finrelori'] != '':
+                        gloss.final_relative_orientation = row['Finrelori']                       
+                        
+                        
 
                     gloss.morph = row['morph']
                     if row['sense'] != '':
@@ -278,6 +300,19 @@ class Command(BaseCommand):
                             Tag.objects.add_tag(gloss, '"%s"' %  self.tag_fields[field])
                     #print ""
                     
+                    # special case tags/definitions
+                    
+                    if row['B92 rel'] != '':
+                        if row['B92 rel'] == 'phvar':
+                            Tag.objects.add_tag(gloss, 'B92:variant')
+                            Tag.objects.add_tag(gloss, 'B92:present')
+                        elif row['B92 rel'] == 'phsame':
+                            Tag.objects.add_tag(gloss, 'B92:present')
+                    
+                    if row['B92 sn'] != '':
+                        dfn = Definition(gloss=gloss, text=row['B92 sn'], role='B92 sn', count=1)
+                        dfn.save()
+                    
                     gloss.language.add(lang_bsl)
                     
                     gloss.save()
@@ -292,8 +327,8 @@ class Command(BaseCommand):
             h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
             for row in h:                    
 
-               # if row['annotation idgloss'].startswith('B'):
-                #    break
+                if row['annotation idgloss'].startswith('B'):
+                    break
                 
                 if row['bsltf'] and row['idgloss'] != '':
                     try:
