@@ -306,10 +306,6 @@ minor or insignificant ways that can be ignored.""")
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
     
-
-    BookProb = models.NullBooleanField(null=True, blank=True)
-    
-    comp = models.NullBooleanField(null=True, blank=True) 
     compound = models.CharField("Compound of", max_length=100, blank=True) # This field type is a guess.
     comptf = models.NullBooleanField("Compound", null=True, blank=True)
     
@@ -338,21 +334,13 @@ minor or insignificant ways that can be ignored.""")
     final_relative_orientation = models.CharField("Final Relative Orientation", max_length=10, blank=True, choices=relOrientationChoices)
  
     
-    # which versions of the dictionary should this gloss appear in
-    inCD = models.NullBooleanField("In the CDROM dictionary", null=True, blank=True) 
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)
-    InMainBook = models.NullBooleanField("In the main book", null=True, blank=True)
-    InSuppBook = models.NullBooleanField("In the supplementary book", null=True, blank=True)  
     isNew = models.NullBooleanField("Is this a proposed new sign?", null=True, default=False)
     
     inittext = models.CharField(max_length="50", blank=True) 
-    inittf = models.NullBooleanField(null=True, blank=True)
 
     morph = models.CharField("Morphemic Analysis", max_length=50, blank=True)  
-    
-    NotBkDBOnly = models.NullBooleanField("Not in book, database only", null=True, blank=True) 
-        
-  
+
     queries = models.TextField(null=True, blank=True) # This field type is a guess.
 
     sedefinetf = models.TextField("Signed English definition available", null=True, blank=True)  # TODO: should be boolean
