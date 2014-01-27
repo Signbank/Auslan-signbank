@@ -72,7 +72,6 @@ class GlossAdmin(VersionAdmin):
                                            'initial_secondary_loc', 'final_secondary_loc',
                                             'locprim', 'locsecond',  'final_loc',
                                             'domhndsh', 'subhndsh', 'final_domhndsh', 'final_subhndsh', ), 'classes': ('collapse',)}, ),
-                 ('Other', {'fields': ('queries', 'SpecialCore', ), 'classes': ('collapse',)}, ),
                  ('Obsolete Fields', {'fields': ('inittext', ), 'classes': ('collapse',)}),
               )
     save_on_top = True
