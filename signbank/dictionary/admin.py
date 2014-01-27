@@ -73,7 +73,7 @@ class GlossAdmin(VersionAdmin):
                                             'locprim', 'locsecond',  'final_loc',
                                             'domhndsh', 'subhndsh', 'final_domhndsh', 'final_subhndsh', ), 'classes': ('collapse',)}, ),
                  ('Other', {'fields': ('queries', 'SpecialCore', ), 'classes': ('collapse',)}, ),
-                 ('Obsolete Fields', {'fields': ('InMainBook', 'InSuppBook', 'NotBkDBOnly', 'inCD', 'BookProb','comp', 'inittf', 'inittext',  ), 'classes': ('collapse',)}),
+                 ('Obsolete Fields', {'fields': ('inittext', ), 'classes': ('collapse',)}),
               )
     save_on_top = True
     save_as = True
