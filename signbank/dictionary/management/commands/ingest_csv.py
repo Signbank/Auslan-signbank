@@ -132,7 +132,8 @@ class Command(BaseCommand):
                   'Attested in Corpus': 'workflow:attested',
                   'Forearm rotation': 'phonology:forearm rotation',
                   'hschange': 'phonology:handshape change',
-                  'Battinson': 'phonology:battinson',
+                  'Battinson': 'lexis:battinson',
+                  'Classifier/Constructed Action': 'lexis:classifier',
                   'B92 reg': 'b92:regional',
                   'B92 dir': 'b92:directional',
                    }
@@ -155,8 +156,8 @@ class Command(BaseCommand):
             h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
             
             for row in h:
-                if row['annotation idgloss'].startswith('B'):
-                    break
+                #if row['annotation idgloss'].startswith('B'):
+                #    break
                 
                 if row['bsltf']:
                     
@@ -327,8 +328,8 @@ class Command(BaseCommand):
             h = DictReader(open(csvfile, 'U'), encoding='iso8859-1')
             for row in h:                    
 
-                if row['annotation idgloss'].startswith('B'):
-                    break
+                #if row['annotation idgloss'].startswith('B'):
+                #    break
                 
                 if row['bsltf'] and row['idgloss'] != '':
                     try:
