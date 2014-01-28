@@ -6,13 +6,13 @@
           <ul id='taglist'>
           {% for tag in tag_list %}
             <li class='tagli'>
-               <div class='tag'>
-                 <span class='tagname'><a href="/dictionary/tag/{{tag}}">{{tag}}</a></span>
+               <div class='badge'>
+                 <span class='tagname'>{{tag}}</span>
                  <span class='tagcount'>
                      <a class='tagdelete'
                         id='{{tag.id}}'
                         href='{% url root_page %}dictionary/update/tag/{{gloss.id}}' 
-                        title='delete this tag'>X</a>
+                        title='delete this tag'>x</a>
                  </span>
                 </div>
             </li>

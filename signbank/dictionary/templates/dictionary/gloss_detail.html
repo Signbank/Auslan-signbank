@@ -5,24 +5,32 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
     <script type='text/javascript'>
      $(document).ready(function() {
-         var edit_post_url = '/fboingr/';
+         var edit_post_url = '{% url dictionary:update_gloss gloss.id %}';
          
          $('.edit').editable(edit_post_url, {
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              indicator : 'Saving...',
              tooltip   : 'Click to edit...',
              cancel    : 'Cancel',
              submit    : 'OK'
          });
          $('.edit_area').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'textarea',
              cancel    : 'Cancel',
              submit    : 'OK',
              tooltip   : 'Click to edit...'
          });
+         $('.edit_role').editable(edit_post_url, { 
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
+             type      : 'select',
+             data      : {{gloss.definition_role_choices_json|safe}},
+             cancel    : 'Cancel',
+             submit    : 'OK',
+             tooltip   : 'Click to edit...'
+         });
          $('.edit_language').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
              cancel    : 'Cancel',
@@ -30,7 +38,7 @@
              tooltip   : 'Click to edit...'
          });
          $('.edit_check').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'checkbox',
              cancel    : 'Cancel',
              submit    : 'OK',
@@ -39,7 +47,7 @@
          });
          
          $('.edit_handshape').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {{gloss.handshape_choices_json|safe}},
              cancel    : 'Cancel',
@@ -47,7 +55,7 @@
              tooltip   : 'Click to edit...'
          });
          $('.edit_location').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {{gloss.location_choices_json|safe}},
              cancel    : 'Cancel',
@@ -55,7 +63,7 @@
              tooltip   : 'Click to edit...'
          });
          $('.edit_palm').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {{gloss.palm_orientation_choices_json|safe}},
              cancel    : 'Cancel',
@@ -63,7 +71,7 @@
              tooltip   : 'Click to edit...'
          });
          $('.edit_relori').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {{gloss.relative_orientation_choices_json|safe}},
              cancel    : 'Cancel',
@@ -71,7 +79,7 @@
              tooltip   : 'Click to edit...'
          }); 
          $('.edit_sec_location').editable(edit_post_url, { 
-             submitdata  : {'gloss': '{{gloss.id}}'},
+             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
              type      : 'select',
              data      : {{gloss.secondary_location_choices_json|safe}},
              cancel    : 'Cancel',
@@ -122,11 +130,9 @@
 </div>
 
     <div id="keywords">
-         <h2>Keywords</h2>
-         {% for trn in gloss.translation_set.all %}
-           {{ trn.translation }}{% if not forloop.last %},{% endif %}
-         {% endfor %}
-         </p>
+      <h2>Keywords</h2>
+      <p class='edit' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+         
     </div>
 
     <div id="definition">
@@ -135,12 +141,10 @@
     {% regroup gloss.definition_set.all by role as roles %}
     
     {% for role in roles %}
-    
-    <h3>{{role.list.0.get_role_display}}</h3>
-      
+        
       <ol>
       {% for def in role.list %}     
-        <li><div class='edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
+        <li><span class='edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</span><div class='edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
       {% endfor %}
       </ol>
 
@@ -168,7 +172,7 @@
             </dd>
         {% endif %}
         <dt>Morphology</dt><dd class='edit' id='morph'>{{gloss.morph}}</dd>
-        <dt>Stem Sign Number</dt><dd class='edit' id='stemsn'>{{gloss.StemSN}}</dd>
+        <dt>Stem Sign Number</dt><dd class='edit' id='StemSN'>{{gloss.StemSN}}</dd>
         <dt>Compound of</dt><dd class='edit' id='compound'>{{gloss.compound}}</dd>
         <dt>Language</dt><dd class='edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% endfor %}</dd>
         <dt>Dialect</dt><dd class='edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% endfor %}</dd>
