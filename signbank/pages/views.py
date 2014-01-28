@@ -1,7 +1,7 @@
 from signbank.pages.models import *
 from django.template import loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.conf import settings
 from django.utils.safestring import mark_safe
 
@@ -25,8 +25,20 @@ def page(request, url='/'):
     # here I've removed the requirement that the page be for this site
     # - this won't work if we ever have more than one site here
     # which isn't planned
-    f = get_object_or_404(Page, url__exact=url)
     
+    # deal with the lack of a root page
+    try:
+        f = Page.objects.get(url__exact=url)
+    except:
+        # no page, if we're after the root page then serve a default page
+        if url == '/':
+
+            f = Page(title='No Pages', 
+                     content='<p>No pages defined. Login to <a href="/admin">admin</a> to create some.</p>')  
+        else:
+            t = loader.get_template("404.html")
+            return HttpResponseNotFound(t.render(RequestContext(request))) 
+
     
     # If registration is required for accessing this page, and the user isn't
     # logged in, redirect to the login page.
