@@ -3,7 +3,6 @@ from django.template import loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
-from django.core.xheaders import populate_xheaders
 from django.utils.safestring import mark_safe
 
 DEFAULT_TEMPLATE = 'pages/default.html'
@@ -51,7 +50,6 @@ def page(request, url='/'):
         'page': f, 
     })
     response = HttpResponse(t.render(c))
-    populate_xheaders(request, response, Page, f.id)
     return response
 
     

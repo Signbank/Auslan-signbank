@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('signbank.pages.views',
     (r'^(?P<url>.*)$', 'page'),

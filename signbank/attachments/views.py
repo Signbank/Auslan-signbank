@@ -6,6 +6,8 @@ import os.path
 from django.core.files import File
 from signbank.attachments.models import Attachment
 
+from django.views.generic.list import ListView
+
 # TODO: both list and upload views should be handled by the same view fn
 # TODO: deal with uploading duplicate files - offer to replace
 
@@ -24,3 +26,7 @@ def upload_file(request):
     return HttpResponseRedirect('/attachments/')
 
 
+class AttachmentListView(ListView):
+    
+    model = Attachment
+    template_name = "list.html"
