@@ -5,7 +5,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
     <script type='text/javascript'>
      $(document).ready(function() {
-         var edit_post_url = '{% url dictionary:update_gloss gloss.id %}';
+         var edit_post_url = '{% url 'dictionary:update_gloss' gloss.id %}';
          
          $('.edit').editable(edit_post_url, {
              submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},

@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     # and and alternate view for direct display of a gloss
     url(r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss'),
 
-    url(r'^search/$', 'signbank.dictionary.views.search', name="dictionary-search"),
+    url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),
     url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag'),
     url(r'^update/video/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_video'),
