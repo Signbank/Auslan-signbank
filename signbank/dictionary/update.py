@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest
 from django.template import Context, RequestContext, loader
 from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -13,33 +13,81 @@ from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
 def update_gloss(request, glossid):
-    """View to update a gloss from the form displayed on the staff view"""
+    """View to update a gloss model from the jeditable jquery form
+    We are sent one field and value at a time, return the new value
+    once we've updated it."""
 
     if not request.user.has_perm('dictionary.change_gloss'):
         return HttpResponseForbidden("Gloss Update Not Allowed")
 
-    thisgloss = None
-    confirm_form = None
     if request.method == "POST":
 
-        thisgloss = get_object_or_404(Gloss, id=glossid)
+        gloss = get_object_or_404(Gloss, id=glossid)
 
-        update_form = GlossModelForm(request.POST, instance=thisgloss)
+        field = request.POST.get('id', '')
+        value = request.POST.get('value', '')
+        
+        # validate
+        # field is a valid field
+        # value is a valid value for field
+        
+        
+        if field.startswith('definition'):
+            
+            (what, defid) = field.split('_')
+            try:
+                defn = Definition.objects.get(id=defid)
+            except:
+                return HttpResponseBadRequest("Bad Definition ID '%s'" % defid, {'content-type': 'text/plain'})
+        
+            if not defn.gloss == gloss:
+                return HttpResponseBadRequest("Definition doesn't match gloss", {'content-type': 'text/plain'})
+            
+            if what == 'definition':
+                # update the definition
+                defn.text = value
+                defn.save()
+                newvalue = defn.text
+            elif what == 'definitionrole':
+                defn.role = value
+                defn.save()
+                newvalue = defn.get_role_display()
+                
+        elif field == 'keywords':
+            kwds = [k.strip() for k in value.split(',')]
+            # remove current keywords 
+            current_trans = gloss.translation_set.all()
+            #current_kwds = [t.translation for t in current_trans]
+            current_trans.delete()
+            # add new keywords
+            for i in range(len(kwds)):
+                (kobj, created) = Keyword.objects.get_or_create(text=kwds[i])
+                trans = Translation(gloss=gloss, translation=kobj, index=i)
+                trans.save()
+            
+            newvalue = ", ".join([t.translation.text for t in gloss.translation_set.all()])
+            
+        else:
+            
 
-        if update_form.is_valid():
+            if not field in Gloss._meta.get_all_field_names():
+                return HttpResponseBadRequest("Unknown field", {'content-type': 'text/plain'})
+            
+            # special cases 
+            # - Foreign Key fields (Language, Dialect)
+            # - keywords
+            # - videos
+            # - tags
+            
+            gloss.__setattr__(field, value)
+            gloss.save()
+            
+            
+            f = Gloss._meta.get_field(field)
+            newvalue = dict(f.flatchoices).get(value, value)
+        
+        return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
-            update_form.save()
-
-
-        referer = request.META['HTTP_REFERER']
-
-        return render_to_response("dictionary/update_result.html",
-                              {'update_form': update_form,
-                               'confirm_form': confirm_form,
-                               'gloss' : thisgloss,
-                               'referer': referer,
-                               },
-                              context_instance=RequestContext(request))
 
 def add_tag(request, glossid):
     """View to add a tag to a gloss"""

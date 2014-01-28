@@ -503,7 +503,15 @@ minor or insignificant ways that can be ignored.""")
     def secondary_location_choices_json(self):
         """Return JSON for the secondary location (BSL) choice list"""
         
-        return json.dumps(dict(BSLsecondLocationChoices))    
+        return json.dumps(dict(BSLsecondLocationChoices))   
+    
+     
+    def definition_role_choices_json(self):
+        """Return JSON for the definition role choice list"""
+        
+        return json.dumps(dict(defn_role_choices))       
+    
+    
     
 
 # register Gloss for tags
