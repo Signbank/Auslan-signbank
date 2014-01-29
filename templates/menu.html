@@ -19,17 +19,17 @@
     {% if '/attachments/' in request.path %}class="current"{% endif %}>
     <a>Staff</a>
     <ul> 
-        <li><a href="{% url admin:index %}">Admin</a></li>
+        <li><a href="{% url 'admin:index' %}">Admin</a></li>
         <li {% if '/feedback/show.html' in request.path %}class="current"{% endif %}>
-              <a href="{% url signbank.feedback.views.showfeedback %}">View Feedback</a></li>
+              <a href="{% url 'signbank.feedback.views.showfeedback' %}">View Feedback</a></li>
         <li {% if '/attachments/' in request.path %}class="current"{% endif %}>
-              <a href="{% url attachments %}">File Attachments</a></li>
+              <a href="{% url 'attachments' %}">File Attachments</a></li>
     </ul>
 </li>
 {% endif %}
 
 {% if user.is_authenticated %}
-<li><a href="{% url logout %}">Logout</a></li>
+<li><a href="{% url 'logout' %}">Logout</a></li>
 <!-- <li>You are signed in as {{ user.first_name }} {{ user.last_name }}.</li> -->
 {% endif %} 
 </ul>

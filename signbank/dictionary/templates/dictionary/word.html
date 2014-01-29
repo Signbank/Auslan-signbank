@@ -33,12 +33,12 @@
 
             {% if navigation.prev %}
             <div class="prev">
-              <a href="{% url root_page %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
             </div>
             {% endif %}
             {% if navigation.next %}
             <div class="next">
-             <a href="{% url root_page %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
+             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
             </div>
             {% endif %}
     </div>
@@ -56,7 +56,7 @@
         {% endfor %}
         </div>
         {% else %}
-            <h2><a href="{% url root_page %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></h2>
+            <h2><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></h2>
             <div>&nbsp;</div>
         {% endifequal %}
 
@@ -70,7 +70,7 @@
 
     <div id="player">
       <iframe width="320" height="240" scrolling="no" frameborder='0'
-          src="{% url signbank.video.views.iframe gloss.get_video_number %}">
+          src="{% url 'signbank.video.views.iframe' gloss.get_video_number %}">
       </iframe>
     </div>
       <div id="replay"></div>
@@ -84,13 +84,13 @@
         <div id="feedback">
             <ul>
                 {% ifequal viewname "words" %}
-                <li><a href="{% url root_page %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/dictionary/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                <li><a href="{% url 'root_page' %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/dictionary/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
                 {% else %}
-                <li><a href="{% url root_page %}feedback/gloss/{{gloss.idgloss}}.html?return=/dictionary/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                <li><a href="{% url 'root_page' %}feedback/gloss/{{gloss.idgloss}}.html?return=/dictionary/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
                 {% endifequal %}
 
-                <li><a href="{% url root_page %}feedback/missingsign.html">Report a missing sign</a></li>
-                <li><a href="{% url root_page %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+                <li><a href="{% url 'root_page' %}feedback/missingsign.html">Report a missing sign</a></li>
+                <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
             </ul>
         </div>
 

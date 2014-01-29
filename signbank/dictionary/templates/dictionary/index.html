@@ -9,7 +9,7 @@
     
     <p>
     {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-      <a href="{% url root_page %}dictionary/search?query={{letter}}">{{letter}}</a> | 
+      <a href="{% url 'root_page' %}dictionary/search?query={{letter}}">{{letter}}</a> | 
    {% endfor %}
    </p>
    
