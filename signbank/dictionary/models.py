@@ -253,7 +253,7 @@ relOrientationChoices = (
                     ('root', 'Root'), 
                     ('radial', 'Radial'),
                     ('ulnar', 'Ulnar'),
-                    ('fingertips', 'Fingertips'),
+                    ('fingertip(s)', 'Fingertips'),
                     ('0', 'N/A'),  
                         )
 
@@ -327,11 +327,11 @@ minor or insignificant ways that can be ignored.""")
     final_secondary_loc = models.CharField("Final Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
      
     
-    initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices) 
-    final_palm_orientation = models.CharField("Final Palm Orientation", max_length=10, blank=True, choices=palmOrientationChoices)
+    initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=20, blank=True, choices=palmOrientationChoices) 
+    final_palm_orientation = models.CharField("Final Palm Orientation", max_length=20, blank=True, choices=palmOrientationChoices)
   
-    initial_relative_orientation = models.CharField("Initial Relative Orientation", max_length=10, blank=True, choices=relOrientationChoices) 
-    final_relative_orientation = models.CharField("Final Relative Orientation", max_length=10, blank=True, choices=relOrientationChoices)
+    initial_relative_orientation = models.CharField("Initial Relative Orientation", max_length=20, blank=True, choices=relOrientationChoices) 
+    final_relative_orientation = models.CharField("Final Relative Orientation", max_length=20, blank=True, choices=relOrientationChoices)
  
     
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)
