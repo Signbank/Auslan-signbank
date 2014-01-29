@@ -109,6 +109,16 @@ class GlossListView(ListView):
             # intersection
             qs = qs & tqs
             
+        if get.has_key('nottags') and get['nottags'] != '':
+            vals = get['nottags']
+            
+            #print "Not TAGS: ", vals
+            # get tags starting with the search string
+            tags = Tag.objects.filter(name__istartswith=vals)
+            tqs = TaggedItem.objects.get_union_by_model(Gloss, tags)
+            
+            # exclude all of tqs from qs
+            qs = [q for q in qs if q not in tqs]     
             
            # print "J :", len(qs)
             
