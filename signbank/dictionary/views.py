@@ -126,12 +126,16 @@ def word(request, keyword, n):
 
     # work out the number of this gloss and the total number
     gloss = trans.gloss
-    if request.user.is_staff:
-        glosscount = Gloss.objects.count()
-        glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+    if gloss.sn != None:
+        if request.user.is_staff:
+            glosscount = Gloss.objects.count()
+            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
     else:
-        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
+        glosscount = 0
+        glossposn = 0
 
     # navigation gives us the next and previous signs
     nav = gloss.navigation(request.user.is_staff)
@@ -171,6 +175,8 @@ def word(request, keyword, n):
                                'feedback' : True,
                                'feedbackmessage': feedbackmessage,
                                'tagform': TagUpdateForm(),
+                               'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
 
@@ -200,12 +206,16 @@ def gloss(request, idgloss):
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
 
-    if request.user.is_staff:
-        glosscount = Gloss.objects.count()
-        glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+    if gloss.sn != None:
+        if request.user.is_staff:
+            glosscount = Gloss.objects.count()
+            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
     else:
-        glosscount = Gloss.objects.filter(inWeb__exact=True).count()
-        glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
+        glosscount = 0
+        glossposn = 0
 
     # navigation gives us the next and previous signs
     nav = gloss.navigation(request.user.is_staff)

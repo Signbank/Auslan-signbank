@@ -99,14 +99,14 @@ class Keyword(models.Model):
     
     
 defn_role_choices = (('general', 'General Definition'),
-                     ('noun', 'Noun'),
-                     ('verb', 'Verb'), 
-                     ('deictic', 'Deictic'),
-                     ('interact', 'Interact'),
-                     ('modifier', 'Modifier'),
-                     ('question', 'Question'),
+                     ('noun', 'As a Noun'),
+                     ('verb', 'As a Verb or Adjective'), 
+                     ('deictic', 'As a Pointing Sign'),
+                     ('interact', 'Interactive'),
+                     ('modifier', 'As Modifier'),
+                     ('question', 'As Question'),
                      ('popexplain', 'Popular Explanation'),
-                     ('augment', 'Augment'),
+                     ('augment', 'Augmented Meaning'),
                      ('note', 'Note'),
                      ('privatenote', 'Private Note')
                      )
@@ -379,7 +379,9 @@ minor or insignificant ways that can be ignored.""")
         
     def next_dictionary_gloss(self, staff=False):
         """Find the next gloss in dictionary order"""
-        if staff:
+        if self.sn == None:
+            return None
+        elif staff:
             set =  Gloss.objects.filter(sn__gt=self.sn).order_by('sn')
         else:
             set = Gloss.objects.filter(sn__gt=self.sn, inWeb__exact=True).order_by('sn')
@@ -390,7 +392,9 @@ minor or insignificant ways that can be ignored.""")
  
     def prev_dictionary_gloss(self, staff=False):
         """Find the previous gloss in dictionary order"""
-        if staff:
+        if self.sn == None:
+            return None
+        elif staff:
             set = Gloss.objects.filter(sn__lt=self.sn).order_by('-sn')
         else:
             set = Gloss.objects.filter(sn__lt=self.sn, inWeb__exact=True).order_by('-sn')

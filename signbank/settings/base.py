@@ -183,6 +183,21 @@ SOUTH_TESTS_MIGRATE = False
 
 ## Application settings for signbank
 
+
+## Settings controlling page contents
+
+# what do we call this signbank?
+SIGNBANK_NAME = "Auslan"
+
+# do we display the previous/next links to signs, requires gloss.sn to be used consistently
+SIGN_NAVIGATION = True
+
+# which definition fields do we show and in what order?
+DEFINITION_FIELDS = ['general', 'noun', 'verb', 'interact', 'diectic', 'modifier', 'question', 'augment', 'note']
+
+
+
+
 # location and URL for uploaded files
 UPLOAD_ROOT = MEDIA_ROOT + "upload/"
 UPLOAD_URL = MEDIA_URL + "upload/"

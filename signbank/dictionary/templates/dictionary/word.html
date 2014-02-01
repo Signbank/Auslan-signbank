@@ -28,6 +28,8 @@
 
 <div id="signinfo">
     <div id="signs">
+        {% if SIGN_NAVIGATION %}
+        
         <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
             Dictionary</h2>
 
@@ -41,6 +43,9 @@
              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
             </div>
             {% endif %}
+         {% else %}
+           
+         {% endif %}
     </div>
 
     <div id="matches">
@@ -125,94 +130,29 @@
     </div>
 
     <div id="definition">
+    {% if DEFINITION_FIELDS %}
         <h2>Sign Definition</h2>
 
-        {% if definitions.general %}
-          <h3>General Definition</h3>
-
-          <ol>
-          {% for def in definitions.general %}
-            <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-        {% if definitions.noun %}
-          <h3>As a Noun</h3>
-
-          <ol>
-          {% for def in definitions.noun %}
-            <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-        {% if definitions.verb %}
-          <h3>As a Verb or Adjective</h3>
-          <ol>
-          {% for def in definitions.verb %}
-            <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-
-        {% if definitions.interact %}
-          <h3>Interactive</h3>
-          <ol>
-          {% for def in definitions.interact %}
-              <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-        {% if definitions.deictic %}
-          <h3>As a Pointing Sign</h3>
-          <ol>
-          {% for def in definitions.deictic %}
-            <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-
-        {% if definitions.modifier %}
-          <h3>As Modifier</h3>
-          <ol>
-          {% for def in definitions.modifier %}
-              <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-
-        {% if definitions.question %}
-          <h3>As Question</h3>
-          <ol>
-          {% for def in definitions.question %}
-              <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-        {% if definitions.augment %}
-          <h3>Augmented Meaning</h3>
-          <ol>
-          {% for def in definitions.augment %}
-              <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
-        {% if definitions.note %}
-          <h3>Note</h3>
-          <ol>
-          {% for def in definitions.note %}
-              <li> {{ def }}</li>
-          {% endfor %}
-          </ol>
-        {% endif %}
-
+        {% for deftype in DEFINITION_FIELDS %}
+        
+             {% regroup gloss.definition_set.all by role as roles %}
+        
+             {% for role in roles %}
+              
+                  {% ifequal deftype role.grouper %}  
+                  
+                      <h3>{{role.list.0.get_role_display}}</h3>
+                  
+                      <ol>
+                      {% for def in role.list %}     
+                        <li>{{def.text}}</li>
+                      {% endfor %}
+                      </ol>
+                  
+                  {% endifequal %}
+             {% endfor %}
+        {% endfor %}
+    {% endif %}
     </div>
     
 </div>
