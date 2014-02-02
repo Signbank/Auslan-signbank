@@ -26,6 +26,7 @@ def update_gloss(request, glossid):
 
         field = request.POST.get('id', '')
         value = request.POST.get('value', '')
+        values = request.POST.getlist('value[]')   # in case we need multiple values 
         
         # validate
         # field is a valid field
@@ -67,6 +68,33 @@ def update_gloss(request, glossid):
             
             newvalue = ", ".join([t.translation.text for t in gloss.translation_set.all()])
             
+        elif field == 'language':
+            # expecting possibly multiple values
+
+            try:
+                gloss.language.clear()
+                for value in values:
+                    lang = Language.objects.get(name=value)
+                    gloss.language.add(lang)
+                gloss.save()
+                newvalue = ", ".join([str(g) for g in gloss.language.all()])
+            except:                
+                return HttpResponseBadRequest("Unknown Language %s" % values, {'content-type': 'text/plain'})
+                
+        elif field == 'dialect':
+            # expecting possibly multiple values
+
+            try:
+                gloss.dialect.clear()
+                for value in values:
+                    lang = Dialect.objects.get(name=value)
+                    gloss.dialect.add(lang)
+                gloss.save()
+                newvalue = ", ".join([str(g.name) for g in gloss.dialect.all()])
+            except:                
+                return HttpResponseBadRequest("Unknown Dialect %s" % values, {'content-type': 'text/plain'})
+                
+                            
         else:
             
 
@@ -82,9 +110,14 @@ def update_gloss(request, glossid):
             gloss.__setattr__(field, value)
             gloss.save()
             
-            
             f = Gloss._meta.get_field(field)
-            newvalue = dict(f.flatchoices).get(value, value)
+            
+            valdict = dict(f.flatchoices)
+            # some fields take ints
+            if type(valdict.keys()[0]) == int:
+                newvalue = valdict.get(int(value), value)
+            else:
+                newvalue = valdict.get(value, value)
         
         return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
