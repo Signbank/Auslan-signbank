@@ -14,10 +14,13 @@ def addvideo(request):
 
         form = VideoUploadForGlossForm(request.POST, request.FILES)
         if form.is_valid():
+            print "Form valid"
             sn = form.cleaned_data['gloss_sn']
             vfile = form.cleaned_data['videofile']
             vfile.name = sn+".mp4"
             redirect_url = form.cleaned_data['redirect']
+
+            print sn, vfile.name, redirect_url
 
             # deal with any existing video for this sign
             oldvids = GlossVideo.objects.filter(gloss_sn=sn)
@@ -31,6 +34,9 @@ def addvideo(request):
             # TODO: provide some feedback that it worked (if
             # immediate display of video isn't working)
             return redirect(redirect_url)
+        else:
+            print "Form invalid"
+            print form.errors
 
     # if we can't process the form, just redirect back to the
     # referring page, should just be the case of hitting

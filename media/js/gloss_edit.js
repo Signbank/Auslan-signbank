@@ -5,19 +5,44 @@
      configure_edit();
      disable_edit();
      $('#enable_edit').click(toggle_edit);
+     
+     /*
+     $('#delete_video').confirm({
+        msg:'Delete this video?',
+        timeout:3000
+     });
+     */
+    
+    // setup requried for Ajax POST
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            } 
+        }
+    });
+
+    ajaxifyTagForm();
+     
  });
 
 function disable_edit() {
     $('.edit').editable('disable');
     $('.edit').css('color', 'black');
     $('#edit_message').text(''); 
-}
+};
 
 function enable_edit() {
     $('.edit').editable('enable');
     $('.edit').css('color', 'red');
     $('#edit_message').text('Click on red text to edit  ');    
-}
+};
 
 function toggle_edit() {
     if ($('#enable_edit').hasClass('edit_enabled')) {
@@ -188,9 +213,9 @@ $.editable.addInputType("multiselect", {
     }
 });
 
-    /*
+
      
-         function getCookie(name) {
+function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
         var cookies = document.cookie.split(';');
@@ -205,60 +230,41 @@ $.editable.addInputType("multiselect", {
     }
     return cookieValue;
 }
+
     
-    function ajaxifyTagForm() {
-        // ajax form submission for tag addition and deletion
-        $('.tagdelete').click(function() {
-            var action = $(this).attr('href');
-            var tagid = $(this).attr('id');
-            var tagelement = $(this).parents('.tagli');
-            
-            $.post(action, {tag: tagid, delete: "True" }, 
-                   function(data) {
-                        if (data == 'deleted') {
-                            // remove the tag from the page 
-                           tagelement.remove();
-                        }
-                   });
-            
-            return false;
-        });
+function ajaxifyTagForm() {
+    // ajax form submission for tag addition and deletion
+    $('.tagdelete').click(function() {
+        var action = $(this).attr('href');
+        var tagid = $(this).attr('id');
+        var tagelement = $(this).parents('.tagli');
         
-        $('#tagaddform').submit(function(){
-            $.post($(this).attr('action'), $(this).serialize(),
-                    function(data) {
-                       // response is a new tag list
-                       $('#tags').replaceWith(data);
-                       ajaxifyTagForm();
-                   })
-            return false;
-        });
-    }
+        $.post(action, 
+              {tag: tagid, 'delete': "True" }, 
+               function(data) {
+                    if (data == 'deleted') {
+                        // remove the tag from the page 
+                       tagelement.remove();
+                    }
+               });
+        
+        return false;
+    });
+    
+    $('#tagaddform').submit(function(){
+        $.post($(this).attr('action'), $(this).serialize(),
+                function(data) {
+                   // response is a new tag list
+                   $('#tags').replaceWith(data);
+                   ajaxifyTagForm();
+               });
+        return false;
+    });
+}
+    
     
      
-    $('#delete_video').confirm({
-        msg:'Delete this video?',
-        timeout:3000
-    });
 
-    var csrftoken = getCookie('csrftoken');
-    
-    // setup requried for Ajax POST
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    
-    $.ajaxSetup({
-        crossDomain: false, // obviates need for sameOrigin test
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type)) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            } 
-        }
-    });
 
-    ajaxifyTagForm();
-  */
       
       
