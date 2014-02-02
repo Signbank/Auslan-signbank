@@ -116,7 +116,7 @@ body {
    text-align: right;
 }
 
-#keywords {
+#keywords_block {
    margin-left: 338px;
    padding-left: 6px; 
    margin-bottom: -0.5em;
@@ -149,6 +149,16 @@ body {
     border-right: 1px solid #ccc;
 }
 
+
+/* editing gloss */
+
+.edit_enabled {
+    background-color: red;
+}
+
+#definition .table th {
+    width: 18em;
+}
 
 
 .tagdelete {

@@ -515,7 +515,23 @@ minor or insignificant ways that can be ignored.""")
         
         return json.dumps(dict(defn_role_choices))       
     
-    
+    def language_choices(self):
+        """Return JSON for langauge choices"""
+        
+        d = dict()
+        for l in Language.objects.all():
+            d[l.name] = l.name
+
+        return json.dumps(d)
+
+    def dialect_choices(self):
+        """Return JSON for dialect choices"""
+        
+        d = dict()
+        for l in Dialect.objects.all():
+            d[l.name] = l.name
+
+        return json.dumps(d)
     
 
 # register Gloss for tags

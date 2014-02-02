@@ -4,170 +4,28 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.mini.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
     <script type='text/javascript'>
-     $(document).ready(function() {
-         var edit_post_url = '{% url 'dictionary:update_gloss' gloss.id %}';
-         
-         $('.edit').editable(edit_post_url, {
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             indicator : 'Saving...',
-             tooltip   : 'Click to edit...',
-             cancel    : 'Cancel',
-             submit    : 'OK'
-         });
-         $('.edit_area').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'textarea',
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_role').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.definition_role_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_language').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {'Auslan' : 'Auslan', 'BSL': 'BSL'},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_check').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'checkbox',
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...',
-             checkbox: { trueValue: 'Yes', falseValue: 'No' }
-         });
-         
-         $('.edit_handshape').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.handshape_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_location').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.location_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_palm').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.palm_orientation_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });
-         $('.edit_relori').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.relative_orientation_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         }); 
-         $('.edit_sec_location').editable(edit_post_url, { 
-             submitdata  : {'csrfmiddlewaretoken': '{{csrf_token}}'},
-             type      : 'select',
-             data      : {{gloss.secondary_location_choices_json|safe}},
-             cancel    : 'Cancel',
-             submit    : 'OK',
-             tooltip   : 'Click to edit...'
-         });                   
-      });
-
-    /*
-     
-         function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) { // >
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-    
-    function ajaxifyTagForm() {
-        // ajax form submission for tag addition and deletion
-        $('.tagdelete').click(function() {
-            var action = $(this).attr('href');
-            var tagid = $(this).attr('id');
-            var tagelement = $(this).parents('.tagli');
-            
-            $.post(action, {tag: tagid, delete: "True" }, 
-                   function(data) {
-                        if (data == 'deleted') {
-                            // remove the tag from the page 
-                           tagelement.remove();
-                        }
-                   });
-            
-            return false;
-        });
         
-        $('#tagaddform').submit(function(){
-            $.post($(this).attr('action'), $(this).serialize(),
-                    function(data) {
-                       // response is a new tag list
-                       $('#tags').replaceWith(data);
-                       ajaxifyTagForm();
-                   })
-            return false;
-        });
-    }
-    
-     
-    $('#delete_video').confirm({
-        msg:'Delete this video?',
-        timeout:3000
-    });
-
-    var csrftoken = getCookie('csrftoken');
-    
-    // setup requried for Ajax POST
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    
-    $.ajaxSetup({
-        crossDomain: false, // obviates need for sameOrigin test
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type)) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            } 
-        }
-    });
-
-    ajaxifyTagForm();
-  */
-      
-      
+     var edit_post_url = '{% url 'dictionary:update_gloss' gloss.id %}';
+     var definition_role_choices = {{gloss.definition_role_choices_json|safe}}
+     var handshape_choices = {{gloss.handshape_choices_json|safe}}
+     var location_choices = {{gloss.location_choices_json|safe}}
+     var palm_orientation_choices = {{gloss.palm_orientation_choices_json|safe}}
+     var relative_orientation_choices = {{gloss.relative_orientation_choices_json|safe}}
+     var secondary_location_choices = {{gloss.secondary_location_choices_json|safe}}
+     var languages = {{gloss.language_choices|safe}};
+     var dialects = {{gloss.dialect_choices|safe}};
+     var csrf_token = '{{csrf_token}}';
+        
     </script>
+    <script type='text/javascript' src="{{ STATIC_URL }}js/gloss_edit.js"></script>
 {% endblock %}
 
 
 {% block content %}
 
+<div class='pull-right'>
+     <span id='edit_message'></span>&nbsp;<button id='enable_edit' class='btn'>Enable Edit</button>
+</div>
 
 <div id="signinfo">
     <div id="signs">
@@ -189,52 +47,34 @@
     <div id="videocontainer">
     {% if gloss.get_video %}
 
-    <div id="player">
-      <iframe width="320" height="240" scrolling="no" frameborder='0'
-          src="{% url 'signbank.video.views.iframe' gloss.get_video_number %}">
-      </iframe>
-    </div>
-      <div id="replay"></div>
+        <div id="player">
+          <iframe width="320" height="240" scrolling="no" frameborder='0'
+              src="{% url 'signbank.video.views.iframe' gloss.get_video_number %}">
+          </iframe>
+        </div>
+        <div id="replay"></div>
 
     {% else %}
-    <img src='{{ STATIC_URL }}images/no-video.png'>
+        <img src='{{ STATIC_URL }}images/no-video.png'>
     {% endif %}
     </div>
 
     {% include "dictionary/glosstags.html" %}
 </div>
 
-    <div id="keywords">
-      <h2>Keywords</h2>
-      <p class='edit' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-         
-    </div>
-
     <div id="definition">
-        <h2>Sign Definition</h2>
-
-    {% regroup gloss.definition_set.all by role as roles %}
-    
-    {% for role in roles %}
-        
-      <ol>
-      {% for def in role.list %}     
-        <li><span class='edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</span><div class='edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
-      {% endfor %}
-      </ol>
-
-    {% endfor %}
   
-    <h2>Properties</h2>  
-  
-    <dl class='dl-horizontal'>
-        <dt>Sign Number: </dt><dd class='edit' id='sn'>{{gloss.sn}}</dd>
-        <dt>IdGloss:</dt><dd class='edit' id='idgloss'>{{gloss.idgloss}}</dd>
-        <dt>Annotation ID Gloss:</dt><dd class='edit'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</dd>
+    <table class='table table-condensed'>
+        <tr><th>Sign Number:</th><td class='edit edit_text' id='sn'>{{gloss.sn}}</td></tr>
+        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</td></tr>
+        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</td></tr>
+        <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+      
+ 
         {% if gloss.sense %}
-            <dt>Sense Number</dt><dd class='edit'  id='sense'>{{gloss.sense}}</dd>
-            <dt>Homonyms/Homophones</dt>
-            <dd>
+            <tr><th>Sense Number</th><td class='edit edit_text'  id='sense'>{{gloss.sense}}</td></tr>
+            <tr><th>Homonyms/Homophones</td>
+            <td>
                <ol>
                {% for h in gloss.homophones %}
                  {% if h == gloss %}
@@ -244,44 +84,59 @@
                  {% endif %}
                {% endfor %}
                </ol>
-            </dd>
+            </td></tr>
         {% endif %}
-        <dt>Morphology</dt><dd class='edit' id='morph'>{{gloss.morph}}</dd>
-        <dt>Stem Sign Number</dt><dd class='edit' id='StemSN'>{{gloss.StemSN}}</dd>
-        <dt>Compound of</dt><dd class='edit' id='compound'>{{gloss.compound}}</dd>
-        <dt>Language</dt><dd class='edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% endfor %}</dd>
-        <dt>Dialect</dt><dd class='edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% endfor %}</dd>
-    </dl>
+        <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{{gloss.morph}}</td></tr>
+        <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{{gloss.StemSN}}</td></tr>
+        <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{{gloss.compound}}</td></tr>
+        <tr><th>Language</th><td class='edit edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr><th>Dialect</th><td class='edit edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+    </table>
     
     <h3>Publication Status</h3>
         
-    <dl class='dl-horizontal'>
-        <dt>In Web Dictionary</dt><dd class='edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</dd>
-        <dt>Proposed New Sign</dt><dd class='edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</dd>
-    </dl>
+    <table class='table table-condensed'>
+        <tr><th>In Web Dictionary</th><td class='edit edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</td></tr>
+        <tr><th>Proposed New Sign</th><td class='edit edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</td></tr>
+    </table>
     
     <h3>Phonology</h3>
         
-    <dl class='dl-horizontal'>
-        <dt>Initial Palm Orientation</dt><dd class='edit_palm' id='initial_palm_orientation'>{{gloss.get_initial_palm_orientation_display}}</dd>
-        <dt>Final Palm Orientation</dt><dd class='edit_palm' id='final_palm_orientation'>{{gloss.get_final_palm_orientation_display}}</dd>
+    <table class='table table-condensed'>
+        <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{{gloss.get_initial_palm_orientation_display}}</td></tr>
+        <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{{gloss.get_final_palm_orientation_display}}</td></tr>
 
-        <dt>Initial Relative Orientation</dt><dd class='edit_relori' id='initial_relative_orientation'>{{gloss.get_initial_relative_orientation_display}}</dd>
-        <dt>Final Relative Orientation</dt><dd class='edit_relori' id='final_relative_orientation'>{{gloss.get_final_relative_orientation_display}}</dd>
+        <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{{gloss.get_initial_relative_orientation_display}}</td></tr>
+        <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{{gloss.get_final_relative_orientation_display}}</td></tr>
 
-        <dt>Dominant Hand Shape</dt><dd class='edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</dd>
-        <dt>Subordinate Hand Shape</dt><dd class='edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</dd>
-        <dt>Final Dominant Hand Shape</dt><dd class='edit_handshape' id='final_domhndsh'>{{gloss.get_final_domhndsh_display}}</dd>
-        <dt>Final Subordinate Hand Shape</dt><dd class='edit_handshape' id='final_subhndsh'>{{gloss.get_final_subjndsh_display}}</dd>
+        <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</td></tr>
+        <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{{gloss.get_subjndsh_display}}</td></tr>
+        <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{{gloss.get_final_domhndsh_display}}</td></tr>
+        <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{{gloss.get_final_subjndsh_display}}</td></tr>
 
-        <dt>Primary Location</dt><dd class='edit_location' id='locprim'>{{gloss.get_locprim_display}}</dd>
-        <dt>Secondary Location</dt><dd class='edit_location' id='locsecond'>{{gloss.get_locsecond_display}}</dd>
-        <dt>Final Location</dt><dd class='edit_location' id='final_loc'>{{gloss.get_final_loc_display}}</dd>
+        <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{{gloss.get_locprim_display}}</td></tr>
+        <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{{gloss.get_locsecond_display}}</td></tr>
+        <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{{gloss.get_final_loc_display}}</td></tr>
         
-        <dt>Initial Secondary Location (BSL)</dt><dd class='edit_sec_location' id='initial_secondary_loc'>{{gloss.get_initial_secondary_loc_display}}</dd>
-        <dt>Final Secondary Location (BSL)</dt><dd class='edit_sec_location' id='final_secondary_loc'>{{gloss.get_final_secondary_loc_display}}</dd>
+        <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{{gloss.get_initial_secondary_loc_display}}</td></tr>
+        <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{{gloss.get_final_secondary_loc_display}}</td></tr>
         
-    </dl>
+    </table>
+    
+    
+    <h3>Definitions/Notes</h3>
+
+    {% regroup gloss.definition_set.all by role as roles %}
+    
+    {% for role in roles %}
+        
+      <ol>
+      {% for def in role.list %}     
+        <li><span class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</span><div class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
+      {% endfor %}
+      </ol>
+
+    {% endfor %}
     
 
     </div>
