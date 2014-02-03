@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import Context, RequestContext
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from models import Video, GlossVideo
 from forms import VideoUploadForm, VideoUploadForGlossForm
 from convertvideo import extract_frame
@@ -10,17 +11,16 @@ def addvideo(request):
     """View to present a video upload form and process
     the upload"""
 
+    print "ADDVIDEO"
     if request.method == 'POST':
 
         form = VideoUploadForGlossForm(request.POST, request.FILES)
         if form.is_valid():
-            print "Form valid"
+
             sn = form.cleaned_data['gloss_sn']
             vfile = form.cleaned_data['videofile']
             vfile.name = sn+".mp4"
             redirect_url = form.cleaned_data['redirect']
-
-            print sn, vfile.name, redirect_url
 
             # deal with any existing video for this sign
             oldvids = GlossVideo.objects.filter(gloss_sn=sn)
@@ -30,13 +30,12 @@ def addvideo(request):
             video = GlossVideo(videofile=vfile, gloss_sn=sn)
             video.save()
 
-
+            print "SAVED", video
+            return HttpResponse(video.get_absolute_url(), {'content-type': 'text/plain'})
+        
             # TODO: provide some feedback that it worked (if
             # immediate display of video isn't working)
             return redirect(redirect_url)
-        else:
-            print "Form invalid"
-            print form.errors
 
     # if we can't process the form, just redirect back to the
     # referring page, should just be the case of hitting
@@ -101,7 +100,8 @@ def iframe(request, videoid):
     return render_to_response("iframe.html",
                               {'videourl': videourl,
                                'posterurl': video.poster_url(),
-                               })
+                               },
+                               context_instance=RequestContext(request))
 
 
 

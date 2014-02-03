@@ -36,12 +36,14 @@ function disable_edit() {
     $('.edit').editable('disable');
     $('.edit').css('color', 'black');
     $('#edit_message').text(''); 
+    $('.editform').hide();
 };
 
 function enable_edit() {
     $('.edit').editable('enable');
     $('.edit').css('color', 'red');
-    $('#edit_message').text('Click on red text to edit  ');    
+    $('#edit_message').text('Click on red text to edit  '); 
+    $('.editform').show();   
 };
 
 function toggle_edit() {

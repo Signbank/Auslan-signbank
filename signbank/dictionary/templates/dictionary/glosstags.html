@@ -19,12 +19,13 @@
           {% endfor %}
           </ul>
       {% endif %}
-      
-      <form id='tagaddform' 
-            action="{% url 'root_page' %}dictionary/update/tag/{{gloss.id}}" 
-            method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-       {{tagform.tag}}
-       <input type='submit' value='Add Tag'>
-      </form>
+      <div class='editform'>
+          <form id='tagaddform' 
+                action="{% url 'root_page' %}dictionary/update/tag/{{gloss.id}}" 
+                method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+           {{tagform.tag}}
+           <input type='submit' value='Add Tag'>
+          </form>
+      </div>
     </div>
