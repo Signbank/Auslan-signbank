@@ -20,6 +20,7 @@ class GlossListView(ListView):
         context = super(GlossListView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['searchform'] = GlossSearchForm(self.request.GET)
+        context['glosscount'] = Gloss.objects.all().count()
         return context
     
 
