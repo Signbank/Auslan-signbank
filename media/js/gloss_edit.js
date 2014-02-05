@@ -3,8 +3,35 @@
  */
  $(document).ready(function() {
      configure_edit();
-     disable_edit();
+     //disable_edit();
      $('#enable_edit').click(toggle_edit);
+     
+     var tagApi = $("#taginput").tagsManager({
+         tagsContainer: "#tagcontainer"
+     });
+     
+     
+     var tagEngine = new Bloodhound({
+        datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        name: 'tags',
+        prefetch: {
+            url : '/dictionary/ajax/tags',
+            filter: function(list) {
+                     return $.map(list, function(tag) { return { name: tag }; });
+            }
+        }
+     });
+     
+     tagEngine.initialize();
+     
+     $("#taginput").typeahead(null, {displayKey: 'name', source: tagEngine.ttAdapter()}).on('typeahead:selected', function (e, d) {
+ 
+      tagApi.tagsManager("pushTag", d.value);
+ 
+    });
+     
+     
      
      /*
      $('#delete_video').confirm({
@@ -67,7 +94,7 @@ function configure_edit() {
          cancel    : 'Cancel',
          submit    : 'OK'
      });
-     $('edit_area').editable(edit_post_url, { 
+     $('.edit_area').editable(edit_post_url, { 
          submitdata  : {'csrfmiddlewaretoken': csrf_token},
          type      : 'textarea',
          cancel    : 'Cancel',

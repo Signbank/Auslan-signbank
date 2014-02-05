@@ -1,10 +1,22 @@
 
 from django.shortcuts import render_to_response, get_object_or_404
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import json
 
 from tagging.models import Tag, TaggedItem
 from signbank.dictionary.models import Gloss
+
+
+def taglist_json(request):
+    """Return a list of tags as JSON"""
+    
+    tags = [t.name for t in Tag.objects.all()]
+    
+    return HttpResponse(json.dumps(tags), {'content-type': 'application/json'})
+    
+    
 
 def taglist(request, tag=None):
     """View of a list of tags or a list of signs with a given tag"""

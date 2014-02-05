@@ -28,7 +28,8 @@ urlpatterns = patterns('',
     url(r'^update/video/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_video'),
 
     url(r'^ajax/keyword/(?P<prefix>.*)$', 'signbank.dictionary.views.keyword_value_list'),
-
+    url(r'^ajax/tags/$', 'signbank.dictionary.tagviews.taglist_json'),
+    
     url(r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 
     url(r'^export.csv', 'signbank.dictionary.views.csv_export', name='export'),
