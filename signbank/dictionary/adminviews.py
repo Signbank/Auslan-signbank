@@ -83,6 +83,31 @@ class GlossListView(ListView):
             val = get['final_loc']
             qs = qs.filter(final_loc__exact=val)   
             
+            
+        if get.has_key('initial_relative_orientation') and get['initial_relative_orientation'] != '':
+            val = get['initial_relative_orientation']
+            qs = qs.filter(initial_relative_orientation__exact=val)               
+
+        if get.has_key('final_relative_orientation') and get['final_relative_orientation'] != '':
+            val = get['final_relative_orientation']
+            qs = qs.filter(final_relative_orientation__exact=val)   
+
+        if get.has_key('initial_palm_orientation') and get['initial_palm_orientation'] != '':
+            val = get['initial_palm_orientation']
+            qs = qs.filter(initial_palm_orientation__exact=val)               
+
+        if get.has_key('final_palm_orientation') and get['final_palm_orientation'] != '':
+            val = get['final_palm_orientation']
+            qs = qs.filter(final_palm_orientation__exact=val)  
+
+        if get.has_key('initial_secondary_loc') and get['initial_secondary_loc'] != '':
+            val = get['initial_secondary_loc']
+            qs = qs.filter(initial_secondary_loc__exact=val)  
+
+        if get.has_key('final_secondary_loc') and get['final_secondary_loc'] != '':
+            val = get['final_secondary_loc']
+            qs = qs.filter(final_secondary_loc__exact=val) 
+            
            # print "G :", len(qs)
         # end of phonology filters
         

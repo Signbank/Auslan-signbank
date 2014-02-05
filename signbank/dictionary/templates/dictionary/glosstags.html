@@ -19,12 +19,18 @@
           {% endfor %}
           </ul>
       {% endif %}
+      <div id="tagcontainer"></div>
       <div class='editform'>
           <form id='tagaddform' 
                 action="{% url 'root_page' %}dictionary/update/tag/{{gloss.id}}" 
                 method="post" enctype="multipart/form-data">
            {% csrf_token %}
-           {{tagform.tag}}
+           {{tagform}}
+           
+           <!--
+           <input type="text" name="tags" placeholder="Tags" class='tm-tag' id="taginput"/>
+           -->
+           
            <input type='submit' value='Add Tag'>
           </form>
       </div>

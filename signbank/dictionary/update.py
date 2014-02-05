@@ -112,11 +112,16 @@ def update_gloss(request, glossid):
             
             f = Gloss._meta.get_field(field)
             
+            
+            # for choice fields we want to return the 'display' version of 
+            # the value
             valdict = dict(f.flatchoices)
             # some fields take ints
-            if type(valdict.keys()[0]) == int:
+            if valdict.keys() != [] and type(valdict.keys()[0]) == int:
                 newvalue = valdict.get(int(value), value)
             else:
+                # either it's not an int or there's no flatchoices
+                # so here we use get with a default of the value itself
                 newvalue = valdict.get(value, value)
         
         return HttpResponse(newvalue, {'content-type': 'text/plain'})
