@@ -132,7 +132,7 @@ function clearForm(myFormElement) {
     <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
 </form>
 
-<p>Number of matches: {{object_list|length}} out of NNNN.</p>
+<p>Number of matches: {{page_obj.paginator.count}} out of {{glosscount}}.</p>
 
 <table class='table'>
     <thead>
