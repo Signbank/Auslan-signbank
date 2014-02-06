@@ -128,9 +128,19 @@ class GlossListView(ListView):
         if get.has_key('tags') and get['tags'] != '':
             vals = get['tags']
             
-            #print "TAGS: ", vals
+            # here we do an implicit OR between tags (or partial tags)
+            # but it might be useful to allow AND
+            
+            taglist = vals.split(',')
             # get tags starting with the search string
-            tags = Tag.objects.filter(name__istartswith=vals)
+            
+            tags = Tag.objects.none()
+            for t in taglist:
+
+                qq = Tag.objects.filter(name__istartswith=t.strip())
+                tags = tags | qq
+            
+            tags = tags.distinct()
             tqs = TaggedItem.objects.get_union_by_model(Gloss, tags)
             
             # intersection

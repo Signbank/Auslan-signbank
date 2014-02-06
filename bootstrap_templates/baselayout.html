@@ -12,12 +12,19 @@
 
     <div id='wrap'>
         <div class="container">
+            
+            <div id="leftcontentborder"></div>
+            <div id="rightcontentborder"></div>
+            <div id='header'><h1>Signbank</h1></div>
 
         {% include 'menu.html' %}  
     
         {% bootstrap_messages %}
 
+        <div id='content'>
         {% block content %}(no content){% endblock %}
+        </div>
+        
         </div>
     </div>
 
