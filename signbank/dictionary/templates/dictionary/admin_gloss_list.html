@@ -1,5 +1,6 @@
 {% extends "baselayout.html" %}
 
+{% block bootstrap3_title %}Signbank: Search Signs{% endblock %}
 {% block extrahead %}
 {% endblock %}
 
@@ -62,15 +63,26 @@ function clearForm(myFormElement) {
 
 
 <form name='adminsearch' id='adminsearch'>
-    <table class='table'>
+    <table class='table' id='searchfields'>
         <tr>
-            <td><label for='id_idgloss'>{{searchform.search.label}}</label>{{searchform.search}}</td>
-            <td><label for='id_tags'>Tagged</label>
-               <div> {{searchform.tags}}</div>
-                </td>
-            <td><label for='id_nottags'>Not Tagged</label>{{searchform.nottags}}</td>
+            <td><div class='input-group'>
+                <label class='input-group-addon' for='id_idgloss'>{{searchform.search.label}}</label>
+                <input name='search' class='form-control' {% if searchform.search.value %}value='{{searchform.search.value}}'{% endif %}></div></td>
+            <td><div class='input-group'><label class='input-group-addon' for='id_tags'>Tagged</label>
+                <input name='tags' class='form-control' {% if searchform.tags.value %}value='{{searchform.tags.value}}'{% endif %}></div></td>
         </tr>
-        <tr id='searchpanels'>
+        <tr>
+            <td><div class='input-group'>
+                <label class='input-group-addon' for='id_keyword'>{{searchform.keyword.label}}</label>
+                <input name='keyword' class='form-control' {% if searchform.search.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
+            <td><div class='input-group'><label class='input-group-addon' for='id_nottags'>{{searchform.nottags.label}}</label>
+                <input name='nottags' class='form-control' {% if searchform.search.value %}value='{{searchform.nottags.value}}'{% endif %}></div></td>
+        </tr>
+    </table>
+    <div data-toggle="collapse"  data-target='#searchpanels' class="panel panel-default">
+      <div class="panel-heading">Advanced Search</div>
+    <table class='table'>
+        <tr id='searchpanels' class='collapse'>
             <td>
                 <table>
                     <tr><td><label for='id_dialect'>{{searchform.dialect.label}}</label></td><td>{{searchform.dialect}}</td></tr>
@@ -103,6 +115,8 @@ function clearForm(myFormElement) {
         </tr>
         
     </table>
+      </div>
+
     <input class='btn' type='submit' name='submit' value='Search'>
     <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
 </form>

@@ -41,6 +41,12 @@ class GlossListView(ListView):
             qs = qs.filter(query)
             
             #print "A: ", len(qs)
+            
+            
+        if get.has_key('keyword'):
+            val = get['keyword']
+            qs = qs.filter(translation__translation__text__startswith=val)
+            
           
         if get.has_key('inWeb') and get['inWeb'] != '1':
             val = get['inWeb'] == '2'
@@ -146,6 +152,8 @@ class GlossListView(ListView):
             # intersection
             qs = qs & tqs
             
+        qs = qs.distinct()
+        
         if get.has_key('nottags') and get['nottags'] != '':
             vals = get['nottags']
             

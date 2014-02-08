@@ -160,6 +160,10 @@ body {
     border-right: 1px solid #ccc;
 }
 
+#adminsearch #searchfields td {
+    width: 50%;
+}
+
 
 /* editing gloss */
 
