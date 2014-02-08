@@ -4,7 +4,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'bootstrap_templates'),
 )
 
-
+PRIMARY_CSS = "bootstrap_css/bsl.css"
 
 # what do we call this signbank?
 SIGNBANK_NAME = "BSL"
