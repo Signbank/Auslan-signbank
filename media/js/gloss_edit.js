@@ -3,7 +3,7 @@
  */
  $(document).ready(function() {
      configure_edit();
-     //disable_edit();
+     disable_edit();
      $('#enable_edit').click(toggle_edit);
      
      var tagApi = $("#taginput").tagsManager({
