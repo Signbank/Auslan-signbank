@@ -29,6 +29,7 @@ class GlossSearchForm(forms.ModelForm):
     search = forms.CharField(label="Search Gloss/SN")
     tags = forms.CharField(label="Tagged")
     nottags = forms.CharField(label="Not Tagged")
+    keyword = forms.CharField(label='Keyword')
     
     class Meta:
         model = Gloss
