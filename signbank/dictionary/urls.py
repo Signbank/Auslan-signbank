@@ -1,5 +1,5 @@
 from django.conf.urls import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
@@ -35,8 +35,8 @@ urlpatterns = patterns('',
     url(r'^export.csv', 'signbank.dictionary.views.csv_export', name='export'),
 
     # Admin views
-    url(r'^list/$', login_required(GlossListView.as_view()), name='admin_gloss_list'),
-    url(r'^gloss/(?P<pk>\d+)', login_required(GlossDetailView.as_view()), name='admin_gloss_view'),
+    url(r'^list/$', permission_required('dictionary.search_gloss')(GlossListView.as_view()), name='admin_gloss_list'),
+    url(r'^gloss/(?P<pk>\d+)', permission_required('dictionary.search_gloss')(GlossDetailView.as_view()), name='admin_gloss_view'),
 
 )
 
