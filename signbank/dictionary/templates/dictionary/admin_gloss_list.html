@@ -74,9 +74,9 @@ function clearForm(myFormElement) {
         <tr>
             <td><div class='input-group'>
                 <label class='input-group-addon' for='id_keyword'>{{searchform.keyword.label}}</label>
-                <input name='keyword' class='form-control' {% if searchform.search.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
+                <input name='keyword' class='form-control' {% if searchform.keyword.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
             <td><div class='input-group'><label class='input-group-addon' for='id_nottags'>{{searchform.nottags.label}}</label>
-                <input name='nottags' class='form-control' {% if searchform.search.value %}value='{{searchform.nottags.value}}'{% endif %}></div></td>
+                <input name='nottags' class='form-control' {% if searchform.nottags.value %}value='{{searchform.nottags.value}}'{% endif %}></div></td>
         </tr>
     </table>
     <div data-toggle="collapse"  data-target='#searchpanels' class="panel panel-default">
@@ -118,6 +118,7 @@ function clearForm(myFormElement) {
       </div>
 
     <input class='btn' type='submit' name='submit' value='Search'>
+    <input class='btn' type='submit' name='format' value='CSV'>
     <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
 </form>
 
