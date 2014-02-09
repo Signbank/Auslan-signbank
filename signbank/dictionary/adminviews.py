@@ -1,6 +1,8 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.db.models import Q
+from django.http import HttpResponse
+import csv
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
@@ -23,7 +25,41 @@ class GlossListView(ListView):
         context['glosscount'] = Gloss.objects.all().count()
         return context
     
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format') == 'CSV':
+            return self.render_to_csv_response(context)
+        else:
+            return super(GlossListView, self).render_to_response(context)
+    
 
+    def render_to_csv_response(self, context):
+        
+        # Create the HttpResponse object with the appropriate CSV header.
+        response = HttpResponse(mimetype='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="dictionary-export.csv"'
+    
+    
+        fields = ['sn', 'idgloss', 'annotation_idgloss', 'morph']
+    
+        writer = csv.writer(response)
+        header = [Gloss._meta.get_field(f).verbose_name for f in fields]
+        header.append("Keywords")
+        writer.writerow(header)
+    
+        for gloss in self.get_queryset():
+            row = []
+            for f in fields:
+                row.append(getattr(gloss, f))
+    
+            trans = [t.translation.text for t in gloss.translation_set.all()]
+            row.append(", ".join(trans))
+    
+            writer.writerow(row)
+    
+        return response
+
+        
     def get_queryset(self):
         
         # get query terms from self.request
