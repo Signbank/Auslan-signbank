@@ -186,6 +186,7 @@ class GlossDetailView(DetailView):
         # Add in a QuerySet of all the books
         context['tagform'] = TagUpdateForm()
         context['videoform'] = VideoUploadForGlossForm()
+        context['definitionform'] = DefinitionForm()
         return context
         
     

@@ -49,6 +49,10 @@ def update_gloss(request, glossid):
                 defn.text = value
                 defn.save()
                 newvalue = defn.text
+            elif what == 'definitioncount':
+                defn.count = int(value)
+                defn.save()
+                newvalue = defn.count
             elif what == 'definitionrole':
                 defn.role = value
                 defn.save()
@@ -127,6 +131,28 @@ def update_gloss(request, glossid):
         return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
 
+def add_definition(request, glossid):
+    """Add a new definition for this gloss"""
+    
+    
+    thisgloss = get_object_or_404(Gloss, id=glossid)
+    
+    if request.method == "POST":
+        form = DefinitionForm(request.POST)
+        
+        if form.is_valid():
+            
+            
+            count = form.cleaned_data['count']
+            role = form.cleaned_data['role']
+            text = form.cleaned_data['text']
+            
+            defn = Definition(gloss=thisgloss, count=count, role=role, text=text)
+            defn.save()
+            
+    return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': thisgloss.id}))
+
+
 def add_tag(request, glossid):
     """View to add a tag to a gloss"""
 
@@ -160,82 +186,5 @@ def add_tag(request, glossid):
 
 
 
-def update_video(request, glossid):
-    """View to update the video for a gloss from the form displayed on the staff view"""
-
-    if not request.user.has_perm('dictionary.update_video'):
-        return HttpResponseForbidden("Video Upload Not Allowed")
-
-
-    keyword = None
-    n = None
-    videofile = None
-    status = "form"
-
-    thisgloss = get_object_or_404(Gloss, id=glossid)
-
-    if request.method == "POST":
-        form = VideoUpdateForm(request.POST, request.FILES)
-        if form.is_valid():
-            if form.cleaned_data.has_key('videofile'):
-                video = form.cleaned_data['videofile']
-                # copy to comment video location
-                basename = os.path.split(video.name)[-1]
-                # this will be the path to the video, relative to MEDIA_ROOT
-                videofile = os.path.join(settings.VIDEO_UPLOAD_LOCATION, basename)
-                # make sure the target directory is there
-                targetdir = os.path.join(settings.MEDIA_ROOT, settings.VIDEO_UPLOAD_LOCATION)
-                if not os.path.exists(targetdir):
-                    os.mkdir(targetdir)
-
-                videoloc = os.path.join(settings.MEDIA_ROOT, videofile)
-                video.rename(videoloc)
-
-        elif request.POST.has_key("confirmvideofile"):
-            # we're in the second stage confirmation
-            videofile = request.POST['confirmvideofile']
-            fullpath = os.path.join(settings.MEDIA_ROOT, videofile)
-
-            if request.POST.has_key("Cancel"):
-                if request.POST['Cancel'] == "cancel":
-                    # remove the pending video file
-                    if os.access(fullpath, os.F_OK):
-                        os.unlink(fullpath)
-                    status = "cancelled"
-            else:
-                # copy video to proper location
-                newlocation = os.path.join(settings.MEDIA_ROOT, thisgloss.get_video_save_location())
-                # backup existing file if any
-                if os.access(newlocation, os.F_OK):
-                    backup = newlocation + ".bak"
-                    if os.access(backup, os.F_OK):
-                        os.unlink(backup)
-                    shutil.copy(newlocation, backup)
-
-
-                # need to make sure the target directory is there
-                try:
-                    os.makedirs(os.path.dirname(newlocation))
-                except:
-                    pass
-
-                # need shutil.copy here since we might be on different devices
-                shutil.copy(fullpath, newlocation)
-                os.unlink(fullpath)
-                #os.rename(fullpath, newlocation)
-                debug("Replaced video file: %s" % newlocation)
-                status = "completed"
-    else:
-        form = VideoUpdateForm()
-
-    return render_to_response("dictionary/update_video.html",
-                              {'form': form,
-                               'gloss' : thisgloss,
-                               'keyword': keyword,
-                               'n': n,
-                               'videofile': videofile,
-                               'status': status,
-                               },
-                              context_instance=RequestContext(request))
 
 

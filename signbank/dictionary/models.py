@@ -124,7 +124,7 @@ class Definition(models.Model):
     count = models.IntegerField() 
 
     class Meta:
-        ordering = ['gloss']
+        ordering = ['gloss', 'role', 'count']
         
     class Admin:
         list_display = ['gloss', 'role', 'count', 'text']
