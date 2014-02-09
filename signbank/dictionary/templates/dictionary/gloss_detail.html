@@ -29,9 +29,11 @@
 
 {% block content %}
 
+{% if perms.dictionary.change_gloss %}
 <div class='pull-right'>
      <span id='edit_message'></span>&nbsp;<button id='enable_edit' class='btn'>Enable Edit</button>
 </div>
+{% endif %}
 
 <div id="signinfo">
     <div id="signs">

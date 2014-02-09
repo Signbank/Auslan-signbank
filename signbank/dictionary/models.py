@@ -262,7 +262,9 @@ class Gloss(models.Model):
     class Meta:
         verbose_name_plural = "Glosses"
         ordering = ['idgloss']
-        permissions = (('update_video', "Can Update Video"), )
+        permissions = (('update_video', "Can Update Video"),
+                       ('search_gloss', 'Can Search/View Full Gloss Details'),
+                        )
 
         
     def __str__(self):
