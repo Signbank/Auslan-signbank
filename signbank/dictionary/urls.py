@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),
     url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag'),
-    url(r'^update/video/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_video'),
+    url(r'^update/definition/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_definition'),
 
     url(r'^ajax/keyword/(?P<prefix>.*)$', 'signbank.dictionary.views.keyword_value_list'),
     url(r'^ajax/tags/$', 'signbank.dictionary.tagviews.taglist_json'),

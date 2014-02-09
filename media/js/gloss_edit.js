@@ -6,6 +6,9 @@
      disable_edit();
      $('#enable_edit').click(toggle_edit);
      
+     $('#add-definition select').addClass('form-control');
+     
+     
      var tagApi = $("#taginput").tagsManager({
          tagsContainer: "#tagcontainer"
      });

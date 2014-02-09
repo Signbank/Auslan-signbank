@@ -11,7 +11,6 @@ def addvideo(request):
     """View to present a video upload form and process
     the upload"""
 
-    print "ADDVIDEO"
     if request.method == 'POST':
 
         form = VideoUploadForGlossForm(request.POST, request.FILES)
@@ -29,9 +28,6 @@ def addvideo(request):
 
             video = GlossVideo(videofile=vfile, gloss_sn=sn)
             video.save()
-
-            print "SAVED", video
-            return HttpResponse(video.get_absolute_url(), {'content-type': 'text/plain'})
         
             # TODO: provide some feedback that it worked (if
             # immediate display of video isn't working)

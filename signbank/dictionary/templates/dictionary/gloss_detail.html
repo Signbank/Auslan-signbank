@@ -67,12 +67,14 @@
     {% endif %}
     
     </div>
+    {% if perms.dictionary.update_video %}
     <div class='editform'>
         <fieldset>
             <legend>Upload New Video</legend>
             <p>We have {{gloss.count_videos}} videos for this gloss.</p>
             <form action="/video/upload/" method="post" enctype="multipart/form-data">
               {% csrf_token %}
+              <input type='hidden' name='redirect' value='{{request.path}}'>
             <table id="staffops">
               <tr>
                   <td>{{videoform.videofile}}</td>
@@ -83,7 +85,7 @@
             </form>
         </fieldset>
     
-        {% if gloss.get_video %}
+        {% if perms.video.can_delete_video and gloss.get_video %}
         <fieldset>
          <legend>Delete/Revert Video</legend>
             <table>
@@ -95,18 +97,19 @@
         </fieldset>
         {% endif %}
     </div>
+    {% endif %}
 
 
     {% include "dictionary/glosstags.html" %}
 </div>
 
     <div id="definition">
-  
+    
     <table class='table table-condensed'>
-        <tr><th>Sign Number:</th><td class='edit edit_text' id='sn'>{{gloss.sn}}</td></tr>
-        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</td></tr>
-        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</td></tr>
-        <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr><th>Sign Number:</th><td class='edit edit_text' id='sn'>{{gloss.sn}}</th></tr>
+        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</th></tr>
+        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</th></tr>
+        <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</th></tr>
       
  
         {% if gloss.sense %}
@@ -166,15 +169,43 @@
 
     {% regroup gloss.definition_set.all by role as roles %}
     
+    <table class='table'>
+      <tr>
+          <th style='width:3em'>Index</th><th style='width:10em'>Role</th><th>Text</th>
+      </tr>
     {% for role in roles %}
-        
-      <ol>
-      {% for def in role.list %}     
-        <li><span class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</span><div class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</div></li>
+
+      {% for def in role.list %} 
+      <tr> 
+        <td class='edit edit_text' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
+        <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
+        <td class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</td>
+      </tr>
       {% endfor %}
-      </ol>
+      
 
     {% endfor %}
+    </table>
+    
+    <form id='add-definition' action='/dictionary/update/definition/{{gloss.id}}' method="POST">
+        <fieldset>
+        {% csrf_token %}
+         <table class='table'>
+            <tr>
+                <td style='width:5em'><input class='form-control' name='count' type='number'></td>   
+                <td style='width:10em'>{{definitionform.role}}</td>
+                <td><input class='form-control' name='text' placeholder='Enter new definition/note'></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input class='btn' type='submit' value='Save New'></td>
+            </tr>
+         </table>
+    </fieldset>
+    
+    </form>
+    
     
 
     </div>

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview
 from signbank.video.fields import VideoUploadToFLVField
-from signbank.dictionary.models import Dialect, Gloss
+from signbank.dictionary.models import Dialect, Gloss, Definition
 from django.conf import settings
 from tagging.models import Tag
 
@@ -43,5 +43,12 @@ class GlossSearchForm(forms.ModelForm):
                    'final_domhndsh', 'final_subhndsh', 'final_loc'
                    )
     
+
+class DefinitionForm(forms.ModelForm):
+    
+    class Meta:
+        model = Definition
+        fields = ('count', 'role', 'text')
+        
 
 
