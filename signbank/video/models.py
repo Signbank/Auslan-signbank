@@ -9,6 +9,7 @@ import sys, os, time, shutil
 from convertvideo import extract_frame, convert_video, ffmpeg
 
 from django.core.files.storage import FileSystemStorage
+from signbank.dictionary.models import Gloss
 
 
 class VideoPosterMixin:
@@ -125,7 +126,10 @@ class GlossVideo(models.Model, VideoPosterMixin):
     """A video that represents a particular idgloss"""
 
     videofile = models.FileField("video file", upload_to=settings.GLOSS_VIDEO_DIRECTORY, storage=storage)
-    gloss_sn = models.CharField("Gloss SN", max_length=20)
+    gloss = models.ForeignKey(Gloss)
+    
+    
+    
     ## video version, version = 0 is always the one that will be displayed
     # we will increment the version (via reversion) if a new video is added
     # for this gloss

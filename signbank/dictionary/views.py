@@ -144,7 +144,7 @@ def word(request, keyword, n):
 
     if request.user.is_authenticated() and request.user.is_staff:
         update_form = GlossModelForm(instance=trans.gloss)
-        video_form = VideoUploadForGlossForm(initial={'gloss_sn': trans.gloss.sn,
+        video_form = VideoUploadForGlossForm(initial={'gloss_id': trans.gloss.pk,
                                                       'redirect': request.path})
     else:
         update_form = None
@@ -225,7 +225,7 @@ def gloss(request, idgloss):
 
     if request.user.is_authenticated() and request.user.is_staff:
         update_form = GlossModelForm(instance=gloss)
-        video_form = VideoUploadForGlossForm(initial={'gloss_sn': gloss.sn,
+        video_form = VideoUploadForGlossForm(initial={'gloss_id': gloss.pk,
                                                       'redirect': request.get_full_path()})
     else:
         update_form = None

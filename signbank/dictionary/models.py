@@ -15,7 +15,7 @@ import tagging
 import sys, os
 import json
 
-from signbank.video.models import GlossVideo
+#from signbank.video.models import GlossVideo
 
 #from models_legacy import Sign
 
@@ -426,24 +426,25 @@ minor or insignificant ways that can be ignored.""")
         return []
 
 
-    def get_video_number(self):
-        """Work out the video number for this sign, usually the sign number but
-        if we're a sense>1 then we look at the homophone with sense=1"""
+    def get_video_gloss(self):
+        """Work out the gloss that might have the video for this sign, usually the sign number but
+        if we're a sense>1 then we look at the homophone with sense=1
+        Return the gloss instance."""
         
         if self.sense > 1:
             homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
             # should be only zero or one of these
             if len(homophones) > 0:   
-                return homophones[0].target.sn
-        return self.sn
+                return homophones[0].target
+        return self
                 
     def get_video(self):
         """Return the video object for this gloss or None if no video available"""
         
-        video_num = self.get_video_number()
+        video_with_gloss = self.get_video_gloss()
         
         try:
-            video = GlossVideo.objects.get(gloss_sn=video_num, version=0)
+            video = video_with_gloss.glossvideo_set.get(version__exact=0)
             return video
         except:
             return None
@@ -453,9 +454,9 @@ minor or insignificant ways that can be ignored.""")
         for this video - ie. the number of versions stored"""
         
         
-        video_num = self.get_video_number()
+        video_with_gloss = self.get_video_gloss()
         
-        return GlossVideo.objects.filter(gloss_sn=video_num).count()
+        return video_with_gloss.glossvideo_set.count()
     
     
     def get_video_url(self):

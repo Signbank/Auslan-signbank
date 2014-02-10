@@ -57,7 +57,7 @@
 
         <div id="player">
           <iframe width="320" height="240" scrolling="no" frameborder='0'
-              src="{% url 'signbank.video.views.iframe' gloss.get_video_number %}">
+              src="{% url 'signbank.video.views.iframe' gloss.pk %}">
           </iframe>
         </div>
         <div id="replay"></div>
@@ -78,7 +78,7 @@
             <table id="staffops">
               <tr>
                   <td>{{videoform.videofile}}</td>
-                  <td><input type='hidden' name='gloss_sn' value='{{gloss.sn}}'>
+                  <td><input type='hidden' name='gloss_id' value='{{gloss.pk}}'>
                       <input type='submit' value='Upload'/></td>
               </tr>
             </table>
