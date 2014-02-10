@@ -4,6 +4,6 @@ from models import Video, GlossVideo
 #admin.site.register(Video)
 
 class GlossVideoAdmin(admin.ModelAdmin):
-    search_fields = ['^gloss_sn']
+    search_fields = ['^gloss']
     
 admin.site.register(GlossVideo, GlossVideoAdmin)
