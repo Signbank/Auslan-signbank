@@ -89,7 +89,7 @@
         <fieldset>
          <legend>Delete/Revert Video</legend>
             <table>
-            <form action="/video/delete/{{gloss.sn}}" method='post'>
+            <form action="/video/delete/{{gloss.pk}}" method='post'>
             <tr><td><em>This will delete the most recent upload and restore the most recent earlier version.</em></td></tr>
             <tr><td>{% csrf_token %}<input id='delete_video' type='submit' value='Delete/Revert this video'></td></tr>
             </form>
