@@ -156,7 +156,8 @@ class Dialect(models.Model):
     def __str__(self):
         return self.language.name+"/"+self.name  
   
-handshapeChoices = (('0.1', 'Round'),
+handshapeChoices = (('notset', 'No Value Set'),
+                    ('0.1', 'Round'),
                     ('0.2', 'Okay'),
                     ('1.1', 'Point'),
                     ('1.2', 'Hook'),
@@ -196,7 +197,7 @@ handshapeChoices = (('0.1', 'Round'),
                     ('18.1', 'Queer'),                     
                      )
                      
-locationChoices = (
+locationChoices = ( (-1, 'No Value Set'),
                     (0, 'N/A'),
                     (1, 'Top of head'),
                     (2, 'Forehead'),
@@ -231,6 +232,7 @@ locationChoices = (
 
 # these are values for prim2ndloc fin2ndloc introduced for BSL, the names might change
 BSLsecondLocationChoices = (
+                    ('notset', 'No Value Set'),
                     ('0', 'N/A'),
                     ('back', 'Back'),
                     ('palm', 'Palm'),
@@ -241,6 +243,7 @@ BSLsecondLocationChoices = (
                     )
 
 palmOrientationChoices = (
+                    ('notset', 'No Value Set'),
                     ('prone','Prone'),
                     ('neutral', 'Neutral'),
                     ('supine', 'Supine'),
@@ -248,6 +251,7 @@ palmOrientationChoices = (
                           )
 
 relOrientationChoices = (
+                    ('notset', 'No Value Set'),
                     ('palm', 'Palm'),
                     ('back', 'Back'),
                     ('root', 'Root'), 
@@ -314,10 +318,10 @@ minor or insignificant ways that can be ignored.""")
 
     # Phonology fields
     
-    domhndsh = models.CharField("Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
+    domhndsh = models.CharField("Dominant Hand Shape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
     subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
     
-    final_domhndsh = models.CharField("Final Dominant Hand Shape", blank=True, choices=handshapeChoices, max_length=5)  
+    final_domhndsh = models.CharField("Final Dominant Hand Shape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
     final_subhndsh = models.CharField("Final Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
     locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
@@ -329,11 +333,11 @@ minor or insignificant ways that can be ignored.""")
     final_secondary_loc = models.CharField("Final Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
      
     
-    initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=20, blank=True, choices=palmOrientationChoices) 
-    final_palm_orientation = models.CharField("Final Palm Orientation", max_length=20, blank=True, choices=palmOrientationChoices)
+    initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=20, null=True, blank=True, choices=palmOrientationChoices) 
+    final_palm_orientation = models.CharField("Final Palm Orientation", max_length=20, null=True, blank=True, choices=palmOrientationChoices)
   
-    initial_relative_orientation = models.CharField("Initial Relative Orientation", max_length=20, blank=True, choices=relOrientationChoices) 
-    final_relative_orientation = models.CharField("Final Relative Orientation", max_length=20, blank=True, choices=relOrientationChoices)
+    initial_relative_orientation = models.CharField("Initial Relative Orientation", null=True, max_length=20, blank=True, choices=relOrientationChoices) 
+    final_relative_orientation = models.CharField("Final Relative Orientation", null=True, max_length=20, blank=True, choices=relOrientationChoices)
  
     
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)
@@ -344,7 +348,7 @@ minor or insignificant ways that can be ignored.""")
     morph = models.CharField("Morphemic Analysis", max_length=50, blank=True)  
 
     sedefinetf = models.TextField("Signed English definition available", null=True, blank=True)  # TODO: should be boolean
-    segloss = models.CharField("Signed English gloss", max_length=50, blank=True) 
+    segloss = models.CharField("Signed English gloss", max_length=50, blank=True,  null=True) 
 
     sense = models.IntegerField("Sense Number", null=True, blank=True, help_text="If there is more than one sense of a sign enter a number here, all signs with sense>1 will use the same video as sense=1") 
     sense.list_filter_sense = True
@@ -486,37 +490,45 @@ minor or insignificant ways that can be ignored.""")
         return defs
     
     
+    def options_to_json(self, options):
+        """Convert an options list to a json dict"""
+        
+        result = []
+        for k, v in options:
+            result.append('"%s":"%s"' % (k, v))
+        return "{" + ",".join(result) + "}"
+    
     def handshape_choices_json(self):
         """Return JSON for the handshape choice list"""
         
-        return json.dumps(dict(handshapeChoices))
+        return self.options_to_json(handshapeChoices)
     
     
     def location_choices_json(self):
         """Return JSON for the location choice list"""
         
-        return json.dumps(dict(locationChoices))    
+        return self.options_to_json(locationChoices)
     
     def palm_orientation_choices_json(self):
         """Return JSON for the palm orientation choice list"""
         
-        return json.dumps(dict(palmOrientationChoices))
+        return self.options_to_json(palmOrientationChoices)
 
     def relative_orientation_choices_json(self):
         """Return JSON for the relative orientation choice list"""
         
-        return json.dumps(dict(relOrientationChoices))
+        return self.options_to_json(relOrientationChoices)
     
     def secondary_location_choices_json(self):
         """Return JSON for the secondary location (BSL) choice list"""
         
-        return json.dumps(dict(BSLsecondLocationChoices))   
+        return self.options_to_json(BSLsecondLocationChoices)
     
      
     def definition_role_choices_json(self):
         """Return JSON for the definition role choice list"""
         
-        return json.dumps(dict(defn_role_choices))       
+        return self.options_to_json(defn_role_choices)
     
     def language_choices(self):
         """Return JSON for langauge choices"""
