@@ -31,7 +31,34 @@
 
 {% if perms.dictionary.change_gloss %}
 <div class='pull-right'>
-     <span id='edit_message'></span>&nbsp;<button id='enable_edit' class='btn'>Enable Edit</button>
+     <span id='edit_message'></span>&nbsp;
+     <button id='delete_gloss_btn' class='btn' data-toggle='modal' data-target='#delete_gloss_modal'>Delete Gloss</button>
+     <button id='enable_edit' class='btn'>Enable Edit</button>
+     
+     <div class="modal fade" id="delete_gloss_modal" tabindex="-1" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
+         <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class='modal-header'>
+                    <h2 id='modalTitle'>Delete This Gloss</h2>
+                </div>
+                <div class='modal-body'>
+                    <p>This action will delete this gloss and all
+                    associated records. It cannot be undone.</p>
+                 </div>
+              <form action='{% url 'dictionary:update_gloss' gloss.id %}' method='post'>
+                  {% csrf_token %}
+                  <input type='hidden' name='id' value='deletegloss'>
+                  <input type='hidden' name='value' value='confirmed'>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-primary" value='Confirm Delete'>
+                  </div>
+              </form>
+                  
+            </div>
+          </div>
+</div>
+     
 </div>
 {% endif %}
 

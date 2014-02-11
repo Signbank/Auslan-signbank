@@ -32,6 +32,11 @@ def update_gloss(request, glossid):
         # field is a valid field
         # value is a valid value for field
         
+        if field == 'deletegloss':
+            if value == 'confirmed':
+                # delete the gloss and redirect back to gloss list
+                gloss.delete()
+                return HttpResponseRedirect('/dictionary/list')
         
         if field.startswith('definition'):
             

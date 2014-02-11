@@ -67,6 +67,7 @@ function disable_edit() {
     $('.edit').css('color', 'black');
     $('#edit_message').text(''); 
     $('.editform').hide();
+    $('#delete_gloss_btn').hide();
 };
 
 function enable_edit() {
@@ -74,6 +75,7 @@ function enable_edit() {
     $('.edit').css('color', 'red');
     $('#edit_message').text('Click on red text to edit  '); 
     $('.editform').show();   
+    $('#delete_gloss_btn').show().css('background', 'red');
 };
 
 function toggle_edit() {
@@ -88,6 +90,10 @@ function toggle_edit() {
     }
 }
 
+
+function delete_gloss() {
+    alert("Delete this gloss?");
+}
 
 $.editable.addInputType('positiveinteger', {
     element : function(settings, original) {
