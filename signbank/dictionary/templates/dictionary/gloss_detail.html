@@ -112,23 +112,7 @@
         <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</th></tr>
         <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</th></tr>
         <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</th></tr>
-      
- 
-        {% if gloss.sense %}
-            <tr><th>Sense Number</th><td class='edit edit_text'  id='sense'>{{gloss.sense}}</td></tr>
-            <tr><th>Homonyms/Homophones</td>
-            <td>
-               <ol>
-               {% for h in gloss.homophones %}
-                 {% if h == gloss %}
-                 <li>{{h.idgloss}}</li>
-                 {% else %}
-                 <li><a href="/dictionary/gloss/{{h.idgloss}}.html">{{h.idgloss}}</a></li>
-                 {% endif %}
-               {% endfor %}
-               </ol>
-            </td></tr>
-        {% endif %}
+        <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{{gloss.sense}}</td></tr>
         <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{{gloss.morph}}</td></tr>
         <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{{gloss.StemSN}}</td></tr>
         <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{{gloss.compound}}</td></tr>
