@@ -12,7 +12,6 @@
     
     
     $(document).ready(function(){
-   
         
     });
     
@@ -68,28 +67,57 @@ function clearForm(myFormElement) {
             <td><div class='input-group'>
                 <label class='input-group-addon' for='id_idgloss'>{{searchform.search.label}}</label>
                 <input name='search' class='form-control' {% if searchform.search.value %}value='{{searchform.search.value}}'{% endif %}></div></td>
-            <td><div class='input-group'><label class='input-group-addon' for='id_tags'>Tagged</label>
-                <input name='tags' class='form-control' {% if searchform.tags.value %}value='{{searchform.tags.value}}'{% endif %}></div></td>
-        </tr>
-        <tr>
             <td><div class='input-group'>
                 <label class='input-group-addon' for='id_keyword'>{{searchform.keyword.label}}</label>
                 <input name='keyword' class='form-control' {% if searchform.keyword.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
-            <td><div class='input-group'><label class='input-group-addon' for='id_nottags'>{{searchform.nottags.label}}</label>
-                <input name='nottags' class='form-control' {% if searchform.nottags.value %}value='{{searchform.nottags.value}}'{% endif %}></div></td>
-        </tr>
+
+
+            </tr>
     </table>
-    <div data-toggle="collapse"  data-target='#searchpanels' class="panel panel-default">
-      <div class="panel-heading">Advanced Search</div>
-    <table class='table'>
-        <tr id='searchpanels' class='collapse'>
-            <td>
+    <div  class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse"  data-target='#searchpanels'>Advanced Search</div>
+      
+         <table class='table'>
+            <tr id='searchpanels' class='collapse in'>
+                <td>
                 <table>
-                    <tr><td><label for='id_dialect'>{{searchform.dialect.label}}</label></td><td>{{searchform.dialect}}</td></tr>
-                    <tr><td><label for='id_language'>{{searchform.language.label}}</label></td><td>{{searchform.language}}</td></tr>
-                </table>
-            </td>
-            <td>
+                    <tr>
+                        <td>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_tags'>Tagged</label>
+                            {{searchform.tags}}
+                        </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_nottags'>Not Tagged</label>
+                            {{searchform.nottags}}
+                        </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_dialect'>{{searchform.dialect.label}}</label>
+                            {{searchform.dialect}}
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_language'>{{searchform.language.label}}</label>
+                            {{searchform.language}}
+                        </div>
+                        </td>
+                    </tr>
+                </table></td>
+                
+                <td>
                 <table>
                     <tr><td><label for='id_inWeb'>{{searchform.inWeb.label}}</label></td><td>{{searchform.inWeb}}</td></tr>
                     <tr><td>&nbsp;</td></tr>

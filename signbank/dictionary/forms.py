@@ -27,8 +27,8 @@ class TagUpdateForm(forms.Form):
 class GlossSearchForm(forms.ModelForm):
     
     search = forms.CharField(label="Search Gloss/SN")
-    tags = forms.CharField(label="Tagged")
-    nottags = forms.CharField(label="Not Tagged")
+    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
+    nottags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
     keyword = forms.CharField(label='Keyword')
     
     class Meta:

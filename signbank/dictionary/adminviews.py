@@ -168,40 +168,35 @@ class GlossListView(ListView):
             #print "I :", len(qs)
                      
         if get.has_key('tags') and get['tags'] != '':
-            vals = get['tags']
+            vals = get.getlist('tags')
             
-            # here we do an implicit OR between tags (or partial tags)
-            # but it might be useful to allow AND
-            
-            taglist = vals.split(',')
-            # get tags starting with the search string
-            
-            tags = Tag.objects.none()
-            for t in taglist:
-
-                qq = Tag.objects.filter(name__istartswith=t.strip())
-                tags = tags | qq
-            
-            tags = tags.distinct()
-            tqs = TaggedItem.objects.get_union_by_model(Gloss, tags)
+            tags = [Tag.objects.get(pk=t) for t in vals]
+ 
+            # search is an implicit AND so intersection
+            tqs = TaggedItem.objects.get_intersection_by_model(Gloss, tags)
             
             # intersection
             qs = qs & tqs
             
+          #  print "J :", len(qs)
+            
         qs = qs.distinct()
         
         if get.has_key('nottags') and get['nottags'] != '':
-            vals = get['nottags']
+            vals = get.getlist('nottags')
             
-            #print "Not TAGS: ", vals
-            # get tags starting with the search string
-            tags = Tag.objects.filter(name__istartswith=vals)
-            tqs = TaggedItem.objects.get_union_by_model(Gloss, tags)
+           # print "NOT TAGS: ", vals
             
+            tags = [Tag.objects.get(pk=t) for t in vals]
+ 
+            # search is an implicit AND so intersection
+            tqs = TaggedItem.objects.get_intersection_by_model(Gloss, tags)
+            
+           # print "NOT", tags, len(tqs)
             # exclude all of tqs from qs
-            qs = [q for q in qs if q not in tqs]     
+            qs = [q for q in qs if q not in tqs]   
             
-           # print "J :", len(qs)
+           # print "K :", len(qs)
             
         
        # print "Final :", len(qs)
