@@ -108,7 +108,7 @@
     <div id="definition">
     
     <table class='table table-condensed'>
-        <tr><th>Sign Number:</th><td class='edit edit_text' id='sn'>{{gloss.sn}}</th></tr>
+        <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{{gloss.sn}}</th></tr>
         <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</th></tr>
         <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</th></tr>
         <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</th></tr>
@@ -179,7 +179,7 @@
 
       {% for def in role.list %} 
       <tr> 
-        <td class='edit edit_text' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
+        <td class='edit edit_int' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
         <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
         <td class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</td>
       </tr>

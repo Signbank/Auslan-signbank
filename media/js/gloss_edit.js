@@ -88,10 +88,29 @@ function toggle_edit() {
     }
 }
 
+
+$.editable.addInputType('positiveinteger', {
+    element : function(settings, original) {
+        var input = $('<input type="number" min="0">');
+        $(this).append(input);
+        return(input);
+    }
+});
+
+
 function configure_edit() {
      $('.edit_text').editable(edit_post_url, {
          submitdata  : {'csrfmiddlewaretoken': csrf_token},
          indicator : 'Saving...',
+         tooltip   : 'Click to edit...',
+         placeholder : 'No Value Set',
+         cancel    : 'Cancel',
+         submit    : 'OK'
+     });    
+     $('.edit_int').editable(edit_post_url, {
+         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+         indicator : 'Saving...',
+         type      : 'positiveinteger',
          tooltip   : 'Click to edit...',
          placeholder : 'No Value Set',
          cancel    : 'Cancel',
