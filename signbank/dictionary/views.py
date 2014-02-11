@@ -255,6 +255,8 @@ def gloss(request, idgloss):
                                'update_form': update_form,
                                'videoform': video_form,
                                'tagform': TagUpdateForm(),
+                               'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
 
