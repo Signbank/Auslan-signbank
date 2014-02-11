@@ -218,6 +218,8 @@ class GlossDetailView(DetailView):
         context['tagform'] = TagUpdateForm()
         context['videoform'] = VideoUploadForGlossForm()
         context['definitionform'] = DefinitionForm()
+        context['navigation'] = context['gloss'].navigation(True)
+        context['SIGN_NAVIGATION']  = settings.SIGN_NAVIGATION
         return context
         
     

@@ -37,16 +37,18 @@
 
 <div id="signinfo">
     <div id="signs">
+        {% if SIGN_NAVIGATION %}
             {% if navigation.prev %}
             <div class="prev">
-              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.pk}}">&laquo; Previous Sign</a>
             </div>
             {% endif %}
             {% if navigation.next %}
             <div class="next">
-             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
+             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.pk}}">Next Sign &raquo;</a>
             </div>
             {% endif %}
+         {% endif %}
     </div>
 </div>
 
