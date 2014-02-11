@@ -11,6 +11,12 @@ class GlossModelForm(forms.ModelForm):
         # fields are defined in settings.py
         fields = settings.QUICK_UPDATE_GLOSS_FIELDS
 
+class GlossCreateForm(forms.ModelForm):
+    """Form for creating a new gloss from scratch"""
+    class Meta:
+        model = Gloss
+        fields = ['idgloss', 'annotation_idgloss', 'sn']
+
 
 class VideoUpdateForm(forms.Form):
     """Form to allow update of the video for a sign"""

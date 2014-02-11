@@ -23,6 +23,7 @@ class GlossListView(ListView):
         # Add in a QuerySet of all the books
         context['searchform'] = GlossSearchForm(self.request.GET)
         context['glosscount'] = Gloss.objects.all().count()
+        context['add_gloss_form'] = GlossCreateForm()
         return context
     
     def render_to_response(self, context):

@@ -78,7 +78,7 @@ function clearForm(myFormElement) {
       <div class="panel-heading" data-toggle="collapse"  data-target='#searchpanels'>Advanced Search</div>
       
          <table class='table'>
-            <tr id='searchpanels' class='collapse in'>
+            <tr id='searchpanels' class='collapse'>
                 <td>
                 <table>
                     <tr>
@@ -144,11 +144,43 @@ function clearForm(myFormElement) {
         
     </table>
       </div>
-
-    <input class='btn' type='submit' name='submit' value='Search'>
-    <input class='btn' type='submit' name='format' value='CSV'>
-    <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
+    
+    <div>  
+        <input class='btn' type='submit' name='submit' value='Search'>
+        <input class='btn' type='submit' name='format' value='CSV'>
+        <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
+    </div>
 </form>
+
+   <div  class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse"  data-target='#add_gloss_form'>Add New Gloss</div>
+      
+         <div id='add_gloss_form' class='collapse'>
+             <form action='{% url "dictionary:add_gloss" %}' method='post'>
+                 {% csrf_token %}
+                 <table class='table'>
+                     <tr>
+                         <th><label for='id_idgloss'>ID Gloss</label></th>
+                         <th><label for='id_annotation_idgloss'>Annotation ID Gloss</label></th>
+                         <th><label for='id_sn'>Sign Number</label></th>
+                         <th></th>
+                     </tr>
+                     <tr>
+                         <td>{{add_gloss_form.idgloss}}</td>
+                         <td>{{add_gloss_form.annotation_idgloss}}</td>
+                         <td>{{add_gloss_form.sn}}</td>
+                         <td><input class='btn' type='submit' value='Add New Gloss'></td>
+                     </tr>
+                 </table>
+                 
+             </form>
+         </div>
+         
+                
+             
+             
+
+  
 
 <p>Number of matches: {{page_obj.paginator.count}} out of {{glosscount}}.</p>
 

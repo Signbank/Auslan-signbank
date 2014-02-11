@@ -12,6 +12,21 @@ import os, shutil
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
+def add_gloss(request):
+    """Create a new gloss and redirect to the edit view"""
+    
+    if request.method == "POST":
+        
+        form = GlossCreateForm(request.POST)
+        if form.is_valid():
+            
+            gloss = form.save()
+            
+            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+        
+    return HttpResponseRedirect(reverse('dictionary:admin_gloss_list'))
+
+
 def update_gloss(request, glossid):
     """View to update a gloss model from the jeditable jquery form
     We are sent one field and value at a time, return the new value
@@ -36,7 +51,7 @@ def update_gloss(request, glossid):
             if value == 'confirmed':
                 # delete the gloss and redirect back to gloss list
                 gloss.delete()
-                return HttpResponseRedirect('/dictionary/list')
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_list'))
         
         if field.startswith('definition'):
             
