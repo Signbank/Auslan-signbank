@@ -127,7 +127,7 @@ def word(request, keyword, n):
     # work out the number of this gloss and the total number
     gloss = trans.gloss
     if gloss.sn != None:
-        if request.user.is_staff:
+        if request.user.has_perm('dictionary.search_gloss'):
             glosscount = Gloss.objects.count()
             glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
         else:
@@ -138,11 +138,11 @@ def word(request, keyword, n):
         glossposn = 0
 
     # navigation gives us the next and previous signs
-    nav = gloss.navigation(request.user.is_staff)
+    nav = gloss.navigation(request.user.has_perm('dictionary.search_gloss'))
 
     # the gloss update form for staff
 
-    if request.user.is_authenticated() and request.user.is_staff:
+    if request.user.has_perm('dictionary.search_gloss'):
         update_form = GlossModelForm(instance=trans.gloss)
         video_form = VideoUploadForGlossForm(initial={'gloss_id': trans.gloss.pk,
                                                       'redirect': request.path})
@@ -207,7 +207,7 @@ def gloss(request, idgloss):
         videourl = None
 
     if gloss.sn != None:
-        if request.user.is_staff:
+        if request.user.has_perm('dictionary.search_gloss'):
             glosscount = Gloss.objects.count()
             glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
         else:
@@ -218,12 +218,12 @@ def gloss(request, idgloss):
         glossposn = 0
 
     # navigation gives us the next and previous signs
-    nav = gloss.navigation(request.user.is_staff)
+    nav = gloss.navigation(request.user.has_perm('dictionary.search_gloss'))
 
     # the gloss update form for staff
     update_form = None
 
-    if request.user.is_authenticated() and request.user.is_staff:
+    if request.user.has_perm('dictionary.search_gloss'):
         update_form = GlossModelForm(instance=gloss)
         video_form = VideoUploadForGlossForm(initial={'gloss_id': gloss.pk,
                                                       'redirect': request.get_full_path()})
@@ -273,7 +273,7 @@ def search(request):
         try:
             term = smart_unicode(term)
 
-            if request.user.is_authenticated() and request.user.is_staff:
+            if request.user.has_perm('dictionary.search_gloss'):
                 # staff get to see all the words
                 words = Keyword.objects.filter(text__istartswith=term)
             else:

@@ -73,7 +73,7 @@ class GlossListView(ListView):
         if get.has_key('search'):
             val = get['search']
             query = Q(idgloss__istartswith=val) | \
-                    Q(annotation_idgloss__startswith=val) | \
+                    Q(annotation_idgloss__istartswith=val) | \
                     Q(sn__startswith=val)
             qs = qs.filter(query)
             
@@ -82,7 +82,7 @@ class GlossListView(ListView):
             
         if get.has_key('keyword'):
             val = get['keyword']
-            qs = qs.filter(translation__translation__text__startswith=val)
+            qs = qs.filter(translation__translation__text__istartswith=val)
             
           
         if get.has_key('inWeb') and get['inWeb'] != '1':
