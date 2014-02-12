@@ -184,12 +184,16 @@
     
     <table class='table'>
       <tr>
-          <th style='width:3em'>Index</th><th style='width:10em'>Role</th><th>Text</th>
+          <th style='width:3em'>Published</th>
+          <th style='width:3em'>Index</th>
+          <th style='width:10em'>Role</th>
+          <th>Text</th>
       </tr>
     {% for role in roles %}
 
       {% for def in role.list %} 
-      <tr> 
+      <tr>
+        <td class='edit edit_check' id='definitionpub_{{def.id}}'>{% if def.published %}Yes{% else %}No{% endif %}</td>
         <td class='edit edit_int' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
         <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
         <td class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</td>

@@ -9,7 +9,7 @@ PRIMARY_CSS = "bootstrap_css/bsl.css"
 # what do we call this signbank?
 SIGNBANK_NAME = "BSL"
 
-# don't show sign navigation
+# show/don't show sign navigation
 SIGN_NAVIGATION = True
 
 # which definition fields do we show and in what order?
