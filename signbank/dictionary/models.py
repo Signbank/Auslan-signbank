@@ -79,7 +79,7 @@ class Keyword(models.Model):
         Returns a tuple (translation, count) where count is the total number
         of matches."""
         
-        if request.user.is_authenticated() and request.user.is_staff:
+        if request.user.has_perm('dictionary.search_gloss'):
             alltrans = self.translation_set.all()
         else:
             alltrans = self.translation_set.filter(gloss__inWeb__exact=True)

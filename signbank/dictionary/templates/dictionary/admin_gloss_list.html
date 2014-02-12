@@ -62,18 +62,22 @@ function clearForm(myFormElement) {
 
 
 <form name='adminsearch' id='adminsearch'>
-    <table class='table' id='searchfields'>
-        <tr>
-            <td><div class='input-group'>
-                <label class='input-group-addon' for='id_idgloss'>{{searchform.search.label}}</label>
-                <input name='search' class='form-control' {% if searchform.search.value %}value='{{searchform.search.value}}'{% endif %}></div></td>
-            <td><div class='input-group'>
-                <label class='input-group-addon' for='id_keyword'>{{searchform.keyword.label}}</label>
-                <input name='keyword' class='form-control' {% if searchform.keyword.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
-
-
-            </tr>
-    </table>
+    
+    <div  class="panel panel-default">
+        <table class='table' id='searchfields'>
+            <tr>
+                <td><div class='input-group'>
+                    <label class='input-group-addon' for='id_idgloss'>{{searchform.search.label}}</label>
+                    <input name='search' class='form-control' {% if searchform.search.value %}value='{{searchform.search.value}}'{% endif %}></div></td>
+                <td><div class='input-group'>
+                    <label class='input-group-addon' for='id_keyword'>{{searchform.keyword.label}}</label>
+                    <input name='keyword' class='form-control' {% if searchform.keyword.value %}value='{{searchform.keyword.value}}'{% endif %}></div></td>
+    
+    
+                </tr>
+        </table>
+    </div>
+    
     <div  class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse"  data-target='#searchpanels'>Advanced Search</div>
       
@@ -175,7 +179,7 @@ function clearForm(myFormElement) {
                  
              </form>
          </div>
-         
+      </div>
                 
              
              
