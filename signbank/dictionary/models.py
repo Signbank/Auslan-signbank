@@ -121,7 +121,8 @@ class Definition(models.Model):
     gloss = models.ForeignKey("Gloss")
     text = models.TextField()
     role = models.CharField(max_length=20, choices=defn_role_choices)  
-    count = models.IntegerField() 
+    count = models.IntegerField()
+    published = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['gloss', 'role', 'count']
@@ -477,6 +478,12 @@ minor or insignificant ways that can be ignored.""")
         """Test to see if the video for this sign is present"""
         
         return self.get_video() != None
+    
+    def published_definitions(self):
+        """Return a query set of just the published definitions for this gloss"""
+        
+        return self.definition_set.filter(published__exact=True)
+    
     
     def definitions(self):
         """gather together the definitions for this gloss"""

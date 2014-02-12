@@ -73,6 +73,14 @@ def update_gloss(request, glossid):
                 defn.count = int(value)
                 defn.save()
                 newvalue = defn.count
+            elif what == 'definitionpub':
+                print "PUB:", value
+                defn.published = value == 'Yes'
+                defn.save()
+                if defn.published:
+                    newvalue = 'Yes'
+                else:
+                    newvalue = 'No'
             elif what == 'definitionrole':
                 defn.role = value
                 defn.save()
@@ -174,7 +182,8 @@ def add_definition(request, glossid):
             role = form.cleaned_data['role']
             text = form.cleaned_data['text']
             
-            defn = Definition(gloss=thisgloss, count=count, role=role, text=text)
+            # create definition, default to not published
+            defn = Definition(gloss=thisgloss, count=count, role=role, text=text, published=False)
             defn.save()
             
     return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': thisgloss.id}))

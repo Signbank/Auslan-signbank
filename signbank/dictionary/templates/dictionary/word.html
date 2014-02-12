@@ -142,7 +142,7 @@
 
         {% for deftype in DEFINITION_FIELDS %}
         
-             {% regroup gloss.definition_set.all by role as roles %}
+             {% regroup gloss.published_definitions by role as roles %}
         
              {% for role in roles %}
               
