@@ -57,7 +57,7 @@
                   
             </div>
           </div>
-</div>
+    </div>
      
 </div>
 {% endif %}
@@ -184,6 +184,7 @@
     
     <table class='table'>
       <tr>
+          <th style='width:1em'></th>
           <th style='width:3em'>Published</th>
           <th style='width:3em'>Index</th>
           <th style='width:10em'>Role</th>
@@ -193,6 +194,34 @@
 
       {% for def in role.list %} 
       <tr>
+        <td>
+            <span class='glyphicon glyphicon-trash definition_delete' data-toggle='modal' data-target='#delete_definition_modal_{{def.id}}'></span>
+            
+             <div class="modal fade" id="delete_definition_modal_{{def.id}}" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
+                 <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class='modal-header'>
+                            <h2 id='modalTitle'>Delete This Definition</h2>
+                        </div>
+                        <div class='modal-body'>
+                            <p><strong>{{def.get_role_display}}</strong> {{def.text}}</p>
+                            <p>This action will delete this definition/note. It cannot be undone.</p>
+                         </div>
+                      <form action='{% url "dictionary:update_gloss" gloss.id %}' method='post'>
+                          {% csrf_token %}
+                          <input type='hidden' name='id' value='definitiondelete_{{def.id}}'>
+                          <input type='hidden' name='value' value='confirmed'>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-primary" value='Confirm Delete'>
+                          </div>
+                      </form>
+                          
+                    </div>
+                  </div>
+             </div>
+            
+        </td>
         <td class='edit edit_check' id='definitionpub_{{def.id}}'>{% if def.published %}Yes{% else %}No{% endif %}</td>
         <td class='edit edit_int' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
         <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
@@ -204,7 +233,7 @@
     {% endfor %}
     </table>
     
-    <form id='add-definition' action='/dictionary/update/definition/{{gloss.id}}' method="POST">
+    <form id='add_definition' action='/dictionary/update/definition/{{gloss.id}}' method="POST">
         <fieldset>
         {% csrf_token %}
          <table class='table'>

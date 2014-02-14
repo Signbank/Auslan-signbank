@@ -64,6 +64,10 @@ def update_gloss(request, glossid):
             if not defn.gloss == gloss:
                 return HttpResponseBadRequest("Definition doesn't match gloss", {'content-type': 'text/plain'})
             
+            if what == 'definitiondelete':
+                defn.delete()
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+            
             if what == 'definition':
                 # update the definition
                 defn.text = value
@@ -85,6 +89,7 @@ def update_gloss(request, glossid):
                 defn.role = value
                 defn.save()
                 newvalue = defn.get_role_display()
+                
                 
         elif field == 'keywords':
             kwds = [k.strip() for k in value.split(',')]
