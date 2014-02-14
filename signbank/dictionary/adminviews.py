@@ -37,15 +37,16 @@ class GlossListView(ListView):
     def render_to_csv_response(self, context):
         
         # Create the HttpResponse object with the appropriate CSV header.
-        response = HttpResponse(mimetype='text/csv')
+        response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="dictionary-export.csv"'
     
     
-        fields = ['sn', 'idgloss', 'annotation_idgloss', 'morph']
+        fields = [f.name for f in Gloss._meta.fields]
     
         writer = csv.writer(response)
         header = [Gloss._meta.get_field(f).verbose_name for f in fields]
         header.append("Keywords")
+        header.append("Tags")
         writer.writerow(header)
     
         for gloss in self.get_queryset():
@@ -53,8 +54,13 @@ class GlossListView(ListView):
             for f in fields:
                 row.append(getattr(gloss, f))
     
+            # get translations
             trans = [t.translation.text for t in gloss.translation_set.all()]
             row.append(", ".join(trans))
+    
+            # get tags
+            tags = [t.name for t in gloss.tags.all()]
+            row.append(", ".join(tags))
     
             writer.writerow(row)
     

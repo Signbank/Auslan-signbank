@@ -33,8 +33,6 @@ urlpatterns = patterns('',
     
     url(r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 
-    url(r'^export.csv', 'signbank.dictionary.views.csv_export', name='export'),
-
     # Admin views
     url(r'^list/$', permission_required('dictionary.search_gloss')(GlossListView.as_view()), name='admin_gloss_list'),
     url(r'^gloss/(?P<pk>\d+)', permission_required('dictionary.search_gloss')(GlossDetailView.as_view()), name='admin_gloss_view'),
