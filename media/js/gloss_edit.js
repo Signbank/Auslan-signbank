@@ -6,7 +6,7 @@
      disable_edit();
      $('#enable_edit').click(toggle_edit);
      
-     $('#add-definition select').addClass('form-control');
+     $('#add_definition select').addClass('form-control');
      
      
      var tagApi = $("#taginput").tagsManager({
@@ -68,6 +68,8 @@ function disable_edit() {
     $('#edit_message').text(''); 
     $('.editform').hide();
     $('#delete_gloss_btn').hide();
+    $('#add_definition').hide();
+    $('.definition_delete').hide();
 };
 
 function enable_edit() {
@@ -76,6 +78,8 @@ function enable_edit() {
     $('#edit_message').text('Click on red text to edit  '); 
     $('.editform').show();   
     $('#delete_gloss_btn').show().css('background', 'red');
+    $('#add_definition').show();
+    $('.definition_delete').show();
 };
 
 function toggle_edit() {
