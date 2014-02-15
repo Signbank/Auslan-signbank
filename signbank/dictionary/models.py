@@ -537,6 +537,11 @@ minor or insignificant ways that can be ignored.""")
         
         return self.options_to_json(defn_role_choices)
     
+    def relation_role_choices_json(self):
+        """Return JSON for the relation role choice list"""
+        
+        return self.options_to_json(RELATION_ROLE_CHOICES)    
+    
     def language_choices(self):
         """Return JSON for langauge choices"""
         
@@ -584,4 +589,4 @@ class Relation(models.Model):
         
     class Meta:
         ordering = ['source']
- 
+        

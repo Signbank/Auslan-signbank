@@ -55,55 +55,11 @@ def update_gloss(request, glossid):
         
         if field.startswith('definition'):
             
-            (what, defid) = field.split('_')
-            try:
-                defn = Definition.objects.get(id=defid)
-            except:
-                return HttpResponseBadRequest("Bad Definition ID '%s'" % defid, {'content-type': 'text/plain'})
-        
-            if not defn.gloss == gloss:
-                return HttpResponseBadRequest("Definition doesn't match gloss", {'content-type': 'text/plain'})
-            
-            if what == 'definitiondelete':
-                defn.delete()
-                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
-            
-            if what == 'definition':
-                # update the definition
-                defn.text = value
-                defn.save()
-                newvalue = defn.text
-            elif what == 'definitioncount':
-                defn.count = int(value)
-                defn.save()
-                newvalue = defn.count
-            elif what == 'definitionpub':
-                print "PUB:", value
-                defn.published = value == 'Yes'
-                defn.save()
-                if defn.published:
-                    newvalue = 'Yes'
-                else:
-                    newvalue = 'No'
-            elif what == 'definitionrole':
-                defn.role = value
-                defn.save()
-                newvalue = defn.get_role_display()
-                
-                
+            return update_definition(gloss, field, value)
+
         elif field == 'keywords':
-            kwds = [k.strip() for k in value.split(',')]
-            # remove current keywords 
-            current_trans = gloss.translation_set.all()
-            #current_kwds = [t.translation for t in current_trans]
-            current_trans.delete()
-            # add new keywords
-            for i in range(len(kwds)):
-                (kobj, created) = Keyword.objects.get_or_create(text=kwds[i])
-                trans = Translation(gloss=gloss, translation=kobj, index=i)
-                trans.save()
-            
-            newvalue = ", ".join([t.translation.text for t in gloss.translation_set.all()])
+
+            return update_keywords(gloss, field, value)
             
         elif field == 'language':
             # expecting possibly multiple values
@@ -192,6 +148,66 @@ def update_gloss(request, glossid):
                     newvalue = valdict.get(value, value)
         
         return HttpResponse(newvalue, {'content-type': 'text/plain'})
+
+def update_keywords(gloss, field, value):
+    """Update the keyword field"""
+
+    kwds = [k.strip() for k in value.split(',')]
+    # remove current keywords 
+    current_trans = gloss.translation_set.all()
+    #current_kwds = [t.translation for t in current_trans]
+    current_trans.delete()
+    # add new keywords
+    for i in range(len(kwds)):
+        (kobj, created) = Keyword.objects.get_or_create(text=kwds[i])
+        trans = Translation(gloss=gloss, translation=kobj, index=i)
+        trans.save()
+    
+    newvalue = ", ".join([t.translation.text for t in gloss.translation_set.all()])
+    
+    return HttpResponse(newvalue, {'content-type': 'text/plain'})
+
+def update_definition(gloss, field, value):
+    """Update one of the definition fields"""
+    
+    (what, defid) = field.split('_')
+    try:
+        defn = Definition.objects.get(id=defid)
+    except:
+        return HttpResponseBadRequest("Bad Definition ID '%s'" % defid, {'content-type': 'text/plain'})
+
+    if not defn.gloss == gloss:
+        return HttpResponseBadRequest("Definition doesn't match gloss", {'content-type': 'text/plain'})
+    
+    if what == 'definitiondelete':
+        defn.delete()
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+    
+    if what == 'definition':
+        # update the definition
+        defn.text = value
+        defn.save()
+        newvalue = defn.text
+    elif what == 'definitioncount':
+        defn.count = int(value)
+        defn.save()
+        newvalue = defn.count
+    elif what == 'definitionpub':
+        print "PUB:", value
+        defn.published = value == 'Yes'
+        defn.save()
+        if defn.published:
+            newvalue = 'Yes'
+        else:
+            newvalue = 'No'
+    elif what == 'definitionrole':
+        defn.role = value
+        defn.save()
+        newvalue = defn.get_role_display()
+
+
+    return HttpResponse(newvalue, {'content-type': 'text/plain'})
+
 
 
 def add_definition(request, glossid):

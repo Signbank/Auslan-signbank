@@ -19,6 +19,7 @@
      var palm_orientation_choices = {{gloss.palm_orientation_choices_json|safe}}
      var relative_orientation_choices = {{gloss.relative_orientation_choices_json|safe}}
      var secondary_location_choices = {{gloss.secondary_location_choices_json|safe}}
+     var relation_role_choices = {{gloss.relation_role_choices_json|safe}}
      var languages = {{gloss.language_choices|safe}};
      var dialects = {{gloss.dialect_choices|safe}};
      var csrf_token = '{{csrf_token}}';
@@ -208,6 +209,26 @@
         </div>
     </div>
      
+
+        
+    <div class="panel panel-default">
+        <div class='panel-heading'>
+            <div class='panel-title'>
+                <a data-toggle='collapse' data-parent='#definition' href='#relations'>Relations to other Glosses</a>
+            </div>
+        </div>
+        <div id='relations' class='collapse'>
+           <table class='table table-condensed'>
+               {% for rel in gloss.relation_sources.all %}
+                <tr><td class='edit edit_relation_role' id='relationrole_{{rel.id}}'>{{rel.get_role_display}}</td>
+                    <td class='edit edit_relation_target' id='relationtarget_{{rel.id}}'>{{rel.target}}</td></tr>
+               {% endfor %}
+               
+           </table>
+           
+        </div>
+    </div>
+
     
         
     <div class="panel panel-default">

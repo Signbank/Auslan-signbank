@@ -173,6 +173,11 @@ function configure_edit() {
          type      : 'select',
          data      : secondary_location_choices
      });                  
+     $('.edit_relation_role').editable(edit_post_url, {
+         type      : 'select',
+         data      : relation_role_choices
+     }); 
+
 }
 
 
