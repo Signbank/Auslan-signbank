@@ -273,7 +273,7 @@ class Gloss(models.Model):
 
         
     def __str__(self):
-        return str(self.sn)+"-"+self.idgloss
+        return "%s-%s" % (self.sn, self.idgloss)
     
     idgloss = models.CharField("Sign Entry Name", max_length=50, help_text="""
     This is the unique identifying name of an entry of a sign form in the

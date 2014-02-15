@@ -14,4 +14,15 @@ def primary_css():
     except:
         return ''
  
-    
+ 
+ 
+@register.simple_tag
+def value(value):
+    """
+    Return value unless it's None in which case we return 'No Value Set'
+    """
+    if value == None:
+        return 'No Value Set'
+    else:
+        return value
+ 
