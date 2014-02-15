@@ -1,4 +1,5 @@
 {% extends 'baselayout.html' %}
+{% load stylesheet %}
 
 {% block extrahead %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tagmanager.css">
@@ -108,7 +109,7 @@
               <tr>
                   <td>{{videoform.videofile}}</td>
                   <td><input type='hidden' name='gloss_id' value='{{gloss.pk}}'>
-                      <input type='submit' value='Upload'/></td>
+                      <input class='btn btn-primary' type='submit' value='Upload'/></td>
               </tr>
             </table>
             </form>
@@ -120,7 +121,7 @@
             <table>
             <form action="/video/delete/{{gloss.pk}}" method='post'>
             <tr><td><em>This will delete the most recent upload and restore the most recent earlier version.</em></td></tr>
-            <tr><td>{% csrf_token %}<input id='delete_video' type='submit' value='Delete/Revert this video'></td></tr>
+            <tr><td>{% csrf_token %}<input class='btn btn-danger' id='delete_video' type='submit' value='Delete/Revert this video'></td></tr>
             </form>
            </table>
         </fieldset>
@@ -135,14 +136,14 @@
     <div id="definition">
     
     <table class='table table-condensed'>
-        <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{{gloss.sn}}</th></tr>
-        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{{gloss.idgloss}}</th></tr>
-        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{{gloss.annotation_idgloss}}</th></tr>
+        <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</th></tr>
+        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</th></tr>
+        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</th></tr>
         <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</th></tr>
-        <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{{gloss.sense}}</td></tr>
-        <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{{gloss.morph}}</td></tr>
-        <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{{gloss.StemSN}}</td></tr>
-        <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{{gloss.compound}}</td></tr>
+        <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{% value gloss.sense %}</td></tr>
+        <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{% value gloss.morph %}</td></tr>
+        <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{% value gloss.StemSN %}</td></tr>
+        <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{% value gloss.compound %}</td></tr>
         <tr><th>Language</th><td class='edit edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
         <tr><th>Dialect</th><td class='edit edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
     </table>
@@ -157,23 +158,23 @@
     <h3>Phonology</h3>
         
     <table class='table table-condensed'>
-        <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{{gloss.get_initial_palm_orientation_display}}</td></tr>
-        <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{{gloss.get_final_palm_orientation_display}}</td></tr>
+        <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{% value gloss.get_initial_palm_orientation_display %}</td></tr>
+        <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{% value gloss.get_final_palm_orientation_display%}</td></tr>
 
-        <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{{gloss.get_initial_relative_orientation_display}}</td></tr>
-        <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{{gloss.get_final_relative_orientation_display}}</td></tr>
+        <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{% value gloss.get_initial_relative_orientation_display%}</td></tr>
+        <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{% value gloss.get_final_relative_orientation_display%}</td></tr>
 
-        <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{{gloss.get_domhndsh_display}}</td></tr>
-        <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{{gloss.get_subhndsh_display}}</td></tr>
-        <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{{gloss.get_final_domhndsh_display}}</td></tr>
-        <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{{gloss.get_final_subhndsh_display}}</td></tr>
+        <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{% value gloss.get_domhndsh_display%}</td></tr>
+        <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{% value gloss.get_subhndsh_display%}</td></tr>
+        <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{% value gloss.get_final_domhndsh_display%}</td></tr>
+        <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{% value gloss.get_final_subhndsh_display%}</td></tr>
 
-        <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{{gloss.get_locprim_display}}</td></tr>
-        <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{{gloss.get_locsecond_display}}</td></tr>
-        <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{{gloss.get_final_loc_display}}</td></tr>
+        <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{% value gloss.get_locprim_display%}</td></tr>
+        <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{% value gloss.get_locsecond_display%}</td></tr>
+        <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{% value gloss.get_final_loc_display%}</td></tr>
         
-        <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{{gloss.get_initial_secondary_loc_display}}</td></tr>
-        <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{{gloss.get_final_secondary_loc_display}}</td></tr>
+        <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{% value gloss.get_initial_secondary_loc_display%}</td></tr>
+        <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{% value gloss.get_final_secondary_loc_display%}</td></tr>
         
     </table>
     

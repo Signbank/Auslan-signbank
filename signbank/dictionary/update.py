@@ -131,7 +131,30 @@ def update_gloss(request, glossid):
             except:                
                 return HttpResponseBadRequest("Unknown Dialect %s" % values, {'content-type': 'text/plain'})
                 
-                            
+        elif field == "sn":
+            # sign number must be unique, return error message if this SN is 
+            # already taken
+            
+            if value == '':
+                gloss.__setattr__(field, None)
+                gloss.save()
+                newvalue = ''
+            else:
+                try:
+                    value = int(value)
+                except:
+                    return HttpResponseBadRequest("SN value must be integer", {'content-type': 'text/plain'})
+                
+                existing_gloss = Gloss.objects.filter(sn__exact=value)
+                if existing_gloss.count() > 0:
+                    g = existing_gloss[0].idgloss
+                    return HttpResponseBadRequest("SN value already taken for gloss %s" % g, {'content-type': 'text/plain'})
+                else:
+                    gloss.sn = value
+                    gloss.save()
+                    newvalue = value
+            
+        
         else:
             
 
@@ -145,7 +168,7 @@ def update_gloss(request, glossid):
             # - tags
             
             # special value of 'notset' or -1 means remove the value
-            if value == 'notset' or value == -1:
+            if value == 'notset' or value == -1 or value == '':
                 gloss.__setattr__(field, None)
                 gloss.save()
                 newvalue = ''

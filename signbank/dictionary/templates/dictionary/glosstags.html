@@ -1,5 +1,6 @@
     <div id='tags'>
-      <h2>Tags</h2>
+        <fieldset>
+      <legend>Tags</legend>
       {% load tagging_tags %}
       {% tags_for_object gloss as tag_list %}
       {% if tag_list %}
@@ -25,13 +26,10 @@
                 action="{% url 'root_page' %}dictionary/update/tag/{{gloss.id}}" 
                 method="post" enctype="multipart/form-data">
            {% csrf_token %}
-           {{tagform}}
-           
-           <!--
-           <input type="text" name="tags" placeholder="Tags" class='tm-tag' id="taginput"/>
-           -->
-           
-           <input type='submit' value='Add Tag'>
+           <table>
+           <tr><td>{{tagform.tag}}</td><td><input class='btn btn-primary' type='submit' value='Add Tag'></td></tr>
+           </table>
           </form>
       </div>
+      </fieldset>
     </div>

@@ -6,7 +6,7 @@
      disable_edit();
      $('#enable_edit').click(toggle_edit);
      
-     $('#add_definition select').addClass('form-control');
+     $('select').addClass('form-control');
      
      
      var tagApi = $("#taginput").tagsManager({
@@ -109,112 +109,67 @@ $.editable.addInputType('positiveinteger', {
 
 
 function configure_edit() {
-     $('.edit_text').editable(edit_post_url, {
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
-         indicator : 'Saving...',
-         tooltip   : 'Click to edit...',
-         placeholder : 'No Value Set',
-         cancel    : 'Cancel',
-         submit    : 'OK'
-     });    
+    
+    $.fn.editable.defaults['indicator'] = 'Saving...';
+    $.fn.editable.defaults['tooltip'] = 'Click to edit...';
+    $.fn.editable.defaults['placeholder'] = 'No Value Set';
+    $.fn.editable.defaults['submit'] = '<button class="btn btn-primary" type="submit">Ok</button>';
+    $.fn.editable.defaults['cancel'] = '<button class="btn btn-default" type="cancel">Cancel</button>';
+    $.fn.editable.defaults['width'] = 'none';
+    $.fn.editable.defaults['height'] = 'none';
+    $.fn.editable.defaults['submitdata'] = {'csrfmiddlewaretoken': csrf_token};
+    $.fn.editable.defaults['onerror']  = function(settings, original, xhr){
+                          alert("There was an error processing this change: " + xhr.responseText );
+                          original.reset();
+                        };
+     
+    
+     $('.edit_text').editable(edit_post_url);    
      $('.edit_int').editable(edit_post_url, {
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
-         indicator : 'Saving...',
          type      : 'positiveinteger',
-         tooltip   : 'Click to edit...',
-         placeholder : 'No Value Set',
-         cancel    : 'Cancel',
-         submit    : 'OK'
+         onerror : function(settings, original, xhr){
+                          alert(xhr.responseText);
+                          original.reset();
+                    },
      });
      $('.edit_area').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
-         type      : 'textarea',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         type      : 'textarea'
      });
      $('.edit_role').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
          type      : 'select',
-         data      : definition_role_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : definition_role_choices
      });
-     $('.edit_language').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_language').editable(edit_post_url, {
          type      : 'multiselect',
-         data      : languages,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : languages
      });
-     $('.edit_dialect').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_dialect').editable(edit_post_url, {
          type      : 'multiselect',
-         data      : dialects,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : dialects
      });     
-     $('.edit_check').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_check').editable(edit_post_url, {
          type      : 'checkbox',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...',
          checkbox: { trueValue: 'Yes', falseValue: 'No' }
      });
-     
-     $('.edit_handshape').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_handshape').editable(edit_post_url, {
          type      : 'select',
-         data      : handshape_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : handshape_choices
      });
-     $('.edit_location').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_location').editable(edit_post_url, {
          type      : 'select',
-         data      : location_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : location_choices
      });
-     $('.edit_palm').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_palm').editable(edit_post_url, {
          type      : 'select',
-         data      : palm_orientation_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : palm_orientation_choices
      });
-     $('.edit_relori').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_relori').editable(edit_post_url, {
          type      : 'select',
-         data      : relative_orientation_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : relative_orientation_choices
      }); 
-     $('.edit_sec_location').editable(edit_post_url, { 
-         submitdata  : {'csrfmiddlewaretoken': csrf_token},
+     $('.edit_sec_location').editable(edit_post_url, {
          type      : 'select',
-         data      : secondary_location_choices,
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         placeholder : 'No Value Set',
-         tooltip   : 'Click to edit...'
+         data      : secondary_location_choices
      });                  
 }
 
