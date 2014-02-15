@@ -33,8 +33,8 @@
 {% if perms.dictionary.change_gloss %}
 <div class='pull-right'>
      <span id='edit_message'></span>&nbsp;
-     <button id='delete_gloss_btn' class='btn' data-toggle='modal' data-target='#delete_gloss_modal'>Delete Gloss</button>
-     <button id='enable_edit' class='btn'>Enable Edit</button>
+     <button id='delete_gloss_btn' class='btn btn-default' data-toggle='modal' data-target='#delete_gloss_modal'>Delete Gloss</button>
+     <button id='enable_edit' class='btn btn-default'>Enable Edit</button>
      
      <div class="modal fade" id="delete_gloss_modal" tabindex="-1" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
          <div class="modal-dialog modal-sm">
@@ -133,54 +133,91 @@
     {% include "dictionary/glosstags.html" %}
 </div>
 
-    <div id="definition">
+    <div class='panel-group' id="definition">
     
-    <table class='table table-condensed'>
-        <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</th></tr>
-        <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</th></tr>
-        <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</th></tr>
-        <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</th></tr>
-        <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{% value gloss.sense %}</td></tr>
-        <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{% value gloss.morph %}</td></tr>
-        <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{% value gloss.StemSN %}</td></tr>
-        <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{% value gloss.compound %}</td></tr>
-        <tr><th>Language</th><td class='edit edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
-        <tr><th>Dialect</th><td class='edit edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
-    </table>
-    
-    <h3>Publication Status</h3>
-        
-    <table class='table table-condensed'>
-        <tr><th>In Web Dictionary</th><td class='edit edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</td></tr>
-        <tr><th>Proposed New Sign</th><td class='edit edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</td></tr>
-    </table>
-    
-    <h3>Phonology</h3>
-        
-    <table class='table table-condensed'>
-        <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{% value gloss.get_initial_palm_orientation_display %}</td></tr>
-        <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{% value gloss.get_final_palm_orientation_display%}</td></tr>
+    <div class="panel panel-default">
+        <div class='panel-heading'>
+            <div class='panel-title'>
+                <a data-toggle='collapse' data-parent='#definition' href='#basicProperties'>Basic Properties</a>
+            </div>
+        </div>
+            
+        <div id="basicProperties" class="panel-collapse collapse in">
+            <table class='table table-condensed'>
+                <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</td></tr>
+                <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</td></tr>
+                <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</td></tr>
+                <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+                <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{% value gloss.sense %}</td></tr>
+                <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{% value gloss.morph %}</td></tr>
+                <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{% value gloss.StemSN %}</td></tr>
+                <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{% value gloss.compound %}</td></tr>
+                <tr><th>Language</th><td class='edit edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+                <tr><th>Dialect</th><td class='edit edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+            </table>
+         </div>
+    </div>
 
-        <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{% value gloss.get_initial_relative_orientation_display%}</td></tr>
-        <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{% value gloss.get_final_relative_orientation_display%}</td></tr>
 
-        <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{% value gloss.get_domhndsh_display%}</td></tr>
-        <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{% value gloss.get_subhndsh_display%}</td></tr>
-        <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{% value gloss.get_final_domhndsh_display%}</td></tr>
-        <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{% value gloss.get_final_subhndsh_display%}</td></tr>
-
-        <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{% value gloss.get_locprim_display%}</td></tr>
-        <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{% value gloss.get_locsecond_display%}</td></tr>
-        <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{% value gloss.get_final_loc_display%}</td></tr>
+    <div class="panel panel-default">
+        <div class='panel-heading'>
+            <div class='panel-title'>
+                <a data-toggle='collapse' data-parent='#definition' href='#pubStatus'>Publication Status</a>
+            </div>
+        </div>
         
-        <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{% value gloss.get_initial_secondary_loc_display%}</td></tr>
-        <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{% value gloss.get_final_secondary_loc_display%}</td></tr>
+            
+        <div id="pubStatus" class="panel-collapse collapse">
         
-    </table>
+            <table class='table table-condensed'>
+                <tr><th>In Web Dictionary</th><td class='edit edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</td></tr>
+                <tr><th>Proposed New Sign</th><td class='edit edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</td></tr>
+            </table>
+        </div>
+    </div>
     
     
-    <h3>Definitions/Notes</h3>
-
+    
+    <div class="panel panel-default">
+        <div class='panel-heading'>
+            <div class='panel-title'>
+                <a data-toggle='collapse' data-parent='#definition' href='#phonology'>Phonology</a>
+            </div>
+        </div>
+        <div id='phonology' class='panel-collapse collapse'>
+            <table class='table table-condensed'>
+                <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{% value gloss.get_initial_palm_orientation_display %}</td></tr>
+                <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{% value gloss.get_final_palm_orientation_display%}</td></tr>
+        
+                <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{% value gloss.get_initial_relative_orientation_display%}</td></tr>
+                <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{% value gloss.get_final_relative_orientation_display%}</td></tr>
+        
+                <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{% value gloss.get_domhndsh_display%}</td></tr>
+                <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{% value gloss.get_subhndsh_display%}</td></tr>
+                <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{% value gloss.get_final_domhndsh_display%}</td></tr>
+                <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{% value gloss.get_final_subhndsh_display%}</td></tr>
+        
+                <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{% value gloss.get_locprim_display%}</td></tr>
+                <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{% value gloss.get_locsecond_display%}</td></tr>
+                <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{% value gloss.get_final_loc_display%}</td></tr>
+                
+                <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{% value gloss.get_initial_secondary_loc_display%}</td></tr>
+                <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{% value gloss.get_final_secondary_loc_display%}</td></tr>
+                
+            </table>
+        </div>
+    </div>
+     
+    
+        
+    <div class="panel panel-default">
+        <div class='panel-heading'>
+            <div class='panel-title'>
+                <a data-toggle='collapse' data-parent='#definition' href='#definitions'>Definitions/Notes</a>
+            </div>
+        </div>
+        <div id='definitions' class='collapse'>
+            
     {% regroup gloss.definition_set.all by role as roles %}
     
     <table class='table'>
@@ -253,6 +290,10 @@
     
     </form>
     
+    
+    </div>
+    
+    </div>
     
 
     </div>

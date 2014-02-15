@@ -68,6 +68,7 @@ function disable_edit() {
     $('#edit_message').text(''); 
     $('.editform').hide();
     $('#delete_gloss_btn').hide();
+    $('#enable_edit').addClass('btn-primary').removeClass('btn-danger');
     $('#add_definition').hide();
     $('.definition_delete').hide();
 };
@@ -76,8 +77,9 @@ function enable_edit() {
     $('.edit').editable('enable');
     $('.edit').css('color', 'red');
     $('#edit_message').text('Click on red text to edit  '); 
-    $('.editform').show();   
-    $('#delete_gloss_btn').show().css('background', 'red');
+    $('.editform').show();
+    $('#delete_gloss_btn').show().addClass('btn-danger');
+    $('#enable_edit').removeClass('btn-primary').addClass('btn-danger');
     $('#add_definition').show();
     $('.definition_delete').show();
 };
