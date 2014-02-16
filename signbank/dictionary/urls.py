@@ -24,12 +24,14 @@ urlpatterns = patterns('',
 
     url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),
-    url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag'),
-    url(r'^update/definition/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_definition'),
+    url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag', name='add_tag'),
+    url(r'^update/definition/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_definition', name='add_definition'),
+    url(r'^update/relation/$', 'signbank.dictionary.update.add_relation', name='add_relation'),
     url(r'^update/gloss/', 'signbank.dictionary.update.add_gloss', name='add_gloss'),
 
     url(r'^ajax/keyword/(?P<prefix>.*)$', 'signbank.dictionary.views.keyword_value_list'),
     url(r'^ajax/tags/$', 'signbank.dictionary.tagviews.taglist_json'),
+    url(r'^ajax/gloss/(?P<prefix>.*)$', 'signbank.dictionary.adminviews.gloss_ajax_complete', name='gloss_complete'),
     
     url(r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
 

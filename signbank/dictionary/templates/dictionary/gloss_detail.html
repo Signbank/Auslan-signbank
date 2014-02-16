@@ -8,7 +8,6 @@
 {% block extrajs %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.mini.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/tagmanager.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/typeahead.bundle.min.js"></script>
     <script type='text/javascript'>
         
@@ -109,14 +108,16 @@
             <table id="staffops">
               <tr>
                   <td>{{videoform.videofile}}</td>
+              </tr>
+              <tr>
                   <td><input type='hidden' name='gloss_id' value='{{gloss.pk}}'>
-                      <input class='btn btn-primary' type='submit' value='Upload'/></td>
+                      <input class='btn btn-primary' type='submit' value='Upload Video'/></td>
               </tr>
             </table>
             </form>
         </fieldset>
     
-        {% if perms.dictionary.update_video %}
+        {% if perms.dictionary.update_video and gloss.count_videos > 0 %}
         <fieldset>
          <legend>Delete/Revert Video</legend>
             <table>
@@ -135,7 +136,7 @@
 </div>
 
     <div class='panel-group' id="definition">
-    
+        
     <div class="panel panel-default">
         <div class='panel-heading'>
             <div class='panel-title'>
@@ -218,13 +219,60 @@
             </div>
         </div>
         <div id='relations' class='collapse'>
-           <table class='table table-condensed'>
-               {% for rel in gloss.relation_sources.all %}
-                <tr><td class='edit edit_relation_role' id='relationrole_{{rel.id}}'>{{rel.get_role_display}}</td>
-                    <td class='edit edit_relation_target' id='relationtarget_{{rel.id}}'>{{rel.target}}</td></tr>
-               {% endfor %}
+               <table class='table table-condensed'>
+                   {% for rel in gloss.relation_sources.all %}
+                    <tr>
+                         <td>
+                            <span class='glyphicon glyphicon-trash relation_delete' data-toggle='modal' data-target='#delete_relation_modal_{{rel.id}}'></span>
+                            
+                             <div class="modal fade" id="delete_relation_modal_{{rel.id}}" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
+                                 <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class='modal-header'>
+                                            <h2 id='modalTitle'>Delete This Relation</h2>
+                                        </div>
+                                        <div class='modal-body'>
+                                            
+                                            <p>This action will delete the <strong>{{rel.get_role_display}}</strong>
+                                                 relation between {{rel.source}} and {{rel.target}}. It cannot be undone.</p>
+                                         </div>
+                                      <form action='{% url "dictionary:update_gloss" gloss.id %}' method='post'>
+                                          {% csrf_token %}
+                                          <input type='hidden' name='id' value='relationdelete_{{rel.id}}'>
+                                          <input type='hidden' name='value' value='confirmed'>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            <input type="submit" class="btn btn-primary" value='Confirm Delete'>
+                                          </div>
+                                      </form>
+                                          
+                                    </div>
+                                  </div>
+                             </div>
+                            
+                        </td>
+                        
+                        
+                        <td class='edit edit_relation_role' id='relationrole_{{rel.id}}'>{{rel.get_role_display}}</td>
+                        <td class='edit edit_relation_target' id='relationtarget_{{rel.id}}'>{{rel.target}}</td>
+                        <td>(<a href='{% url "dictionary:admin_gloss_view" pk=rel.target.pk %}'>view</a>)</td></tr>
+                   {% endfor %}
+               </table>
                
-           </table>
+               <form id='add_relation_form' method='post' action='{% url 'dictionary:add_relation' %}'>
+                   {% csrf_token %}
+                   <input type='hidden' name='sourceid' value='{{gloss.pk}}'>
+                   <table class='table table-condensed'>
+                       <tr>
+                           <td>{{relationform.role}}</td>
+                           <td><input class='form-control glosstypeahead' placeholder='SN/ID Gloss/Annotation ID Gloss' name='targetid'></td>
+                           <td><input class='btn btn-primary' value='Add Relation' type='submit'></td>
+                       </tr>
+                   </table>
+                </form>
+                
+           {# spacing div to allow room for typeahead dropdown #}
+           <div style='height: 10em'></div>
            
         </div>
     </div>
@@ -292,7 +340,7 @@
     {% endfor %}
     </table>
     
-    <form id='add_definition' action='/dictionary/update/definition/{{gloss.id}}' method="POST">
+    <form id='add_definition' action='{% url 'dictionary:add_definition' gloss.id %}' method="POST">
         <fieldset>
         {% csrf_token %}
          <table class='table'>

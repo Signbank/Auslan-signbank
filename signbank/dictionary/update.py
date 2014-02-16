@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from signbank.log import debug
 from tagging.models import TaggedItem, Tag
-import os, shutil
+import os, shutil, re
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
@@ -61,6 +61,10 @@ def update_gloss(request, glossid):
 
             return update_keywords(gloss, field, value)
             
+        elif field.startswith('relation'):
+            
+            return update_relation(gloss, field, value)
+        
         elif field == 'language':
             # expecting possibly multiple values
 
@@ -115,6 +119,8 @@ def update_gloss(request, glossid):
             
 
             if not field in Gloss._meta.get_all_field_names():
+                print "FIELD: ", field
+                print "VALUE: ", value
                 return HttpResponseBadRequest("Unknown field", {'content-type': 'text/plain'})
             
             # special cases 
@@ -167,6 +173,62 @@ def update_keywords(gloss, field, value):
     
     return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
+def update_relation(gloss, field, value):
+    """Update one of the relations for this gloss"""
+    
+    (what, relid) = field.split('_')
+
+    try:
+        rel = Relation.objects.get(id=relid)
+    except:
+        return HttpResponseBadRequest("Bad Relation ID '%s'" % defid, {'content-type': 'text/plain'})
+
+    if not rel.source == gloss:
+        return HttpResponseBadRequest("Relation doesn't match gloss", {'content-type': 'text/plain'})
+    
+    if what == 'relationdelete':
+        print "DELETE: ", rel
+        rel.delete()
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+    elif what == 'relationrole':
+        rel.role = value
+        rel.save()
+        newvalue = rel.get_role_display()
+    elif what == 'relationtarget':
+        
+        target = gloss_from_identifer(value)
+        if target:
+            rel.target = target
+            rel.save()
+            newvalue = str(target)
+        else:
+            return HttpResponseBadRequest("Badly formed gloss identifier '%s'" % value, {'content-type': 'text/plain'})
+    else:
+        
+        return HttpResponseBadRequest("Unknown form field '%s'" % field, {'content-type': 'text/plain'})           
+    
+    return HttpResponse(newvalue, {'content-type': 'text/plain'})
+            
+def gloss_from_identifier(value):
+    """Given an id of the form idgloss (pk) return the
+    relevant gloss or None if none is found"""
+    
+    
+    match = re.match('(.*) \((\d+)\)', value)
+    if match:
+        print "MATCH: ", match
+        idgloss = match.group(1)
+        pk = match.group(2)
+        print "INFO: ", idgloss, pk
+        
+        target = Gloss.objects.get(pk=int(pk))
+        print "TARGET: ", target
+        return target
+    else:
+        return None
+            
+            
+
 def update_definition(gloss, field, value):
     """Update one of the definition fields"""
     
@@ -208,6 +270,38 @@ def update_definition(gloss, field, value):
 
     return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
+
+def add_relation(request):
+    """Add a new relation instance"""
+    
+    if request.method == "POST":
+        
+        form = RelationForm(request.POST)
+        
+        if form.is_valid():
+            
+            role = form.cleaned_data['role']
+            sourceid = form.cleaned_data['sourceid']
+            targetid = form.cleaned_data['targetid']
+            
+            try:
+                source = Gloss.objects.get(pk=int(sourceid))
+            except:
+                return HttpResponseBadRequest("Source gloss not found.", {'content-type': 'text/plain'})
+            
+            target = gloss_from_identifier(targetid)
+            if target:
+                rel = Relation(source=source, target=target, role=role)
+                rel.save()
+                
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id}))
+            else:
+                return HttpResponseBadRequest("Target gloss not found.", {'content-type': 'text/plain'})
+        else:
+            print form
+
+    # fallback to redirecting to the requesting page
+    return HttpResponseRedirect('/')
 
 
 def add_definition(request, glossid):

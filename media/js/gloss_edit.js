@@ -8,41 +8,9 @@
      
      $('select').addClass('form-control');
      
-     
-     var tagApi = $("#taginput").tagsManager({
-         tagsContainer: "#tagcontainer"
-     });
-     
-     
-     var tagEngine = new Bloodhound({
-        datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        name: 'tags',
-        prefetch: {
-            url : '/dictionary/ajax/tags',
-            filter: function(list) {
-                     return $.map(list, function(tag) { return { name: tag }; });
-            }
-        }
-     });
-     
-     tagEngine.initialize();
-     
-     $("#taginput").typeahead(null, {displayKey: 'name', source: tagEngine.ttAdapter()}).on('typeahead:selected', function (e, d) {
- 
-      tagApi.tagsManager("pushTag", d.value);
- 
-    });
-     
-     
-     
-     /*
-     $('#delete_video').confirm({
-        msg:'Delete this video?',
-        timeout:3000
-     });
-     */
-    
+     glosstypeahead($('.glosstypeahead'));
+
+
     // setup requried for Ajax POST
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -70,7 +38,9 @@ function disable_edit() {
     $('#delete_gloss_btn').hide();
     $('#enable_edit').addClass('btn-primary').removeClass('btn-danger');
     $('#add_definition').hide();
+    $('#add_relation_form').hide();
     $('.definition_delete').hide();
+    $('.relation_delete').hide();
 };
 
 function enable_edit() {
@@ -81,7 +51,9 @@ function enable_edit() {
     $('#delete_gloss_btn').show().addClass('btn-danger');
     $('#enable_edit').removeClass('btn-primary').addClass('btn-danger');
     $('#add_definition').show();
+    $('#add_relation_form').show();
     $('.definition_delete').show();
+    $('.relation_delete').show();
 };
 
 function toggle_edit() {
@@ -177,9 +149,47 @@ function configure_edit() {
          type      : 'select',
          data      : relation_role_choices
      }); 
+     $('.edit_relation_target').editable(edit_post_url, {
+         type      : 'glosstypeahead'
+     });
 
 }
 
+
+var gloss_bloodhound = new Bloodhound({
+      datumTokenizer: function(d) { return d.tokens; },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: '/dictionary/ajax/gloss/%QUERY'
+    });
+     
+gloss_bloodhound.initialize();
+
+function glosstypeahead(target) {
+     console.log('glosstypeahead: ' + target);
+     $(target).typeahead(null, {
+          name: 'glosstarget',
+          displayKey: 'pk',
+          source: gloss_bloodhound.ttAdapter(),
+          templates: {
+              suggestion: function(gloss) {
+                  return("<p><strong>" + gloss.idgloss + "</strong> (SN: " + gloss.sn + ")</p>");
+              }
+          }
+      });
+};
+
+
+$.editable.addInputType('glosstypeahead', {
+    
+   element: function(settings, original) {
+      var input = $('<input type="text" class="glosstypeahead">');
+      $(this).append(input);
+     
+      glosstypeahead(input); 
+
+      return (input);
+   }, 
+});
 
 /* 
  * http://stackoverflow.com/questions/1597756/is-there-a-jquery-jeditable-multi-select-plugin
