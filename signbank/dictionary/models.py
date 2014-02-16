@@ -108,7 +108,8 @@ defn_role_choices = (('general', 'General Definition'),
                      ('popexplain', 'Popular Explanation'),
                      ('augment', 'Augmented Meaning'),
                      ('note', 'Note'),
-                     ('privatenote', 'Private Note')
+                     ('privatenote', 'Private Note'),
+                     ('B92 sn', 'Sign Number in Brien 92'),
                      )
 
 
