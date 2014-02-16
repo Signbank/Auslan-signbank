@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview
 from signbank.video.fields import VideoUploadToFLVField
-from signbank.dictionary.models import Dialect, Gloss, Definition
+from signbank.dictionary.models import Dialect, Gloss, Definition, Relation
 from django.conf import settings
 from tagging.models import Tag
 
@@ -55,6 +55,17 @@ class DefinitionForm(forms.ModelForm):
     class Meta:
         model = Definition
         fields = ('count', 'role', 'text')
+        
+class RelationForm(forms.ModelForm):
+    
+    sourceid = forms.CharField(label='Source Gloss')
+    targetid = forms.CharField(label='Target Gloss')
+    
+    class Meta:
+        model = Relation
+        fields = ['role']
+        
+
         
 
 

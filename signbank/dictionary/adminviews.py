@@ -225,8 +225,26 @@ class GlossDetailView(DetailView):
         context['tagform'] = TagUpdateForm()
         context['videoform'] = VideoUploadForGlossForm()
         context['definitionform'] = DefinitionForm()
+        context['relationform'] = RelationForm()
         context['navigation'] = context['gloss'].navigation(True)
         context['SIGN_NAVIGATION']  = settings.SIGN_NAVIGATION
         return context
         
+
+def gloss_ajax_complete(request, prefix):
+    """Return a list of glosses matching the search term
+    as a JSON structure suitable for typeahead."""
     
+    
+    query = Q(idgloss__istartswith=prefix) | \
+            Q(annotation_idgloss__istartswith=prefix) | \
+            Q(sn__startswith=prefix)
+    qs = Gloss.objects.filter(query)
+
+    result = []
+    for g in qs:
+        result.append({'idgloss': g.idgloss, 'annotation_idgloss': g.annotation_idgloss, 'sn': g.sn, 'pk': "%s (%s)" % (g.idgloss, g.pk)})
+    
+    return HttpResponse(json.dumps(result), {'content-type': 'application/json'})
+
+
