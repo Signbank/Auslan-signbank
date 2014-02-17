@@ -47,7 +47,7 @@
          <ul class='dropdown-menu'> 
             
           <li {% if '/dictionary/list/' in request.path %}class='active'{% endif %}>
-               <a href="{% url 'dictionary:admin_gloss_list' %}">Search Glosses</a></li>
+               <a href="{% url 'dictionary:admin_gloss_list' %}">Search Signs</a></li>
 
           <li {% if '/feedback/show.html' in request.path %}class="active"{% endif %}>
                <a href="{% url 'signbank.feedback.views.showfeedback' %}">View Feedback</a></li>

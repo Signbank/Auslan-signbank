@@ -150,14 +150,14 @@ function clearForm(myFormElement) {
       </div>
     
     <div>  
-        <input class='btn' type='submit' name='submit' value='Search'>
-        <input class='btn' type='submit' name='format' value='CSV'>
-        <button class='btn' onclick="clearForm(document.adminsearch);">Reset</button>
+        <input class='btn btn-primary' type='submit' name='submit' value='Search'>
+        <input class='btn btn-default' type='submit' name='format' value='CSV'>
+        <button class='btn btn-default' onclick="clearForm(document.adminsearch);">Reset</button>
     </div>
 </form>
 
    <div  class="panel panel-default">
-      <div class="panel-heading" data-toggle="collapse"  data-target='#add_gloss_form'>Add New Gloss</div>
+      <div class="panel-heading" data-toggle="collapse"  data-target='#add_gloss_form'>Add New Sign</div>
       
          <div id='add_gloss_form' class='collapse'>
              <form action='{% url "dictionary:add_gloss" %}' method='post'>
@@ -173,7 +173,7 @@ function clearForm(myFormElement) {
                          <td>{{add_gloss_form.idgloss}}</td>
                          <td>{{add_gloss_form.annotation_idgloss}}</td>
                          <td>{{add_gloss_form.sn}}</td>
-                         <td><input class='btn' type='submit' value='Add New Gloss'></td>
+                         <td><input class='btn btn-primary' type='submit' value='Add New Sign'></td>
                      </tr>
                  </table>
                  
