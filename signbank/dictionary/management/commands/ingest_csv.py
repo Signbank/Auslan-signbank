@@ -129,7 +129,7 @@ class Command(BaseCommand):
                   'weathertf': 'semantic:weather',
                   'worktf': 'semantic:work',
                   
-                  'Attested in Corpus': 'workflow:attested',
+                  'Attested in Corpus': 'corpus:attested',
                   'Forearm rotation': 'phonology:forearm rotation',
                   'hschange': 'phonology:handshape change',
                   'Battinson': 'lexis:battinson',
@@ -159,7 +159,7 @@ class Command(BaseCommand):
                 #if row['annotation idgloss'].startswith('B'):
                 #    break
                 
-                if row['bsltf']:
+                if row['bsltf'] == 'T':
                     
                     for key in row.keys():
                         row[key] = row[key].strip()
