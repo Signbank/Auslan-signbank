@@ -183,9 +183,9 @@ class Command(BaseCommand):
                         gloss.domhndsh = row['domhndsh']
                     if row['subhndsh'] != '':
                         gloss.subhndsh = row['subhndsh']
-                    if row['FinaldominantHS'] != '' and row['FinaldominantHS'] != '0':
+                    if row['FinaldominantHS'] != '':
                         gloss.final_domhndsh = row['FinaldominantHS']
-                    if row['FinalSubordinateHS'] != '' and row['FinalSubordinateHS'] != '0':
+                    if row['FinalSubordinateHS'] != '':
                         gloss.final_subhndsh = row['FinalSubordinateHS']
                     if row['FinalLoc'] != '':
                         gloss.final_loc = row['FinalLoc']

@@ -159,6 +159,7 @@ class Dialect(models.Model):
         return self.language.name+"/"+self.name  
   
 handshapeChoices = (('notset', 'No Value Set'),
+                    ('0.0', 'N/A'),
                     ('0.1', 'Round'),
                     ('0.2', 'Okay'),
                     ('1.1', 'Point'),
