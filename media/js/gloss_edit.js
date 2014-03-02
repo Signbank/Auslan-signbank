@@ -285,12 +285,19 @@ function ajaxifyTagForm() {
     });
     
     $('#tagaddform').submit(function(){
-        $.post($(this).attr('action'), $(this).serialize(),
-                function(data) {
-                   // response is a new tag list
-                   $('#tags').replaceWith(data);
-                   ajaxifyTagForm();
-               });
+        
+        var newtag = $('#tagaddform select').val();
+        
+        if (newtag != "") {
+            $.post($(this).attr('action'), $(this).serialize(),
+                    function(data) {
+                       // response is a new tag list
+                       $('#tags').replaceWith(data);
+                       ajaxifyTagForm();
+                   });
+        } else {
+            alert("Please select a tag value.")
+        }
         return false;
     });
 }
