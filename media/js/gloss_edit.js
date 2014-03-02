@@ -3,7 +3,22 @@
  */
  $(document).ready(function() {
      configure_edit();
+     
      disable_edit();
+    
+
+     if (window.location.search.match('edit')) {
+         toggle_edit();
+         
+         if (window.location.search.match('editrel')) {
+             $('#relations').addClass('in');
+         }
+         if (window.location.search.match('editdef')) {
+             $('#definitions').addClass('in');
+         }      
+         
+     }  
+          
      $('#enable_edit').click(toggle_edit);
      
      $('select').addClass('form-control');
@@ -165,7 +180,7 @@ var gloss_bloodhound = new Bloodhound({
 gloss_bloodhound.initialize();
 
 function glosstypeahead(target) {
-     console.log('glosstypeahead: ' + target);
+
      $(target).typeahead(null, {
           name: 'glosstarget',
           displayKey: 'pk',

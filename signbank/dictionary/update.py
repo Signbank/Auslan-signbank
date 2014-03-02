@@ -22,7 +22,7 @@ def add_gloss(request):
             
             gloss = form.save()
             
-            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id})+'?edit')
         
     return HttpResponseRedirect(reverse('dictionary:admin_gloss_list'))
 
@@ -243,7 +243,7 @@ def update_definition(gloss, field, value):
     
     if what == 'definitiondelete':
         defn.delete()
-        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id})+'?editdef')
     
     if what == 'definition':
         # update the definition
@@ -294,7 +294,7 @@ def add_relation(request):
                 rel = Relation(source=source, target=target, role=role)
                 rel.save()
                 
-                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id}))
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel')
             else:
                 return HttpResponseBadRequest("Target gloss not found.", {'content-type': 'text/plain'})
         else:
@@ -324,7 +324,7 @@ def add_definition(request, glossid):
             defn = Definition(gloss=thisgloss, count=count, role=role, text=text, published=False)
             defn.save()
             
-    return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': thisgloss.id}))
+    return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': thisgloss.id})+'?editdef')
 
 
 def add_tag(request, glossid):
