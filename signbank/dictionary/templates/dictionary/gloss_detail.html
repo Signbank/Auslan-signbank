@@ -104,7 +104,7 @@
             <p>We have {{gloss.count_videos}} videos for this sign.</p>
             <form action="/video/upload/" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              <input type='hidden' name='redirect' value='{{request.path}}'>
+              <input type='hidden' name='redirect' value='{{request.path}}?edit'>
             <table id="staffops">
               <tr>
                   <td>{{videoform.videofile}}</td>
@@ -137,19 +137,27 @@
 
     <div class='panel-group' id="definition">
         
+
+        
+        <table class='table table-condensed'>
+            <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</td></tr>
+            <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</td></tr>
+            <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</td></tr>
+            <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+       </table>
+       
+       
     <div class="panel panel-default">
+
         <div class='panel-heading'>
             <div class='panel-title'>
                 <a data-toggle='collapse' data-parent='#definition' href='#basicProperties'>Basic Properties</a>
             </div>
         </div>
             
-        <div id="basicProperties" class="panel-collapse collapse in">
+            
+        <div id="basicProperties" class="panel-collapse collapse">
             <table class='table table-condensed'>
-                <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</td></tr>
-                <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</td></tr>
-                <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</td></tr>
-                <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
                 <tr><th>Sense Number</th><td class='edit edit_int'  id='sense'>{% value gloss.sense %}</td></tr>
                 <tr><th>Morphology</th><td class='edit edit_text' id='morph'>{% value gloss.morph %}</td></tr>
                 <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{% value gloss.StemSN %}</td></tr>
