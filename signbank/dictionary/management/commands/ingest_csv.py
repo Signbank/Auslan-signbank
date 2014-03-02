@@ -273,7 +273,12 @@ class Command(BaseCommand):
                             #print "Question: ", count, row[field]
                             count += 1
                             dfn.save()     
+
+                    if row['CorrectionsAdditionsComments'] != '':
+                        dfn = Definition(gloss=gloss, text=cd(row['CorrectionsAdditionsComments']), role='privatenote', count=1)
+                        dfn.save()                            
                             
+                        
                     count = 1
                     for field in ['verb1', 'verb2', 'verb3', 'verb4', 'verb5']:
                         if row[field] != '':
