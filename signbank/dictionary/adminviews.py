@@ -75,8 +75,9 @@ class GlossListView(ListView):
         #print "QS:", len(qs)
         
         get = self.request.GET
+ 
         
-        if get.has_key('search'):
+        if get.has_key('search') and get['search'] != '':
             val = get['search']
             query = Q(idgloss__istartswith=val) | \
                     Q(annotation_idgloss__istartswith=val) | \
@@ -85,17 +86,28 @@ class GlossListView(ListView):
             
             #print "A: ", len(qs)
             
-            
-        if get.has_key('keyword'):
+        if get.has_key('keyword') and get['keyword'] != '':
             val = get['keyword']
             qs = qs.filter(translation__translation__text__istartswith=val)
             
           
-        if get.has_key('inWeb') and get['inWeb'] != '1':
-            val = get['inWeb'] == '2'
+        if get.has_key('inWeb') and get['inWeb'] != 'unspecified':
+            val = get['inWeb'] == 'yes'
             qs = qs.filter(inWeb__exact=val)
             #print "B :", len(qs)
-                 
+            
+            
+        if get.has_key('hasvideo') and get['hasvideo'] != 'unspecified':
+            val = get['hasvideo'] == 'no'
+
+            qs = qs.filter(glossvideo__isnull=val)
+
+        if get.has_key('defspublished') and get['defspublished'] != 'unspecified':
+            val = get['defspublished'] == 'yes'
+
+            qs = qs.filter(definition__published=val)
+            
+    
         ## phonology field filters
         if get.has_key('domhndsh') and get['domhndsh'] != '':
             val = get['domhndsh']
@@ -127,13 +139,14 @@ class GlossListView(ListView):
             val = get['locsecond']
             qs = qs.filter(locsecond__exact=val)
             
-            print "H :", len(qs)     
+            #print "H :", len(qs)     
 
         if get.has_key('final_loc') and get['final_loc'] != '':
             val = get['final_loc']
             qs = qs.filter(final_loc__exact=val)   
             
-            
+        
+        
         if get.has_key('initial_relative_orientation') and get['initial_relative_orientation'] != '':
             val = get['initial_relative_orientation']
             qs = qs.filter(initial_relative_orientation__exact=val)               
@@ -185,7 +198,7 @@ class GlossListView(ListView):
             # intersection
             qs = qs & tqs
             
-          #  print "J :", len(qs)
+            #print "J :", len(qs)
             
         qs = qs.distinct()
         

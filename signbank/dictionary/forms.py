@@ -28,7 +28,8 @@ class TagUpdateForm(forms.Form):
 
     tag = forms.ModelChoiceField(queryset=Tag.objects.all())
     delete = forms.BooleanField(required=False, widget=forms.HiddenInput)
-    
+
+YESNOCHOICES = (("unspecified", "Unspecified" ), ('yes', 'Yes'), ('no', 'No'))
     
 class GlossSearchForm(forms.ModelForm):
     
@@ -36,6 +37,8 @@ class GlossSearchForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
     nottags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
     keyword = forms.CharField(label='Keyword')
+    hasvideo = forms.ChoiceField(label='Has Video', choices=YESNOCHOICES)
+    defspublished = forms.ChoiceField(label="All Definitions Published", choices=YESNOCHOICES)
     
     class Meta:
         model = Gloss
@@ -48,6 +51,9 @@ class GlossSearchForm(forms.ModelForm):
                    'domhndsh', 'subhndsh', 'locprim', 'locsecond',
                    'final_domhndsh', 'final_subhndsh', 'final_loc'
                    )
+        widgets = {
+                   'inWeb': forms.Select(choices=YESNOCHOICES),
+                   }
     
 
 class DefinitionForm(forms.ModelForm):
