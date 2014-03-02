@@ -246,7 +246,10 @@ body {
     color: red;
 }
 
-
+.editform {
+    clear: both;
+    padding: 20px;
+}
 
 
 
