@@ -207,7 +207,7 @@ function clearForm(myFormElement) {
             <td>{{gloss.annotation_idgloss}} {% if not gloss.inWeb %}*{% endif %}</td>
             <td>{{gloss.idgloss}}</td>
             <td>{{gloss.morph}}</td>
-            <td>{% for tag in gloss.tags %}<span class='badge'>{{tag}}</span> {% endfor %}</td>
+            <td>{% for tag in gloss.tags %}<span class='tag'>{{tag}}</span> {% endfor %}</td>
             
         </tr>
     {% empty %}
