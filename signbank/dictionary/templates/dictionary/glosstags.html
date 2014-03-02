@@ -4,10 +4,10 @@
       {% load tagging_tags %}
       {% tags_for_object gloss as tag_list %}
       {% if tag_list %}
-          <ul id='taglist'>
+          <ul class='taglist'>
           {% for tag in tag_list %}
             <li class='tagli'>
-               <div class='badge'>
+               <div class='tag'>
                  <span class='tagname'>{{tag}}</span>
                  <span class='tagcount'>
                      <a class='tagdelete editform'
