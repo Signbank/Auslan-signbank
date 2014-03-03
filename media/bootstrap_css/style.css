@@ -181,6 +181,9 @@ body {
 }
 
 
+
+/* tag code adapted from http://cssglobe.com/pure-css3-post-tags/ */
+
 .taglist {
     margin:0;
     padding:0;
@@ -246,7 +249,7 @@ body {
     color: red;
 }
 
-.editform {
+#tagaddform {
     clear: both;
     padding: 20px;
 }

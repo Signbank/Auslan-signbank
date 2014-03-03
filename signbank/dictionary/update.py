@@ -343,7 +343,7 @@ def add_tag(request, glossid):
 
             if form.cleaned_data['delete']:
                 # get the relevant TaggedItem
-                ti = get_object_or_404(TaggedItem, object_id=thisgloss.id, tag=tag)
+                ti = get_object_or_404(TaggedItem, object_id=thisgloss.id, tag__name=tag)
                 ti.delete()
                 response = HttpResponse('deleted', {'content-type': 'text/plain'})
             else:
@@ -355,7 +355,10 @@ def add_tag(request, glossid):
                                                'tagform': TagUpdateForm(),
                                                },
                                               context_instance=RequestContext(request))
-                
+        else:
+            print "invalid form"
+            print form.as_table()
+            
     return response
 
 
