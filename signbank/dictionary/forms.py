@@ -35,8 +35,8 @@ YESNOCHOICES = (("unspecified", "Unspecified" ), ('yes', 'Yes'), ('no', 'No'))
 class GlossSearchForm(forms.ModelForm):
     
     search = forms.CharField(label="Search Gloss/SN")
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
-    nottags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
+    tags = forms.MultipleChoiceField(choices=[(t, t) for t in settings.ALLOWED_TAGS])
+    nottags = forms.MultipleChoiceField(choices=[(t, t) for t in settings.ALLOWED_TAGS])
     keyword = forms.CharField(label='Keyword')
     hasvideo = forms.ChoiceField(label='Has Video', choices=YESNOCHOICES)
     defspublished = forms.ChoiceField(label="All Definitions Published", choices=YESNOCHOICES)
