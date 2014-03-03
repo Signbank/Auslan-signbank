@@ -21,8 +21,6 @@
           
      $('#enable_edit').click(toggle_edit);
      
-     $('select').addClass('form-control');
-     
      glosstypeahead($('.glosstypeahead'));
 
 
@@ -311,8 +309,9 @@ function ajaxifyTagForm() {
                        ajaxifyTagForm();
                    });
         } else {
-            alert("Please select a tag value.")
+            alert("Please select a tag value.");
         }
+        
         return false;
     });
 }

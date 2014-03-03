@@ -116,7 +116,7 @@ class Command(BaseCommand):
                   'shapestf': 'semantic:shapes',
                   'shoppingtf': 'semantic:shopping',
                   'sporttf': 'semantic:sport',
-                  'stateschtf': 'state school',
+                  'stateschtf': 'school:state school',
                   'sym': 'phonology:symmetrical',
                   'techtf': 'lexis:technical',
                   'telecomtf': 'semantic:telecommunications',

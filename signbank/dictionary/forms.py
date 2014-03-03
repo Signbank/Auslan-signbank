@@ -26,7 +26,8 @@ class VideoUpdateForm(forms.Form):
 class TagUpdateForm(forms.Form):
     """Form to add a new tag to a gloss"""
 
-    tag = forms.ModelChoiceField(queryset=Tag.objects.all())
+    tag = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), 
+                            choices=[(t, t) for t in settings.ALLOWED_TAGS])
     delete = forms.BooleanField(required=False, widget=forms.HiddenInput)
 
 YESNOCHOICES = (("unspecified", "Unspecified" ), ('yes', 'Yes'), ('no', 'No'))
@@ -52,7 +53,7 @@ class GlossSearchForm(forms.ModelForm):
                    'final_domhndsh', 'final_subhndsh', 'final_loc'
                    )
         widgets = {
-                   'inWeb': forms.Select(choices=YESNOCHOICES),
+                   'inWeb': forms.Select(choices=YESNOCHOICES, attrs={'class': 'form-control'}),
                    }
     
 
@@ -61,6 +62,9 @@ class DefinitionForm(forms.ModelForm):
     class Meta:
         model = Definition
         fields = ('count', 'role', 'text')
+        widgets = {
+                   'role': forms.Select(attrs={'class': 'form-control'}),
+                   }
         
 class RelationForm(forms.ModelForm):
     
@@ -70,6 +74,10 @@ class RelationForm(forms.ModelForm):
     class Meta:
         model = Relation
         fields = ['role']
+        widgets = {
+                   'role': forms.Select(attrs={'class': 'form-control'}),
+                   }
+        
         
 
         
