@@ -20,6 +20,7 @@
           {% endfor %}
           </ul>
       {% endif %}
+      {% if perms.dictionary.change_gloss %}
       <div id="tagcontainer"></div>
       <div class='editform'>
           <form id='tagaddform' 
@@ -31,5 +32,6 @@
            </table>
           </form>
       </div>
+      {% endif %}
       </fieldset>
     </div>

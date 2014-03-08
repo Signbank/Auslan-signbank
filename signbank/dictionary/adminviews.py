@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.db.models import Q
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 import csv
 
 from signbank.dictionary.models import *
@@ -33,9 +34,12 @@ class GlossListView(ListView):
         else:
             return super(GlossListView, self).render_to_response(context)
     
-
+    
     def render_to_csv_response(self, context):
         
+        if not self.request.user.has_perm('dictionary.export_csv'):
+            raise PermissionDenied
+
         # Create the HttpResponse object with the appropriate CSV header.
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="dictionary-export.csv"'

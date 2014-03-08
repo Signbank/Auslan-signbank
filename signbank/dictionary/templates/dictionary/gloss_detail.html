@@ -9,8 +9,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.mini.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jeditable.checkbox.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/typeahead.bundle.min.js"></script>
+    
+    
+    {% if perms.dictionary.change_gloss %}
+    
     <script type='text/javascript'>
-        
+    
      var edit_post_url = '{% url 'dictionary:update_gloss' gloss.id %}';
      var definition_role_choices = {{gloss.definition_role_choices_json|safe}}
      var handshape_choices = {{gloss.handshape_choices_json|safe}}
@@ -25,6 +29,9 @@
       
     </script>
     <script type='text/javascript' src="{{ STATIC_URL }}js/gloss_edit.js"></script>
+    
+    
+    {% endif %}
 {% endblock %}
 
 
@@ -97,7 +104,7 @@
     {% endif %}
     
     </div>
-    {% if perms.dictionary.update_video %}
+    {% if perms.dictionary.change_gloss and perms.dictionary.update_video %}
     <div class='editform'>
         <fieldset>
             <legend>Upload New Video</legend>
@@ -180,7 +187,7 @@
         <div id="pubStatus" class="panel-collapse collapse">
         
             <table class='table table-condensed'>
-                <tr><th>In Web Dictionary</th><td class='edit edit_check' id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</td></tr>
+                <tr><th>In Web Dictionary</th><td {% if perms.dictionary.can_publish %}class='edit edit_check'{% endif %} id='inWeb'>{% if gloss.inWeb %}Yes{% else %}No{% endif %}</td></tr>
                 <tr><th>Proposed New Sign</th><td class='edit edit_check' id='isNew'>{% if gloss.isNew %}Yes{% else %}No{% endif %}</td></tr>
             </table>
         </div>
@@ -267,6 +274,8 @@
                    {% endfor %}
                </table>
                
+               
+               {% if perms.dictionary.change_gloss %}
                <form id='add_relation_form' method='post' action='{% url 'dictionary:add_relation' %}'>
                    {% csrf_token %}
                    <input type='hidden' name='sourceid' value='{{gloss.pk}}'>
@@ -278,6 +287,7 @@
                        </tr>
                    </table>
                 </form>
+                {% endif %}
                 
            {# spacing div to allow room for typeahead dropdown #}
            <div style='height: 10em'></div>
@@ -310,6 +320,9 @@
       {% for def in role.list %} 
       <tr>
         <td>
+            
+            {% if perms.dictionary.change_gloss %}
+            {% if not def.published and perms.dictionary.can_delete_unpublished or def.published and perms.dictionary.can_delete_published %}
             <span class='glyphicon glyphicon-trash definition_delete' data-toggle='modal' data-target='#delete_definition_modal_{{def.id}}'></span>
             
              <div class="modal fade" id="delete_definition_modal_{{def.id}}" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
@@ -335,9 +348,10 @@
                     </div>
                   </div>
              </div>
-            
+            {% endif %}
+            {% endif %}
         </td>
-        <td class='edit edit_check' id='definitionpub_{{def.id}}'>{% if def.published %}Yes{% else %}No{% endif %}</td>
+        <td {% if perms.dictionary.can_publish %}class='edit edit_check'{% endif %} id='definitionpub_{{def.id}}'>{% if def.published %}Yes{% else %}No{% endif %}</td>
         <td class='edit edit_int' id='definitioncount_{{def.id}}'>{{def.count}}</td>   
         <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
         <td class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</td>
@@ -348,6 +362,8 @@
     {% endfor %}
     </table>
     
+    
+    {% if perms.dictionary.change_gloss %}
     <form id='add_definition' action='{% url 'dictionary:add_definition' gloss.id %}' method="POST">
         <fieldset>
         {% csrf_token %}
@@ -366,6 +382,7 @@
     </fieldset>
     
     </form>
+    {% endif %}
     
     
     </div>
