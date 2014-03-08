@@ -158,6 +158,7 @@ function clearForm(myFormElement) {
     </div>
 </form>
 
+   {% if perms.dictionary.add_gloss %}
    <div  class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse"  data-target='#add_gloss_form'>Add New Sign</div>
       
@@ -182,6 +183,7 @@ function clearForm(myFormElement) {
              </form>
          </div>
       </div>
+      {% endif %}
                 
              
              

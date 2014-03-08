@@ -12,6 +12,7 @@ import os, shutil, re
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 
+@permission_required('dictionary.add_gloss')
 def add_gloss(request):
     """Create a new gloss and redirect to the edit view"""
     
@@ -55,7 +56,7 @@ def update_gloss(request, glossid):
         
         if field.startswith('definition'):
             
-            return update_definition(gloss, field, value)
+            return update_definition(request, gloss, field, value)
 
         elif field == 'keywords':
 
@@ -115,12 +116,21 @@ def update_gloss(request, glossid):
                     newvalue = value
             
         
+        elif field == 'inWeb':
+            # only modify if we have publish permission
+            if request.user.has_perm('dictionary.can_publish'):
+                gloss.inWeb = value
+                gloss.save()
+            
+            if gloss.inWeb:
+                newvalue = 'Yes'
+            else:
+                newvalue = 'No'
+                
         else:
             
 
             if not field in Gloss._meta.get_all_field_names():
-                print "FIELD: ", field
-                print "VALUE: ", value
                 return HttpResponseBadRequest("Unknown field", {'content-type': 'text/plain'})
             
             # special cases 
@@ -229,7 +239,7 @@ def gloss_from_identifier(value):
             
             
 
-def update_definition(gloss, field, value):
+def update_definition(request, gloss, field, value):
     """Update one of the definition fields"""
     
     (what, defid) = field.split('_')
@@ -255,9 +265,11 @@ def update_definition(gloss, field, value):
         defn.save()
         newvalue = defn.count
     elif what == 'definitionpub':
-        print "PUB:", value
-        defn.published = value == 'Yes'
-        defn.save()
+        
+        if request.user.has_perm('dictionary.can_publish'):
+            defn.published = value == 'Yes'
+            defn.save()
+        
         if defn.published:
             newvalue = 'Yes'
         else:
@@ -326,7 +338,7 @@ def add_definition(request, glossid):
             
     return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': thisgloss.id})+'?editdef')
 
-
+@permission_required('dictionary.update_gloss')
 def add_tag(request, glossid):
     """View to add a tag to a gloss"""
 

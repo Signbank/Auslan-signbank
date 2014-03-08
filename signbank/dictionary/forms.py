@@ -53,7 +53,7 @@ class GlossSearchForm(forms.ModelForm):
                    'final_domhndsh', 'final_subhndsh', 'final_loc'
                    )
         widgets = {
-                   'inWeb': forms.Select(choices=YESNOCHOICES, attrs={'class': 'form-control'}),
+                   'inWeb': forms.Select(choices=YESNOCHOICES),
                    }
     
 
