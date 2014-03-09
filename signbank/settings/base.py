@@ -339,6 +339,10 @@ ALLOWED_TAGS = [ '',
                  'semantic:utensil',
                  'semantic:weather',
                  'semantic:work',
-                 'school:state school']
+                 'school:state school',
+                 'workflow:needs video',
+                 'workflow:redo video',
+                 'workflow:problematic',
+                 ]
 
 
