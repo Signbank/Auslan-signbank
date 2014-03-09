@@ -151,6 +151,10 @@ body {
 
 /* admin search form */
 
+#searchformwell {
+    background: #FFFFFF;
+}
+
 #adminsearch td input {
     width: 100%;
 }
@@ -164,6 +168,14 @@ body {
     width: 50%;
 }
 
+#adminsearch #searchpanels {
+    width: 100%;
+}
+
+
+#adminsearch #searchpanels select {
+    width: 100%;
+}
 
 /* editing gloss */
 
