@@ -13,8 +13,20 @@
     
     $(document).ready(function(){
         
+        
+        $('.collapsetoggle').click(function() {
+            if ($(this).text() == 'Show') {
+                $(this).text('Hide');
+            } else {
+                $(this).text('Show');
+            }
+        });
+        
+        
     });
-    
+
+
+
 // http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
 function clearForm(myFormElement) {
 
@@ -61,7 +73,7 @@ function clearForm(myFormElement) {
 {% block content %}
 
 
-<div class='panel panel-default'>
+<div id='searchformwell' class='well'>
     <form name='adminsearch' id='adminsearch'>
         
         <div>
@@ -80,9 +92,10 @@ function clearForm(myFormElement) {
         </div>
         
         <div  class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse"  data-target='#searchpanels'>Search by Tags, Dialect and Language</div>
+            <div class="panel-heading">Search by Tags, Dialect and Language 
+                (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#searchpanels'>Show</a></a>)</div>
           
-            <table id='searchpanels' class='collapse' width='100%'>
+            <table id='searchpanels' class='collapse'>
                 <tr>
                     <td>
                     <div class='input-group'>
@@ -90,18 +103,22 @@ function clearForm(myFormElement) {
                         {{searchform.tags}}
                     </div>
                     </td>
+                    
+                    <td>
+                    <div class='input-group'>
+                        <label class='input-group-addon' for='id_dialect'>{{searchform.dialect.label}}</label>
+                        {{searchform.dialect}}
+                    </div>
+                    </td>                   
+                  </tr>
+                  <tr>
                     <td>
                     <div class='input-group'>
                         <label class='input-group-addon' for='id_nottags'>Not Tagged</label>
                         {{searchform.nottags}}
                     </div>
                     </td>
-                    <td>
-                    <div class='input-group'>
-                        <label class='input-group-addon' for='id_dialect'>{{searchform.dialect.label}}</label>
-                        {{searchform.dialect}}
-                    </div>
-                    </td>
+
             
                     <td>
                     <div class='input-group'>
@@ -114,7 +131,8 @@ function clearForm(myFormElement) {
           </div>
               
         <div  class="panel panel-default">
-          <div class="panel-heading" data-toggle="collapse"  data-target='#advsearchpanels'>Publication and Phonology</div>
+          <div class="panel-heading">Search by Publication and Phonology
+                (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#advsearchpanels'>Show</a></a>)</div>
           
           <table class='table'>
             <tr id='advsearchpanels' class='collapse'>
@@ -148,13 +166,13 @@ function clearForm(myFormElement) {
           </table>
         </div>
         
-        <div>
+ 
         <div class='btn-group'>  
             <input class='btn btn-primary' type='submit' name='submit' value='Search'>
             <input class='btn btn-default' type='submit' name='format' value='CSV'>
             <button class='btn btn-default' onclick="clearForm(document.adminsearch);">Reset</button>
         </div>
-        </div>
+
     </form>
 
 </div>
