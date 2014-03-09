@@ -166,10 +166,19 @@ function clearForm(myFormElement) {
           </table>
         </div>
  
-         <div  class="panel panel-default">
+        <div  class="panel panel-default">
             <div class="panel-heading">Search Definitions and Notes 
-                (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#searchpanels'>Show</a></a>)</div>
+                (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#searchdefs'>Show</a></a>)</div>
              
+             
+             <div id='searchdefs' class='collapse'>
+                     
+                 <div class='input-group'>
+                    <label class='input-group-addon' for='id_defsearch'>{{searchform.defsearch.label}}</label>
+                    <input name='defsearch' class='form-control' {% if searchform.defsearch.value %}value='{{searchform.defsearch.value}}'{% endif %}>
+                 </div>
+                     
+             </div>  
         </div>
  
  

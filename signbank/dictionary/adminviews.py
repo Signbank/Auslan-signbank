@@ -179,6 +179,16 @@ class GlossListView(ListView):
         # end of phonology filters
         
         
+        if get.has_key('defsearch') and get['defsearch'] != '':
+            
+            val = get['defsearch']
+            
+            print "DEF", val, len(qs)
+            qs = qs.filter(definition__text__contains=val)
+            print "AFTER", len(qs)
+        
+        
+        
         vals = get.getlist('dialect', [])
         if vals != []:
             qs = qs.filter(dialect__in=vals)

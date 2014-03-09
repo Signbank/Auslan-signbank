@@ -41,6 +41,8 @@ class GlossSearchForm(forms.ModelForm):
     hasvideo = forms.ChoiceField(label='Has Video', choices=YESNOCHOICES)
     defspublished = forms.ChoiceField(label="All Definitions Published", choices=YESNOCHOICES)
     
+    defsearch = forms.CharField(label='Search Definition/Notes')
+    
     class Meta:
         model = Gloss
         fields = ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
