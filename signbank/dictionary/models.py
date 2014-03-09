@@ -273,8 +273,8 @@ class Gloss(models.Model):
                        ('search_gloss', 'Can Search/View Full Gloss Details'),
                        ('export_csv', 'Can export sign details as CSV'),
                        ('can_publish', 'Can publish signs and definitions'),
-                       ('can_delete_unpublished', 'Can delete signs or definitions that are not published'),
-                       ('can_delete_published', 'Can delete published signs and definitions'),
+                       ('can_delete_unpublished', 'Can delete unpub signs or defs'),
+                       ('can_delete_published', 'Can delete pub signs and defs'),
                         )
 
         
