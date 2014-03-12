@@ -281,6 +281,19 @@ class Gloss(models.Model):
     def __str__(self):
         return "%s-%s" % (self.sn, self.idgloss)
     
+    def field_labels(self):
+        """Return the dictionary of field labels for use in a template"""
+        
+        d = dict()
+        for f in self._meta.fields:
+            try:
+                d[f.name] = self._meta.get_field(f.name).verbose_name
+            except:
+                pass
+            
+        return d
+        
+    
     idgloss = models.CharField("Sign Entry Name", max_length=50, help_text="""
     This is the unique identifying name of an entry of a sign form in the
 database. No two Sign Entry Names can be exactly the same, but a "Sign
@@ -325,26 +338,26 @@ minor or insignificant ways that can be ignored.""")
 
     # Phonology fields
     
-    domhndsh = models.CharField("Dominant Hand Shape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
-    subhndsh = models.CharField("Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
+    domhndsh = models.CharField("Initial Dominant Handshape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
+    subhndsh = models.CharField("Initial Subordinate Handshape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
     
-    final_domhndsh = models.CharField("Final Dominant Hand Shape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
-    final_subhndsh = models.CharField("Final Subordinate Hand Shape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
+    final_domhndsh = models.CharField("Final Dominant Handshape", blank=True,  null=True, choices=handshapeChoices, max_length=5)  
+    final_subhndsh = models.CharField("Final Subordinate Handshape", null=True, choices=handshapeChoices, blank=True, max_length=5) 
  
-    locprim = models.IntegerField("Primary Location", choices=locationChoices, null=True, blank=True) 
-    final_loc = models.IntegerField("Final Location", choices=locationChoices, null=True, blank=True) 
+    locprim = models.IntegerField("Initial Primary Location", choices=locationChoices, null=True, blank=True) 
+    final_loc = models.IntegerField("Final Primary Location", choices=locationChoices, null=True, blank=True) 
     
     locsecond = models.IntegerField("Secondary Location", choices=locationChoices, null=True, blank=True) 
     
-    initial_secondary_loc = models.CharField("Initial Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
-    final_secondary_loc = models.CharField("Final Secondary Location (BSL)", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
+    initial_secondary_loc = models.CharField("Initial Subordinate Location", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
+    final_secondary_loc = models.CharField("Final Subordinate Location", max_length=20, choices=BSLsecondLocationChoices, null=True, blank=True) 
      
     
     initial_palm_orientation = models.CharField("Initial Palm Orientation", max_length=20, null=True, blank=True, choices=palmOrientationChoices) 
     final_palm_orientation = models.CharField("Final Palm Orientation", max_length=20, null=True, blank=True, choices=palmOrientationChoices)
   
-    initial_relative_orientation = models.CharField("Initial Relative Orientation", null=True, max_length=20, blank=True, choices=relOrientationChoices) 
-    final_relative_orientation = models.CharField("Final Relative Orientation", null=True, max_length=20, blank=True, choices=relOrientationChoices)
+    initial_relative_orientation = models.CharField("Initial Interacting Dominant Hand Part", null=True, max_length=20, blank=True, choices=relOrientationChoices) 
+    final_relative_orientation = models.CharField("Final Interacting Dominant Hand Part", null=True, max_length=20, blank=True, choices=relOrientationChoices)
  
     
     inWeb = models.NullBooleanField("In the Web dictionary", default=False)

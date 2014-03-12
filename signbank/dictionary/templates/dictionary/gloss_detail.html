@@ -203,24 +203,28 @@
         </div>
         <div id='phonology' class='panel-collapse collapse'>
             <table class='table table-condensed'>
-                <tr><th>Initial Palm Orientation</th><td class='edit edit_palm' id='initial_palm_orientation'>{% value gloss.get_initial_palm_orientation_display %}</td></tr>
-                <tr><th>Final Palm Orientation</th><td class='edit edit_palm' id='final_palm_orientation'>{% value gloss.get_final_palm_orientation_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.domhndsh}}</th><td class='edit edit_handshape' id='domhndsh'>{% value gloss.get_domhndsh_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.subhndsh}}</th><td class='edit edit_handshape' id='subhndsh'>{% value gloss.get_subhndsh_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.final_domhndsh}}</th><td class='edit edit_handshape' id='final_domhndsh'>{% value gloss.get_final_domhndsh_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.final_subhndsh}}</th><td class='edit edit_handshape' id='final_subhndsh'>{% value gloss.get_final_subhndsh_display%}</td></tr>
+
+                <tr><th>{{gloss.field_labels.locprim}}</th><td class='edit edit_location' id='locprim'>{% value gloss.get_locprim_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.final_loc}}</th><td class='edit edit_location' id='final_loc'>{% value gloss.get_final_loc_display%}</td></tr>
+
+                <tr><th>{{gloss.field_labels.initial_secondary_loc}}</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{% value gloss.get_initial_secondary_loc_display%}</td></tr>
+                <tr><th>{{gloss.field_labels.final_secondary_loc}}</th><td class='edit edit_sec_location' id='final_secondary_loc'>{% value gloss.get_final_secondary_loc_display%}</td></tr>
+  
+               <tr><th>{{gloss.field_labels.initial_relative_orientation}}</th><td class='edit edit_relori' id='initial_relative_orientation'>{% value gloss.get_initial_relative_orientation_display%}</td></tr>
+               <tr><th>{{gloss.field_labels.final_relative_orientation}}</th><td class='edit edit_relori' id='final_relative_orientation'>{% value gloss.get_final_relative_orientation_display%}</td></tr>
+    
+<!--
+               <tr><th>{{gloss.field_labels.locsecond}}</th><td class='edit edit_location' id='locsecond'>{% value gloss.get_locsecond_display%}</td></tr>                     
+               <tr><th>{{gloss.field_labels.initial_palm_orientation}}</th><td class='edit edit_palm' id='initial_palm_orientation'>{% value gloss.get_initial_palm_orientation_display %}</td></tr>
+               <tr><th>{{gloss.field_labels.final_palm_orientation}}</th><td class='edit edit_palm' id='final_palm_orientation'>{% value gloss.get_final_palm_orientation_display%}</td></tr>
         
-                <tr><th>Initial Relative Orientation</th><td class='edit edit_relori' id='initial_relative_orientation'>{% value gloss.get_initial_relative_orientation_display%}</td></tr>
-                <tr><th>Final Relative Orientation</th><td class='edit edit_relori' id='final_relative_orientation'>{% value gloss.get_final_relative_orientation_display%}</td></tr>
-        
-                <tr><th>Dominant Hand Shape</th><td class='edit edit_handshape' id='domhndsh'>{% value gloss.get_domhndsh_display%}</td></tr>
-                <tr><th>Subordinate Hand Shape</th><td class='edit edit_handshape' id='subhndsh'>{% value gloss.get_subhndsh_display%}</td></tr>
-                <tr><th>Final Dominant Hand Shape</th><td class='edit edit_handshape' id='final_domhndsh'>{% value gloss.get_final_domhndsh_display%}</td></tr>
-                <tr><th>Final Subordinate Hand Shape</th><td class='edit edit_handshape' id='final_subhndsh'>{% value gloss.get_final_subhndsh_display%}</td></tr>
-        
-                <tr><th>Primary Location</th><td class='edit edit_location' id='locprim'>{% value gloss.get_locprim_display%}</td></tr>
-                <tr><th>Secondary Location</th><td class='edit edit_location' id='locsecond'>{% value gloss.get_locsecond_display%}</td></tr>
-                <tr><th>Final Location</th><td class='edit edit_location' id='final_loc'>{% value gloss.get_final_loc_display%}</td></tr>
-                
-                <tr><th>Initial Secondary Location (BSL)</th><td class='edit edit_sec_location' id='initial_secondary_loc'>{% value gloss.get_initial_secondary_loc_display%}</td></tr>
-                <tr><th>Final Secondary Location (BSL)</th><td class='edit edit_sec_location' id='final_secondary_loc'>{% value gloss.get_final_secondary_loc_display%}</td></tr>
-                
+--> 
+ 
+            
             </table>
         </div>
     </div>
