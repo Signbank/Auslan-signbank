@@ -499,9 +499,13 @@ minor or insignificant ways that can be ignored.""")
         return self.get_video() != None
     
     def published_definitions(self):
-        """Return a query set of just the published definitions for this gloss"""
+        """Return a query set of just the published definitions for this gloss
+        also filter out those fields not in DEFINITION_FIELDS"""
         
-        return self.definition_set.filter(published__exact=True)
+
+        defs = self.definition_set.filter(published__exact=True)
+    
+        return [d for d in defs if d.role in settings.DEFINITION_FIELDS]
     
     
     def definitions(self):

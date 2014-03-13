@@ -19,19 +19,18 @@
 
 
 {% block content %}
-
+<div id='publicsign'>
 {% if feedbackmessage %}
 <div id="feedbackmessage">
     <p>{{ feedbackmessage }}</p>
 </div>
 {% endif %}
 
-<div id="signinfo">
+<div id="signinfo" class='navbar navbar-default'>
     <div id="signs">
         {% if SIGN_NAVIGATION %}
         
-        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan
-            Dictionary</h2>
+        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</h2>
 
             {% if navigation.prev %}
             <div class="prev">
@@ -50,8 +49,8 @@
 
     <div id="matches">
         {% ifequal viewname "words" %}
-        <h2>Matches for the word <em>{{ translation.translation }}</em></h2>
-        <div>
+        <span>Matches for the word <em>{{ translation.translation }}</em></span>
+
         {% for i in matches %}
             {% ifequal i n %}
             <span class='match current'>{{i}}</span>
@@ -59,20 +58,18 @@
             <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
             {% endifequal %}
         {% endfor %}
-        </div>
-        {% else %}
-            <h2><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></h2>
-            <div>&nbsp;</div>
-        {% endifequal %}
 
+        {% else %}
+            <span><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></span>
+        {% endifequal %}
+    </div>
     
     {% if perms.dictionary.change_gloss %}
     <div class='pull-right'>
-        <button class='btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Edit this sign</a></button>
+        <button class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Edit this sign</a></button>
     </div>
     {% endif %}
- 
-    </div>
+
 </div>
 
 <div id="definitionblock">
@@ -81,9 +78,11 @@
     {% if gloss.get_video %}
 
     <div id="player">
-      <iframe width="320" height="240" scrolling="no" frameborder='0'
+      
+      <iframe id='videoiframe' scrolling="no" frameborder='0'
           src="{% url 'signbank.video.views.iframe' gloss.pk %}">
       </iframe>
+      
     </div>
       <div id="replay"></div>
 
@@ -115,6 +114,7 @@
         {% endif %}
 
         <div>
+           {% if gloss.dialect.all %}
            <h4>Sign Distribution</h4>
                 <ul>
                 {% ifequal dialect_image "images/maps/allstates.gif" %}
@@ -125,6 +125,7 @@
 	                {% endfor %}
                 {% endifequal %}
                 </ul>
+            {% endif %}
         </div>
 </div>
 
@@ -137,7 +138,7 @@
     </div>
 
     <div id="definition">
-    {% if DEFINITION_FIELDS %}
+    {% if DEFINITION_FIELDS and gloss.published_definitions %}
         <h2>Sign Definition</h2>
 
         {% for deftype in DEFINITION_FIELDS %}
@@ -163,7 +164,7 @@
     </div>
     
 </div>
-
+</div>
 
 {% endblock %}
 
