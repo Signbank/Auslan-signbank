@@ -37,18 +37,52 @@ body, html {
     top: -80px;
 }
 
+#bslstripe {
+    height: 29px;
+    width: 100%;
+    background-color: #ee7c23;
+}
+
 
 .navbar-default {
     border: 0;
 }
 
 #navbar, #navbar .dropdown-menu {
-        background-color: #ee7c23;
-        color: #ffffff;
+        margin: 0px;
 }
 
-#navbar a {
-    color: #ffffff;
-    background-color: #ee7c23;
+
+#publicsign #leftblock {
+   float: left; 
+   margin-left: 0px;
+   width: 672px;
+    
 }
+#publicsign #keywords {
+    font-size: 200%;
+}
+#publicsign #videoiframe {
+    width: 640px; 
+    height: 360px;
+}
+
+#publicsign #videocontainer {
+   width: 652px;
+}
+
+#publicsign #videocontainer #player {
+   margin: auto;
+   width: 652px;
+   height: 372px;
+   border-top: 0px;
+   border-left: 6px solid black;
+   border-right: 6px solid black;
+   border-bottom: 12px solid black;
+   -webkit-border-radius: 0px 0px 10px 10px;
+   -moz-border-radius: 0px 0px 10px 10px;
+   border-radius: 0px 0px 10px 10px;
+}
+
+
 

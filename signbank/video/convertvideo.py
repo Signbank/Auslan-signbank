@@ -76,7 +76,7 @@ def extract_frame(sourcefile, targetfile):
     """Extract a single frame from the source video and 
     write it to the target file"""
     
-    options = ["-s", "320x240", "-r", "1", "-f", "mjpeg"]
+    options = ["-r", "1", "-f", "mjpeg"]
     
     err = ffmpeg(sourcefile, targetfile, options=options)
 

@@ -39,20 +39,11 @@ body {
 
 
 #signinfo {
-   margin: 0px;
-   height: 50px;
-   margin-bottom: 0px;
-   
+    margin-top: 40px;
+    height: 30px;
 }
 
 
-#signinfo h2 {
-   margin: 0px;
-   padding-left: 6px;
-   padding-bottom: 6px;
-   font-weight: normal;
-   font-size: 12pt;
-}
 #signinfo .prev { 
    float: left; 
 }
@@ -84,10 +75,6 @@ body {
 }
 
 
-#signnav #matches {
-   height: 50px;
-}
-
 #definitionblock {
    border-top: 1px solid #000; 
    margin-top: 0px;
@@ -113,6 +100,10 @@ body {
    background-color: #000;
 }
 
+
+
+
+
 /* style for the answer in the fingerspelling practice page */
 #answerpara {
    font-size: larger;
@@ -127,10 +118,8 @@ body {
    text-align: right;
 }
 
-#keywords_block {
-   margin-left: 338px;
-   padding-left: 6px; 
-   margin-bottom: -0.5em;
+#keywords {
+
 }
 #definition {
    margin-left: 338px;
