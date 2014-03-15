@@ -37,54 +37,65 @@
 
 {% block content %}
 
-{% if perms.dictionary.change_gloss %}
-<div class='pull-right'>
-     <span id='edit_message'></span>&nbsp;
-     <button id='delete_gloss_btn' class='btn btn-default' data-toggle='modal' data-target='#delete_gloss_modal'>Delete Sign</button>
-     <button id='enable_edit' class='btn btn-default'>Enable Edit</button>
-     
-     <div class="modal fade" id="delete_gloss_modal" tabindex="-1" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
-         <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class='modal-header'>
-                    <h2 id='modalTitle'>Delete This Sign</h2>
-                </div>
-                <div class='modal-body'>
-                    <p>This action will delete this sign and all
-                    associated records. It cannot be undone.</p>
-                 </div>
-              <form action='{% url 'dictionary:update_gloss' gloss.id %}' method='post'>
-                  {% csrf_token %}
-                  <input type='hidden' name='id' value='deletegloss'>
-                  <input type='hidden' name='value' value='confirmed'>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" value='Confirm Delete'>
-                  </div>
-              </form>
-                  
-            </div>
-          </div>
-    </div>
-     
-</div>
-{% endif %}
-
-<div id="signinfo">
-    <div id="signs">
+<div id="signinfo" class='navbar navbar-default navbar-collapse'>
+   
+    <div class='btn-group'>
         {% if SIGN_NAVIGATION %}
+        
             {% if navigation.prev %}
-            <div class="prev">
-              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.pk}}">&laquo; Previous Sign</a>
-            </div>
+            <button class='btn navbar-btn btn-default'><a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+            </button>
             {% endif %}
+            
+            <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</span>
+            
             {% if navigation.next %}
-            <div class="next">
-             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.pk}}">Next Sign &raquo;</a>
-            </div>
+            <button class="btn navbar-btn btn-default">
+             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
+            </button>
             {% endif %}
+         {% else %}
+           
          {% endif %}
     </div>
+    
+    {% if gloss.idgloss %}
+    <button class='btn btn-default navbar-btn'><a href="{% url 'root_page' %}dictionary/gloss/{{gloss.idgloss}}.html">Public View</a></button>
+    {% endif %}
+    
+    {% if perms.dictionary.change_gloss %}
+    
+    <div class='pull-right'>
+         <span id='edit_message'></span>&nbsp;
+         <button id='delete_gloss_btn' class='btn btn-default navbar-btn' data-toggle='modal' data-target='#delete_gloss_modal'>Delete Sign</button>
+         <button id='enable_edit' class='btn btn-default navbar-btn'>Enable Edit</button>
+         
+         <div class="modal fade" id="delete_gloss_modal" tabindex="-1" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
+             <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class='modal-header'>
+                        <h2 id='modalTitle'>Delete This Sign</h2>
+                    </div>
+                    <div class='modal-body'>
+                        <p>This action will delete this sign and all
+                        associated records. It cannot be undone.</p>
+                     </div>
+                  <form action='{% url 'dictionary:update_gloss' gloss.id %}' method='post'>
+                      {% csrf_token %}
+                      <input type='hidden' name='id' value='deletegloss'>
+                      <input type='hidden' name='value' value='confirmed'>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value='Confirm Delete'>
+                      </div>
+                  </form>
+                      
+                </div>
+              </div>
+        </div>
+         
+    </div>
+    {% endif %}
 </div>
 
 <div id="definitionblock">
@@ -93,14 +104,16 @@
     {% if gloss.get_video %}
 
         <div id="player">
-          <iframe width="320" height="240" scrolling="no" frameborder='0'
+          <iframe id='videoiframe' scrolling="no" frameborder='0'
               src="{% url 'signbank.video.views.iframe' gloss.pk %}">
           </iframe>
         </div>
         <div id="replay"></div>
 
     {% else %}
-        <img src='{{ STATIC_URL }}images/no-video.png'>
+    <div id='player'>
+     <img src='{{ STATIC_URL }}images/no-video.png'>
+    </div>
     {% endif %}
     
     </div>

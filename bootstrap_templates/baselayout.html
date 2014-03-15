@@ -5,7 +5,7 @@
   <head>
     <title>{% block bootstrap3_title %}Signbank{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% bootstrap_css %}
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap_css/style.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}{% primary_css %}">
     {% block extrahead %}{% endblock %}
@@ -26,7 +26,7 @@
     
         {% bootstrap_messages %}
 
-        <div id='content'>
+        <div role='main'>
         {% block content %}(no content){% endblock %}
         </div>
         
@@ -42,11 +42,11 @@
        </div>
     </div>
     
-    <script src='{% bootstrap_jquery_url %}'></script>
-    {% bootstrap_javascript jquery=True %}
+    <script src='{{ STATIC_URL}}js/jquery-1.11.0.min.js'></script>
+    <script src='{{ STATIC_URL}}bootstrap/js/bootstrap.min.js'></script>
     
     <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
 
     {% block extrajs %}{% endblock %}
   </body>

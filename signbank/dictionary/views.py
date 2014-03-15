@@ -274,8 +274,8 @@ def search(request):
             term = smart_unicode(term)
 
             if request.user.has_perm('dictionary.search_gloss'):
-                # staff get to see all the words
-                words = Keyword.objects.filter(text__istartswith=term)
+                # staff get to see all the words that have at least one translation
+                words = Keyword.objects.filter(text__istartswith=term, translation__isnull=False)
             else:
                 # regular users see either everything that's published
                 words = Keyword.objects.filter(text__istartswith=term,
