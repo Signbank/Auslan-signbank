@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.tagviews.taglist'),
 
     # and and alternate view for direct display of a gloss
-    url(r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss'),
+    url(r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss', name='public_gloss'),
 
     url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),

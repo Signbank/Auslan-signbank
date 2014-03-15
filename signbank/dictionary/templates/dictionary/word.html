@@ -26,50 +26,55 @@
 </div>
 {% endif %}
 
-<div id="signinfo" class='navbar navbar-default'>
-    <div id="signs">
+<div id="signinfo" class='navbar navbar-default navbar-collapse'>
+    
+    <div class='btn-group'>
         {% if SIGN_NAVIGATION %}
         
-        <h2>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</h2>
-
             {% if navigation.prev %}
-            <div class="prev">
-              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
-            </div>
+            <button class='btn navbar-btn btn-default'><a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+            </button>
             {% endif %}
+            
+            <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</span>
+            
             {% if navigation.next %}
-            <div class="next">
+            <button class="btn navbar-btn btn-default">
              <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
-            </div>
+            </button>
             {% endif %}
          {% else %}
            
          {% endif %}
     </div>
+   
 
-    <div id="matches">
+   
+   
+    <div class='pull-right'>
         {% ifequal viewname "words" %}
-        <span>Matches for the word <em>{{ translation.translation }}</em></span>
-
+        <span class='navbar-text'>Matches for the word <em>{{ translation.translation }}</em></span>
+        <div class='btn-group'>
         {% for i in matches %}
             {% ifequal i n %}
-            <span class='match current'>{{i}}</span>
+            <button type='button' class='btn btn-primary navbar-btn'>{{i}}</button>
             {% else %}
-            <span class='match'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></span>
+            <button type='button' class='btn btn-default navbar-btn'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></button>
             {% endifequal %}
         {% endfor %}
-
+        </div>
         {% else %}
-            <span><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></span>
+        <button class='btn btn-default navbar-btn'><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></button>
         {% endifequal %}
     </div>
     
+    
     {% if perms.dictionary.change_gloss %}
-    <div class='pull-right'>
-        <button class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Edit this sign</a></button>
+    <div class='btn-group pull-right'>
+       <button id='editbutton' class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Edit this sign</a></button>
     </div>
     {% endif %}
-
+    
 </div>
 
 <div id="definitionblock">
@@ -87,7 +92,9 @@
       <div id="replay"></div>
 
     {% else %}
-    <img src='{{ STATIC_URL }}images/no-video.png'>
+    <div id='player'>
+     <img src='{{ STATIC_URL }}images/no-video.png'>
+    </div>
     {% endif %}
     </div>
 

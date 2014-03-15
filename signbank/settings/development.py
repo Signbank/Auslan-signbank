@@ -11,7 +11,7 @@ PRIMARY_CSS = "bootstrap_css/bsl.css"
 SIGNBANK_NAME = "BSL"
 
 # show/don't show sign navigation
-SIGN_NAVIGATION = False
+SIGN_NAVIGATION = True
 
 # which definition fields do we show and in what order?
 #DEFINITION_FIELDS = []

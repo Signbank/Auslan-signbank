@@ -22,7 +22,6 @@ body {
 }
 
 #content {
-    margin-top: -20px;
     background-color: #fff;
 }
 /* Set the fixed height of the footer here */
@@ -39,33 +38,17 @@ body {
 
 
 #signinfo {
-    margin-top: 40px;
-    height: 30px;
+    background-color: #393736;
+    margin-bottom: 0px;
 }
 
-
-#signinfo .prev { 
-   float: left; 
+#signinfo .navbar-text {
+        color: #FFFFFF;
+}
+#signinfo #editbutton {
+    margin-right: 15px;
 }
 
-#signinfo .next {
-   float: right; 
-}
-
-#signinfo .prev, #signinfo .next {
-   font-size: smaller;
-   font-variant: small-caps;
-   padding-left: 6px;
-   padding-right: 6px;
-}
-
-#signinfo .prev:hover, #signinfo .next:hover {  
-   border: 1px outset #fff; 
-}
-
-
-#signnav { 
-}
 
 #signs { 
    margin-right: 0em;
@@ -101,8 +84,11 @@ body {
 }
 
 
-
-
+#videoiframe {
+   -webkit-border-radius: 0px 0px 10px 10px;
+   -moz-border-radius: 0px 0px 10px 10px;
+   border-radius: 0px 0px 10px 10px;
+}
 
 /* style for the answer in the fingerspelling practice page */
 #answerpara {
@@ -176,10 +162,6 @@ body {
     width: 20em;
 }
 
-
-#enable_edit {
-    margin: 5px;
-}
 
 
 

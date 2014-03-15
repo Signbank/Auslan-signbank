@@ -17,6 +17,10 @@ body, html {
     background:#ffffff;
 }
 
+#header {
+    position: relative;
+}
+
 #header h1 {
         height: 80px;
         width: 297px;
@@ -32,9 +36,9 @@ body, html {
     background-image: url(../uclimages/logo.gif);
     width: 265px;
     height: 110px;
-    position: relative;
-    left: 70%;
-    top: -80px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
 
 #bslstripe {
@@ -56,7 +60,7 @@ body, html {
 #publicsign #leftblock {
    float: left; 
    margin-left: 0px;
-   width: 672px;
+   width: 664px;
     
 }
 #publicsign #keywords {
@@ -68,7 +72,7 @@ body, html {
 }
 
 #publicsign #videocontainer {
-   width: 652px;
+   width: 664px;   
 }
 
 #publicsign #videocontainer #player {
@@ -84,5 +88,44 @@ body, html {
    border-radius: 0px 0px 10px 10px;
 }
 
+
+
+#publicsign #player img {
+    margin-left: 160px;
+    margin-top: 60px;
+    width: 320px;
+    height: 240px;
+}
+
+
+
+/* video display on admin edit pages */
+
+#videoiframe {
+    width: 320px; 
+    height: 180px;
+}
+
+#videocontainer {
+   width: 344px;   
+}
+
+#videocontainer #player {
+   margin: auto;
+   width: 332px;
+   height: 192px;
+   border-top: 0px;
+   border-left: 6px solid black;
+   border-right: 6px solid black;
+   border-bottom: 12px solid black;
+   -webkit-border-radius: 0px 0px 10px 10px;
+   -moz-border-radius: 0px 0px 10px 10px;
+   border-radius: 0px 0px 10px 10px;
+}
+
+#player img {
+    width: 320px;
+    height: 180px;
+}
 
 
