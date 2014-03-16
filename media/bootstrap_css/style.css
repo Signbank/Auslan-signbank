@@ -122,6 +122,12 @@ body {
     color: #ccc;
 }
 
+/* numbersigns */
+
+#numsigntable {
+    margin-left: 400px;
+}
+
 
 
 /* admin search form */

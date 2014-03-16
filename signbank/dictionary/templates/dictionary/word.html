@@ -79,24 +79,18 @@
 
 <div id="definitionblock">
     <div id="leftblock">
-    <div id="videocontainer">
-    {% if gloss.get_video %}
-
-    <div id="player">
-      
-      <iframe id='videoiframe' scrolling="no" frameborder='0'
-          src="{% url 'signbank.video.views.iframe' gloss.pk %}">
-      </iframe>
-      
-    </div>
-      <div id="replay"></div>
-
-    {% else %}
-    <div id='player'>
-     <img src='{{ STATIC_URL }}images/no-video.png'>
-    </div>
-    {% endif %}
-    </div>
+        <div id="videocontainer">
+           <div id="player">
+            {% if gloss.get_video %}
+              <iframe id='videoiframe' scrolling="no" frameborder='0' 
+                      src="{% url 'signbank.video.views.iframe' gloss.pk %}">
+              </iframe>
+            {% else %}
+              <img src='{{ STATIC_URL }}images/no-video.png'>
+            {% endif %}
+           </div>
+           <div id="replay"></div>
+        </div>
 
 
         <div id="feedback">
