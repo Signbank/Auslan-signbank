@@ -25,6 +25,7 @@ class GlossListView(ListView):
         context['searchform'] = GlossSearchForm(self.request.GET)
         context['glosscount'] = Gloss.objects.all().count()
         context['add_gloss_form'] = GlossCreateForm()
+        context['ADMIN_RESULT_FIELDS'] = settings.ADMIN_RESULT_FIELDS
         return context
     
     def render_to_response(self, context):

@@ -195,7 +195,7 @@ SIGN_NAVIGATION = True
 # which definition fields do we show and in what order?
 DEFINITION_FIELDS = ['general', 'noun', 'verb', 'interact', 'diectic', 'modifier', 'question', 'augment', 'note']
 
-
+ADMIN_RESULT_FIELDS = ['sn', 'idgloss', 'annotation_idgloss', 'morph']
 
 
 # location and URL for uploaded files
