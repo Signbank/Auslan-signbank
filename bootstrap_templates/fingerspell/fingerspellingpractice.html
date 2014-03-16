@@ -1,47 +1,46 @@
 
 {% extends "baselayout.html" %}
  
-{% block extrahead %}
+{% block extrajs %}
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/fingerspelling.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/fspractice.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function() {
 
-{% endblock %}
-
-{% block jqueryready %}
-
-  current_word = "albatros";
-
-  function fingerspell_play() {
-      if ($.mobile != undefined) {
-         $.mobile.silentScroll(0);
+      current_word = "albatros";
+    
+      function fingerspell_play() {
+          if ($.mobile != undefined) {
+             $.mobile.silentScroll(0);
+          }
+          speed = $('input:radio[name=speed]:checked').val(); 
+          display_string("#mainimg", $('#answer').html(), speed, "{{ STATIC_URL }}images/", twohanded); 
+          return false;
+        }
+    
+      function new_word() {
+        current_word = get_word();
+        $("#answer").hide().html(current_word);
+        fingerspell_play();   
+        return false;
       }
-      speed = $('input:radio[name=speed]:checked').val(); 
-      display_string("#mainimg", $('#answer').html(), speed, "{{ STATIC_URL }}images/", twohanded); 
-      return false;
-    }
-
-  function new_word() {
-    current_word = get_word();
-    $("#answer").hide().html(current_word);
-    fingerspell_play();   
-    return false;
-  }
-
-  function reveal_answer() {
-  
-    $("#answer").show()
-    return false;
-  }
-  
-  
-  $('#new_word').click( new_word );
-  $('#reveal_answer').click( reveal_answer );
-  $('#replay').click( fingerspell_play );
-  
-  /* fill out the table of signs */
-  $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", twohanded);
-  
+    
+      function reveal_answer() {
+      
+        $("#answer").show();
+        return false;
+      }
+      
+      $('#new_word').click( new_word );
+      $('#reveal_answer').click( reveal_answer );
+      $('#replay').click( fingerspell_play );
+      
+      /* fill out the table of signs */
+      $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", twohanded);
+  });
+  </script>
 {% endblock %}
 
 
@@ -57,8 +56,8 @@
     </div>
   
     <form id="inputarea">
-      <p><button id="new_word">New Word</button>
-	 <button id="reveal_answer">Reveal Answer</button> 
+      <p><button class='btn btn-primary'id="new_word">New Word</button>
+	 <button class='btn btn-default' id="reveal_answer">Reveal Answer</button> 
       </p>
       <p id="answerpara">The word is: <span id="answer"></span></p>
     </form>

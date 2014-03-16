@@ -102,6 +102,13 @@ body {
 /* replay for both video and fingerspelling images */
 #replay {
    text-align: right;
+   padding-right: 1em;
+   margin-bottom: 1em;
+   background-color: #000000;
+   color: #ffffff;
+   -webkit-border-radius: 0px 0px 10px 10px;
+   -moz-border-radius: 0px 0px 10px 10px;
+   border-radius: 0px 0px 10px 10px;
 }
 
 #keywords {
@@ -168,6 +175,69 @@ body {
     width: 20em;
 }
 
+
+/* styles for finger spelling pages */
+
+#fingerspellblock {
+   border-top: 10px solid black;
+}
+
+#handcontainer {
+   margin-top: -2px;
+   width: 320px;
+}
+
+#handcontainer #handimage {
+   margin: auto;
+   width:320px;
+   height:240px;
+   border-left: 6px solid black;
+   border-right: 6px solid black;
+}
+
+
+/* this will be the same size as our videos */ 
+#handimage {
+  position: relative;
+  height: 240px;
+  width:  300px;
+  background-color: #4b62ae;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+}
+
+
+/* images are 192x144 centre them in the above div */
+#mainimg {
+  position: absolute;
+  top: 49px; /* (240 - 144)/2  */
+  left: 54px;  /* (300 - 192)/2 */
+  display: block;
+  margin: auto;
+}
+
+#fingerspellright {
+   width: 470px; /* 847 - 320 - 20 - fiddle factor */
+   float: left;
+   padding-left: 20px;or
+}
+
+#fstable td {
+  margin-right: -1em;
+}
+#fstable img {
+  width: 75px;
+  height: 56px;
+}
+#fstable td div {
+  margin-top: -1.4em; 
+  font-size: large;
+  color: #fff;
+  text-align: center;
+}
+#info {
+   clear: both;
+}
 
 
 
