@@ -1,16 +1,10 @@
-
-{% extends "baselayout.html" %}
- 
-{% block extrahead %}
-    
+{% extends "baselayout.html" %}
+{% block extrajs %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/fingerspelling.js"></script>
 
-{% endblock %}
-
-{% block jqueryready %} 
-
-  $('#inputarea').submit( function() {     fingerspell_play("{{ STATIC_URL }}images/", onehanded);     return false;    });     $('#replay').click( function() { fingerspell_play("{{ STATIC_URL }}images/", onehanded);} );    /* fill out the table of signs */  $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", onehanded);
-  
+    <script type="text/javascript">        $(document).ready(function() {
+      $('#inputarea').submit( function() {         fingerspell_play("{{ STATIC_URL }}images/", onehanded);         return false;        });             $('#replay').click( function() { fingerspell_play("{{ STATIC_URL }}images/", onehanded);} );            /* fill out the table of signs */      $("#fstable td").fingerspellimage("{{ STATIC_URL }}images/", onehanded);
+   });   </script>
 {% endblock %}
 
 
@@ -24,11 +18,7 @@
     <div id="replay">REPLAY</div>
   </div>
     
-  <div id="fsinput" data-role="collapsible">    <h2>Enter text</h2>
-  <form id="inputarea">
-    <p><input type="text" id="text" size="20"/><input type='submit' value='Show'/> 
-    </p>
-  </form>
+  <div id="fsinput" data-role="collapsible">   <form class='inline-form' id="inputarea" role='form'>            <div class='form-group'>            <label class='sr-only' for='text'>Enter Text</label>            <input class='form-control' type="text" id="text" placeholder="Enter Text" size="20"/>        </div>        <input class='btn btn-primary' type='submit' value='Show'/>     </form>
 
 <form name='speedform'>   <fieldset data-role="controlgroup" data-type="horizontal" >   <legend>Playback Speed</legend>      <input type='radio' name='speed' id='speed-slow' value='1500'><label for='speed-slow'>Slow</label>      <input type='radio' name='speed' id='speed-medium' value='1000' checked><label for='speed-medium'>Medium</label>      <input type='radio' name='speed' id='speed-fast' value='500'><label for='speed-fast'>Fast</label>         </fieldset>   </form>
   </div>
