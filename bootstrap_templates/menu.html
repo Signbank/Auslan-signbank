@@ -35,6 +35,19 @@
     {% endfor %}
 
     </ul>
+    
+    <ul class='nav navbar-nav'>
+        <li class='dropdown'>
+            <a class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
+            <ul class='dropdown-menu'>
+                <li><a href="/dictionary/">Dictionary</a></li>
+                <li><a href="/numbersigns.html">Number Signs</a></li>
+                <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
+                
+            </ul>
+        </li>
+        
+    </ul>
 
     {% if perms.dictionary.search_gloss %}
     <ul class="nav navbar-nav">
