@@ -16,6 +16,9 @@ SIGN_NAVIGATION = True
 # which definition fields do we show and in what order?
 #DEFINITION_FIELDS = []
 
+ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
+
+
 GLOSS_VIDEO_DIRECTORY = 'glossvideo'
 
 

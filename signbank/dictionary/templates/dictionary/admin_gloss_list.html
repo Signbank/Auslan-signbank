@@ -228,28 +228,38 @@ function clearForm(myFormElement) {
 
 <p>Number of matches: {{page_obj.paginator.count}} out of {{glosscount}}.</p>
 
+{% if object_list %}
 <table class='table'>
     <thead>
       <tr>
-        <th>SN</th>
-        <th>Annotation IDGLOSS</th>
-        <th>IDGLOSS</th>
-        <th>Morphology</th>
+         {% for name, value in object_list.0.admin_fields %}
+           <th>{{ name }}</th>
+         {% endfor %}
         <th>Tags</th> 
       </tr>
     </thead>
     <tbody>
     {% for gloss in object_list %}
         <tr>
+            
+            {% for name, value in gloss.admin_fields %}
+              {% if forloop.first %}
+                <td><a href="/dictionary/gloss/{{gloss.pk}}/">{{value}}</a></td>
+              {% else %}
+              <td>{{ value }}</td>
+              {% endif %}
+            {% endfor %}
+            
+            <!--
             <td><a href="/dictionary/gloss/{{gloss.pk}}/">{{gloss.sn}}</a></td>
             <td>{{gloss.annotation_idgloss}} {% if not gloss.inWeb %}*{% endif %}</td>
             <td>{{gloss.idgloss}}</td>
             <td>{{gloss.morph}}</td>
+            -->
+            
             <td>{% for tag in gloss.tags %}<span class='tag'>{{tag}}</span> {% endfor %}</td>
             
         </tr>
-    {% empty %}
-        <tr><td>No Glosses</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -274,5 +284,6 @@ function clearForm(myFormElement) {
     </span>
 </div>
 
+{% endif %}
 
 {% endblock content %}

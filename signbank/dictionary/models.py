@@ -292,6 +292,17 @@ class Gloss(models.Model):
                 pass
             
         return d
+    
+    def admin_fields(self):
+        """Return a list of field values in settings.ADMIN_RESULT_FIELDS 
+        for use in the admin list view"""
+        
+        result = []
+        for field in settings.ADMIN_RESULT_FIELDS:
+            fname = self._meta.get_field(field).verbose_name
+            result.append((fname, getattr(self, field)))
+            
+        return result
         
     
     idgloss = models.CharField("Sign Entry Name", max_length=50, help_text="""
