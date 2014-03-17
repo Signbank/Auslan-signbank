@@ -305,12 +305,12 @@ class Gloss(models.Model):
         return result
         
     
-    idgloss = models.CharField("Sign Entry Name", max_length=50, help_text="""
+    idgloss = models.CharField("ID Gloss", max_length=50, help_text="""
     This is the unique identifying name of an entry of a sign form in the
 database. No two Sign Entry Names can be exactly the same, but a "Sign
 Entry Name" can be (and often is) the same as the Annotation Idgloss.""")    
   
-    annotation_idgloss = models.CharField("Annotation Idgloss", blank=True, max_length=30, help_text="""
+    annotation_idgloss = models.CharField("Annotation ID Gloss", blank=True, max_length=30, help_text="""
     This is the name of a sign used by annotators when glossing the corpus in
 an ELAN annotation file. The Annotation Idgloss may be the same for two or
 more entries (each with their own 'Sign Entry Name'). If two sign entries
