@@ -64,7 +64,9 @@
         {% endfor %}
         </div>
         {% else %}
+        {% if lastmatch %}
         <button class='btn btn-default navbar-btn'><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></button>
+        {% endif %}
         {% endifequal %}
     </div>
     
@@ -91,7 +93,15 @@
            </div>
            <div id="replay"></div>
         </div>
-
+        
+        
+    <div id="keywords">
+         <p><strong>Keywords:</strong>
+         {% for kwd in allkwds %}
+           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+         {% endfor %}
+         </p>
+    </div>
 
         <div id="feedback">
             <ul>
@@ -130,13 +140,7 @@
         </div>
 </div>
 
-    <div id="keywords">
-         <p><strong>Keywords:</strong>
-         {% for kwd in allkwds %}
-           {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
-         {% endfor %}
-         </p>
-    </div>
+
 
     <div id="definition">
     {% if DEFINITION_FIELDS and gloss.published_definitions %}

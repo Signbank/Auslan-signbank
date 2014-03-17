@@ -56,36 +56,44 @@ body, html {
         margin: 0px;
 }
 
+#signinfo .navbar-text {
+        color: inherit;
+}
 
 #publicsign #leftblock {
-   float: left; 
-   margin-left: 0px;
+   float: none;
+   margin: auto;
    width: 664px;
     
 }
+
 #publicsign #keywords {
     font-size: 200%;
 }
+
+#publicsign #definitionblock {
+   border-top: none;
+   margin-top: 0px;
+   background-color: #FFFFFF;
+}
+
 #publicsign #videoiframe {
     width: 640px; 
     height: 360px;
 }
 
 #publicsign #videocontainer {
-   width: 664px;   
+   width: 664px;
 }
 
 #publicsign #videocontainer #player {
    margin: auto;
-   width: 652px;
-   height: 372px;
-   border-top: 0px;
-   border-left: 6px solid black;
-   border-right: 6px solid black;
-   border-bottom: 12px solid black;
-   -webkit-border-radius: 0px 0px 10px 10px;
-   -moz-border-radius: 0px 0px 10px 10px;
-   border-radius: 0px 0px 10px 10px;
+   width: 664px;
+   height: 384px;
+   border: 12px solid black;
+   -webkit-border-radius: 10px 10px 10px 10px;
+   -moz-border-radius: 10px 10px 10px 10px;
+   border-radius: 10px 10px 10px 10px;
 }
 
 

@@ -32,13 +32,9 @@ body {
 }
 
 
-#extrasigninfo {
-    border: 1px solid red;
-}
-
 
 #signinfo {
-    background-color: #393736;
+    background-color: #ffffff;
     margin-bottom: 0px;
 }
 
@@ -68,7 +64,7 @@ body {
    float: left; 
    margin-left: 6px;
    width: 320px;
-    
+   
 }
 
 #videocontainer {
@@ -115,7 +111,7 @@ body {
 
 }
 #definition {
-   margin-left: 338px;
+   margin-left: 348px;
    padding-left: 6px;
 }
 #staffinfo {
