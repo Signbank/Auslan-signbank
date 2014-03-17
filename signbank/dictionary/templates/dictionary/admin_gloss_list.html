@@ -190,6 +190,18 @@ function clearForm(myFormElement) {
             <button class='btn btn-default' onclick="clearForm(document.adminsearch);">Reset</button>
         </div>
 
+        <div class='form-group' id='paginate_by'>
+        <label for='paginate_by'>Results per page</label>
+        <select class='form-control' name="paginate_by">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+            <option>75</option>
+            <option>100</option>
+        </select>
+        </div>
+
+
     </form>
 
 </div>
@@ -249,13 +261,6 @@ function clearForm(myFormElement) {
               <td>{{ value }}</td>
               {% endif %}
             {% endfor %}
-            
-            <!--
-            <td><a href="/dictionary/gloss/{{gloss.pk}}/">{{gloss.sn}}</a></td>
-            <td>{{gloss.annotation_idgloss}} {% if not gloss.inWeb %}*{% endif %}</td>
-            <td>{{gloss.idgloss}}</td>
-            <td>{{gloss.morph}}</td>
-            -->
             
             <td>{% for tag in gloss.tags %}<span class='tag'>{{tag}}</span> {% endfor %}</td>
             
