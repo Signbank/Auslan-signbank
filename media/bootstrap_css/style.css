@@ -161,6 +161,22 @@ body {
     width: 100%;
 }
 
+#paginate_by select {
+    width: 100px;
+}
+
+#paginate_by {
+    float: right;
+}
+
+#paginate_by label {
+    display: inline;
+}
+
+#paginate_by select {
+    display: inline-block;
+}
+
 /* editing gloss */
 
 .edit_enabled {

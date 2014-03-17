@@ -28,6 +28,14 @@ class GlossListView(ListView):
         context['ADMIN_RESULT_FIELDS'] = settings.ADMIN_RESULT_FIELDS
         return context
     
+    
+    def get_paginate_by(self, queryset):
+        """
+        Paginate by specified value in querystring, or use default class property value.
+        """
+        return self.request.GET.get('paginate_by', self.paginate_by)
+        
+    
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
         if self.request.GET.get('format') == 'CSV':
