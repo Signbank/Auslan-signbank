@@ -60,6 +60,8 @@ body, html {
         color: inherit;
 }
 
+
+
 #publicsign #leftblock {
    float: none;
    margin: auto;
@@ -96,6 +98,22 @@ body, html {
    border-radius: 10px 10px 10px 10px;
 }
 
+@media  (max-width: 768px) {
+
+    #publicsign #videocontainer {
+        width: 80%;
+    }
+    
+    #publicsign #videocontainer #player {
+        width: 80%;
+    }
+    
+    
+#publicsign #videoiframe {
+    width: 80%;
+}
+    
+}
 
 
 #publicsign #player img {

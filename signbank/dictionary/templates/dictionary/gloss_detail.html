@@ -161,7 +161,7 @@
         
         <table class='table table-condensed'>
             <tr><th>Sign Number:</th><td class='edit edit_int' id='sn'>{% value gloss.sn %}</td></tr>
-            <tr><th>IdGloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</td></tr>
+            <tr><th>ID Gloss:</th><td class='edit edit_text' id='idgloss'>{% value gloss.idgloss %}</td></tr>
             <tr><th>Annotation ID Gloss:</th><td class='edit edit_text'  id='annotation_idgloss'>{% value gloss.annotation_idgloss %}</td></tr>
             <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
        </table>
