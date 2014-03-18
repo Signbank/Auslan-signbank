@@ -177,7 +177,10 @@ function clearForm(myFormElement) {
                     <label class='input-group-addon' for='id_defsearch'>{{searchform.defsearch.label}}</label>
                     <input name='defsearch' class='form-control' {% if searchform.defsearch.value %}value='{{searchform.defsearch.value}}'{% endif %}>
                  </div>
-                     
+                 <div class='input-group'>
+                     <label class='input-group-addon' for='id_defrole'>{{searchform.defrole.label}}</label>
+                     {{searchform.defrole}}
+                 </div>     
              </div>  
         </div>
  

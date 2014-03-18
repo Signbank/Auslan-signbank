@@ -192,10 +192,17 @@ class GlossListView(ListView):
             
             val = get['defsearch']
             
-            print "DEF", val, len(qs)
-            qs = qs.filter(definition__text__contains=val)
-            print "AFTER", len(qs)
-        
+            if get.has_key('defrole'):
+                role = get['defrole']
+            else:
+                role = 'all'
+            
+            if role == 'all':
+                qs = qs.filter(definition__text__icontains=val)
+            else:
+                qs = qs.filter(definition__text__icontains=val, definition__role__exact=role)
+                
+
         
         
         vals = get.getlist('dialect', [])
