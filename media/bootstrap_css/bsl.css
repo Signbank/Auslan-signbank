@@ -61,6 +61,10 @@ body, html {
 }
 
 
+#publicsign #signinfo {
+     width: 700px;
+     margin: auto;
+}
 
 #publicsign #leftblock {
    float: none;
@@ -77,6 +81,12 @@ body, html {
    border-top: none;
    margin-top: 0px;
    background-color: #FFFFFF;
+}
+
+#publicsign #definition {
+   margin: auto;
+   width: 640px;
+   padding-left: 0px;
 }
 
 #publicsign #videoiframe {
@@ -109,9 +119,9 @@ body, html {
     }
     
     
-#publicsign #videoiframe {
-    width: 80%;
-}
+    #publicsign #videoiframe {
+        width: 80%;
+    }
     
 }
 
