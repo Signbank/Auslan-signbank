@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview
 from signbank.video.fields import VideoUploadToFLVField
-from signbank.dictionary.models import Dialect, Gloss, Definition, Relation
+from signbank.dictionary.models import Dialect, Gloss, Definition, Relation, defn_role_choices
 from django.conf import settings
 from tagging.models import Tag
 
@@ -32,6 +32,10 @@ class TagUpdateForm(forms.Form):
 
 YESNOCHOICES = (("unspecified", "Unspecified" ), ('yes', 'Yes'), ('no', 'No'))
     
+    
+ROLE_CHOICES = [('all', 'All')]
+ROLE_CHOICES.extend(defn_role_choices)
+
 class GlossSearchForm(forms.ModelForm):
     
     search = forms.CharField(label="Search Gloss/SN")
@@ -42,6 +46,7 @@ class GlossSearchForm(forms.ModelForm):
     defspublished = forms.ChoiceField(label="All Definitions Published", choices=YESNOCHOICES)
     
     defsearch = forms.CharField(label='Search Definition/Notes')
+    defrole = forms.ChoiceField(label='Search Definition/Note Type', choices=ROLE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     
     class Meta:
         model = Gloss
