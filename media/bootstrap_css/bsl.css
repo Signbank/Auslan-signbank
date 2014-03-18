@@ -22,10 +22,10 @@ body, html {
 }
 
 #header h1 {
-        height: 80px;
+        height: 110px;
         width: 297px;
         background-image: url(../uclimages/signbank.png);
-        background-position: 20px 10px;
+        background-position: 20px 20px;
         background-repeat: no-repeat;   
         text-indent: -9000px;
         margin: 0px;
