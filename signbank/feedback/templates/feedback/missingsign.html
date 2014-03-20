@@ -1,0 +1,190 @@
+
+
+{% extends "baselayout.html" %}
+
+{% block script %}
+
+$(document).ready(function(){
+
+    /* the togglevideobutton switches between input for
+       video upload and input for manual entry of sign
+       details. Manual entry is the default */
+   $("#togglevideobutton").click(function() {
+       $("#videoupload").toggle();
+       $("#signdescriptioninput").toggle();
+       return false;
+    })
+    $("#videoupload").hide();
+    
+    
+    /* the choice of one, two together or two apart hands
+       determines whether some form fields are hidden */
+       
+    $("#id_handform").change(function() {
+       if ($(this).val() == "1") {
+           $("#relativelocationdiv").hide();
+           $("#althandshapediv").hide();
+           $("#handinteractiondiv").hide();
+       } else if ($(this).val() == "2") {
+           $("#relativelocationdiv").hide();
+           $("#althandshapediv").show();
+           $("#handinteractiondiv").show();
+       } else {
+           $("#relativelocationdiv").show();
+           $("#althandshapediv").show();
+           $("#handinteractiondiv").show();
+       }
+       return false;
+    }).change()
+})
+
+{% endblock %}
+ 
+ 
+
+
+{% block content %}
+  {% if posted %}
+     <p>Thank you for your feedback.</p>     
+  {% else %}
+   
+    <p>Please fill out the required questions opposite and then
+    click 'Submit' to report a missing sign to the Auslan signbank.</p>
+    <p>If verified, the site will be updated 
+         to include the new sign.</p>
+
+<form method="post" enctype="multipart/form-data" name="missingsign">
+   {% csrf_token %}
+    <p>You may either upload a video that shows the missing sign or
+    fill in details in a form.  In either case, you should
+    enter a meaning and any comments you might have in the text 
+    boxes at the bottom of the form. <p>
+
+    <button id="togglevideobutton">Video Comment</button>
+    
+ <fieldset id="videoupload">
+  <legend>Video Upload</legend>
+  <div id="{{form.video.name}}div">
+    <label>{{form.video.label}}</label>
+    <p>Upload a video of the sign.</p>
+    {%if form.video.errors %}{{form.video.errors}}{% endif %}
+    {{form.video}}   
+    <p>NOTE: Video files can be quite large, and may take a long time to send. 
+    Please be patient when submitting this feedback.</p>
+  </div>
+</fieldset>
+ 
+{# this part of the form only shown if we're not uploading a video #}
+<fieldset id="signdescriptioninput">
+    <legend>Sign Description</legend>
+    
+    <div id="{{form.handform.name}}div">
+        <label>{{form.handform.label}} *</label>
+        {%if form.handform.errors %}{{form.handform.errors}}{% endif %}
+        {{form.handform}}
+    </div>
+    
+    <div id="{{form.handshape.name}}div">
+        <label>{{form.handshape.label}} *
+        <a href="{{ STATIC_URL }}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
+        </label>
+        {%if form.handshape.errors %}{{form.handshape.errors}}{% endif %}
+        {{form.handshape}}
+    </div>
+    
+    <div id="{{form.althandshape.name}}div">
+        <label>{{form.althandshape.label}} *  
+          <a href="{{ STATIC_URL }}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
+        </label>
+        {%if form.althandshape.errors %}{{form.althandshape.errors}}{% endif %}
+        {{form.althandshape}}
+    </div>
+    
+    <div id="{{form.location.name}}div">
+        <label>{{form.location.label}} *
+         <a href="{{ STATIC_URL }}images/feedback/guide_signpos.gif" target="guide">Show Guide</a>
+        </label>
+        {%if form.location.errors %}{{form.location.errors}}{% endif %}
+        {{form.location}}
+    </div>
+    
+    <div id="{{form.relativelocation.name}}div">
+        <label>{{form.relativelocation.label}} *
+         <a href="{{ STATIC_URL }}images/feedback/guide_relativesignpos.gif" target="guide">Show Guide</a>
+        </label>
+        {%if form.relativelocation.errors %}{{form.relativelocation.errors}}{% endif %}
+        {{form.relativelocation}}
+    </div>
+    
+    <p id="movementmessagep">Using the guide, select the movement symbol/word that 
+      best describes this sign. Please choose either: one only (chosen from any category), 
+      or a choice from every category.</p>
+    
+    <div id="{{form.handbodycontact.name}}div">
+      <label>{{form.handbodycontact.label}}</label>
+      <img src="{{ STATIC_URL }}images/feedback/guide_movecontact.gif" class="formguide" />
+    {%if form.handbodycontact.errors %}{{form.handbodycontact.errors}}{% endif %}
+    {{form.handbodycontact}}
+    </div>
+    
+    <div id="{{form.handinteraction.name}}div">
+    <label>{{form.handinteraction.label}}</label>
+    <img src="{{ STATIC_URL }}images/feedback/guide_moveinteraction.gif" class="formguide" />
+    {%if form.handinteraction.errors %}{{form.handinteraction.errors}}{% endif %}
+    {{form.handinteraction}}
+    </div>
+    
+    <div id="{{form.direction.name}}div">
+    <label>{{form.direction.label}}</label>
+    <img src="{{ STATIC_URL }}images/feedback/guide_movedirection.gif" class="formguide" />
+    {%if form.direction.errors %}{{form.direction.errors}}{% endif %}
+    {{form.direction}}
+    </div>
+    
+    <div id="{{form.movementtype.name}}div">
+    <label>{{form.movementtype.label}}</label>
+    <img src="{{ STATIC_URL }}images/feedback/guide_movetype.gif" class="formguide" />
+    {%if form.movementtype.errors %}{{form.movementtype.errors}}{% endif %}
+    {{form.movementtype}}
+    </div>
+    
+    <div id="{{form.smallmovement.name}}div">
+    <label>{{form.smallmovement.label}}</label>
+    <img src="{{ STATIC_URL }}images/feedback/guide_movehands.gif" class="formguide" />
+    {%if form.smallmovement.errors %}{{form.smallmovement.errors}}{% endif %}
+    {{form.smallmovement}}
+    </div>
+    
+    <div id="{{form.repetition.name}}div">
+    <label>{{form.repetition.label}}</label>
+    {%if form.repetition.errors %}{{form.repetition.errors}}{% endif %}
+    {{form.repetition}}
+    </div>
+    
+</fieldset>
+
+<fieldset id="meaninginput">
+  <legend>Details</legend>
+    <div id="{{form.meaning.name}}div">
+        <label>{{form.meaning.label}} *</label>
+        <p>Please explain the meaning of the new or missing sign, or enter individual English words that have the same meaning as this sign (i.e. keywords).</p>
+        {%if form.meaning.errors %}{{form.meaning.errors}}{% endif %}
+        {{form.meaning}}
+    </div>
+
+    <div id="{{form.comments.name}}div">
+        <label>{{form.comments.label}}</label>
+        <p>Are there any other comments you would like to give about this sign? For example, do you think there are other or extra keyword/s that belong with this sign? If so, please include your comments below.</p>
+        {%if form.comments.errors %}{{form.comments.errors}}{% endif %}
+        {{form.comments}}
+    </div>
+</fieldset>
+ 
+<hr />
+<div class="formbuttons">
+  <input type="submit" value="Submit" class="submit" />
+  <input type="button" name="reset" value="Reset" class="reset" />
+</div>
+</form>
+  {% endif %}
+{% endblock %}
