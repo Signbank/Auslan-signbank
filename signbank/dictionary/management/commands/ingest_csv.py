@@ -57,8 +57,7 @@ class Command(BaseCommand):
                   'Attested in Corpus': 'corpus:attested',
                   'Forearm rotation': 'phonology:forearm rotation',
                   'hschange': 'phonology:handshape change',
-                  'Battinson': 'lexis:battinson',
-                  'Classifier/Constructed Action': 'lexis:classifier',
+
                   'B92 reg': 'b92:regional',
                   'B92 dir': 'b92:directional',
                   
@@ -67,6 +66,11 @@ class Command(BaseCommand):
                   }
     
     unused_tags = {
+                                    
+                  'Battinson': 'lexis:battison',
+                  'Classifier/Constructed Action': 'lexis:classifier',
+                  
+                  
                   
                   'transltf': 'iconicity:translucent',
                   'transptf': 'iconicity:transparent',
@@ -199,12 +203,20 @@ class Command(BaseCommand):
                         gloss.idgloss = gloss.annotation_idgloss
                     
                     if row['domhndsh'] != '':
+                        if row['domhndsh'] == '0':
+                            row['domhndsh'] = '0.0'
                         gloss.domhndsh = row['domhndsh']
                     if row['subhndsh'] != '':
+                        if row['subhndsh'] == '0':
+                            row['subhndsh'] = '0.0'
                         gloss.subhndsh = row['subhndsh']
                     if row['FinaldominantHS'] != '':
+                        if row['FinaldominantHS'] == '0':
+                            row['FinaldominantHS'] = '0.0'                        
                         gloss.final_domhndsh = row['FinaldominantHS']
                     if row['FinalSubordinateHS'] != '':
+                        if row['FinalSubordinateHS'] == '0':
+                            row['FinalSubordinateHS'] = '0.0'    
                         gloss.final_subhndsh = row['FinalSubordinateHS']
                     if row['FinalLoc'] != '':
                         gloss.final_loc = row['FinalLoc']
