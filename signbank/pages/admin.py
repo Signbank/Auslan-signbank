@@ -39,12 +39,6 @@ class PageVideoInline(admin.TabularInline):
     model = PageVideo  
     extra = 1
 
-class PageVideoAdmin(admin.ModelAdmin):
-    model = PageVideo
-    form = PageVideoForm
-    
-admin.site.register(PageVideo, PageVideoAdmin)
-
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
     fieldsets = (
@@ -57,3 +51,5 @@ class PageAdmin(admin.ModelAdmin):
     inlines = [PageVideoInline]
 
 admin.site.register(Page, PageAdmin)
+
+

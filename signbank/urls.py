@@ -9,6 +9,7 @@ from signbank.dictionary.models import Gloss
 from django.contrib import admin
 admin.autodiscover()
 
+from adminsite import publisher_admin
 
 urlpatterns = patterns('',
 
@@ -38,6 +39,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    # special admin sub site
+    url(r'^publisher/', include(publisher_admin.urls)),
 
     url(r'^test/(?P<videofile>.*)$', TemplateView.as_view(template_name="test.html")),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
