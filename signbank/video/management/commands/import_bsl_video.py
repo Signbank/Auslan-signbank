@@ -49,7 +49,7 @@ def import_existing_gloss_videos(path):
             if len(glosses) == 1:
                 gloss = glosses[0]
                 
-                print fullpath, gloss
+                #print fullpath, gloss
                 
                 h = open(fullpath)
                 uf = UploadedFile(h, name=videofile)
@@ -57,7 +57,7 @@ def import_existing_gloss_videos(path):
             
                 gv.save()
             else:
-                print "gloss matches: ", glosses
+                print "gloss matches for", videofile, glosses
             
         else:
             print 'skipping ', videofile
