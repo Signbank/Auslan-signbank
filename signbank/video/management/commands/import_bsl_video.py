@@ -33,7 +33,7 @@ def import_existing_gloss_videos(path):
     # scan the directory and make an entry for each video file found
     for videofile in os.listdir(path):
         (idgloss, ext) = os.path.splitext(videofile)
-        if ext in ['.mov']:
+        if ext in ['.mov', '.MOV']:
 
             fullpath = os.path.join(path, videofile)
         
