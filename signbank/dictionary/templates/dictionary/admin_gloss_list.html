@@ -190,7 +190,7 @@ function clearForm(myFormElement) {
             {% if perms.dictionary.export_csv %}
             <input class='btn btn-default' type='submit' name='format' value='CSV'>
             {% endif %}
-            <button class='btn btn-default' onclick="clearForm(document.adminsearch);">Reset</button>
+            <input class='btn btn-default' type='submit' onclick="clearForm(document.adminsearch);" value='Reset'>
         </div>
 
         <div class='form-group' id='paginate_by'>
