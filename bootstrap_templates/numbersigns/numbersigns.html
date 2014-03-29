@@ -13,8 +13,10 @@
 <script type="text/javascript">
     var base_url = "{{ STATIC_URL }}";
 </script>
+
 <script type="text/javascript" src="{{ STATIC_URL }}projekktor/projekktor-1.3.09.min.js"></script>
 <script type='text/javascript' src="{{ STATIC_URL }}js/numbersigns.js"></script>
+
 {% endblock %}
  
 {% block bodyid %}id='numbersigns'{% endblock %}
@@ -24,9 +26,7 @@
 	<div id="leftblock">
         <div id="videocontainer">
           <div id="player">
-              <video id='projekktor' class="projekktor" width="320" height="240">
-                 <source src="{{ STATIC_URL }}numbersigns/ns_011-019.mp4" type="video/mp4">
-              </video>
+              <video id='projekktor' class="projekktor"  src="{{ STATIC_URL }}numbersigns/ns_011-019.mp4">
           </div>
         </div>
              <p>
