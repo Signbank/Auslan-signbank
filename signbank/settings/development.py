@@ -13,6 +13,9 @@ SIGNBANK_NAME = "BSL"
 # show/don't show sign navigation
 SIGN_NAVIGATION = False
 
+# show the number signs page or an under construction page?
+SHOW_NUMBERSIGNS = False
+
 # which definition fields do we show and in what order?
 #DEFINITION_FIELDS = []
 
