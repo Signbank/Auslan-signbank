@@ -71,9 +71,9 @@
     </div>
     
     
-    {% if perms.dictionary.change_gloss %}
+    {% if perms.dictionary.search_gloss %}
     <div class='btn-group pull-left'>
-       <button id='editbutton' class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Edit this sign</a></button>
+       <button id='editbutton' class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a></button>
     </div>
     {% endif %}
     
