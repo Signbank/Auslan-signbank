@@ -166,7 +166,7 @@
             <tr><th>Keywords</th><td class='edit edit_text' id='keywords'>{% for trn in gloss.translation_set.all %}{{ trn.translation }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
        </table>
        
-       
+    {% if perms.dictionary.view_advanced_properties %}
     <div class="panel panel-default">
 
         <div class='panel-heading'>
@@ -187,7 +187,7 @@
             </table>
          </div>
     </div>
-
+    {% endif %}
 
     <div class="panel panel-default">
         <div class='panel-heading'>
@@ -244,7 +244,8 @@
     </div>
      
 
-        
+    
+    {% if perms.dictionary.view_advanced_properties %}
     <div class="panel panel-default">
         <div class='panel-heading'>
             <div class='panel-title'>
@@ -312,6 +313,7 @@
            
         </div>
     </div>
+    {% endif %}
 
     
         
