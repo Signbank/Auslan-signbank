@@ -9,12 +9,14 @@
             <li class='tagli'>
                <div class='tag'>
                  <span class='tagname'>{{tag}}</span>
+                 {% if perms.dictionary.change_gloss %}
                  <span class='tagcount'>
                      <a class='tagdelete editform'
                         id='{{tag.name}}'
                         href='{% url 'root_page' %}dictionary/update/tag/{{gloss.id}}' 
                         title='delete this tag'>x</a>
                  </span>
+                 {% endif %}
                 </div>
             </li>
           {% endfor %}
