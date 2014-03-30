@@ -11,6 +11,12 @@ admin.autodiscover()
 
 from adminsite import publisher_admin
 
+if settings.SHOW_NUMBERSIGNS:
+    numbersigns_view = TemplateView.as_view(template_name='numbersigns/numbersigns.html')
+else:
+    numbersigns_view = TemplateView.as_view(template_name='numbersigns/underconstruction.html')
+
+
 urlpatterns = patterns('',
 
     url(r'^$', 'signbank.pages.views.page', name='root_page'),
@@ -28,7 +34,7 @@ urlpatterns = patterns('',
     url(r'^spell/twohanded.html$', TemplateView.as_view(template_name='fingerspell/fingerspellingtwohanded.html')),
     url(r'^spell/practice.html$', TemplateView.as_view(template_name='fingerspell/fingerspellingpractice.html')),
     url(r'^spell/onehanded.html$', TemplateView.as_view(template_name='fingerspell/fingerspellingonehanded.html')),
-    url(r'^numbersigns.html$', TemplateView.as_view(template_name='numbersigns/numbersigns.html')),
+    url(r'^numbersigns.html$', numbersigns_view),
 
     # compatibility with old links - intercept and return 401
     url(r'^index.cfm', TemplateView.as_view(template_name='compat.html')),

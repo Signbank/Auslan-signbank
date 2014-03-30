@@ -231,6 +231,9 @@ PRIMARY_CSS = "bootstrap_css/test-server.css"
 ALLOW_REGISTRATION = True
 
 
+# show the number signs page or an under construction page?
+SHOW_NUMBERSIGNS = True
+
 LOGIN_REDIRECT_URL = '/feedback/'
 
 
