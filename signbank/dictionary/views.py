@@ -37,7 +37,7 @@ def index(request):
 
 
     return render_to_response("dictionary/search_result.html",
-                              {'query': '',
+                              {'form': UserSignSearchForm(),
                                },
                                context_instance=RequestContext(request))
 
@@ -267,25 +267,75 @@ def search(request):
     """Handle keyword search form submission"""
 
 
-    if request.GET.has_key('query'):
+    # default the safe field based on user authentication
+    #form = UserSignSearchForm(request.GET, initial={'safe': not request.user.is_authenticated()})
+    form = UserSignSearchForm(request.GET.copy())
+
+    if form.is_valid():
         # need to transcode the query to our encoding
-        term = request.GET['query']
+        term = form.cleaned_data['query']
+        category = form.cleaned_data['category']
+        
+        if 'safe' in request.GET:
+            safe = form.cleaned_data['safe']
+        else:
+            safe = not request.user.is_authenticated()
+            form.data['safe'] = safe
+            
+        print "SAFE: ", safe
+        
         try:
             term = smart_unicode(term)
-
-            if request.user.has_perm('dictionary.search_gloss'):
-                # staff get to see all the words that have at least one translation
-                words = Keyword.objects.filter(text__istartswith=term, translation__isnull=False).distinct()
-            else:
-                # regular users see either everything that's published
-                words = Keyword.objects.filter(text__istartswith=term,
-                                                translation__gloss__inWeb__exact=True).distinct()
-
         except:
             # if the encoding didn't work this is
             # a strange unicode or other string
             # and it won't match anything in the dictionary
             words = []
+
+
+        if request.user.has_perm('dictionary.search_gloss'):
+            # staff get to see all the words that have at least one translation
+            words = Keyword.objects.filter(text__istartswith=term, translation__isnull=False).distinct()
+        else:
+            # regular users see either everything that's published
+            words = Keyword.objects.filter(text__istartswith=term,
+                                            translation__gloss__inWeb__exact=True).distinct()
+
+        if safe:
+            
+            tag = Tag.objects.get(name='lexis:crude')
+            
+            crude = TaggedItem.objects.get_by_model(Gloss, tag)
+            # remove crude words from result
+
+            result = []
+            for w in words:
+                trans = w.translation_set.all()
+                glosses = [t.gloss for t in trans]
+                found = False
+                for g in glosses:
+                    if g in crude:
+                        found = True
+                        break
+                if not found:
+                    result.append(w)
+            
+            words = result
+            
+            
+        if not category in ['all', '']:
+            
+            tag = Tag.objects.get(name=category)
+            
+            result = []
+            for w in words:
+                trans = w.translation_set.all()
+                glosses = [t.gloss for t in trans]
+                for g in glosses:
+                    if tag in g.tags:
+                        result.append(w)
+            words = result
+
 
     else:
         term = ''
@@ -314,6 +364,7 @@ def search(request):
 
     return render_to_response("dictionary/search_result.html",
                               {'query' : term,
+                               'form': form,
                                'paginator' : paginator,
                                'wordcount' : len(words),
                                'page' : result_page,
