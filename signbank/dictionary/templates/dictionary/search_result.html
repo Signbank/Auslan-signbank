@@ -2,9 +2,7 @@
 
 {% block content %}
  
-    {# if we have no search term, include a bit of prompt text and the letter list #}
-    {% ifequal query '' %}
-    
+
     <p>Welcome to the Sign Search section of the Auslan SignBank. Here
      you can search for a sign using an English keyword in the search box
      above, or browse keywords starting with any letter below.</p>	
@@ -15,7 +13,15 @@
       {% endfor %}
     </p>
     
-    {% else %}
+    <form class='form-inline' action="{% url 'dictionary:search' %}">
+        <div class='form-group'><label for='query'>{{form.query.label}}</label> {{form.query}}</div>
+        <div class='form-group'><label for='category'>{{form.category.label}}</label> {{form.category}}</div>
+        {% if user.is_authenticated %}
+        <div class='form-group'><label class='checkbox-inline' for='safe'>{{form.safe}} Safe Search</label></div>
+        {% endif %}
+        <div class='form-group'><input type='submit' class='btn btn-primary' value='Submit'></div>
+     </form>
+    
 
         {% ifequal wordcount 0 %}
             <p>There is no exact match to the word you typed.</p>
@@ -73,7 +79,6 @@
 
           {% endif %}
 
-    {% endifequal %}
 {% endblock %}
 
 
