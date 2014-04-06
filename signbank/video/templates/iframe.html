@@ -1,23 +1,54 @@
 <!DOCTYPE HTML>
 <html>
  <head>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+    <link href="//vjs.zencdn.net/4.5/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.5/video.js"></script>
+    <script>
+    $(document).ready(function(){     
+        var myPlayer = videojs('sign');
+
+        var aspectRatio = 9/16; // Make up an aspect ratio
+    
+        function resizeVideoJS(){
+          // Get the parent element's actual width
+          var width = document.getElementById('signbody').offsetWidth;
+          // Set width to fill parent element, Set height
+          myPlayer.width(width).height( width * aspectRatio );
+        }
+    
+       
+
+        myPlayer.ready(function(){
+
+           resizeVideoJS(); // Initialize the function
+           window.onresize = resizeVideoJS; // Call the function on resize
+
+           this.on('ended', function(){
+              this.bigPlayButton.show(); 
+           });
+           this.on('playing', function(){
+              this.bigPlayButton.hide(); 
+           });           
+           
+           this.play(); 
+        });
+        
+    });
+    </script>
+    <style>
+video-container {
+height: 100%; width: 100%; left: 0; top: 0; overflow: hidden; position: absolute; }
+
+video-container #track, #video-container #track_html5_api {
+min-height: 100%; min-width: 100%; height: auto !important; width: auto !important; position: absolute; left: 0; top: 0; }
+    </style>
  </head> 
  <body id='signbody'>
-     
-     
-     <object type="application/x-shockwave-flash" 
-             id="VideoPlayer" 
-             data="http://jarisflvplayer.org/files/JarisFLVPlayer.swf" 
-             width="640px" height="360px">
-       <param name="menu" value="false">
-       <param name="scale" value="noScale">
-       <param name="allowFullscreen" value="true">
-       <param name="allowScriptAccess" value="always">
-       <param name="bgcolor" value="#000000">
-       <param name="quality" value="high">
-       <param name="wmode" value="opaque">
-       <param name="flashvars" value="source={{videourl}}&amp;type=video&amp;streamtype=file&amp;controltype=0&amp;duration=4&amp;poster={{posterurl}}&amp;aspectratio=&amp;autostart=true&amp;hardwarescaling=false&amp;controls=false&amp;darkcolor=000000&amp;brightcolor=4c4c4c&amp;controlcolor=FFFFFF&amp;hovercolor=67A8C1&amp;seekcolor=D3D3D3&amp;jsapi=true">
-     </object>
-     
+     <video id='sign' class='video-js vjs-default-skin' 
+            poster='{{posterurl}}' 
+            data-setup='{ "autoplay":true, "controls":false, "techOrder":["flash", "html5"] }' preload='auto'>
+         <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
+     </video>
 </body>
 </html>
