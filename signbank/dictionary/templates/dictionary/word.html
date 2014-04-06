@@ -32,16 +32,15 @@
         {% if SIGN_NAVIGATION %}
         
             {% if navigation.prev %}
-            <button class='btn navbar-btn btn-default'><a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
-            </button>
+            <a class='btn navbar-btn btn-default' href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+           
             {% endif %}
             
             <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</span>
             
             {% if navigation.next %}
-            <button class="btn navbar-btn btn-default">
-             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
-            </button>
+            <a class="btn navbar-btn btn-default"
+               href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
             {% endif %}
          {% else %}
            
@@ -59,13 +58,13 @@
             {% ifequal i n %}
             <button type='button' class='btn btn-primary navbar-btn'>{{i}}</button>
             {% else %}
-            <button type='button' class='btn btn-default navbar-btn'><a href="{{translation.translation}}-{{i}}.html">{{i}}</a></button>
+            <a type='button' class='btn btn-default navbar-btn' href="{{translation.translation}}-{{i}}.html">{{i}}</a>
             {% endifequal %}
         {% endfor %}
         </div>
         {% else %}
         {% if lastmatch %}
-        <button class='btn btn-default navbar-btn'><a href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a></button>
+        <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a>
         {% endif %}
         {% endifequal %}
     </div>
@@ -73,7 +72,7 @@
     
     {% if perms.dictionary.search_gloss %}
     <div class='btn-group pull-left'>
-       <button id='editbutton' class='btn btn-default navbar-btn'><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a></button>
+       <a id='editbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a>
     </div>
     {% endif %}
     

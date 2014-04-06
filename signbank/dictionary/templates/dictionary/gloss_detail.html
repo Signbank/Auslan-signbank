@@ -43,16 +43,15 @@
         {% if SIGN_NAVIGATION %}
         
             {% if navigation.prev %}
-            <button class='btn navbar-btn btn-default'><a href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
-            </button>
+            <a class='btn navbar-btn btn-default' href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign
+            </a>
             {% endif %}
             
             <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</span>
             
             {% if navigation.next %}
-            <button class="btn navbar-btn btn-default">
-             <a href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
-            </button>
+            <a class="btn navbar-btn btn-default"
+               href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
             {% endif %}
          {% else %}
            
@@ -60,7 +59,7 @@
     </div>
 
     {% if gloss.idgloss %}
-    <button class='btn btn-default navbar-btn'><a href="{% url 'root_page' %}dictionary/gloss/{{gloss.idgloss}}.html">Public View</a></button>
+    <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/gloss/{{gloss.idgloss}}.html">Public View</a>
     {% endif %}
     
     {% if perms.dictionary.change_gloss %}
