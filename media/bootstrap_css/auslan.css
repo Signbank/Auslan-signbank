@@ -15,3 +15,8 @@ body {
   background-repeat: repeat-x;
   padding: 0px; 
 }
+
+#videoiframe {
+    width: 308px;
+    height: 230px;
+}

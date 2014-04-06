@@ -243,6 +243,10 @@ FFMPEG_TIMEOUT = 60
 FFMPEG_OPTIONS = ["-vcodec", "h264", "-an"]
 
 
+# defines the aspect ratio for videos
+VIDEO_ASPECT_RATIO = 3.0/4.0
+
+
 
 # settings for django-tagging
 

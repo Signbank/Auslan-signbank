@@ -8,9 +8,11 @@
     $(document).ready(function(){     
         var myPlayer = videojs('sign');
 
-        var aspectRatio = 9/16; // Make up an aspect ratio
+        var aspectRatio = {{aspectRatio}}; // Make up an aspect ratio
+        console.log(aspectRatio);
     
         function resizeVideoJS(){
+            
           // Get the parent element's actual width
           var width = document.getElementById('signbody').offsetWidth;
           // Set width to fill parent element, Set height
@@ -21,9 +23,10 @@
 
         myPlayer.ready(function(){
 
+          
            resizeVideoJS(); // Initialize the function
            window.onresize = resizeVideoJS; // Call the function on resize
-
+            
            this.on('ended', function(){
               this.bigPlayButton.show(); 
            });
