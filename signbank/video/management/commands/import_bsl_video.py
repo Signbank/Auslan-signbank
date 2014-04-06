@@ -33,7 +33,7 @@ def import_existing_gloss_videos(path):
     # scan the directory and make an entry for each video file found
     for videofile in os.listdir(path):
         (idgloss, ext) = os.path.splitext(videofile)
-        if ext in ['.mov', '.MOV']:
+        if ext in ['.mov', '.MOV', '.mp4']:
 
             fullpath = os.path.join(path, videofile)
         
@@ -49,13 +49,18 @@ def import_existing_gloss_videos(path):
             if len(glosses) == 1:
                 gloss = glosses[0]
                 
-                #print fullpath, gloss
+                print fullpath, gloss
+                
+                # replace apostrophe to make nicer URLs
+                cleanname = videofile.replace("'", '1')
                 
                 h = open(fullpath)
-                uf = UploadedFile(h, name=videofile)
+                uf = UploadedFile(h, name=cleanname)
                 gv = GlossVideo(gloss=gloss, videofile=uf)
             
                 gv.save()
+                # force conversion to mp4
+                gv.ensure_mp4()
             else:
                 print "gloss matches for", videofile, glosses
             
