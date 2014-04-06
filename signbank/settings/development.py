@@ -43,3 +43,10 @@ LOGGING = {
         },
     },
 }
+
+
+import mimetypes
+mimetypes.add_type("video/mp4", ".mov", True)
+    
+    
+    
