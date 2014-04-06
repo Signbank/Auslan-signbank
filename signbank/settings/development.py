@@ -6,6 +6,12 @@ TEMPLATE_DIRS = (
 )
 
 PRIMARY_CSS = "bootstrap_css/bsl.css"
+#PRIMARY_CSS = "bootstrap_css/auslan.css"
+
+
+# defines the aspect ratio for videos
+VIDEO_ASPECT_RATIO = 360.0/640.0
+
 
 # what do we call this signbank?
 SIGNBANK_NAME = "BSL"
