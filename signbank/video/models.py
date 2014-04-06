@@ -69,11 +69,13 @@ class VideoPosterMixin:
         # create a temporary copy in the new format
         # then move it into place
 
+        #print "ENSURE: ", self.videofile.path
+        
         (basename, ext) = os.path.splitext(self.videofile.path)
         tmploc = basename + "-conv.mp4"
-        err = ffmpeg(self.videofile.path, tmploc, options=settings.FFMPEG_OPTIONS)
-        print tmploc
-        #shutil.move(tmploc, self.videofile.path)
+        err = convert_video(self.videofile.path, tmploc, force=True)
+        #print tmploc
+        shutil.move(tmploc, self.videofile.path)
 
 
     def delete_files(self):

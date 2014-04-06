@@ -28,22 +28,27 @@ class Command(BaseCommand):
 def convert_video_collection(sourcedir, destdir):
     """Convert all video files in this collection"""
     
-    for dir in os.listdir(sourcedir):
-        if os.path.isdir(os.path.join(sourcedir, dir)):
-            if not os.path.exists(os.path.join(destdir, dir)):
-                os.makedirs(os.path.join(destdir, dir))
+    for dirpath, dirnames, filenames in os.walk(sourcedir):
+        
+        
+        destpath = os.path.join(destdir, '/'.join(dirpath.split(os.sep)[1:]))
+        
+        if not os.path.exists(destpath):
+            os.makedirs(destpath)
+        
+        for f in filenames:
+        
+            (name, ext) = os.path.splitext(os.path.basename(f))
+            if ext in ['.mp4', '.flv', '.mov']:
+                
+                sourcefile = os.path.join(dirpath, f)
+                
+                destfile = os.path.join(destpath, name+".mp4")
+                if not os.path.exists(destfile):
+                    print sourcefile, destfile  
+                    convert_video(sourcefile, destfile, force=True)
 
-            for f in os.listdir(os.path.join(sourcedir, dir)):
-                (name, ext) = os.path.splitext(f)
-                if ext in ['.mp4', '.flv']:
-                    sourcefile = os.path.join(sourcedir, dir, f)
-                    destfile = os.path.join(destdir, dir, name+".mp4")
-                    if not os.path.exists(destfile):
-                        print sourcefile, destfile  
-                        convert_video(sourcefile, destfile, force=True)
-                        # wait a while before the next one
-                        time.sleep(60)
-                    
+                
 
 
 
