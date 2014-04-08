@@ -1,97 +1,22 @@
 
 {% extends "baselayout.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
-   <h1>User Registration</h1>
-    <form method="post" action="">
-    {% csrf_token %}
-    <div id='registrationform'> 
-    
-      <fieldset id="userdetails">
-        <legend>User Details</legend>
-        <table>
-        <tr>This site uses your email address as your login name.  You don't need 
-        to choose a seperate username. <input type="hidden" name="username" value="xyzzy"/> {{form.username.errors}}</tr>
-       
-        
-        
-       <tr {% if form.email.errors %}class="errors"{% endif %}><td>{{ form.email.label_tag }}</td><td> {{ form.email }}
-          {% if form.email.errors %}</td></tr><tr><td colspan='2'><ul class="errorlist">{{ form.email.errors }}</ul>{% endif %}</td>
-       </tr> 
-       
-       <tr {% if form.firstname.errors %}class="errors"{% endif %}><td>{{ form.firstname.label_tag }}</td><td> {{ form.firstname }}
-          {% if form.firstname.errors %}</td></tr><tr><td colspan='2'><ul class="errorlist">{{ form.firstname.errors }}</ul>{% endif %}</td>
-       </tr>
-       
-       <tr {% if form.lastname.errors %}class="errors"{% endif %}><td>{{ form.lastname.label_tag }}</td><td> {{ form.lastname }}
-          {% if form.lastname.errors %}</td></tr><tr><td colspan='2'><ul class="errorlist">{{ form.lastname.errors }}</ul>{% endif %}</td>
-       </tr>
-       
-        <tr {% if form.password1.errors %}class="errors"{% endif %}><td>{{ form.password1.label_tag }}</td><td> {{ form.password1 }} 
-         {% if form.password1.errors %}</td></tr><tr><td colspan='2'><ul class="errorlist">{{ form.password1.errors }}</ul>{% endif %}</td>
-        </tr>
-
-       <tr {% if form.password2.errors %}class="errors"{% endif %}><td>{{ form.password2.label_tag }}</td><td> {{ form.password2 }} 
-         {% if form.password2.errors %}</td></tr><tr><td colspan='2'><ul class="errorlist">{{ form.password2.errors }}</ul>{% endif %}</td>
-       </tr>
-       
-       </table>
-      </fieldset>
+<form class='form-horizontal' method="post" action="">
       
-      <fieldset>
-        <legend>Demographic Data</legend>
-      <ul>
-       
-      <li {% if form.yob.errors %}class="errors"{% endif %}>{{ form.yob.label_tag }} {{ form.yob }}
-       {% if form.yob.errors %}<ul class="errorlist">{{ form.yob.errors }}</ul>{% endif %}
-       </li> 
-       
-       <li {% if form.australian.errors %}class="errors"{% endif %}>{{ form.australian.label_tag }} {{ form.australian }}
-       {% if form.australian.errors %}<ul class="errorlist">{{ form.australian.errors }}</ul>{% endif %}
-       </li> 
-       
-       <li {% if form.postcode.errors %}class="errors"{% endif %}>{{ form.postcode.label_tag }} {{ form.postcode }}</li> 
-       {% if form.postcode.errors %}<ul class="errorlist">{{ form.postcode.errors }}</ul>{% endif %}
-      </ul>
-     </fieldset>
-     
-     <fieldset>
-       <legend>Your Background</legend>
-       <ul>
-       <li {% if form.background.errors %}class="errors"{% endif %}>{{ form.background.label_tag }} <br/> (you can choose more than one) {{ form.background }}
-       {% if form.background.errors %}<ul class="errorlist">{{ form.background.errors }}</ul>{% endif %}
-       </li> 
-       
-       <li {% if form.auslan_user.errors %}class="errors"{% endif %}>{{ form.auslan_user.label_tag }} {{ form.auslan_user }} 
-       {% if form.auslan_user.errors %}<ul class="errorlist">{{ form.auslan_user.errors }}</ul>{% endif %}
-       </li>
-
-       <li {% if form.learned.errors %}class="errors"{% endif %}>{{ form.learned.label_tag }} {{ form.learned }}
-       {% if form.learned.errors %}<ul class="errorlist">{{ form.learned.errors }}</ul>{% endif %}
-       </li>
- 
-       <li {% if form.deaf.errors %}class="errors"{% endif %}>{{ form.deaf.label_tag }} {{ form.deaf }} 
-       {% if form.deaf.errors %}<ul class="errorlist">{{ form.deaf.errors }}</ul>{% endif %}
-       </li>
- 
-       <li {% if form.schooltype.errors %}class="errors"{% endif %}>{{ form.schooltype.label_tag }} {{ form.schooltype }}
-       {% if form.schooltype.errors %}<ul class="errorlist">{{ form.schooltype.errors }}</ul>{% endif %}
-       </li>
- 
-       <li {% if form.school.errors %}class="errors"{% endif %}>{{ form.school.label_tag }} {{ form.school }} 
-       {% if form.school.errors %}<ul class="errorlist">{{ form.school.errors }}</ul>{% endif %}
-       </li>
-
-       <li {% if form.teachercomm.errors %}class="errors"{% endif %}>{{ form.teachercomm.label_tag }} {{ form.teachercomm }} 
-       {% if form.teachercomm.errors %}<ul class="errorlist">{{ form.teachercomm.errors }}</ul>{% endif %}
-       </li>
-       
-        </ul>
-      </fieldset>
-     
-    </div> 
-    <input type="submit" />
-     </form>
+    {% csrf_token %}
+    <div id='registrationform'  class="col-md-6 col-md-offset-3"> 
+    
+        {% bootstrap_form form %}
+        
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Submit
+        </button>
+        {% endbuttons %}
+    </div>
+  </form>
 {% endblock %}							
 
 

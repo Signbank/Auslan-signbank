@@ -14,7 +14,8 @@ VIDEO_ASPECT_RATIO = 360.0/640.0
 
 
 # what do we call this signbank?
-SIGNBANK_NAME = "BSL"
+LANGUAGE_NAME = "BSL"
+COUNTRY_NAME = "the UK"
 
 # show/don't show sign navigation
 SIGN_NAVIGATION = False
@@ -54,5 +55,27 @@ LOGGING = {
 import mimetypes
 mimetypes.add_type("video/mp4", ".mov", True)
     
-    
+
+
+# a list of tags we're allowed to use
+ALLOWED_TAGS = [ '', 
+                 'workflow:needs video',
+                 'workflow:redo video',
+                 'workflow:problematic',
+                 'b92:directional',
+                 'b92:regional',
+                 'b92:variant',
+                 'corpus:attested',
+                 'lexis:doubtlex',
+                 'phonology:alternating',
+                 'phonology:dominant hand only',
+                 'phonology:double handed',
+                 'phonology:forearm rotation',
+                 'phonology:handshape change',
+                 'phonology:onehand',
+                 'phonology:parallel',
+                 'phonology:symmetrical',
+                 'phonology:two handed',
+                ]
+
     
