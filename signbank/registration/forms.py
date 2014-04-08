@@ -5,8 +5,9 @@ Forms and validation code for user registration.
 
 
 from django import forms
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from models import RegistrationProfile, UserProfile
 
@@ -18,8 +19,8 @@ alnum_re = re.compile(r'^\w+$')
 # on them with CSS or JavaScript if they have a class of "required"
 # in the HTML. Your mileage may vary. If/when Django ticket #3515
 # lands in trunk, this will no longer be necessary.
-attrs_dict = { 'class': 'required' }
-
+attrs_reqd = { 'class': 'required form-control' }
+attrs_default = {'class': 'form-control'}
 
 class RegistrationForm(forms.Form):
     """
@@ -36,14 +37,16 @@ class RegistrationForm(forms.Form):
 
     """
     username = forms.CharField(max_length=30,
-                               widget=forms.TextInput(attrs=attrs_dict),
+                               widget=forms.TextInput(attrs=attrs_reqd),
                                label=_(u'Username'))
-    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
-                                                               maxlength=75)),
+    email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_reqd,
+                                                               maxlength=75)
+                                                    
+                                                    ),
                              label=_(u'Your Email Address'))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_reqd),
                                 label=_(u'Password'))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_reqd),
                                 label=_(u'Password (again)'))
 
     def clean_username(self):
@@ -52,8 +55,6 @@ class RegistrationForm(forms.Form):
         in use.
 
         """
-        if not alnum_re.search(self.cleaned_data['username']):
-            raise forms.ValidationError(_(u'Usernames can only contain letters, numbers and underscores'))
         try:
             user = User.objects.get(username__exact=self.cleaned_data['username'])
         except User.DoesNotExist:
@@ -96,7 +97,7 @@ class RegistrationFormTermsOfService(RegistrationForm):
     for agreeing to a site's Terms of Service.
 
     """
-    tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
+    tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_reqd),
                              label=_(u'I have read and agree to the Terms of Service'))
 
     def clean_tos(self):
@@ -183,26 +184,45 @@ from models import backgroundChoices, learnedChoices, schoolChoices, teachercomm
 
 yesnoChoices = ((1, 'yes'), (0, 'no'))
 
+import string
+
+def t(message):
+    """Replace $country and $language in message with dat from settings"""
+    
+    tpl = string.Template(message)
+    return tpl.substitute(country=settings.COUNTRY_NAME, language=settings.LANGUAGE_NAME)
+
+
 class RegistrationFormAuslan(RegistrationFormUniqueEmail):
     """
-    Registration form for the Auslan site
+    Registration form for the site
     """
-    username = forms.CharField(widget=forms.HiddenInput)
-    firstname = forms.CharField(label="Firstname", max_length=50)
-    lastname = forms.CharField(label="Lastname", max_length=50)
-    yob = BirthYearField(label="What year were you born?")
-    australian = forms.ChoiceField(yesnoChoices, label="Do you live in Australia?",  widget=forms.RadioSelect)
-    postcode = forms.IntegerField(label="If you live in Australia, what is your postcode?", required=False)
-    background = forms.MultipleChoiceField(backgroundChoices, label="What is your background?",
-                    widget=forms.CheckboxSelectMultiple)
-    auslan_user = forms.ChoiceField(yesnoChoices, label="Do you use Auslan?",  widget=forms.RadioSelect, required=False)
-    learned = forms.ChoiceField(label="If you use Auslan, when did you learn sign language?",
+    username = forms.CharField(widget=forms.HiddenInput, required=False)
+    firstname = forms.CharField(label=t("Firstname"), max_length=50)
+    
+    lastname = forms.CharField(label=t("Lastname"), max_length=50)
+    
+    yob = BirthYearField(label=t("What year were you born?"))
+    
+    australian = forms.ChoiceField(yesnoChoices, label=t("Do you live in ${country}?"))
+    
+    postcode = forms.CharField(label=t("If you live in $country, what is your postcode?"), 
+                               max_length=20, required=False)
+    
+    background = forms.MultipleChoiceField(backgroundChoices, label=_("What is your background?"))
+    
+    auslan_user = forms.ChoiceField(yesnoChoices, label=t("Do you use $language?"), required=False)
+    
+    learned = forms.ChoiceField(label=t("If you use $language, when did you learn sign language?"),
                                   choices=learnedChoices, required=False)
-    deaf = forms.ChoiceField(yesnoChoices, label="Are you a deaf person?",  widget=forms.RadioSelect)
-    schooltype = forms.ChoiceField(label="What sort of school do you (or did you) attend?",
+    
+    deaf = forms.ChoiceField(yesnoChoices, label=t("Are you a deaf person?"))
+    
+    schooltype = forms.ChoiceField(label=t("What sort of school do you (or did you) attend?"),
                                    choices=schoolChoices, required=False)
-    school = forms.CharField(label="Which school do you (or did you) attend?", max_length=50, required=False)
-    teachercomm = forms.ChoiceField(label="How do (or did) your teachers communicate with you?",
+    school = forms.CharField(label=t("Which school do you (or did you) attend?"),
+                             max_length=50, required=False)
+    teachercomm = forms.ChoiceField(label=t("How do (or did) your teachers communicate with you?"),
                                     choices=teachercommChoices,
                                     required=False)
 

@@ -187,7 +187,9 @@ SOUTH_TESTS_MIGRATE = False
 ## Settings controlling page contents
 
 # what do we call this signbank?
-SIGNBANK_NAME = "Auslan"
+LANGUAGE_NAME = "Auslan"
+COUNTRY_NAME = "Australia"
+
 
 # do we display the previous/next links to signs, requires gloss.sn to be used consistently
 SIGN_NAVIGATION = True
@@ -229,6 +231,9 @@ PRIMARY_CSS = "bootstrap_css/test-server.css"
 
 # do we allow people to register for the site
 ALLOW_REGISTRATION = True
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
 
 
 # show the number signs page or an under construction page?

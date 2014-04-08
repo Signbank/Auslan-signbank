@@ -224,14 +224,23 @@ class RegistrationProfile(models.Model):
     
 from django.contrib.auth import models as authmodels    
 
+import string
+
+def t(message):
+    """Replace $country and $language in message with dat from settings"""
+    
+    tpl = string.Template(message)
+    return tpl.substitute(country=settings.COUNTRY_NAME, language=settings.LANGUAGE_NAME)
+
+
 
 backgroundChoices = ((0, 'deaf community'),
-            	      (1, 'Auslan teacher'),
+            	      (1, t('$language teacher')),
                      (2, 'teacher of the deaf'),
                      (3, 'parent of a deaf child'),
                      (4, 'sign language interpreter'),
                      (5, 'school or university student'),
-                     (6, 'student learning Auslan'),
+                     (6, t('student learning $language')),
                      (7, 'other'),
                      )
                      
@@ -251,7 +260,7 @@ schoolChoices = ((0, 'a deaf school (boarder)'),
 
 teachercommChoices = ((0, 'mostly oral'),
                       (1, 'mostly Signed English'),
-                      (2, 'mostly sign language (Auslan)'),
+                      (2, t('mostly sign language ($language)')),
                       (3, 'mostly fingerspelling')
                       )
 
@@ -260,11 +269,11 @@ class UserProfile(models.Model):
     
     user = models.ForeignKey(authmodels.User, unique=True)    
     yob = models.IntegerField("When were you born?")
-    australian = models.BooleanField("Do you live in Australia?")
-    postcode = models.PositiveIntegerField("If you live in Australia, what is your postcode?", null=True, blank=True)
+    australian = models.BooleanField(t("Do you live in $country?"))
+    postcode = models.PositiveIntegerField(t("If you live in $country, what is your postcode?"), null=True, blank=True)
     background = models.CommaSeparatedIntegerField("What is your background?", max_length=20, choices=backgroundChoices)
-    auslan_user = models.BooleanField("Do you use Auslan?")
-    learned = models.IntegerField("If you use Auslan, when did you learn sign language?", 
+    auslan_user = models.BooleanField(t("Do you use $language?"))
+    learned = models.IntegerField(t("If you use $language, when did you learn sign language?"), 
                                   choices=learnedChoices)
     deaf = models.BooleanField("Are you a deaf person?")
     schooltype = models.IntegerField("What sort of school do you (or did you) attend?", 
