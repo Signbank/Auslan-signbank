@@ -40,21 +40,35 @@ isAuslanChoices = ( (1, "yes"),
                     (5, "No"),
                     (0, "N/A")
                     )
-                    
-whereusedChoices = (('auswide', 'Australia Wide'),
-                    ('dialectN', 'Dialect Sign (North)'),
-                    ('dialectS', 'Dialect Sign (South)'),
-                    ('nsw', "New South Wales"),
-                    ('vic', "Victoria"),
-                    ('qld', "Queensland"),
-                    ('wa', "Western Australia"),
-                    ('sa', "South Australia"),
-                    ('tas', "Tasmania"),
-                    ('nt', "Northern Territory"),
-                    ('act', "Australian Capital Territory"),
-                    ('dk', "Don't Know"),
-                    ('n/a', "N/A")
-                    )
+
+if settings.LANGUAGE_NAME == "BSL":
+    whereusedChoices = (('Belfast', 'Belfast'),
+                        ('Birmingham', 'Birmingham'),
+                        ('Bristol', 'Bristol'),
+                        ('Cardiff', 'Cardiff'),
+                        ('Glasgow', 'Glasgow'),
+                        ('London', 'London'),
+                        ('Manchester', 'Manchester'),
+                        ('Newcastle', 'Newcastle'),
+                        ('Other', 'Other (note in comments)'),
+                        ("Don't Know", "Don't Know"),
+                        ('N/A', 'N/A'),
+                        )
+else:
+    whereusedChoices = (('auswide', 'Australia Wide'),
+                        ('dialectN', 'Dialect Sign (North)'),
+                        ('dialectS', 'Dialect Sign (South)'),
+                        ('nsw', "New South Wales"),
+                        ('vic', "Victoria"),
+                        ('qld', "Queensland"),
+                        ('wa', "Western Australia"),
+                        ('sa', "South Australia"),
+                        ('tas', "Tasmania"),
+                        ('nt', "Northern Territory"),
+                        ('act', "Australian Capital Territory"),
+                        ('dk', "Don't Know"),
+                        ('n/a', "N/A")
+                        )
 
 likedChoices =    ( (1, "yes"), 
                     (2, "A little"), 
