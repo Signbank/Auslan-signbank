@@ -1,12 +1,6 @@
-{# Parameters #}
-{# username (string) #}
-{#   Either "" indicating that the user is not logged in, or the user name in <first name> <last name> form. #}
-{# title (string #}
-{#   The title of the page, appears in horizontal span above content. #}
 
 {% extends "baselayout.html" %}
 
-     
 
 {% block content %}
 
@@ -31,13 +25,14 @@
       <p>Upload your feedback as a video.</p>
       {%if form.video.errors %}{{form.video.errors}}{% endif %}
       {{form.video}}
-      <p>NOTE: Video files can be quite large, and may take a long time to send. Please be patient when submitting this feedback.</p>
+      <p>NOTE: Video files can be quite large, and may take a long time to send.
+           Please be patient when submitting this feedback.</p>
     </div>
 
     <hr />
     <div class="formbuttons">
-      <input type="submit" value="Submit" class="submit" />
-      <input type="button" name="reset" value="Reset" class="reset" />
+      <input class='btn btn-primary' type="submit" value="Submit" class="submit" />
+      <input class='btn btn-default' type="button" name="reset" value="Reset" class="reset" />
     </div>
   </form>
 {% endif %}
