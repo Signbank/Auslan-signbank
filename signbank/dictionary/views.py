@@ -285,14 +285,16 @@ def search(request):
         term = form.cleaned_data['query']
         category = form.cleaned_data['category']
         
-        if 'safe' in request.GET:
-            safe = form.cleaned_data['safe']
+        if settings.ADVANCED_SEARCH:
+            if 'safe' in request.GET:
+                safe = form.cleaned_data['safe']
+            else:
+                safe = not request.user.is_authenticated()
+                form.data['safe'] = safe
         else:
-            safe = not request.user.is_authenticated()
-            form.data['safe'] = safe
-            
-        print "SAFE: ", safe
-        
+            safe = False
+            category = 'all'
+
         try:
             term = smart_unicode(term)
         except:
@@ -377,7 +379,7 @@ def search(request):
                                'paginator' : paginator,
                                'wordcount' : len(words),
                                'page' : result_page,
-                               'menuid' : 2,
+                               'ADVANCED_SEARCH': settings.ADVANCED_SEARCH,
                                },
                               context_instance=RequestContext(request))
 

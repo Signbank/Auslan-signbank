@@ -23,6 +23,9 @@ SIGN_NAVIGATION = False
 # show the number signs page or an under construction page?
 SHOW_NUMBERSIGNS = False
 
+# do we show the 'advanced search' form and implement 'safe' search?
+ADVANCED_SEARCH = False
+
 # which definition fields do we show and in what order?
 #DEFINITION_FIELDS = []
 

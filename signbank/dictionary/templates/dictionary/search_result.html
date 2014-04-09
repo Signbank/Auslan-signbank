@@ -13,6 +13,7 @@
       {% endfor %}
     </p>
     
+    {% if ADVANCED_SEARCH %}
     <form class='form-inline' action="{% url 'dictionary:search' %}">
         <div class='form-group'><label for='query'>{{form.query.label}}</label> {{form.query}}</div>
         <div class='form-group'><label for='category'>{{form.category.label}}</label> {{form.category}}</div>
@@ -21,7 +22,7 @@
         {% endif %}
         <div class='form-group'><input type='submit' class='btn btn-primary' value='Submit'></div>
      </form>
-    
+    {% endif %}
 
         {% ifequal wordcount 0 %}
             <p>There is no exact match to the word you typed.</p>
