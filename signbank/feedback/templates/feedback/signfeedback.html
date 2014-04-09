@@ -2,14 +2,11 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<div class="asbBodyCell" style="width: 600px">
- {% if valid %} 
-   <p>Thank's for your comments</p>
- {% else %}
- 
+<div class="col-md-6 col-md-offset-3">
+    <h2>Sign Feedback</h2>
   
-<form id="signfeedback" method="post">
-{% csrf_token %}
+  <form id="signfeedback" method="post">
+  {% csrf_token %}
 
   <input type='hidden' name='sourcepage' value='{{sourcepage}}'>
 

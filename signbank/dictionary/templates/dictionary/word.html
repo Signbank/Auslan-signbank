@@ -65,9 +65,9 @@
         {% endfor %}
         </div>
         {% else %}
-        {% if lastmatch %}
-        <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a>
-        {% endif %}
+            {% if lastmatch %}
+            <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a>
+            {% endif %}
         {% endifequal %}
     </div>
     

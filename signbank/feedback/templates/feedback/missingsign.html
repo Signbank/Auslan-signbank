@@ -46,8 +46,15 @@ $(document).ready(function(){
 
 {% block content %}
   <div class="col-md-6 col-md-offset-3">
+      
+      <h2>Missing Sign Feedback</h2>
+      
   {% if posted %}
-     <p>Thank you for your feedback.</p>     
+<div id="feedbackmessage">
+    <p class='alert alert-info'>
+        Thank you for your feedback. 
+    </p>
+</div>    
   {% else %}
    
     <p>Please fill out the required questions opposite and then

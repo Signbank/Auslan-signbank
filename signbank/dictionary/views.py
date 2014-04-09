@@ -185,6 +185,12 @@ def gloss(request, idgloss):
     """View of a gloss - mimics the word view, really for admin use
        when we want to preview a particular gloss"""
 
+
+    if request.GET.has_key('feedbackmessage'):
+        feedbackmessage = request.GET['feedbackmessage']
+    else:
+        feedbackmessage = False
+
     # we should only be able to get a single gloss, but since the URL
     # pattern could be spoofed, we might get zero or many
     # so we filter first and raise a 404 if we don't get one
@@ -236,8 +242,10 @@ def gloss(request, idgloss):
     # get the last match keyword if there is one passed along as a form variable
     if request.GET.has_key('lastmatch'):
         lastmatch = request.GET['lastmatch']
+        if lastmatch == "None":
+            lastmatch = False
     else:
-        lastmatch = None
+        lastmatch = False
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
@@ -255,6 +263,7 @@ def gloss(request, idgloss):
                                'update_form': update_form,
                                'videoform': video_form,
                                'tagform': TagUpdateForm(),
+                               'feedbackmessage': feedbackmessage,
                                'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
