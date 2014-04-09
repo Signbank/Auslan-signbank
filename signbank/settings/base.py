@@ -190,6 +190,8 @@ SOUTH_TESTS_MIGRATE = False
 LANGUAGE_NAME = "Auslan"
 COUNTRY_NAME = "Australia"
 
+# do we show the 'advanced search' form and implement 'safe' search?
+ADVANCED_SEARCH = True
 
 # do we display the previous/next links to signs, requires gloss.sn to be used consistently
 SIGN_NAVIGATION = True
