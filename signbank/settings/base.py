@@ -9,7 +9,7 @@ PROJECT_DIR = os.path.dirname(BASE_DIR)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-EMAIL_HOST = "mail.exetel.com.au"
+EMAIL_HOST = ""
 
 ADMINS = (
      ('Steve Cassidy', 'steve.cassidy@mq.edu.au'),
