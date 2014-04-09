@@ -254,18 +254,11 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
 
         # now also create the userprofile for this user with
         # the extra information from the form
-
-        # having trouble with postcode not being allowed to be NULL in the db
-        # despite my declaring it null=True
-        # so we default it to a value if it isn't supplied
-        postcode = self.cleaned_data['postcode']
-        if postcode == None:
-            postcode = 0
-
+        
         profile = UserProfile(user=new_user,
                               yob=self.cleaned_data['yob'],
                               australian=self.cleaned_data['australian'],
-                              postcode=postcode,
+                              postcode=self.cleaned_data['postcode'],
                               background=",".join(self.cleaned_data['background']),
                               auslan_user=self.cleaned_data['auslan_user'],
                               learned=self.cleaned_data['learned'],
