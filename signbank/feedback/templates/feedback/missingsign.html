@@ -1,9 +1,10 @@
 
 
 {% extends "baselayout.html" %}
+{% load bootstrap3 %}
 
-{% block script %}
-
+{% block extrajs %}
+<script type='text/javascript'>
 $(document).ready(function(){
 
     /* the togglevideobutton switches between input for
@@ -13,7 +14,7 @@ $(document).ready(function(){
        $("#videoupload").toggle();
        $("#signdescriptioninput").toggle();
        return false;
-    })
+    });
     $("#videoupload").hide();
     
     
@@ -35,23 +36,26 @@ $(document).ready(function(){
            $("#handinteractiondiv").show();
        }
        return false;
-    }).change()
-})
-
+    }).change();
+});
+</script>
 {% endblock %}
  
  
 
 
 {% block content %}
+  <div class="col-md-6 col-md-offset-3">
   {% if posted %}
      <p>Thank you for your feedback.</p>     
   {% else %}
    
     <p>Please fill out the required questions opposite and then
-    click 'Submit' to report a missing sign to the Auslan signbank.</p>
+    click 'Submit' to report a missing sign to the {{language}} signbank.</p>
+    
     <p>If verified, the site will be updated 
-         to include the new sign.</p>
+         to include the new sign.  Note that this may take some time depending 
+         on the level of requests.</p>
 
 <form method="post" enctype="multipart/form-data" name="missingsign">
    {% csrf_token %}
@@ -60,15 +64,16 @@ $(document).ready(function(){
     enter a meaning and any comments you might have in the text 
     boxes at the bottom of the form. <p>
 
-    <button id="togglevideobutton">Video Comment</button>
+    <button class='btn btn-default' id="togglevideobutton">Video Comment</button>
     
  <fieldset id="videoupload">
   <legend>Video Upload</legend>
   <div id="{{form.video.name}}div">
-    <label>{{form.video.label}}</label>
+    {% bootstrap_label form.video.label %}
     <p>Upload a video of the sign.</p>
     {%if form.video.errors %}{{form.video.errors}}{% endif %}
-    {{form.video}}   
+    {% bootstrap_field form.video show_label=False %}
+       
     <p>NOTE: Video files can be quite large, and may take a long time to send. 
     Please be patient when submitting this feedback.</p>
   </div>
@@ -78,34 +83,31 @@ $(document).ready(function(){
 <fieldset id="signdescriptioninput">
     <legend>Sign Description</legend>
     
+    
     <div id="{{form.handform.name}}div">
-        <label>{{form.handform.label}} *</label>
         {%if form.handform.errors %}{{form.handform.errors}}{% endif %}
-        {{form.handform}}
+        {% bootstrap_field form.handform %}
     </div>
     
     <div id="{{form.handshape.name}}div">
-        <label>{{form.handshape.label}} *
-        <a href="{{ STATIC_URL }}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
-        </label>
         {%if form.handshape.errors %}{{form.handshape.errors}}{% endif %}
-        {{form.handshape}}
+        {% bootstrap_label form.handshape.label %} <a href="{{ STATIC_URL }}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
+        {% bootstrap_field form.handshape show_label=False %}
     </div>
     
     <div id="{{form.althandshape.name}}div">
-        <label>{{form.althandshape.label}} *  
+        {% bootstrap_label form.althandshape.label %}  
           <a href="{{ STATIC_URL }}images/feedback/guide_handshapes.gif" target="guide">Show Guide</a>
-        </label>
+
         {%if form.althandshape.errors %}{{form.althandshape.errors}}{% endif %}
-        {{form.althandshape}}
+        {% bootstrap_field form.althandshape show_label=False %}
     </div>
     
     <div id="{{form.location.name}}div">
-        <label>{{form.location.label}} *
+         {% bootstrap_label form.location.label %}
          <a href="{{ STATIC_URL }}images/feedback/guide_signpos.gif" target="guide">Show Guide</a>
-        </label>
         {%if form.location.errors %}{{form.location.errors}}{% endif %}
-        {{form.location}}
+        {% bootstrap_field form.location show_label=False %}
     </div>
     
     <div id="{{form.relativelocation.name}}div">
@@ -113,7 +115,7 @@ $(document).ready(function(){
          <a href="{{ STATIC_URL }}images/feedback/guide_relativesignpos.gif" target="guide">Show Guide</a>
         </label>
         {%if form.relativelocation.errors %}{{form.relativelocation.errors}}{% endif %}
-        {{form.relativelocation}}
+        {% bootstrap_field form.relativelocation show_label=False %}
     </div>
     
     <p id="movementmessagep">Using the guide, select the movement symbol/word that 
@@ -121,44 +123,44 @@ $(document).ready(function(){
       or a choice from every category.</p>
     
     <div id="{{form.handbodycontact.name}}div">
-      <label>{{form.handbodycontact.label}}</label>
-      <img src="{{ STATIC_URL }}images/feedback/guide_movecontact.gif" class="formguide" />
-    {%if form.handbodycontact.errors %}{{form.handbodycontact.errors}}{% endif %}
-    {{form.handbodycontact}}
+      {% bootstrap_label form.handbodycontact.label %}
+      <img src="{{ STATIC_URL }}images/feedback/guide_movecontact.gif" class="formguide">
+      {%if form.handbodycontact.errors %}{{form.handbodycontact.errors}}{% endif %}
+      {% bootstrap_field form.handbodycontact show_label=False %}
     </div>
     
     <div id="{{form.handinteraction.name}}div">
-    <label>{{form.handinteraction.label}}</label>
-    <img src="{{ STATIC_URL }}images/feedback/guide_moveinteraction.gif" class="formguide" />
+    {% bootstrap_label form.handinteraction.label %}
+    <img src="{{ STATIC_URL }}images/feedback/guide_moveinteraction.gif" class="formguide">
     {%if form.handinteraction.errors %}{{form.handinteraction.errors}}{% endif %}
-    {{form.handinteraction}}
+    {% bootstrap_field form.handinteraction show_label=False %}
     </div>
     
     <div id="{{form.direction.name}}div">
-    <label>{{form.direction.label}}</label>
-    <img src="{{ STATIC_URL }}images/feedback/guide_movedirection.gif" class="formguide" />
+    {% bootstrap_label form.direction.label %}
+    <img src="{{ STATIC_URL }}images/feedback/guide_movedirection.gif" class="formguide">
     {%if form.direction.errors %}{{form.direction.errors}}{% endif %}
-    {{form.direction}}
+    {% bootstrap_field form.direction show_label=False %}
     </div>
     
     <div id="{{form.movementtype.name}}div">
-    <label>{{form.movementtype.label}}</label>
-    <img src="{{ STATIC_URL }}images/feedback/guide_movetype.gif" class="formguide" />
+    {% bootstrap_label form.movementtype.label %}
+    <img src="{{ STATIC_URL }}images/feedback/guide_movetype.gif" class="formguide">
     {%if form.movementtype.errors %}{{form.movementtype.errors}}{% endif %}
-    {{form.movementtype}}
+    {% bootstrap_field form.movementtype show_label=False %}
     </div>
     
     <div id="{{form.smallmovement.name}}div">
-    <label>{{form.smallmovement.label}}</label>
-    <img src="{{ STATIC_URL }}images/feedback/guide_movehands.gif" class="formguide" />
+    {% bootstrap_label form.smallmovement.label %}
+    <img src="{{ STATIC_URL }}images/feedback/guide_movehands.gif" class="formguide">
     {%if form.smallmovement.errors %}{{form.smallmovement.errors}}{% endif %}
-    {{form.smallmovement}}
+    {% bootstrap_field form.smallmovement show_label=False %}
     </div>
     
     <div id="{{form.repetition.name}}div">
-    <label>{{form.repetition.label}}</label>
+    {% bootstrap_label form.repetition.label %}
     {%if form.repetition.errors %}{{form.repetition.errors}}{% endif %}
-    {{form.repetition}}
+    {% bootstrap_field form.repetition show_label=False %}
     </div>
     
 </fieldset>
@@ -166,25 +168,25 @@ $(document).ready(function(){
 <fieldset id="meaninginput">
   <legend>Details</legend>
     <div id="{{form.meaning.name}}div">
-        <label>{{form.meaning.label}} *</label>
         <p>Please explain the meaning of the new or missing sign, or enter individual English words that have the same meaning as this sign (i.e. keywords).</p>
         {%if form.meaning.errors %}{{form.meaning.errors}}{% endif %}
-        {{form.meaning}}
+        {% bootstrap_field form.meaning show_label=False %}
     </div>
 
     <div id="{{form.comments.name}}div">
-        <label>{{form.comments.label}}</label>
         <p>Are there any other comments you would like to give about this sign? For example, do you think there are other or extra keyword/s that belong with this sign? If so, please include your comments below.</p>
         {%if form.comments.errors %}{{form.comments.errors}}{% endif %}
-        {{form.comments}}
+        {% bootstrap_field form.comments show_label=False %}
     </div>
 </fieldset>
  
-<hr />
+<hr>
 <div class="formbuttons">
-  <input type="submit" value="Submit" class="submit" />
-  <input type="button" name="reset" value="Reset" class="reset" />
+  <input class='btn btn-primary' type="submit" value="Submit Feedback" class="submit" />
 </div>
+<hr>
 </form>
+
+</div>
   {% endif %}
 {% endblock %}

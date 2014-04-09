@@ -22,7 +22,9 @@
 <div id='publicsign'>
 {% if feedbackmessage %}
 <div id="feedbackmessage">
-    <p>{{ feedbackmessage }}</p>
+    <p class='alert alert-info'>
+        {{ feedbackmessage }}
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></p>
 </div>
 {% endif %}
 

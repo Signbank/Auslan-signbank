@@ -95,14 +95,15 @@ class SignFeedback(models.Model):
     
     translation = models.ForeignKey(Translation, editable=False)
     
+    comment = models.TextField("Please give us your comments about this sign. For example: do you think there are other keywords that belong with this sign? Please write your comments or new keyword/s below.", blank=True)
+    kwnotbelong = models.TextField("Is there a keyword or keyword/s that DO NOT belong with this sign? Please provide the list of keywords below", blank=True)
+     
     isAuslan = models.IntegerField("Is this sign an Auslan Sign?", choices=isAuslanChoices)
     whereused = models.CharField("Where is this sign used?", max_length=10, choices=whereusedChoices)
     like = models.IntegerField("Do you like this sign?", choices=likedChoices)
     use = models.IntegerField("Do you use this sign?", choices=useChoices)
     suggested = models.IntegerField("If this sign is a suggested new sign, would you use it?", default=3, choices=suggestedChoices)
     correct = models.IntegerField("Is the information about the sign correct?", choices=correctChoices)
-    kwnotbelong = models.TextField("Keywords that DO NOT belong with this sign", blank=True)
-    comment = models.TextField("Comment", blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='unread')
     
     def __str__(self):
@@ -110,6 +111,7 @@ class SignFeedback(models.Model):
 
     class Meta:
         ordering = ['-date']
+
 
 class SignFeedbackForm(forms.Form):
     """Form for input of sign feedback"""
@@ -126,7 +128,7 @@ class SignFeedbackForm(forms.Form):
     #suggested = forms.IntegerField(initial=0, widget=forms.HiddenInput)
     correct = forms.ChoiceField(choices=correctChoices, initial=0, widget=forms.RadioSelect)
     #correct = forms.IntegerField(initial=0, widget=forms.HiddenInput)
-    kwnotbelong = forms.CharField(required=False, widget=forms.Textarea) 
+    kwnotbelong = forms.CharField(label="List keywords", required=False, widget=forms.Textarea) 
     comment = forms.CharField(required=False, widget=forms.Textarea)
 
  

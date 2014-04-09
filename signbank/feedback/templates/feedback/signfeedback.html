@@ -1,4 +1,5 @@
 {% extends "baselayout.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
 <div class="asbBodyCell" style="width: 600px">
@@ -9,6 +10,7 @@
   
 <form id="signfeedback" method="post">
 {% csrf_token %}
+
   <input type='hidden' name='sourcepage' value='{{sourcepage}}'>
 
   {% csrf_token %}
@@ -18,17 +20,16 @@
   </p>
 
   {% if feedback_form.comment.errors %}<ul class="errorlist">{{ feedback_form.comment.errors }}</ul>{% endif %}
-    {{ feedback_form.comment }} 
+    {% bootstrap_field feedback_form.comment show_label=False %} 
     
   <p> <span class="feedbackQuestion">Is there a keyword or keyword/s 
   that DO NOT belong with this sign?</span>
   <br /> Please provide the list of keywords below  </p>
   {% if feedback_form.kwnotbelong.errors %}<ul class="errorlist">{{ feedback_form.kwnotbelong.errors }}</ul>{% endif %}
-      {{ feedback_form.kwnotbelong }}  
+      {% bootstrap_field feedback_form.kwnotbelong show_label=False %}  
 
-  <table border='0' width='100%'>
-   <tr><td><input type="submit" value="Submit"/></td><td align="right"><input type="reset"/></td></tr>
-  </table>
+  <p><input class='btn btn-primary' type="submit" value="Submit"/></p>
+
   <h3>Optional Questions</h3>
   <p class="feedbackQuestion">Is this sign an Auslan Sign?</p>
   
@@ -58,9 +59,9 @@
     
   <input type="hidden" name="translation_id" value="{{translation.id}}" />
   <hr/>
-  <table border='0' width='100%'>
-   <tr><td><input type="submit" value="Submit"/></td><td align="right"><input type="reset"/></td></tr>
-  </table>
+
+  <p><input class='btn btn-primary' type="submit" value="Submit"></p>
+
   
 </form>
  {% endif %}
