@@ -1,5 +1,5 @@
 {% extends "baselayout.html" %}
-
+{% load bootstrap3 %}
 {% block bootstrap3_title %}Signbank: Search Signs{% endblock %}
 {% block extrahead %}
 {% endblock %}
@@ -92,50 +92,54 @@ function clearForm(myFormElement) {
         </div>
         
         <div  class="panel panel-default">
-            <div class="panel-heading">Search by Tags, Dialect and Language 
+            <div class="panel-heading">Search by Tags
+                    {% if perms.dictionary.view_advanced_properties %}, Dialect and Language{% endif %}
                 (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#searchpanels'>Show</a></a>)</div>
           
-            <table id='searchpanels' class='collapse'>
+            <div id='searchpanels' class='collapse'>
+            <table class='table'>
                 <tr>
                     <td>
-                    <div class='input-group'>
-                        <label class='input-group-addon' for='id_tags'>Tagged</label>
-                        {{searchform.tags}}
-                    </div>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_tags'>Tagged</label>
+                            {{searchform.tags}}
+                        </div>
                     </td>
-                    
                     <td>
-                    <div class='input-group'>
-                        <label class='input-group-addon' for='id_dialect'>{{searchform.dialect.label}}</label>
-                        {{searchform.dialect}}
-                    </div>
-                    </td>                   
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_nottags'>Not Tagged</label>
+                            {{searchform.nottags}}
+                        </div>
+                    </td>    
                   </tr>
+                  
+                  {% if perms.dictionary.view_advanced_properties %}
                   <tr>
                     <td>
-                    <div class='input-group'>
-                        <label class='input-group-addon' for='id_nottags'>Not Tagged</label>
-                        {{searchform.nottags}}
-                    </div>
-                    </td>
-
-            
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_dialect'>{{searchform.dialect.label}}</label>
+                            {{searchform.dialect}}
+                        </div>
+                    </td> 
                     <td>
-                    <div class='input-group'>
-                        <label class='input-group-addon' for='id_language'>{{searchform.language.label}}</label>
-                        {{searchform.language}}
-                    </div>
+                        <div class='input-group'>
+                            <label class='input-group-addon' for='id_language'>{{searchform.language.label}}</label>
+                            {{searchform.language}}
+                        </div>
                     </td>
-                </tr>
+                  </tr>
+                  {% endif %}
             </table>
+            </div>
           </div>
               
         <div  class="panel panel-default">
           <div class="panel-heading">Search by Publication and Phonology
                 (<a class='collapsetoggle' href="#" data-toggle="collapse"  data-target='#advsearchpanels'>Show</a></a>)</div>
           
+          <div id='advsearchpanels' class='collapse'>
           <table class='table'>
-            <tr id='advsearchpanels' class='collapse'>
+            <tr>
       
               <td>
                 <table>
@@ -164,6 +168,7 @@ function clearForm(myFormElement) {
               </td>
             </tr>
           </table>
+        </div>
         </div>
  
         <div  class="panel panel-default">
