@@ -9,7 +9,6 @@
         var myPlayer = videojs('sign');
 
         var aspectRatio = {{aspectRatio}}; // Make up an aspect ratio
-        console.log(aspectRatio);
     
         function resizeVideoJS(){
             
@@ -32,8 +31,10 @@
            });
            this.on('playing', function(){
               this.bigPlayButton.hide(); 
-           });           
+           });
            
+           // show the button because on mobile autoplay won't work
+           this.bigPlayButton.show(); 
            this.play(); 
         });
         
@@ -50,7 +51,7 @@ min-height: 100%; min-width: 100%; height: auto !important; width: auto !importa
  <body id='signbody'>
      <video id='sign' class='video-js vjs-default-skin' 
             poster='{{posterurl}}' 
-            data-setup='{ "autoplay":true, "controls":false }' preload='auto'>
+            data-setup='{ "autoplay":false, "controls":false }' preload='auto'>
          <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
      </video>
 </body>
