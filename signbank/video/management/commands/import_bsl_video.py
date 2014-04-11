@@ -59,8 +59,7 @@ def import_existing_gloss_videos(path):
                 gv = GlossVideo(gloss=gloss, videofile=uf)
             
                 gv.save()
-                # force conversion to mp4
-                gv.ensure_mp4()
+
             else:
                 print "gloss matches for", videofile, glosses
             
