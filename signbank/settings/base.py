@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_summernote',
     'signbank.dictionary',
     'signbank.feedback',
     'signbank.registration',

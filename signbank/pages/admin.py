@@ -4,6 +4,9 @@ from signbank.pages.models import Page, PageVideo
 from signbank.video.fields import VideoUploadToFLVField
 from django.utils.translation import ugettext_lazy as _
 
+from django_summernote.admin import SummernoteModelAdmin
+
+
 from signbank.log import debug
 
 class PageForm(forms.ModelForm):
@@ -39,7 +42,7 @@ class PageVideoInline(admin.TabularInline):
     model = PageVideo  
     extra = 1
 
-class PageAdmin(admin.ModelAdmin):
+class PageAdmin(SummernoteModelAdmin):
     form = PageForm
     fieldsets = (
         (None, {'fields': ('url', 'title', 'parent', 'index', 'publish', 'content' )}),
