@@ -47,6 +47,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # special admin sub site
     url(r'^publisher/', include(publisher_admin.urls)),
+    
+    
+    url(r'^summernote/', include('django_summernote.urls')),
 
     url(r'^test/(?P<videofile>.*)$', TemplateView.as_view(template_name="test.html")),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

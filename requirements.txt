@@ -4,3 +4,4 @@ django-tagging
 django-mobile
 django-reversion
 django-bootstrap3
+django-summernote

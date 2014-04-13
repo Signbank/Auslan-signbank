@@ -13,7 +13,7 @@ class Page(models.Model):
     template_name = models.CharField(_('template name'), max_length=70, blank=True,
         help_text=_("Example: 'pages/contact_page.html'. If this isn't provided, the system will use 'pages/default.html'."))
     publish = models.BooleanField(_('publish'), help_text=_("If this is checked, the page will be included in the site menus."))
-    parent = models.ForeignKey('self', blank=True, null=True, help_text=_("Leave blank for a top level menu entry"))     
+    parent = models.ForeignKey('self', blank=True, null=True, help_text=_("Leave blank for a top level menu entry.  Top level entries that have sub-pages should be empty as they will not be linked in the menu."))     
     index = models.IntegerField(_('ordering index'), default=0, help_text=_('Used to order pages in the menu'))
     group_required = models.ForeignKey(Group, null=True, blank=True, help_text=_("This page will only be visible to members of this group, leave blank to allow anyone to access."))
 
