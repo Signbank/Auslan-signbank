@@ -213,7 +213,8 @@ def recordsignfeedback(request, trans, n, total):
                                'feedback_form': feedback_form, 
                                'valid': valid,
                                'sourcepage': sourcepage,
-                               'lastmatch': lastmatch
+                               'lastmatch': lastmatch,
+                               'language': settings.LANGUAGE_NAME,
                                },
                                context_instance=RequestContext(request))
 
