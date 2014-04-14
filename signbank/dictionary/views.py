@@ -38,6 +38,7 @@ def index(request):
 
     return render_to_response("dictionary/search_result.html",
                               {'form': UserSignSearchForm(),
+                               'language': settings.LANGUAGE_NAME,
                                },
                                context_instance=RequestContext(request))
 
@@ -380,6 +381,7 @@ def search(request):
                                'wordcount' : len(words),
                                'page' : result_page,
                                'ADVANCED_SEARCH': settings.ADVANCED_SEARCH,
+                               'language': settings.LANGUAGE_NAME,
                                },
                               context_instance=RequestContext(request))
 
