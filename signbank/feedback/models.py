@@ -6,6 +6,16 @@ from signbank.video.fields import VideoUploadToFLVField
 from signbank.dictionary.models import *
 # models to represent the feedback from users in the site
 
+import string
+
+def t(message):
+    """Replace $country and $language in message with dat from settings"""
+    
+    tpl = string.Template(message)
+    return tpl.substitute(country=settings.COUNTRY_NAME, language=settings.LANGUAGE_NAME)
+
+
+
 from django import forms
 
 STATUS_CHOICES = ( ('unread', 'unread'),
@@ -112,7 +122,7 @@ class SignFeedback(models.Model):
     comment = models.TextField("Please give us your comments about this sign. For example: do you think there are other keywords that belong with this sign? Please write your comments or new keyword/s below.", blank=True)
     kwnotbelong = models.TextField("Is there a keyword or keyword/s that DO NOT belong with this sign? Please provide the list of keywords below", blank=True)
      
-    isAuslan = models.IntegerField("Is this sign an Auslan Sign?", choices=isAuslanChoices)
+    isAuslan = models.IntegerField(t("Is this sign an $language Sign?"), choices=isAuslanChoices)
     whereused = models.CharField("Where is this sign used?", max_length=10, choices=whereusedChoices)
     like = models.IntegerField("Do you like this sign?", choices=likedChoices)
     use = models.IntegerField("Do you use this sign?", choices=useChoices)

@@ -28,7 +28,7 @@
   <p><input class='btn btn-primary' type="submit" value="Submit"/></p>
 
   <h3>Optional Questions</h3>
-  <p class="feedbackQuestion">Is this sign an Auslan Sign?</p>
+  <p class="feedbackQuestion">Is this sign an {{language}} Sign?</p>
   
   {% if feedback_form.isAuslan.errors %}<ul class="errorlist">{{ feedback_form.isAuslan.errors }}</ul>{% endif %}
   {{ feedback_form.isAuslan }}  
