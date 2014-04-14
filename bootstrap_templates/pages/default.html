@@ -4,9 +4,9 @@
 {% block content %}
 
 {# show the edit button if the user has permission to change pages #}
-{% if perms.pages.change %}
+{% if perms.pages.change_page %}
 <div id="editbutton">
-    <a href="/admin/pages/page/{{page.id}}/">[Edit]</a>
+    <a href="/publisher/pages/page/{{page.id}}/">[Edit]</a>
 </div>
 {% endif %}
 
