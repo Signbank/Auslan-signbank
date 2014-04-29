@@ -16,6 +16,10 @@ body {
   padding: 0px; 
 }
 
+#signinfo .navbar-text {
+        color: #000000;
+}
+
 #videoiframe {
     width: 308px;
     height: 230px;

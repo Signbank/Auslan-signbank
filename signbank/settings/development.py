@@ -8,29 +8,30 @@ TEMPLATE_DIRS = (
 # show emails on the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-PRIMARY_CSS = "bootstrap_css/bsl.css"
-#PRIMARY_CSS = "bootstrap_css/auslan.css"
+#PRIMARY_CSS = "bootstrap_css/bsl.css"
+PRIMARY_CSS = "bootstrap_css/auslan.css"
 
 
 # defines the aspect ratio for videos
-VIDEO_ASPECT_RATIO = 360.0/640.0
+#VIDEO_ASPECT_RATIO = 360.0/640.0
 
 
 # what do we call this signbank?
-LANGUAGE_NAME = "BSL"
-COUNTRY_NAME = "the UK"
+#LANGUAGE_NAME = "BSL"
+#COUNTRY_NAME = "the UK"
 
 # show/don't show sign navigation
-SIGN_NAVIGATION = False
+#SIGN_NAVIGATION = False
 
 # show the number signs page or an under construction page?
-SHOW_NUMBERSIGNS = False
+#SHOW_NUMBERSIGNS = False
 
 # do we show the 'advanced search' form and implement 'safe' search?
-ADVANCED_SEARCH = False
+#ADVANCED_SEARCH = False
 
 # which definition fields do we show and in what order?
 #DEFINITION_FIELDS = []
+
 
 ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
 
