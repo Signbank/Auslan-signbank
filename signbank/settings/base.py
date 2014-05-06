@@ -36,6 +36,8 @@ USE_TZ = True
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "test-media")
 MEDIA_URL = '/media/'
+MEDIA_MOBILE_URL = MEDIA_URL
+
 
 # Ditto for static files from the Auslan site (css, etc) with trailing slash
 AUSLAN_STATIC_PREFIX = "/static/"
@@ -69,7 +71,7 @@ SECRET_KEY = '^g=q21r_nnmbz49d!vs*2gvpll-y9b@&amp;t3k2r3c$*u&amp;2la5!%s'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django_mobile.loader.Loader',
+   # 'django_mobile.loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
