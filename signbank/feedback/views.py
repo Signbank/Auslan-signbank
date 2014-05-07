@@ -8,6 +8,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required 
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 import time
 
@@ -19,7 +20,53 @@ def index(request):
                                'title':"Leave Feedback"},
                               context_instance=RequestContext(request))
 
+
+
+@login_required
+def interpreterfeedback(request, glossid=None):
+      
+    if request.method == "POST":
         
+        if 'action' in request.POST and 'delete_all' in request.POST['action']:
+            gloss = get_object_or_404(Gloss, pk=glossid)
+            fbset = gloss.interpreterfeedback_set.all()
+            fbset.delete()        
+        elif 'action' in request.POST and 'delete' in request.POST['action']:
+            fbid = request.POST['id']
+            fb = get_object_or_404(InterpreterFeedback, pk=fbid)
+            
+            fb.delete()
+        else:
+            gloss = get_object_or_404(Gloss, pk=glossid)
+        
+            form = InterpreterFeedbackForm(request.POST, request.FILES)
+            if form.is_valid():        
+            
+            
+                fb = form.save(commit=False)
+                fb.user = request.user
+                fb.gloss = gloss
+                fb.save()
+    
+        # redirect to the gloss page 
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid}))
+    else:
+        
+        # generate a page listing the feedback from interpreters
+        
+        notes = InterpreterFeedback.objects.all()
+        #general = GeneralFeedback.objects.filter(user__groups__name__equal='Interpreter')
+        
+        
+        return render_to_response('feedback/interpreter.html',
+                                   {'notes': notes,
+                                    #'general': general,
+                                   },
+                               context_instance=RequestContext(request))
+
+
+        
+
 
 @login_required
 def generalfeedback(request):

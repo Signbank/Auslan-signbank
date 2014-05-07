@@ -22,7 +22,29 @@ STATUS_CHOICES = ( ('unread', 'unread'),
                    ('read', 'read'),
                    ('deleted', 'deleted'),
                  )
+                 
+                 
+                 
+class InterpreterFeedback(models.Model):
+    """Feedback on a sign from an interpreter"""                
 
+    class Meta:
+        ordering = ['-date']
+        permissions = (('view_interpreterfeedback', "Can View Interpreter Feedback"),)
+
+    gloss = models.ForeignKey(Gloss)
+    comment = models.TextField('Note')
+    user = models.ForeignKey(authmodels.User)
+    date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='unread')
+    
+class InterpreterFeedbackForm(forms.ModelForm):
+    
+    class Meta:
+        model = InterpreterFeedback
+        fields = ['comment']
+        widgets={'comment': forms.Textarea(attrs={'cols': 30, 'rows': 2})}
+    
 
 class GeneralFeedback(models.Model):
  
