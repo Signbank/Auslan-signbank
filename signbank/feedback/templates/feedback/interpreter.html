@@ -1,0 +1,27 @@
+{% extends "baselayout.html" %}
+
+{% block content %}
+    <h1>Interpreter Feedback Summary</h1>
+    
+    {% if perms.feedback.view_interpreterfeedback %}
+    
+    <p>A list of signs that have at least one Interpreter Note</p>
+    
+    <table>
+      {% regroup notes by gloss as glosses %}
+      
+      {% for gloss in glosses %}
+      <tr>
+        <td><a href="{% url 'dictionary:admin_gloss_view' pk=gloss.grouper.id %}">{{gloss.grouper.idgloss}}</a></td>
+      </tr>
+
+      {% endfor %}      
+    </table>
+    {% else %}
+    
+    <p>You do not have permission to view this page</p>
+    
+    {% endif %}
+
+
+{% endblock %}
