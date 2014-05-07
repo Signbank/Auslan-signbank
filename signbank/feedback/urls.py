@@ -13,6 +13,8 @@ urlpatterns = patterns('',
    
     (r'^gloss/(?P<glossid>.+).html$',  'signbank.feedback.views.glossfeedback'),
    
+    url(r'^interpreter/(?P<glossid>\d+)', 'signbank.feedback.views.interpreterfeedback', name='intnote'),
+    url(r'^interpreter.html', 'signbank.feedback.views.interpreterfeedback', name='intnotelist'),
    
     (r'^(?P<kind>general|sign|missingsign)/delete/(?P<id>\d+)$', 'signbank.feedback.views.delete'),
 )

@@ -61,6 +61,13 @@
     
               <li {% if '/feedback/show.html' in request.path %}class="active"{% endif %}>
                    <a href="{% url 'signbank.feedback.views.showfeedback' %}">View Feedback</a></li>
+                   
+              {% if perms.feedback.view_interpreterfeedback %}
+                   
+              <li {% if '/feedback/interpreter.html' in request.path %}class="active"{% endif %}>
+                    <a href="{% url 'intnotelist' %}">Interpreter Feedback</a></li>
+                
+              {% endif %}
                 
               <li {% if '/attachments/' in request.path %}class="active"{% endif %}>
                    <a href="{% url 'attachments' %}">File Attachments</a></li>
