@@ -277,9 +277,11 @@ class GlossDetailView(DetailView):
         context['navigation'] = context['gloss'].navigation(True)
         context['interpform'] = InterpreterFeedbackForm()
         context['SIGN_NAVIGATION']  = settings.SIGN_NAVIGATION
+        context['glosscount'] = Gloss.objects.count()
+        context['glossposn'] =  Gloss.objects.filter(sn__lt=context['gloss'].sn).count()+1
         return context
         
-
+        
 def gloss_ajax_complete(request, prefix):
     """Return a list of glosses matching the search term
     as a JSON structure suitable for typeahead."""
