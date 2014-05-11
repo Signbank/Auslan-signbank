@@ -34,15 +34,15 @@
             {% if SIGN_NAVIGATION %}
         
                 {% if navigation.prev %}
-                <a class='btn navbar-btn btn-default' href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; Previous Sign</a>
+                <a class='btn navbar-btn btn-default' href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&laquo; <span class='hidden-xs'>Previous Sign</span></a>
            
                 {% endif %}
             
-                <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} in the Auslan Dictionary</button>
+                <button class='btn navbar-btn'>Sign {{glossposn}} of {{glosscount}} <span class='hidden-xs'>in the Auslan Dictionary</span></button>
             
                 {% if navigation.next %}
                 <a class="btn navbar-btn btn-default"
-                   href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">Next Sign &raquo;</a>
+                   href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}"><span class='hidden-xs'>Next Sign</span> &raquo;</a>
                 {% endif %}
              {% else %}
            
@@ -79,7 +79,7 @@
     </div>
 
     <div id="definitionblock">
-        <div id="leftblock">
+        <div class='col-md-4'>
             <div id="videocontainer">
                <div id="player">
                 {% if gloss.get_video %}
@@ -140,7 +140,7 @@
         </div>
 
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
-        <div id="definition">
+        <div  class='col-md-8'>
             <h2>Sign Definition</h2>
 
             {% for deftype in DEFINITION_FIELDS %}
