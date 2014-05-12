@@ -5,17 +5,17 @@ from signbank.dictionary.models import Gloss
 from django.contrib.auth.models import User, Group, Permission
 
 
-advanced_search = Permission.objects.get(codename='search_gloss')
-view_adv_properties = Permission.objects.get(codename='view_advanced_properties')
-export_csv = Permission.objects.get(codename='export_csv')
-add_video = Permission.objects.get(codename='update_video')
-create_signs = Permission.objects.get(codename='add_gloss')
-publish = Permission.objects.get(codename='can_publish')
-delete_unpublished = Permission.objects.get(codename='can_delete_unpublished')
-delete_published = Permission.objects.get(codename='can_delete_published')
-view_interp_note = Permission.objects.get(codename='view_interpreterfeedback')
-create_interp_note = Permission.objects.get(codename='add_interpreterfeedback')
-delete_interp_note = Permission.objects.get(codename='delete_interpreterfeedback')
+advanced_search = Permission.objects.get(codename='search_gloss', content_type__model__exact='gloss')
+view_adv_properties = Permission.objects.get(codename='view_advanced_properties', content_type__model__exact='gloss')
+export_csv = Permission.objects.get(codename='export_csv', content_type__model__exact='gloss')
+add_video = Permission.objects.get(codename='update_video', content_type__model__exact='gloss')
+create_signs = Permission.objects.get(codename='add_gloss', content_type__model__exact='gloss')
+publish = Permission.objects.get(codename='can_publish', content_type__model__exact='gloss')
+delete_unpublished = Permission.objects.get(codename='can_delete_unpublished', content_type__model__exact='gloss')
+delete_published = Permission.objects.get(codename='can_delete_published', content_type__model__exact='gloss')
+view_interp_note = Permission.objects.get(codename='view_interpreterfeedback', content_type__model__exact='interpreterfeedback')
+create_interp_note = Permission.objects.get(codename='add_interpreterfeedback', content_type__model__exact='interpreterfeedback')
+delete_interp_note = Permission.objects.get(codename='delete_interpreterfeedback', content_type__model__exact='interpreterfeedback')
 
 
 class Command(BaseCommand):
