@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from signbank.dictionary.models import Gloss
 from django.contrib.auth.models import User, Group, Permission
 
-
+change_gloss = Permission.objects.get(codename='change_gloss', content_type__model__exact='gloss')
 advanced_search = Permission.objects.get(codename='search_gloss', content_type__model__exact='gloss')
 view_adv_properties = Permission.objects.get(codename='view_advanced_properties', content_type__model__exact='gloss')
 export_csv = Permission.objects.get(codename='export_csv', content_type__model__exact='gloss')
@@ -31,6 +31,7 @@ class Command(BaseCommand):
             publisher.permissions.add(advanced_search)
             publisher.permissions.add(view_adv_properties)
             publisher.permissions.add(export_csv)
+            publisher.permissions.add(change_gloss)
             publisher.permissions.add(add_video)
             publisher.permissions.add(create_signs)
             publisher.permissions.add(publish)
@@ -43,6 +44,7 @@ class Command(BaseCommand):
             # Editor
             editor, created = Group.objects.get_or_create(name='Editor')
             editor.permissions.add(advanced_search)
+            editor.permissions.add(change_gloss)
             editor.permissions.add(view_adv_properties)
             editor.permissions.add(export_csv)
             editor.permissions.add(add_video)
@@ -81,7 +83,6 @@ class Command(BaseCommand):
             observer, created = Group.objects.get_or_create(name='Observer')
             observer.permissions.add(advanced_search)
             observer.permissions.add(view_adv_properties)
-            observer.permissions.add(export_csv)
             
             
             # Public
