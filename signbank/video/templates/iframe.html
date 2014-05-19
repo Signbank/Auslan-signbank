@@ -26,15 +26,6 @@
            resizeVideoJS(); // Initialize the function
            window.onresize = resizeVideoJS; // Call the function on resize
             
-           this.on('ended', function(){
-              this.bigPlayButton.show(); 
-           });
-           this.on('playing', function(){
-              this.bigPlayButton.hide(); 
-           });
-           
-           // show the button because on mobile autoplay won't work
-           this.bigPlayButton.show(); 
            this.play(); 
         });
         
