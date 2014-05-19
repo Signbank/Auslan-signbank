@@ -39,6 +39,7 @@ def index(request):
     return render_to_response("dictionary/search_result.html",
                               {'form': UserSignSearchForm(),
                                'language': settings.LANGUAGE_NAME,
+                               'query': '',
                                },
                                context_instance=RequestContext(request))
 

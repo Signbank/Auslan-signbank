@@ -1,8 +1,13 @@
 @import url('tags.css');
 
+#header {
+    background-color: #333;
+}
+
 #header h1 {
 	color: #FFFF66;
 	font-family: "Arial Rounded MT Bold", "Arial Rounded", serif;
+    text-shadow: 0 0px 0 #000;
 }
 
 .ui-body-c {
