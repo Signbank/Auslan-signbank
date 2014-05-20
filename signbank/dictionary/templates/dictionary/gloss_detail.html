@@ -117,6 +117,22 @@
     {% endif %}
     
     </div>
+    
+    <div id="feedback">
+        <ul>
+            {% ifequal viewname "words" %}
+            <li><a href="{% url 'root_page' %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/dictionary/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+            {% else %}
+            <li><a href="{% url 'root_page' %}feedback/gloss/{{gloss.idgloss}}.html?return=/dictionary/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+            {% endifequal %}
+
+            <li><a href="{% url 'root_page' %}feedback/missingsign.html">Report a missing sign</a></li>
+            <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+        </ul>
+    </div>
+    
+    
+    
     {% if perms.dictionary.change_gloss and perms.dictionary.update_video %}
     <div class='editform'>
         <fieldset>

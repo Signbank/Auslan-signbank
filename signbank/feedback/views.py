@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import Context, RequestContext, loader
 from django.conf import settings 
 from django.core.mail import send_mail
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -55,12 +55,16 @@ def interpreterfeedback(request, glossid=None):
         # generate a page listing the feedback from interpreters
         
         notes = InterpreterFeedback.objects.all()
-        #general = GeneralFeedback.objects.filter(user__groups__name__equal='Interpreter')
-        
+    
+        general = GeneralFeedback.objects.filter(status='unread', user__groups__name='Interpreter')
+        missing = MissingSignFeedback.objects.filter(status='unread', user__groups__name='Interpreter')
+        signfb = SignFeedback.objects.filter(status='unread', user__groups__name='Interpreter')
         
         return render_to_response('feedback/interpreter.html',
                                    {'notes': notes,
-                                    #'general': general,
+                                    'general': general,
+                                    'missing': missing,
+                                    'signfb': signfb,
                                    },
                                context_instance=RequestContext(request))
 
@@ -158,7 +162,7 @@ def missingsign(request):
 # views to show feedback to Trevor et al
 #-----------
 
-@login_required
+@permission_required('feedback.delete_generalfeedback')
 def showfeedback(request):
     """View to list the feedback that's been left on the site"""
     
@@ -269,7 +273,7 @@ def recordsignfeedback(request, trans, n, total):
 #--------------------
 #  deleting feedback
 #--------------------
-@login_required
+@permission_required('feedback.delete_generalfeedback')
 def delete(request, kind, id):
     """Mark a feedback item as deleted, kind 'signfeedback', 'generalfeedback' or 'missingsign'"""
     

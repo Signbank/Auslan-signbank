@@ -59,9 +59,11 @@
               <li {% if '/dictionary/list/' in request.path %}class='active'{% endif %}>
                    <a href="{% url 'dictionary:admin_gloss_list' %}">Search Signs</a></li>
     
+              {% if perms.feedback.delete_generalfeedback %}
               <li {% if '/feedback/show.html' in request.path %}class="active"{% endif %}>
                    <a href="{% url 'signbank.feedback.views.showfeedback' %}">View Feedback</a></li>
-                   
+              {% endif %}
+              
               {% if perms.feedback.delete_interpreterfeedback %}
                    
               <li {% if '/feedback/interpreter.html' in request.path %}class="active"{% endif %}>
