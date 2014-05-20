@@ -16,6 +16,7 @@ delete_published = Permission.objects.get(codename='can_delete_published', conte
 view_interp_note = Permission.objects.get(codename='view_interpreterfeedback', content_type__model__exact='interpreterfeedback')
 create_interp_note = Permission.objects.get(codename='add_interpreterfeedback', content_type__model__exact='interpreterfeedback')
 delete_interp_note = Permission.objects.get(codename='delete_interpreterfeedback', content_type__model__exact='interpreterfeedback')
+delete_gen_feedback = Permission.objects.get(codename='delete_generalfeedback', content_type__model__exact='generalfeedback')
 
 
 class Command(BaseCommand):
@@ -40,6 +41,7 @@ class Command(BaseCommand):
             publisher.permissions.add(view_interp_note)
             publisher.permissions.add(create_interp_note)
             publisher.permissions.add(delete_interp_note)
+            publisher.permissions.add(delete_gen_feedback)
             
             # Editor
             editor, created = Group.objects.get_or_create(name='Editor')
@@ -53,6 +55,8 @@ class Command(BaseCommand):
             editor.permissions.add(view_interp_note)
             editor.permissions.add(create_interp_note)
             editor.permissions.add(delete_interp_note)
+            editor.permissions.add(delete_gen_feedback)
+
             
             # Interpreter
             interpreter, created = Group.objects.get_or_create(name='Interpreter')
