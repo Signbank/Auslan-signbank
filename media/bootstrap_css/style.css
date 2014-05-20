@@ -60,6 +60,15 @@ body {
    background-color: #FFF;
 }
 
+@media  (min-width: 992px) {
+
+    #definitionblock .col-md-8 {
+        padding-left: 60px;
+    }
+
+}
+
+
 #leftblock {
    float: left; 
    margin-left: 6px;
