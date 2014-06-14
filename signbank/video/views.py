@@ -101,16 +101,16 @@ def iframe(request, videoid):
     
     gloss = get_object_or_404(Gloss, pk=videoid)
 
-    video = get_object_or_404(GlossVideo, gloss=gloss, version=0)
+    glossvideo = gloss.get_video()
 
     if django_mobile.get_flavour(request) == 'mobile':
-        videourl = video.get_mobile_url()
+        videourl = glossvideo.get_mobile_url()
     else:
-        videourl = video.get_absolute_url()
+        videourl = glossvideo.get_absolute_url()
 
     return render_to_response("iframe.html",
                               {'videourl': videourl,
-                               'posterurl': video.poster_url(),
+                               'posterurl': glossvideo.poster_url(),
                                'aspectRatio': settings.VIDEO_ASPECT_RATIO,
                                },
                                context_instance=RequestContext(request))

@@ -314,11 +314,15 @@ def search(request):
             words = Keyword.objects.filter(text__istartswith=term,
                                             translation__gloss__inWeb__exact=True).distinct()
 
-        if safe:
+        try:
+            crudetag = Tag.objects.get(name='lexis:crude')
+        except:
+            crudetag = None
+
+        if safe and crudetag != None:
             
-            tag = Tag.objects.get(name='lexis:crude')
             
-            crude = TaggedItem.objects.get_by_model(Gloss, tag)
+            crude = TaggedItem.objects.get_by_model(Gloss, crudetag)
             # remove crude words from result
 
             result = []

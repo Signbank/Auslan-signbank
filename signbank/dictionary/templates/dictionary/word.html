@@ -82,7 +82,7 @@
         <div class='col-md-4'>
             <div id="videocontainer">
                <div id="player">
-                {% if gloss.get_video %}
+                {% if gloss.has_video %}
                   <iframe id='videoiframe' scrolling="no" frameborder='0' 
                           src="{% url 'signbank.video.views.iframe' gloss.pk %}">
                   </iframe>
