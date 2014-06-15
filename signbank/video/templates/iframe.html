@@ -7,7 +7,7 @@
     <script>
     $(document).ready(function(){     
         var myPlayer = videojs('sign');
-
+ 
         var aspectRatio = {{aspectRatio}}; // Make up an aspect ratio
     
         function resizeVideoJS(){
@@ -17,18 +17,15 @@
           // Set width to fill parent element, Set height
           myPlayer.width(width).height( width * aspectRatio );
         }
-    
-       
 
         myPlayer.ready(function(){
 
           
            resizeVideoJS(); // Initialize the function
            window.onresize = resizeVideoJS; // Call the function on resize
-            
-           this.play(); 
+
         });
-        
+    
     });
     </script>
     <style>
@@ -40,10 +37,11 @@ min-height: 100%; min-width: 100%; height: auto !important; width: auto !importa
     </style>
  </head> 
  <body id='signbody'>
+
      <video id='sign' class='video-js vjs-default-skin' 
-            poster='{{posterurl}}' 
-            data-setup='{ "autoplay":false, "controls":false }' preload='auto'>
+            poster='{{posterurl}}' controls autoplay preload='auto'>
          <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
      </video>
+    
 </body>
 </html>
