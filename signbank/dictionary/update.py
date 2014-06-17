@@ -24,6 +24,10 @@ def add_gloss(request):
             gloss = form.save()
             
             return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id})+'?edit')
+        else:
+            return render_to_response('dictionary/add_gloss_form.html', 
+                                      {'add_gloss_form': form},
+                                      context_instance=RequestContext(request))
         
     return HttpResponseRedirect(reverse('dictionary:admin_gloss_list'))
 
