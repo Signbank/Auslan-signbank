@@ -4,9 +4,11 @@ from django.conf import settings
 from django import forms
 import os.path
 from django.core.files import File
+from django.contrib.auth.decorators import permission_required
+from django.views.generic.list import ListView
+
 from signbank.attachments.models import Attachment
 
-from django.views.generic.list import ListView
 
 # TODO: both list and upload views should be handled by the same view fn
 # TODO: deal with uploading duplicate files - offer to replace
@@ -15,6 +17,7 @@ class UploadFileForm(forms.Form):
     file  = forms.FileField()
     description = forms.CharField()
 
+@permission_required('attachments.add_attachment')
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)

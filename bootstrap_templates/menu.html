@@ -70,13 +70,15 @@
                     <a href="{% url 'intnotelist' %}">Interpreter Feedback</a></li>
                 
               {% endif %}
-                
+              
+              {% if perms.attachments.add_attachment %}
               <li {% if '/attachments/' in request.path %}class="active"{% endif %}>
                    <a href="{% url 'attachments' %}">File Attachments</a></li>
-                                  
-            {% if user.is_staff %}
+              {% endif %}
+              
+              {% if user.is_staff %}
               <li><a href="/publisher">Users/Pages</a></li>
-            {% endif %}
+              {% endif %}
                       
                       
              </ul>
