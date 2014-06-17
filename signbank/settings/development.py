@@ -33,7 +33,7 @@ PRIMARY_CSS = "bootstrap_css/auslan.css"
 #DEFINITION_FIELDS = []
 
 
-ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
+#ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
 
 
 GLOSS_VIDEO_DIRECTORY = 'glossvideo'
