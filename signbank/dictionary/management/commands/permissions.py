@@ -17,6 +17,8 @@ view_interp_note = Permission.objects.get(codename='view_interpreterfeedback', c
 create_interp_note = Permission.objects.get(codename='add_interpreterfeedback', content_type__model__exact='interpreterfeedback')
 delete_interp_note = Permission.objects.get(codename='delete_interpreterfeedback', content_type__model__exact='interpreterfeedback')
 delete_gen_feedback = Permission.objects.get(codename='delete_generalfeedback', content_type__model__exact='generalfeedback')
+change_page = Permission.objects.get(codename='change_page', content_type__model__exact='page')
+add_page = Permission.objects.get(codename='add_page', content_type__model__exact='page')
 
 
 class Command(BaseCommand):
@@ -42,6 +44,9 @@ class Command(BaseCommand):
             publisher.permissions.add(create_interp_note)
             publisher.permissions.add(delete_interp_note)
             publisher.permissions.add(delete_gen_feedback)
+            publisher.permissions.add(change_page)
+            publisher.permissions.add(add_page)
+
             
             # Editor
             editor, created = Group.objects.get_or_create(name='Editor')
