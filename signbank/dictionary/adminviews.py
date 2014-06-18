@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 import csv
+import re
 
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
@@ -93,8 +94,10 @@ class GlossListView(ListView):
         if get.has_key('search') and get['search'] != '':
             val = get['search']
             query = Q(idgloss__istartswith=val) | \
-                    Q(annotation_idgloss__istartswith=val) | \
-                    Q(sn__startswith=val)
+                    Q(annotation_idgloss__istartswith=val)
+            if re.match('\d+', val):
+                query = query | Q(sn__exact=val)
+                    
             qs = qs.filter(query)
             
             #print "A: ", len(qs)
