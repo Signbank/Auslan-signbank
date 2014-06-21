@@ -2,11 +2,12 @@
 
 {% block extrahead %}
 
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}projekktor/projekktor-1.3.09.min.js"></script>
-<link rel="stylesheet" href="{{ STATIC_URL}}projekktor/themes/maccaco/projekktor.style.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+    <link href="//vjs.zencdn.net/4.5/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.5/video.js"></script>
 
-
+ 
+ 
 {% endblock %}
 {% block extrajs %}
 <script type='text/javascript'>
@@ -60,8 +61,15 @@ jQuery(document).ready(function(){
   
         {% if fb.video %}  
         <div class="videocontainer">
-           <video width=400 controls="controls" src='{{ MEDIA_URL }}{{ fb.video }}'></video>
+            <video id='genfbvid{{fb.id}}' class='video-js vjs-default-skin' 
+               poster='{{posterurl}}' controls  preload='false' data-setup='{"example_option":true}'>
+                <source src='{{ MEDIA_URL }}{{ fb.video }}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
+            </video>
+            <p><a href='{{ MEDIA_URL }}{{ fb.video }}'>Download video</a><br>
+                (if video does not play here you may be able to play by downloading)</p>
         </div>
+
+        
         {% endif %}
       
 	    <p>{{fb.comment}}</p>
@@ -134,8 +142,10 @@ jQuery(document).ready(function(){
     
         <p>Email: <a href="mailto:{{fb.user.email}}">{{fb.user.email}}</a></p>
         {% if fb.video %}  
-         <div class="videocontainer">
-            <video width=400 controls="controls" src='{{ MEDIA_URL }}{{ fb.video }}'>
+        <div class="videocontainer">
+            <video id='msfb{{fb.id}}' class='video-js vjs-default-skin' 
+               poster='{{posterurl}}' controls preload='false' data-setup='{"example_option":true}'>
+                <source src='{{ MEDIA_URL }}{{ fb.video }}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
             </video>
             <p><a href='{{ MEDIA_URL }}{{ fb.video }}'>Download video</a><br>
                 (if video does not play here you may be able to play by downloading)</p>
