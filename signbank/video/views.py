@@ -99,18 +99,26 @@ def video(request, videoid):
 def iframe(request, videoid):
     """Generate an iframe with a player for this video"""
     
-    gloss = get_object_or_404(Gloss, pk=videoid)
+    try:
+        gloss = Gloss.objects.get(pk=videoid)
+        glossvideo = gloss.get_video()
+        
+        if django_mobile.get_flavour(request) == 'mobile':
+            videourl = glossvideo.get_mobile_url()
+        else:
+            videourl = glossvideo.get_absolute_url()
+                
+        posterurl = glossvideo.poster_url()
+    except:
+        gloss = None
+        glossvideo = None
+        videourl = None
+        posterurl = None
 
-    glossvideo = gloss.get_video()
-
-    if django_mobile.get_flavour(request) == 'mobile':
-        videourl = glossvideo.get_mobile_url()
-    else:
-        videourl = glossvideo.get_absolute_url()
 
     return render_to_response("iframe.html",
                               {'videourl': videourl,
-                               'posterurl': glossvideo.poster_url(),
+                               'posterurl': posterurl,
                                'aspectRatio': settings.VIDEO_ASPECT_RATIO,
                                },
                                context_instance=RequestContext(request))
