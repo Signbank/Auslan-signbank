@@ -280,8 +280,9 @@ class GlossDetailView(DetailView):
         context['navigation'] = context['gloss'].navigation(True)
         context['interpform'] = InterpreterFeedbackForm()
         context['SIGN_NAVIGATION']  = settings.SIGN_NAVIGATION
-        context['glosscount'] = Gloss.objects.count()
-        context['glossposn'] =  Gloss.objects.filter(sn__lt=context['gloss'].sn).count()+1
+        if settings.SIGN_NAVIGATION:
+            context['glosscount'] = Gloss.objects.count()
+            context['glossposn'] =  Gloss.objects.filter(sn__lt=context['gloss'].sn).count()+1
         return context
         
         
