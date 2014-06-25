@@ -104,8 +104,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django_mobile.context_processors.flavour",
 )
 
-TEMPLATE_TAGS = ('signbank.dictionary.templatetags.prefixes', )
-
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
