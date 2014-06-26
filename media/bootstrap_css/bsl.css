@@ -98,6 +98,13 @@ body, html {
    width: 664px;
 }
 
+/* this overrides the bootstrap style for this class since BSL wants the video centred in the page */
+#publicsign #definitionblock .col-md-4 {
+    float: none;
+    width: 664px;
+    margin: auto;
+}
+
 #publicsign #videocontainer #player {
    margin: auto;
    width: 664px;
