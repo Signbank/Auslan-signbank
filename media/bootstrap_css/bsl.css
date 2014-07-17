@@ -118,18 +118,30 @@ body, html {
 @media  (max-width: 768px) {
 
     #publicsign #videocontainer {
-        width: 80%;
+        width: 100%;
     }
     
     #publicsign #videocontainer #player {
-        width: 80%;
+        width: 100%;
     }
     
     
     #publicsign #videoiframe {
-        width: 80%;
+        width: 100%;
     }
     
+    
+    #publicsign #definitionblock .col-md-4 {
+        float: none;
+        width: 100%;
+        margin: auto;
+    }
+    
+    #publicsign #player img {
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+    }
 }
 
 
