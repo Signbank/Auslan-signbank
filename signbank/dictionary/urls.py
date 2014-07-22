@@ -10,7 +10,7 @@ from signbank.dictionary.adminviews import GlossListView, GlossDetailView
 urlpatterns = patterns('',
 
     # index page is just the search page
-    url(r'^$', 'signbank.dictionary.views.index'),
+    url(r'^$', 'signbank.dictionary.views.search'),
 
     # we use the same view for a definition and for the feedback form on that
     # definition, the first component of the path is word or feedback in each case

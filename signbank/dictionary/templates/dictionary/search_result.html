@@ -24,14 +24,47 @@
      </form>
     {% endif %}
 
+
         {% ifequal wordcount 0 %}
-            <p>There is no exact match to the word you typed.</p>
+           {% if query %}
+            <p>There is no exact match to the word you typed.</p>            
             
-            <p>Search Tips:</p>
+            <p>There are 
+                {% if ADVANCED_SEARCH %}three{% else %}two{% endif %} 
+                main reasons why there may be no match:</p>
+
+            <ol>
+              <li>There really is no {{language}} sign for which that word is an good translation (you may need to 
+
+            fingerspell the word)</li>
+
+            <li>You have mis-typed the word or you have added unnecessary word endings. Follow these 
+
+            search tips:
             <ul>
-               <li>type only the first few letters of a word</li>
-               <li>type words with no word endings like 'ing', 'ed', or 's'.</li>
+             <li>type only the first few letters of a word</li>
+
+             <li>type words with no word endings like ‘ing’, ‘ed’, or ‘s’.</li>
             </ul>
+            {% if ADVANCED_SEARCH %}
+            <li>The match is blocked in the public view of {{language}} Signbank because the word/sign is 
+
+            obscene or offensive in English or {{language}}, or both. (Schools and parents have repeatedly 
+
+            requested that these type of words/signs be only visible to registered users.) If you
+            <a href="/accounts/login/">login or register 
+
+            with {{langauge}} Signbank</a>, you can turn off the "Safe Search" check box 
+
+            you will see (the default setting that blocks some signs) and you will then be able to find these 
+
+            matching words/signs if they exist in {{language}}.</li>
+            {% endif %}
+        </ul>
+            
+            {% endif %}
+            
+            
         {% else %}
          {% ifequal wordcount 1 %}
             <p>There is one word that fully or partially match your query. Please select the word below.</p>       
