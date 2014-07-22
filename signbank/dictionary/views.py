@@ -359,8 +359,8 @@ def search(request):
         words = []
 
 
-    # display the keyword page if there's only one hit
-    if len(words) == 1:
+    # display the keyword page if there's only one hit and it is an exact match
+    if len(words) == 1 and words[0].text == term:
         return HttpResponseRedirect('/dictionary/words/'+words[0].text+'-1.html' )
 
     paginator = Paginator(words, 50)
