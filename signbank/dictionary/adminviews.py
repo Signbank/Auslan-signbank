@@ -95,11 +95,11 @@ class GlossListView(ListView):
             val = get['search']
             query = Q(idgloss__istartswith=val) | \
                     Q(annotation_idgloss__istartswith=val)
-            if re.match('$\d+^', val):
+
+            if re.match('^\d+$', val):
                 query = query | Q(sn__exact=val)
                     
             qs = qs.filter(query)
-            
             #print "A: ", len(qs)
             
         if get.has_key('keyword') and get['keyword'] != '':
