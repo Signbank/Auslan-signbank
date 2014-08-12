@@ -8,8 +8,8 @@ TEMPLATE_DIRS = (
 # show emails on the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-PRIMARY_CSS = "bootstrap_css/bsl.css"
-#PRIMARY_CSS = "bootstrap_css/auslan.css"
+#PRIMARY_CSS = "bootstrap_css/bsl.css"
+PRIMARY_CSS = "bootstrap_css/auslan.css"
 
 
 # defines the aspect ratio for videos
@@ -30,10 +30,10 @@ SIGN_NAVIGATION = False
 #ADVANCED_SEARCH = False
 
 # which definition fields do we show and in what order?
-DEFINITION_FIELDS = []
+#DEFINITION_FIELDS = []
 
 
-ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
+#ADMIN_RESULT_FIELDS = ['idgloss', 'annotation_idgloss']
 
 
 GLOSS_VIDEO_DIRECTORY = 'glossvideo'
@@ -65,7 +65,7 @@ mimetypes.add_type("video/mp4", ".mov", True)
 
 
 # a list of tags we're allowed to use
-ALLOWED_TAGS = [ '', 
+XALLOWED_TAGS = [ '', 
                  'workflow:needs video',
                  'workflow:redo video',
                  'workflow:problematic',
