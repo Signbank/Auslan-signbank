@@ -327,14 +327,11 @@ def search(request):
 
             result = []
             for w in words:
+                # crude if all glosses for any translation are tagged crude
                 trans = w.translation_set.all()
                 glosses = [t.gloss for t in trans]
-                found = False
-                for g in glosses:
-                    if g in crude:
-                        found = True
-                        break
-                if not found:
+                
+                if not all([g in crude for g in glosses]):
                     result.append(w)
             
             words = result
