@@ -277,9 +277,6 @@ def gloss(request, idgloss):
 def search(request):
     """Handle keyword search form submission"""
 
-
-    # default the safe field based on user authentication
-    #form = UserSignSearchForm(request.GET, initial={'safe': not request.user.is_authenticated()})
     form = UserSignSearchForm(request.GET.copy())
 
     if form.is_valid():
@@ -287,15 +284,8 @@ def search(request):
         term = form.cleaned_data['query']
         category = form.cleaned_data['category']
         
-        if settings.ADVANCED_SEARCH:
-            if 'safe' in request.GET:
-                safe = form.cleaned_data['safe']
-            else:
-                safe = not request.user.is_authenticated()
-                form.data['safe'] = safe
-        else:
-            safe = False
-            category = 'all'
+        # safe search for authenticated users if the setting says so
+        safe = (not request.user.is_authenticated()) and settings.ANON_SAFE_SEARCH
 
         try:
             term = smart_unicode(term)
@@ -304,7 +294,6 @@ def search(request):
             # a strange unicode or other string
             # and it won't match anything in the dictionary
             words = []
-
 
         if request.user.has_perm('dictionary.search_gloss'):
             # staff get to see all the words that have at least one translation
@@ -318,16 +307,15 @@ def search(request):
             crudetag = Tag.objects.get(name='lexis:crude')
         except:
             crudetag = None
-
+        
         if safe and crudetag != None:
-            
             
             crude = TaggedItem.objects.get_by_model(Gloss, crudetag)
             # remove crude words from result
 
             result = []
             for w in words:
-                # crude if all glosses for any translation are tagged crude
+                # remove word if all glosses for any translation are tagged crude
                 trans = w.translation_set.all()
                 glosses = [t.gloss for t in trans]
                 
@@ -382,7 +370,8 @@ def search(request):
                                'paginator' : paginator,
                                'wordcount' : len(words),
                                'page' : result_page,
-                               'ADVANCED_SEARCH': settings.ADVANCED_SEARCH,
+                               'ANON_SAFE_SEARCH': settings.ANON_SAFE_SEARCH,                                         
+                               'ANON_TAG_SEARCH': settings.ANON_TAG_SEARCH,
                                'language': settings.LANGUAGE_NAME,
                                },
                               context_instance=RequestContext(request))
