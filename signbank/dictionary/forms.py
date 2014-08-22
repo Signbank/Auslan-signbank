@@ -13,7 +13,6 @@ CATEGORY_CHOICES = (('all', 'All Signs'),
 class UserSignSearchForm(forms.Form):
 
     query = forms.CharField(label='Keywords starting with', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    safe = forms.BooleanField(label='Safe Search', required=False)
     category = forms.ChoiceField(label='Search', choices=CATEGORY_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control'}))
         
 

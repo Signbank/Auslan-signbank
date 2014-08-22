@@ -84,6 +84,16 @@ class Keyword(models.Model):
         else:
             alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
         
+        # remove crude signs for non-authenticated users if ANON_SAFE_SEARCH is on
+        try:
+            crudetag = tagging.models.Tag.objects.get(name='lexis:crude')
+        except:
+            crudetag = None
+            
+        safe = (not request.user.is_authenticated()) and settings.ANON_SAFE_SEARCH
+        if safe and crudetag:
+            alltrans = [tr for tr in alltrans if not crudetag in tagging.models.Tag.objects.get_for_object(tr.gloss)]
+        
         # if there are no translations, generate a 404
         if len(alltrans) == 0:
             raise Http404
