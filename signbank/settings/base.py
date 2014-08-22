@@ -191,8 +191,14 @@ SOUTH_TESTS_MIGRATE = False
 LANGUAGE_NAME = "Auslan"
 COUNTRY_NAME = "Australia"
 
-# do we show the 'advanced search' form and implement 'safe' search?
-ADVANCED_SEARCH = True
+# do we implement safe search for anonymous users?
+# if True, any gloss that is tagged lexis:crude will be removed from
+# search results for users who are not logged in
+ANON_SAFE_SEARCH = False
+
+# do we show the tag based search for anonymous users?
+ANON_TAG_SEARCH = False
+
 
 # do we display the previous/next links to signs, requires gloss.sn to be used consistently
 SIGN_NAVIGATION = True
