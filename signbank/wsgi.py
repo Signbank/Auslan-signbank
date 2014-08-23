@@ -18,7 +18,7 @@ import socket
 
 # Determine if there is a host specific settings file and load that if it exists instead of the default settings
 hostname = socket.gethostname().split('.')[0]
-host_specific_settings = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'settings', 'hosts', hostname)
+host_specific_settings = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'settings', 'hosts', hostname + '.py')
 if os.path.isfile(host_specific_settings):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings.hosts." + hostname)
 else:
