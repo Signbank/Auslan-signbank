@@ -14,8 +14,15 @@ framework.
 
 """
 import os
+import socket
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings")
+# Determine if there is a host specific settings file and load that if it exists instead of the default settings
+hostname = socket.gethostname().split('.')[0]
+host_specific_settings = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'settings', 'hosts', hostname)
+if os.path.isfile(host_specific_settings):
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings.hosts." + hostname)
+else:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
