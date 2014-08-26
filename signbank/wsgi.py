@@ -14,15 +14,14 @@ framework.
 
 """
 import os
-import socket
 
-# Determine if there is a host specific settings file and load that if it exists instead of the default settings
-hostname = socket.gethostname().split('.')[0]
-host_specific_settings = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'settings', 'hosts', hostname + '.py')
+# Determine if there are live settings (not commited to source control) and load that if it exists instead of the default settings
+code_path = os.path.dirname(os.path.realpath(__file__))
+host_specific_settings = os.path.join(code_path, 'settings', 'live.py')
 if os.path.isfile(host_specific_settings):
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings.hosts." + hostname)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings.live")
 else:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "signbank.settings.production")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
