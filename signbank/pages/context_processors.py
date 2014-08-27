@@ -1,5 +1,5 @@
 from signbank.pages.models import Page
-
+from django.conf import settings
 
 def menu(request):
     """Generate a menu hierarchy from the current set of pages
@@ -36,4 +36,12 @@ def find_children(page, currentURL):
 
     return (result, anyCurrent)
     
+def configuration(request):
+    """
+    Return settings that can be used in the templates
+    """
     
+    return {
+       'settings_admin_email': settings.ADMIN_EMAIL,
+       'settings_google_analytics_tracking_code': settings.GOOGLE_ANALYTICS_TRACKING_CODE,
+    }
