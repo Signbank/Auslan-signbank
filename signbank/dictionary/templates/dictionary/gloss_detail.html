@@ -104,7 +104,7 @@
     {% if gloss.get_video %}
 
         <div id="player">
-          <iframe id='videoiframe' scrolling="no" frameborder='0'
+          <iframe id='videoiframe' scrolling="no" frameborder='0' allowfullscreen="allowfullscreen"
               src="{% url 'signbank.video.views.iframe' gloss.pk %}">
           </iframe>
         </div>
