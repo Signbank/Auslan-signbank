@@ -9,7 +9,13 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/typeahead.bundle.min.js"></script>
     
     <script type='text/javascript'>
-    
+
+    // Submit the search form again if the user changes results per page
+    $(document).ready(function() {
+      $('#paginate_by_select').change(function() {
+        $("#search_submit_button").click();
+      });
+    });
     
     $(document).ready(function(){
         
@@ -24,7 +30,6 @@
         
         
     });
-
 
 
 // http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
@@ -198,7 +203,7 @@ function clearForm(myFormElement) {
  
  
         <div class='btn-group'>  
-            <input class='btn btn-primary' type='submit' name='submit' value='Search'>
+            <input class='btn btn-primary' type='submit' name='submit' id="search_submit_button" value='Search'>
             {% if perms.dictionary.export_csv %}
             <input class='btn btn-default' type='submit' name='format' value='CSV'>
             {% endif %}
@@ -207,12 +212,12 @@ function clearForm(myFormElement) {
 
         <div class='form-group' id='paginate_by'>
         <label for='paginate_by'>Results per page</label>
-        <select class='form-control' name="paginate_by">
-            <option>10</option>
-            <option>25</option>
-            <option>50</option>
-            <option>75</option>
-            <option>100</option>
+        <select class='form-control' name="paginate_by" id="paginate_by_select">
+            <option {% if page_obj.paginator.per_page == 10 %}selected="selected"{% endif %}>10</option>
+            <option {% if page_obj.paginator.per_page == 25 %}selected="selected"{% endif %}>25</option>
+            <option {% if page_obj.paginator.per_page == 50 %}selected="selected"{% endif %}>50</option>
+            <option {% if page_obj.paginator.per_page == 75 %}selected="selected"{% endif %}>75</option>
+            <option {% if page_obj.paginator.per_page == 100 %}selected="selected"{% endif %}>100</option>
         </select>
         </div>
 
