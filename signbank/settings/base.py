@@ -10,6 +10,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 EMAIL_HOST = ""
+ADMIN_EMAIL = "webmaster@auslan.org.au"
 
 ADMINS = (
      ('Steve Cassidy', 'steve.cassidy@mq.edu.au'),
