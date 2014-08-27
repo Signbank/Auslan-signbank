@@ -24,4 +24,20 @@ class PageTests(TestCase):
             
             self.assertContains(response, "test@example.com", 2, 404)
             self.assertNotContains(response, "webmaster@auslan.org.au", 404)
+            
+    def test_google_analytics(self):
+        """
+        Can add Google Analytics javascript by including a code in settings
+        """
+        
+        self.assertEqual(settings.GOOGLE_ANALYTICS_TRACKING_CODE, None)
+        
+        response = self.client.get('/')
+        self.assertNotContains(response, "google-analytics.com")
+        
+        with self.settings(GOOGLE_ANALYTICS_TRACKING_CODE='UA-TEST-1'):
+            response = self.client.get('/')
+
+            self.assertContains(response, "google-analytics.com")
+            self.assertContains(response, "UA-TEST-1")
         

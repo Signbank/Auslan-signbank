@@ -102,6 +102,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
     "signbank.pages.context_processors.menu",
+    "signbank.pages.context_processors.configuration",
     "django_mobile.context_processors.flavour",
 )
 
@@ -191,6 +192,10 @@ SOUTH_TESTS_MIGRATE = False
 # what do we call this signbank?
 LANGUAGE_NAME = "Auslan"
 COUNTRY_NAME = "Australia"
+
+# Where does the analytics data go?
+# "UA-3928964-1" was the original setting or set to None to disable GA
+GOOGLE_ANALYTICS_TRACKING_CODE = None
 
 # do we implement safe search for anonymous users?
 # if True, any gloss that is tagged lexis:crude will be removed from
