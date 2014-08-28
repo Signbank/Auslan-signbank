@@ -24,3 +24,8 @@ body {
     width: 308px;
     height: 230px;
 }
+
+/* Hide feedback link under Signbank menu for auslan */
+#navbar #extrafeedback {
+  display: none;
+}
