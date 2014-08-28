@@ -32,6 +32,14 @@ body, html {
         
 }
 
+#navbar #extrafeedback {
+  display: block;
+}
+
+#footer #copyright #notice {
+  float: left;
+}
+
 #logoholder {
     background-image: url(../uclimages/logo.gif);
     width: 265px;
