@@ -1,0 +1,8 @@
+^venv$
+.pyc$
+.DS_Store
+signbank/settings/live.py
+^test-media/
+^backup/
+^[^/]*\.db
+^[^/]*\.log
