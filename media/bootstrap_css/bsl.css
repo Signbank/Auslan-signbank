@@ -38,6 +38,11 @@ body, html {
 
 #footer #copyright #notice {
   float: left;
+  text-align: left;
+  position: absolute;
+  margin-right: 20em;
+  padding: 0 1em 1em 0;
+  background-color: #f5f5f5;
 }
 
 #logoholder {
