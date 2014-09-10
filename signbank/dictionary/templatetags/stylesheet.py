@@ -13,7 +13,19 @@ def primary_css():
         return settings.PRIMARY_CSS
     except:
         return ''
- 
+
+@register.simple_tag
+def mobile_css():
+    """
+    Returns the string contained in the setting MOBILE_CSS - the
+    prefix for any media served by the site
+    """
+    try:
+        from django.conf import settings
+        return settings.MOBILE_CSS
+    except:
+        return ''
+
  
  
 @register.simple_tag

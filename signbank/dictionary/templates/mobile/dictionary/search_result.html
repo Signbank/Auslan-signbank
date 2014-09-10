@@ -9,7 +9,7 @@
     <form id="frmSearch" name="frmSearch" method="get" action="{% url 'root_page' %}dictionary/search/">
       <input type="search" name="query" value="" maxlength="50">
       <button type="submit" data-theme="a" data-icon="search" data-inline="true">Sign Search</button>
-      <div data-role="fieldcontain">
+      <div data-role="fieldcontain" class="hideonbsl">
   <fieldset data-role="controlgroup">
   <input id="msb" type="checkbox" name="msb" value="1" class="custom" />
   <label for="msb">Search medical signs only</label>

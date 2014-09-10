@@ -243,6 +243,9 @@ ALWAYS_REQUIRE_LOGIN = False
 # name of the primary css file, relative to the media directory
 PRIMARY_CSS = "bootstrap_css/test-server.css"
 
+# name of the mobile css extension file, to be loaded after the main mobile css to customise it for a site
+# relative to the media directory
+MOBILE_CSS = "bootstrap_css/mobile-extra.css"
 
 # do we allow people to register for the site
 ALLOW_REGISTRATION = True
