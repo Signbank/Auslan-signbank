@@ -108,19 +108,7 @@ class Keyword(models.Model):
         return (trans, len(alltrans))
     
     
-defn_role_choices = (('general', 'General Definition'),
-                     ('noun', 'As a Noun'),
-                     ('verb', 'As a Verb or Adjective'), 
-                     ('deictic', 'As a Pointing Sign'),
-                     ('interact', 'Interactive'),
-                     ('modifier', 'As Modifier'),
-                     ('question', 'As Question'),
-                     ('popexplain', 'Popular Explanation'),
-                     ('augment', 'Augmented Meaning'),
-                     ('note', 'Note'),
-                     ('privatenote', 'Private Note'),
-                     ('B92 sn', 'Sign Number in Brien 92'),
-                     )
+defn_role_choices = settings.DEFINITION_ROLE_CHOICES
 
 
 class Definition(models.Model):
