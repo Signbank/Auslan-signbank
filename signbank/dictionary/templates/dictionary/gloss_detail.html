@@ -138,7 +138,7 @@
         <fieldset>
             <legend>Upload New Video</legend>
             <p>We have {{gloss.count_videos}} videos for this sign.</p>
-            <form action="/video/upload/" method="post" enctype="multipart/form-data">
+            <form action="/video/upload/" method="post" enctype="multipart/form-data" id="video_upload_form">
               {% csrf_token %}
               <input type='hidden' name='redirect' value='{{request.path}}?edit'>
             <table id="staffops">
