@@ -19,8 +19,10 @@
          
      }  
           
-     $('#enable_edit').click(toggle_edit);
+     $('#video_upload_form').submit(check_video_present);
      
+     $('#enable_edit').click(toggle_edit);
+          
      glosstypeahead($('.glosstypeahead'));
 
 
@@ -42,6 +44,14 @@
     ajaxifyTagForm();
      
  });
+ 
+function check_video_present(event) {
+  if (!$("#video_upload_form input:file").val()) {
+    alert("Please select a video first");
+    event.preventDefault();
+    return false;
+  }
+}
 
 function disable_edit() {
     $('.edit').editable('disable');
