@@ -44,4 +44,7 @@ def configuration(request):
     return {
        'settings_admin_email': settings.ADMIN_EMAIL,
        'settings_google_analytics_tracking_code': settings.GOOGLE_ANALYTICS_TRACKING_CODE,
+       'settings_social_network_share_links': settings.SOCIAL_NETWORK_SHARE_LINKS,
+       'settings_social_network_facebook_page': settings.SOCIAL_NETWORK_FACEBOOK_PAGE,
+       'settings_social_network_twitter_page': settings.SOCIAL_NETWORK_TWITTER_PAGE,
     }
