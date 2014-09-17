@@ -261,7 +261,8 @@ schoolChoices = ((0, 'a deaf school (boarder)'),
 teachercommChoices = ((0, 'mostly oral'),
                       (1, 'mostly Signed English'),
                       (2, t('mostly sign language ($language)')),
-                      (3, 'mostly fingerspelling')
+                      (3, 'mostly fingerspelling'),
+                      (4, 'N/A, I am hearing')
                       )
 
 class UserProfile(models.Model):
