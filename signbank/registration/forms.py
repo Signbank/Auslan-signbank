@@ -211,6 +211,8 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
     
     background = forms.MultipleChoiceField(backgroundChoices, label=_("What is your background?"))
     
+    researcher_credentials = forms.CharField(label=t("(OPTIONAL) If you would like access to advanced SignBank features, e.g. advanced search and detail view of signs, please give evidence of your researcher status here (e.g. link to your university staff profile page, or evidence that you are a research student)."), widget=forms.Textarea)
+    
     auslan_user = forms.ChoiceField(yesnoChoices, label=t("Do you use $language?"), required=False)
     
     learned = forms.ChoiceField(label=t("If you use $language, when did you learn sign language?"),
@@ -260,6 +262,7 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
                               australian=self.cleaned_data['australian'] == '1',
                               postcode=self.cleaned_data['postcode'],
                               background=",".join(self.cleaned_data['background']),
+                              researcher_credentials=self.cleaned_data['researcher_credentials'],
                               auslan_user=self.cleaned_data['auslan_user'] == '1',
                               learned=self.cleaned_data['learned'],
                               deaf=self.cleaned_data['deaf'] == '1',
