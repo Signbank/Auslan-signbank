@@ -336,6 +336,16 @@ body {
 
 
 
+/* other form markup */
+.form-horizontal .control-label {
+  text-align: left;
+}
+
+textarea.form-control {
+  height: 100px;
+}
+
+
 // typeahead dropdown styling
 
 .typeahead,
