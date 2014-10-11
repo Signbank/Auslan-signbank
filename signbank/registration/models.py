@@ -58,7 +58,8 @@ class RegistrationManager(models.Manager):
     
     def create_inactive_user(self, username, password, email, 
                              firstname="", lastname="",
-                             send_email=True, profile_callback=None):
+                             send_email=True, profile_callback=None,
+                             is_researcher=False):
         """
         Creates a new, inactive ``User``, generates a
         ``RegistrationProfile`` and emails its activation key to the
@@ -102,6 +103,7 @@ class RegistrationManager(models.Manager):
             message = render_to_string('registration/activation_email.txt',
                                        { 'activation_key': registration_profile.activation_key,
                                          'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+                                         'is_researcher': is_researcher,
                                          'site': current_site })
             
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
@@ -286,19 +288,31 @@ class UserProfile(models.Model):
     school = models.CharField("Which school do you (or did you) attend?", max_length=50, blank=True)                             
     teachercomm = models.IntegerField("How do (or did) your teachers communicate with you?", 
                                       choices=teachercommChoices)
-    
-    def best_describes_you(self):
-        "Return the background in a readable form"
+
+    @staticmethod
+    def best_describes_you_from_background(background):
         result = []
         try:
-            indices = self.background.split(",")
+            indices = background.split(",")
             for index in indices:
                 i = int(''.join(n for n in index if n.isdigit()))
                 result.append(dict(backgroundChoices)[i])
         except:
             result = ['(unknown)']
         return ", ".join(result)
-                                      
+    
+    def best_describes_you(self):
+        "Return the background in a readable form"
+        return UserProfile.best_describes_you_from_background(self.background)
+
+    @staticmethod
+    def is_researcher_from_background(background):
+        return 'research' in UserProfile.best_describes_you_from_background(background)
+        
+    def is_researcher(self):
+        "True if this person has picked a background that includes the word research"
+        return UserProfile.is_researcher_from_background(self.background)
+
     class Admin:
         list_display = ['user', 'deaf', 'auslan_user']
             

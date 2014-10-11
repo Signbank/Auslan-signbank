@@ -245,12 +245,16 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
         username = self.cleaned_data['email'].replace('@','').replace('.','')
         username = username[:30]
 
+        # Get the indices of the selected backgrounds to help decide if this is a researcher
+        background_list = ",".join(self.cleaned_data['background'])
+
         new_user = RegistrationProfile.objects.create_inactive_user(username=username,
                                                                     password=self.cleaned_data['password1'],
                                                                     email=self.cleaned_data['email'],
                                                                     firstname=self.cleaned_data['firstname'],
                                                                     lastname=self.cleaned_data['lastname'],
-                                                                    profile_callback=profile_callback)
+                                                                    profile_callback=profile_callback,
+                                                                    is_researcher=UserProfile.is_researcher_from_background(background_list))
 
 
 
@@ -261,7 +265,7 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
                               yob=self.cleaned_data['yob'],
                               australian=self.cleaned_data['australian'] == '1',
                               postcode=self.cleaned_data['postcode'],
-                              background=",".join(self.cleaned_data['background']),
+                              background=background_list,
                               researcher_credentials=self.cleaned_data['researcher_credentials'],
                               auslan_user=self.cleaned_data['auslan_user'] == '1',
                               learned=self.cleaned_data['learned'],
