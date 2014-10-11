@@ -209,7 +209,9 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
     postcode = forms.CharField(label=t("If you live in $country, what is your postcode?"), 
                                max_length=20, required=False)
     
-    background = forms.MultipleChoiceField(backgroundChoices, label=_("What is your background?"))
+    background = forms.MultipleChoiceField(backgroundChoices, label=_("Which of the following best describes you?"))
+    
+    researcher_credentials = forms.CharField(label=t("(OPTIONAL) If you would like access to advanced SignBank features, e.g. advanced search and detail view of signs, please give evidence of your researcher status here (e.g. link to your university staff profile page, or evidence that you are a research student)."), widget=forms.Textarea, required=False)
     
     auslan_user = forms.ChoiceField(yesnoChoices, label=t("Do you use $language?"), required=False)
     
@@ -243,12 +245,16 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
         username = self.cleaned_data['email'].replace('@','').replace('.','')
         username = username[:30]
 
+        # Get the indices of the selected backgrounds to help decide if this is a researcher
+        background_list = ",".join(self.cleaned_data['background'])
+
         new_user = RegistrationProfile.objects.create_inactive_user(username=username,
                                                                     password=self.cleaned_data['password1'],
                                                                     email=self.cleaned_data['email'],
                                                                     firstname=self.cleaned_data['firstname'],
                                                                     lastname=self.cleaned_data['lastname'],
-                                                                    profile_callback=profile_callback)
+                                                                    profile_callback=profile_callback,
+                                                                    is_researcher=UserProfile.is_researcher_from_background(background_list))
 
 
 
@@ -259,7 +265,8 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
                               yob=self.cleaned_data['yob'],
                               australian=self.cleaned_data['australian'] == '1',
                               postcode=self.cleaned_data['postcode'],
-                              background=",".join(self.cleaned_data['background']),
+                              background=background_list,
+                              researcher_credentials=self.cleaned_data['researcher_credentials'],
                               auslan_user=self.cleaned_data['auslan_user'] == '1',
                               learned=self.cleaned_data['learned'],
                               deaf=self.cleaned_data['deaf'] == '1',
