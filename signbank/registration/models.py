@@ -287,6 +287,17 @@ class UserProfile(models.Model):
     teachercomm = models.IntegerField("How do (or did) your teachers communicate with you?", 
                                       choices=teachercommChoices)
     
+    def best_describes_you(self):
+        "Return the background in a readable form"
+        result = []
+        try:
+            indices = self.background.split(",")
+            for index in indices:
+                i = int(''.join(n for n in index if n.isdigit()))
+                result.append(dict(backgroundChoices)[i])
+        except:
+            result = ['(unknown)']
+        return ", ".join(result)
                                       
     class Admin:
         list_display = ['user', 'deaf', 'auslan_user']
