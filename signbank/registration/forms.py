@@ -211,7 +211,7 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
     
     background = forms.MultipleChoiceField(backgroundChoices, label=_("Which of the following best describes you?"))
     
-    researcher_credentials = forms.CharField(label=t("(OPTIONAL) If you would like access to advanced SignBank features, e.g. advanced search and detail view of signs, please give evidence of your researcher status here (e.g. link to your university staff profile page, or evidence that you are a research student)."), widget=forms.Textarea)
+    researcher_credentials = forms.CharField(label=t("(OPTIONAL) If you would like access to advanced SignBank features, e.g. advanced search and detail view of signs, please give evidence of your researcher status here (e.g. link to your university staff profile page, or evidence that you are a research student)."), widget=forms.Textarea, required=False)
     
     auslan_user = forms.ChoiceField(yesnoChoices, label=t("Do you use $language?"), required=False)
     
