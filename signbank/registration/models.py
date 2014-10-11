@@ -241,7 +241,9 @@ backgroundChoices = ((0, 'deaf community'),
                      (4, 'sign language interpreter'),
                      (5, 'school or university student'),
                      (6, t('student learning $language')),
-                     (8, 'researcher'),
+                     (9, 'university student (taught, e.g. BA, BSc, MA, Msc)'),
+                     (10, 'university student (research, e.g. PhD)'),
+                     (8, 'university academic/research staff'),
                      (7, 'other'),
                      )
                      
