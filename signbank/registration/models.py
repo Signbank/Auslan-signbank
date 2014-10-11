@@ -276,6 +276,7 @@ class UserProfile(models.Model):
     australian = models.BooleanField(t("Do you live in $country?"))
     postcode = models.CharField(t("If you live in $country, what is your postcode?"), max_length=20, blank=True)
     background = models.CommaSeparatedIntegerField("What is your background?", max_length=20, choices=backgroundChoices)
+    researcher_credentials = models.TextField(t("Research credentials"))
     auslan_user = models.BooleanField(t("Do you use $language?"))
     learned = models.IntegerField(t("If you use $language, when did you learn sign language?"), 
                                   choices=learnedChoices)
