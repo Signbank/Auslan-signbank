@@ -209,7 +209,7 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
     postcode = forms.CharField(label=t("If you live in $country, what is your postcode?"), 
                                max_length=20, required=False)
     
-    background = forms.MultipleChoiceField(backgroundChoices, label=_("What is your background?"))
+    background = forms.MultipleChoiceField(backgroundChoices, label=_("Which of the following best describes you?"))
     
     researcher_credentials = forms.CharField(label=t("(OPTIONAL) If you would like access to advanced SignBank features, e.g. advanced search and detail view of signs, please give evidence of your researcher status here (e.g. link to your university staff profile page, or evidence that you are a research student)."), widget=forms.Textarea)
     
