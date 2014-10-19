@@ -73,6 +73,19 @@ body, html {
         color: inherit;
 }
 
+#mainSearch {
+  padding-bottom: 0.5em;
+}
+
+#mainSearch input.form-control {
+  width: 30em;
+  display: inline-block;
+}
+
+.alphablock {
+  margin-bottom: 1.5em;
+}
+
 #fingerspellblock #leftblock {
   width: 400px;
   margin-left: 0;
