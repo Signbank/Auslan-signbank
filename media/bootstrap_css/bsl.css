@@ -73,6 +73,11 @@ body, html {
         color: inherit;
 }
 
+#fingerspellblock #leftblock {
+  width: 400px;
+  margin-left: 0;
+}
+
 
 #publicsign #signinfo {
      width: 700px;
