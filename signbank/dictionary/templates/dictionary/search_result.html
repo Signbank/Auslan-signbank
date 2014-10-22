@@ -7,12 +7,28 @@
      you can search for a sign using an English keyword in the search box
      above, or browse keywords starting with any letter below.</p>	
     
-    <p>
-      {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-        <a href="{% url 'root_page' %}dictionary/search?query={{letter}}">{{letter}}</a> | 
-      {% endfor %}
-    </p>
+    <div class="searchblock">
+      <p>Enter English word or first few letters:</p>
+  
+      <form role="search" id="mainSearch" name="mainSearch" method="get" action="/dictionary/search">
+         <div class="form-group">
+            <input class='form-control' placeholder='Enter keywords' type="Text" name="query" value="{{ query }}" maxlength="50">
+            <button type="submit" class="btn btn-default">Sign Search</button>
+         </div>
+       
+      </form>
+    </div>
     
+    <div class="alphablock">
+      <p>Or search alphabetically:</p>
+    
+      <p>
+        {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+          <a href="{% url 'root_page' %}dictionary/search?query={{letter}}">{{letter}}</a> | 
+        {% endfor %}
+      </p>
+    </div>
+  
     {% if ANON_TAG_SEARCH %}
     <form class='form-inline' action="{% url 'dictionary:search' %}">
         <div class='form-group'><label for='query'>{{form.query.label}}</label> {{form.query}}</div>
@@ -61,9 +77,9 @@
             
         {% else %}
          {% ifequal wordcount 1 %}
-            <p>There is one word that fully or partially match your query. Please select the word below.</p>       
+            <p>{{ wordcount }} full or partial matche found</p>       
          {% else %}
-           <p>There are {{ wordcount }} words that fully or partially match your query. Please select a word from the list below.</p>
+           <p>{{ wordcount }} full or partial matches found</p>
          {% endifequal %}
         {% endifequal %}
  
