@@ -35,7 +35,7 @@
     
     <ul class='nav navbar-nav'>
         <li class='dropdown'>
-            <a class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 <li><a href="/dictionary/">Dictionary</a></li>
                 <li><a href="/numbersigns.html">Number Signs</a></li>
@@ -48,7 +48,7 @@
     {% if settings_social_network_share_links %}
     <ul class='nav navbar-nav'>
         <li class='dropdown'>
-            <a class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 {% if settings_social_network_twitter_page %}
                 <li><a href="http://twitter.com/share?text={{ " #bslsignbank"|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
