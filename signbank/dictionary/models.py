@@ -274,6 +274,7 @@ class Gloss(models.Model):
                        ('can_delete_unpublished', 'Can delete unpub signs or defs'),
                        ('can_delete_published', 'Can delete pub signs and defs'),
                        ('view_advanced_properties', 'Include all properties in sign detail view'),
+                       ('can_view_unpub_defs', 'Can view unpublished defs'),
                         )
 
         
