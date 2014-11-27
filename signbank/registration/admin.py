@@ -9,7 +9,7 @@ class UserProfileAdmin(admin.ModelAdmin):
    
     def permissions(self, obj):
         url = reverse('admin:auth_user_change', args=(obj.pk,))
-        return '<a href="%s">Change</a>' % (url)
+        return '<a href="%s">View user</a>' % (url)
     permissions.allow_tags = True
    
 admin.site.register(UserProfile, UserProfileAdmin)
