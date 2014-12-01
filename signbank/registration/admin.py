@@ -8,7 +8,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_filter = ['australian', 'auslan_user', 'deaf']
    
     def permissions(self, obj):
-        url = reverse('admin:auth_user_change', args=(obj.pk,))
+        url = reverse('admin:auth_user_change', args=(obj.user.id,))
         return '<a href="%s">View user</a>' % (url)
     permissions.allow_tags = True
    
