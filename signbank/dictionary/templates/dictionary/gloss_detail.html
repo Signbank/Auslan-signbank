@@ -447,6 +447,7 @@
     {% for role in roles %}
 
       {% for def in role.list %} 
+      {% if def.published or perms.dictionary.can_view_unpub_defs %}
       <tr>
         <td>
             
@@ -485,6 +486,7 @@
         <td class='edit edit_role' id='definitionrole_{{def.id}}'>{{def.get_role_display}}</td>
         <td class='edit edit_area' id='definition_{{def.id}}'>{{def.text}}</td>
       </tr>
+      {% endif %}
       {% endfor %}
       
 

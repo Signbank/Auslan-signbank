@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from forms import RegistrationForm, EmailAuthenticationForm
-from models import RegistrationProfile
+from models import RegistrationProfile, UserProfile
 
 
 def activate(request, activation_key, template_name='registration/activate.html'):
@@ -41,8 +41,13 @@ def activate(request, activation_key, template_name='registration/activate.html'
     """
     activation_key = activation_key.lower() # Normalize before trying anything with it.
     account = RegistrationProfile.objects.activate_user(activation_key)
+    is_researcher = False
+    if account:
+        user_profile = UserProfile.objects.get(user = account)
+        is_researcher = user_profile.is_researcher
     return render_to_response(template_name,
                               { 'account': account,
+                                'is_researcher': is_researcher,
                                 'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
                                 context_instance=RequestContext(request))
 
