@@ -51,7 +51,7 @@
    
    
         <div class='pull-right'>
-            {% ifequal viewname "words" %}
+            {% if viewname == "words" or viewname == "regional" %}
             <span class='navbar-text'>Matches for the word <em>{{ translation.translation }}</em></span>
             <div class='btn-group'>
             {% for i in matches %}
@@ -66,15 +66,20 @@
                 {% if lastmatch %}
                 <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a>
                 {% endif %}
-            {% endifequal %}
+            {% endif %}
         </div>
     
     
-        {% if perms.dictionary.search_gloss %}
         <div class='btn-group'>
+           {% if perms.dictionary.search_gloss %}
            <a id='editbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a>
+           {% endif %}
+           {% if viewname == "words" %}
+           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:regional_view' keyword=translation.translation n=n %}">Regional View</a>
+           {% elif viewname == "regional" %}
+           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:word_view' keyword=translation.translation n=n %}">Main View</a>
+           {% endif %}
         </div>
-        {% endif %}
     
     </div>
 

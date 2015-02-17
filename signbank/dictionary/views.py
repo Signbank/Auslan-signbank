@@ -100,10 +100,12 @@ def map_image_for_dialects(dialects):
 
     return None
 
-
 @login_required_config
-def word(request, keyword, n):
-    """View of a single keyword that may have more than one sign"""
+def word_and_regional_view(request, keyword, n, viewname):
+    """
+    Helper view that displays the word or the regional view depending on what
+    viewname is set to
+    """
 
     n = int(n)
 
@@ -155,7 +157,7 @@ def word(request, keyword, n):
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
-                               'viewname': 'words',
+                               'viewname': viewname,
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
@@ -181,6 +183,18 @@ def word(request, keyword, n):
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
+
+@login_required_config
+def word(request, keyword, n):
+    """View of a single keyword that may have more than one sign"""
+    
+    return word_and_regional_view(request, keyword, n, "words")
+
+@login_required_config
+def regional(request, keyword, n):
+    """View of a single keyword that may have more than one sign alongside regional information"""
+    
+    return word_and_regional_view(request, keyword, n, "regional")
 
 @login_required_config
 def gloss(request, idgloss):

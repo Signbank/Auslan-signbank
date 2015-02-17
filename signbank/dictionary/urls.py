@@ -15,12 +15,17 @@ urlpatterns = patterns('',
     # we use the same view for a definition and for the feedback form on that
     # definition, the first component of the path is word or feedback in each case
     url(r'^words/(?P<keyword>.+)-(?P<n>\d+).html$',
-            'signbank.dictionary.views.word'),
+            'signbank.dictionary.views.word', name='word_view'),
 
     url(r'^tag/(?P<tag>[^/]*)/?$', 'signbank.dictionary.tagviews.taglist'),
 
     # and and alternate view for direct display of a gloss
     url(r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss', name='public_gloss'),
+
+    # Regional views for words and glosses
+    url(r'^regional/(?P<keyword>.+)-(?P<n>\d+).html$',
+            'signbank.dictionary.views.regional', name='regional_view'),
+
 
     url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),
