@@ -58,7 +58,8 @@ class RegistrationManager(models.Manager):
     
     def create_inactive_user(self, username, password, email, 
                              firstname="", lastname="",
-                             send_email=True, profile_callback=None):
+                             send_email=True, profile_callback=None,
+                             is_researcher=False):
         """
         Creates a new, inactive ``User``, generates a
         ``RegistrationProfile`` and emails its activation key to the
@@ -102,6 +103,7 @@ class RegistrationManager(models.Manager):
             message = render_to_string('registration/activation_email.txt',
                                        { 'activation_key': registration_profile.activation_key,
                                          'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+                                         'is_researcher': is_researcher,
                                          'site': current_site })
             
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
@@ -239,8 +241,11 @@ backgroundChoices = ((0, 'deaf community'),
                      (2, 'teacher of the deaf'),
                      (3, 'parent of a deaf child'),
                      (4, 'sign language interpreter'),
-                     (5, 'school or university student'),
+                     (5, 'school or college student (under 18)'),
                      (6, t('student learning $language')),
+                     (9, 'university student (taught, e.g. BA, BSc, MA, Msc)'),
+                     (10, 'university student (research, e.g. PhD)'),
+                     (8, 'university academic/research staff'),
                      (7, 'other'),
                      )
                      
@@ -261,7 +266,8 @@ schoolChoices = ((0, 'a deaf school (boarder)'),
 teachercommChoices = ((0, 'mostly oral'),
                       (1, 'mostly Signed English'),
                       (2, t('mostly sign language ($language)')),
-                      (3, 'mostly fingerspelling')
+                      (3, 'mostly fingerspelling'),
+                      (4, 'N/A, I am hearing')
                       )
 
 class UserProfile(models.Model):
@@ -272,6 +278,7 @@ class UserProfile(models.Model):
     australian = models.BooleanField(t("Do you live in $country?"))
     postcode = models.CharField(t("If you live in $country, what is your postcode?"), max_length=20, blank=True)
     background = models.CommaSeparatedIntegerField("What is your background?", max_length=20, choices=backgroundChoices)
+    researcher_credentials = models.TextField(t("Research credentials"))
     auslan_user = models.BooleanField(t("Do you use $language?"))
     learned = models.IntegerField(t("If you use $language, when did you learn sign language?"), 
                                   choices=learnedChoices)
@@ -281,8 +288,31 @@ class UserProfile(models.Model):
     school = models.CharField("Which school do you (or did you) attend?", max_length=50, blank=True)                             
     teachercomm = models.IntegerField("How do (or did) your teachers communicate with you?", 
                                       choices=teachercommChoices)
+
+    @staticmethod
+    def best_describes_you_from_background(background):
+        result = []
+        try:
+            indices = background.split(",")
+            for index in indices:
+                i = int(''.join(n for n in index if n.isdigit()))
+                result.append(dict(backgroundChoices)[i])
+        except:
+            result = ['(unknown)']
+        return ", ".join(result)
     
-                                      
+    def best_describes_you(self):
+        "Return the background in a readable form"
+        return UserProfile.best_describes_you_from_background(self.background)
+
+    @staticmethod
+    def is_researcher_from_background(background):
+        return 'research' in UserProfile.best_describes_you_from_background(background)
+        
+    def is_researcher(self):
+        "True if this person has picked a background that includes the word research"
+        return UserProfile.is_researcher_from_background(self.background)
+
     class Admin:
         list_display = ['user', 'deaf', 'auslan_user']
             
