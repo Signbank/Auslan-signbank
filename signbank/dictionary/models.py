@@ -155,7 +155,19 @@ class Dialect(models.Model):
     
     def __str__(self):
         return self.language.name+"/"+self.name  
-  
+
+class Region(models.Model):
+    """Regional information for a gloss - including dialect, frequency and traditional status"""
+    
+    class Meta:
+        ordering = ['gloss', 'dialect', 'frequency', 'traditional']
+    
+    gloss = models.ForeignKey('Gloss')
+    dialect = models.ForeignKey(Dialect)
+    frequency = models.IntegerField()
+    traditional = models.BooleanField(default=False)
+    
+
 handshapeChoices = (('notset', 'No Value Set'),
                     ('0.0', 'N/A'),
                     ('0.1', 'Round'),
