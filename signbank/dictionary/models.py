@@ -349,7 +349,7 @@ minor or insignificant ways that can be ignored.""")
     ########
     
     # one or more regional dialects that this gloss is used in
-    dialect = models.ManyToManyField(Dialect)
+    dialect = models.ManyToManyField(Dialect, through='Region')
     
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
