@@ -38,6 +38,19 @@ body {
     margin-bottom: 0px;
 }
 
+/* Regional view overrides */
+#publicsign.view-regional #signinfo {
+  width: auto;
+}
+
+#publicsign.view-regional #definitionblock .region-left {
+  float: left;
+}
+
+#publicsign.view-regional #definitionblock .region-right {
+  float: right;
+}
+
 #signinfo .navbar-text {
         color: #FFFFFF;
 }
