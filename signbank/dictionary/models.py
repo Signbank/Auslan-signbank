@@ -352,7 +352,8 @@ minor or insignificant ways that can be ignored.""")
     dialect = models.ManyToManyField(Dialect, through='Region')
     
     # template field for showing regional groups, should normalize this to another table
-    regional_template = models.CharField("Regional Template", max_length=50, blank=True)
+    regional_template = models.CharField("Regional Template", max_length=50, blank=True, help_text="""
+    Enter the URL of a page to display on the regional view of this gloss or blank for a standard template""")
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
