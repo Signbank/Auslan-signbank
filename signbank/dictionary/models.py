@@ -351,6 +351,8 @@ minor or insignificant ways that can be ignored.""")
     # one or more regional dialects that this gloss is used in
     dialect = models.ManyToManyField(Dialect, through='Region')
     
+    # template field for showing regional groups, should normalize this to another table
+    regional_template = models.CharField("Regional Template", max_length=50, blank=True)
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
