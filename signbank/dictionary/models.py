@@ -609,6 +609,8 @@ minor or insignificant ways that can be ignored.""")
 
         return json.dumps(d)
     
+    def dialect_list(self):
+        return Dialect.objects.all()
 
 # register Gloss for tags
 try:
