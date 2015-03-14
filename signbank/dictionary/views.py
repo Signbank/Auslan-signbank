@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from tagging.models import Tag, TaggedItem
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.safestring import mark_safe
 
 from django.utils.encoding import smart_unicode
 
@@ -16,6 +17,7 @@ import os
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 from signbank.feedback.models import *
+from signbank.pages.models import *
 
 from signbank.video.forms import VideoUploadForGlossForm
 
@@ -45,65 +47,38 @@ def index(request):
 
 
 
-STATE_IMAGES = {'auslan_all': "images/maps/allstates.gif",
-                'auslan_nsw_act_qld': "images/maps/nsw-act-qld.gif",
-                'auslan_nsw': "images/maps/nsw.gif",
-                'auslan_nt':  "images/maps/nt.gif",
-                'auslan_qld': "images/maps/qld.gif",
-                'auslan_sa': "images/maps/sa.gif",
-                'auslan_tas': "images/maps/tas.gif",
-                'auslan_south': "images/maps/vic-wa-tas-sa-nt.gif",
-                'auslan_vic': "images/maps/vic.gif",
-                'auslan_wa': "images/maps/wa.gif",
-                }
-
-def map_image_for_dialects(dialects):
-    """Get the right map image for this dialect set
-
-
-    Relies on database contents, which is bad. This should
-    be in the database
+def map_image_for_regions(regions):
+    """Get the right map images for this region set
     """
-    # we only work for Auslan just now
-    dialects = dialects.filter(language__name__exact="Auslan")
-
-    if len(dialects) == 0:
-        return
-
-    # all states
-    if dialects.filter(name__exact="Australia Wide"):
-        return STATE_IMAGES['auslan_all']
-
-    if dialects.filter(name__exact="Southern Dialect"):
-        return STATE_IMAGES['auslan_south']
-
-    if dialects.filter(name__exact="Northern Dialect"):
-        return STATE_IMAGES['auslan_nsw_act_qld']
-
-    if dialects.filter(name__exact="New South Wales"):
-        return STATE_IMAGES['auslan_nsw']
-
-    if dialects.filter(name__exact="Queensland"):
-        return STATE_IMAGES['auslan_qld']
-
-    if dialects.filter(name__exact="Western Australia"):
-        return STATE_IMAGES['auslan_wa']
-
-    if dialects.filter(name__exact="South Australia"):
-        return STATE_IMAGES['auslan_sa']
-
-    if dialects.filter(name__exact="Tasmania"):
-        return STATE_IMAGES['auslan_tas']
-
-    if dialects.filter(name__exact="Victoria"):
-        return STATE_IMAGES['auslan_vic']
-
-    return None
-
+    
+    # Add a map for every unique language and dialect we have
+    # regional information on
+    # This may look odd if there is more than one language
+    images = []
+    for region in regions.all():
+        language_name = region.dialect.language.name.replace(" ", "")
+        dialect_name = region.dialect.name.replace(" ", "")
+        dialect_extension = ""
+        if region.traditional:
+            dialect_extension = "-traditional"
+        
+        language_filename = "images/maps/" + language_name + ".png"
+        dialect_filename = "images/maps/" + language_name + "/" + dialect_name + dialect_extension + ".png"
+        
+        if language_filename not in images:
+            images.append(language_filename)
+        if dialect_filename not in images:
+            images.append(dialect_filename)
+        
+    return images
+    
 
 @login_required_config
-def word(request, keyword, n):
-    """View of a single keyword that may have more than one sign"""
+def word_and_regional_view(request, keyword, n, viewname):
+    """
+    Helper view that displays the word or the regional view depending on what
+    viewname is set to
+    """
 
     n = int(n)
 
@@ -152,10 +127,17 @@ def word(request, keyword, n):
         update_form = None
         video_form = None
 
+    # Regional list (sorted by dialect name) and regional template contents if this gloss has one
+    regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
+    try:
+        page = Page.objects.get(url__exact=gloss.regional_template)
+        regional_template_content = mark_safe(page.content)
+    except:
+        regional_template_content = None
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
-                               'viewname': 'words',
+                               'viewname': viewname,
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
@@ -163,7 +145,9 @@ def word(request, keyword, n):
                                'total': total,
                                'matches': range(1, total+1),
                                'navigation': nav,
-                               'dialect_image': map_image_for_dialects(gloss.dialect.all()),
+                               'dialect_image': map_image_for_regions(gloss.region_set),
+                               'regions': regions,
+                               'regional_template_content': regional_template_content,
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
@@ -181,6 +165,18 @@ def word(request, keyword, n):
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
+
+@login_required_config
+def word(request, keyword, n):
+    """View of a single keyword that may have more than one sign"""
+    
+    return word_and_regional_view(request, keyword, n, "words")
+
+@login_required_config
+def regional(request, keyword, n):
+    """View of a single keyword that may have more than one sign alongside regional information"""
+    
+    return word_and_regional_view(request, keyword, n, "regional")
 
 @login_required_config
 def gloss(request, idgloss):
@@ -249,11 +245,21 @@ def gloss(request, idgloss):
     else:
         lastmatch = False
 
+    # Regional list (sorted by dialect name) and regional template contents if this gloss has one
+    regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
+    try:
+        page = Page.objects.get(url__exact=gloss.regional_template)
+        regional_template_content = mark_safe(page.content)
+    except:
+        regional_template_content = None
+
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
-                               'dialect_image': map_image_for_dialects(gloss.dialect.all()),
+                               'dialect_image': map_image_for_regions(gloss.region_set),
+                               'regions': regions,
+                               'regional_template_content': regional_template_content,
                                'lastmatch': lastmatch,
                                'videofile': videourl,
                                'viewname': word,

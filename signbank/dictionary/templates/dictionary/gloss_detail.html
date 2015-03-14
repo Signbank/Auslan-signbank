@@ -292,9 +292,76 @@
                 <tr><th>Stem Sign Number</th><td class='edit edit_text' id='StemSN'>{% value gloss.StemSN %}</td></tr>
                 <tr><th>Compound of</th><td class='edit edit_text' id='compound'>{% value gloss.compound %}</td></tr>
                 <tr><th>Language</th><td class='edit edit_language' id='language'>{% for lang in gloss.language.all %}{{lang.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
-                <tr><th>Dialect</th><td class='edit edit_dialect' id='dialect'>{% for dia in gloss.dialect.all %}{{dia.name}}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+                <tr><th>Regional template</th><td class='edit edit_text' id='regional_template'>{% value gloss.regional_template %}</td></tr>
             </table>
          </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class='panel-heading'>
+        <div class='panel-title'>
+          <a data-toggle='collapse' data-parent='#definition' href='#regions'>Dialects and Regional Frequencies</a>
+        </div>
+      </div>
+      <div id='regions' class='collapse'>
+
+        <table class='table table-condensed'>
+            {% for region in gloss.region_set.all %}
+             <tr>
+                  <td>
+                     <span class='glyphicon glyphicon-trash region_delete' data-toggle='modal' data-target='#delete_region_modal_{{region.id}}'></span>
+                    
+                      <div class="modal fade" id="delete_region_modal_{{region.id}}" role="dialog" aria-labelledby="#modalTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-sm">
+                             <div class="modal-content">
+                                 <div class='modal-header'>
+                                     <h2 id='modalTitle'>Delete This Region</h2>
+                                 </div>
+                                 <div class='modal-body'>
+                                    
+                                     <p>This action will delete the <strong>{{region.dialect.name}}</strong> dialect information. It cannot be undone.</p>
+                                  </div>
+                               <form action='{% url "dictionary:update_gloss" gloss.id %}' method='post'>
+                                   {% csrf_token %}
+                                   <input type='hidden' name='id' value='regiondelete_{{region.id}}'>
+                                   <input type='hidden' name='value' value='confirmed'>
+                                   <div class="modal-footer">
+                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                     <input type="submit" class="btn btn-primary" value='Confirm Delete'>
+                                   </div>
+                               </form>
+                                  
+                             </div>
+                           </div>
+                      </div>
+                    
+                 </td>
+                
+                
+                 <td class='edit edit_region_dialect' id='regiondialect_{{region.id}}'>{{region.dialect.name}}</td>
+                 <td class='edit edit_int' id='regionfrequency_{{region.id}}'>{{region.frequency}}</td>
+                 <td class='edit edit_region_traditional' id='regiontraditional_{{region.id}}'>{{region.traditional|yesno:"traditional,not traditional"}}</td>
+            {% endfor %}
+        </table>
+        
+        <form id='add_region_form' method='post' action='{% url 'dictionary:add_region' gloss.id %}'>
+            {% csrf_token %}
+            <input type='hidden' name='sourceid' value='{{gloss.pk}}'>
+            <table class='table table-condensed'>
+                <tr>
+                    <td><select class="form-control" name="dialect">
+                      {% for dialect in gloss.dialect_list %}
+                        <option value="{{ dialect.id }}">{{ dialect.language.name }}/{{ dialect.name }}</option>
+                      {% endfor %}
+                    </select></td>
+                    <td><input class='form-control edit_int' placeholder='Frequency - positive whole number' name="frequency"></td>
+                    <td>Traditional: <input class="form-control" type="checkbox" name="traditional"></td>
+                    <td><input class='btn btn-primary' value='Add Dialect' type='submit'></td>
+                </tr>
+            </table>
+         </form>
+      </div>
+      
     </div>
     {% endif %}
 
