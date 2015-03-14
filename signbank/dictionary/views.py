@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from tagging.models import Tag, TaggedItem
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.safestring import mark_safe
 
 from django.utils.encoding import smart_unicode
 
@@ -16,6 +17,7 @@ import os
 from signbank.dictionary.models import *
 from signbank.dictionary.forms import *
 from signbank.feedback.models import *
+from signbank.pages.models import *
 
 from signbank.video.forms import VideoUploadForGlossForm
 
@@ -125,6 +127,13 @@ def word_and_regional_view(request, keyword, n, viewname):
         update_form = None
         video_form = None
 
+    # Regional list (sorted by dialect name) and regional template contents if this gloss has one
+    regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
+    try:
+        page = Page.objects.get(url__exact=gloss.regional_template)
+        regional_template_content = mark_safe(page.content)
+    except:
+        regional_template_content = None
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
@@ -137,8 +146,8 @@ def word_and_regional_view(request, keyword, n, viewname):
                                'matches': range(1, total+1),
                                'navigation': nav,
                                'dialect_image': map_image_for_regions(gloss.region_set),
-                               # Regions sorted by dialect name
-                               'regions': sorted(gloss.region_set.all(), key=lambda n: n.dialect.name),
+                               'regions': regions,
+                               'regional_template_content': regional_template_content,
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
@@ -236,13 +245,21 @@ def gloss(request, idgloss):
     else:
         lastmatch = False
 
+    # Regional list (sorted by dialect name) and regional template contents if this gloss has one
+    regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
+    try:
+        page = Page.objects.get(url__exact=gloss.regional_template)
+        regional_template_content = mark_safe(page.content)
+    except:
+        regional_template_content = None
+
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
                                'dialect_image': map_image_for_regions(gloss.region_set),
-                               # Regions sorted by dialect name
-                               'regions': sorted(gloss.region_set.all(), key=lambda n: n.dialect.name),
+                               'regions': regions,
+                               'regional_template_content': regional_template_content,
                                'lastmatch': lastmatch,
                                'videofile': videourl,
                                'viewname': word,

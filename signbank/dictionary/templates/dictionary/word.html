@@ -143,10 +143,11 @@
         </div>
 
         {% if viewname == "regional" %}
+        {% if regional_template_content %}
         <div  class='col-md-8'>
-          <h2>Template and other signs in the series</h2>
-          <p>Here they go</p>
+          {{ regional_template_content }}
         </div>
+        {% endif %}
         {% endif %}
 
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
