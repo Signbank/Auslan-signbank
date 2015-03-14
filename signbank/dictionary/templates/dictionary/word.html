@@ -121,30 +121,33 @@
 
         <div class='col-md-3 region-right'>
             {% if viewname == "regional" %}
-            {% if dialect_image %}
+            {% if gloss.regions|length > 0 %}
             <div id="states">
                 <div>
-                    <img src="{{ STATIC_URL }}{{dialect_image}}" alt="States">
+                {% for image in dialect_image %}
+                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
+                {% endfor %}
                 </div>
             </div>
-            {% endif %}
 
-            {% if gloss.dialect.all %}
             <div>
                 <h4>Sign Distribution</h4>
                 <ul>
-                {% ifequal dialect_image "images/maps/allstates.gif" %}
-                  <li>All States</li>
-                {% else %}
-                    {% for dialect in gloss.dialect.all %}
-                      <li>{{ dialect.name }}</li>
-                    {% endfor %}
-                {% endifequal %}
+                  {% for dialect in gloss.dialect.all %}
+                    <li>{{ dialect.name }}</li>
+                  {% endfor %}
                 </ul> 
             </div>
             {% endif %}
             {% endif %}
         </div>
+
+        {% if viewname == "regional" %}
+        <div  class='col-md-8'>
+          <h2>Template and other signs in the series</h2>
+          <p>Here they go</p>
+        </div>
+        {% endif %}
 
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
         <div  class='col-md-8'>
