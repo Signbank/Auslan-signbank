@@ -51,6 +51,15 @@ body {
   float: right;
 }
 
+#states {
+  position: relative;
+  height: 200px;
+}
+
+#states img {
+  position: absolute;
+}
+
 #signinfo .navbar-text {
         color: #FFFFFF;
 }
