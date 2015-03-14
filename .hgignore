@@ -1,7 +1,9 @@
 ^venv$
 .pyc$
 .DS_Store
+privatenotes.csv
 signbank/settings/live.py
+signbank/debug.log
 ^test-media/
 ^backup/
 ^[^/]*\.db
