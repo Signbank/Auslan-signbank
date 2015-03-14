@@ -134,7 +134,12 @@
                 <h4>Sign Distribution</h4>
                 <ul>
                   {% for region in regions %}
-                    <li>{{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }} - {{ region.frequency }}</li>
+                    <li>
+                      {{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }}
+                      {% if region.frequency > 0 %}
+                         - {{ region.frequency }}
+                      {% endif %}
+                    </li>
                   {% endfor %}
                 </ul> 
             </div>

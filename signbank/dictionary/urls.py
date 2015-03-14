@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag', name='add_tag'),
     url(r'^update/definition/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_definition', name='add_definition'),
     url(r'^update/relation/$', 'signbank.dictionary.update.add_relation', name='add_relation'),
+    url(r'^update/region/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_region', name='add_region'),
     url(r'^update/gloss/', 'signbank.dictionary.update.add_gloss', name='add_gloss'),
 
     url(r'^ajax/keyword/(?P<prefix>.*)$', 'signbank.dictionary.views.keyword_value_list'),
