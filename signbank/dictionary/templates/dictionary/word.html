@@ -121,7 +121,7 @@
 
         <div class='col-md-3 region-right'>
             {% if viewname == "regional" %}
-            {% if gloss.regions|length > 0 %}
+            {% if regions|length > 0 %}
             <div id="states">
                 <div>
                 {% for image in dialect_image %}
@@ -133,8 +133,8 @@
             <div>
                 <h4>Sign Distribution</h4>
                 <ul>
-                  {% for dialect in gloss.dialect.all %}
-                    <li>{{ dialect.name }}</li>
+                  {% for region in regions %}
+                    <li>{{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }} - {{ region.frequency }}</li>
                   {% endfor %}
                 </ul> 
             </div>

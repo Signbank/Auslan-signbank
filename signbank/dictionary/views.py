@@ -56,9 +56,12 @@ def map_image_for_regions(regions):
     for region in regions.all():
         language_name = region.dialect.language.name.replace(" ", "")
         dialect_name = region.dialect.name.replace(" ", "")
+        dialect_extension = ""
+        if region.traditional:
+            dialect_extension = "-traditional"
         
         language_filename = "images/maps/" + language_name + ".png"
-        dialect_filename = "images/maps/" + language_name + "/" + dialect_name +  ".png"
+        dialect_filename = "images/maps/" + language_name + "/" + dialect_name + dialect_extension + ".png"
         
         if language_filename not in images:
             images.append(language_filename)
@@ -134,6 +137,8 @@ def word_and_regional_view(request, keyword, n, viewname):
                                'matches': range(1, total+1),
                                'navigation': nav,
                                'dialect_image': map_image_for_regions(gloss.region_set),
+                               # Regions sorted by dialect name
+                               'regions': sorted(gloss.region_set.all(), key=lambda n: n.dialect.name),
                                # lastmatch is a construction of the url for this word
                                # view that we use to pass to gloss pages
                                # could do with being a fn call to generate this name here and elsewhere
@@ -236,6 +241,8 @@ def gloss(request, idgloss):
                                'definitions': gloss.definitions(),
                                'allkwds': allkwds,
                                'dialect_image': map_image_for_regions(gloss.region_set),
+                               # Regions sorted by dialect name
+                               'regions': sorted(gloss.region_set.all(), key=lambda n: n.dialect.name),
                                'lastmatch': lastmatch,
                                'videofile': videourl,
                                'viewname': word,
