@@ -19,7 +19,7 @@
 
 
 {% block content %}
-<div id='publicsign'>
+<div id='publicsign' class="view-{{ viewname }}">
     {% if feedbackmessage %}
     <div id="feedbackmessage">
         <p class='alert alert-info'>
@@ -51,7 +51,7 @@
    
    
         <div class='pull-right'>
-            {% ifequal viewname "words" %}
+            {% if viewname == "words" or viewname == "regional" %}
             <span class='navbar-text'>Matches for the word <em>{{ translation.translation }}</em></span>
             <div class='btn-group'>
             {% for i in matches %}
@@ -66,20 +66,25 @@
                 {% if lastmatch %}
                 <a class='btn btn-default navbar-btn' href="{% url 'root_page' %}dictionary/words/{{lastmatch}}.html">Return to Matches</a>
                 {% endif %}
-            {% endifequal %}
+            {% endif %}
         </div>
     
     
-        {% if perms.dictionary.search_gloss %}
         <div class='btn-group'>
+           {% if perms.dictionary.search_gloss %}
            <a id='editbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a>
+           {% endif %}
+           {% if viewname == "words" and gloss.region_set.count > 0 %}
+           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:regional_view' keyword=translation.translation n=n %}">Regional View</a>
+           {% elif viewname == "regional" %}
+           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:word_view' keyword=translation.translation n=n %}">Main View</a>
+           {% endif %}
         </div>
-        {% endif %}
     
     </div>
 
     <div id="definitionblock">
-        <div class='col-md-4'>
+        <div class='col-md-4 region-left'>
             <div id="videocontainer">
                <div id="player">
                   <iframe id='videoiframe' scrolling="no" frameborder='0' allowfullscreen="allowfullscreen"
@@ -98,6 +103,7 @@
                  </p>
             </div>
 
+            {% if viewname == "words" %}
             <div id="feedback">
                 <ul>
                     {% ifequal viewname "words" %}
@@ -110,30 +116,44 @@
                     <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
                 </ul>
             </div>
+            {% endif %}
+        </div>
 
-            {% if dialect_image %}
+        <div class='col-md-3 region-right'>
+            {% if viewname == "regional" %}
+            {% if regions|length > 0 %}
             <div id="states">
                 <div>
-                    <img src="{{ STATIC_URL }}{{dialect_image}}" alt="States">
+                {% for image in dialect_image %}
+                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
+                {% endfor %}
                 </div>
             </div>
-            {% endif %}
 
-            {% if gloss.dialect.all %}
             <div>
                 <h4>Sign Distribution</h4>
                 <ul>
-                {% ifequal dialect_image "images/maps/allstates.gif" %}
-                  <li>All States</li>
-                {% else %}
-                    {% for dialect in gloss.dialect.all %}
-                      <li>{{ dialect.name }}</li>
-                    {% endfor %}
-                {% endifequal %}
+                  {% for region in regions %}
+                    <li>
+                      {{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }}
+                      {% if region.frequency > 0 %}
+                         - {{ region.frequency }}
+                      {% endif %}
+                    </li>
+                  {% endfor %}
                 </ul> 
             </div>
             {% endif %}
+            {% endif %}
         </div>
+
+        {% if viewname == "regional" %}
+        {% if regional_template_content %}
+        <div  class='col-md-8'>
+          {{ regional_template_content }}
+        </div>
+        {% endif %}
+        {% endif %}
 
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
         <div  class='col-md-8'>

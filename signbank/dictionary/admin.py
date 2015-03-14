@@ -60,11 +60,13 @@ class SenseNumberListFilter(SimpleListFilter):
         if self.value() == 'morethanone':
             return queryset.filter(sense__gte=1)
         
-        
+class RegionInline(admin.TabularInline):
+    model = Gloss.dialect.through
+    verbose_name_plural = "Regional information on dialects"
 
 class GlossAdmin(VersionAdmin):
     fieldsets = ((None, {'fields': ('idgloss', 'annotation_idgloss', 'morph', 'sense', 
-                                    'sn', 'StemSN', 'comptf', 'compound', 'language', 'dialect' )}, ),
+                                    'sn', 'StemSN', 'comptf', 'compound', 'language', 'regional_template' )}, ),
                  ('Publication Status', {'fields': ('inWeb',  'isNew',  ), 
                                        'classes': ('collapse',)}, ),
                  ('Phonology', {'fields': ('initial_palm_orientation', 'final_palm_orientation', 
@@ -79,15 +81,14 @@ class GlossAdmin(VersionAdmin):
     list_display = ['idgloss', 'annotation_idgloss', 'morph', 'sense', 'sn']
     search_fields = ['^idgloss', '=sn', '^annotation_idgloss']
     list_filter = ['language', 'dialect', SenseNumberListFilter, 'inWeb', 'domhndsh']
-    inlines = [ RelationInline, DefinitionInline, TranslationInline ]
+    inlines = [ RegionInline, RelationInline, DefinitionInline, TranslationInline ]
 
 
 class RegistrationProfileAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'activation_key_expired', )
     search_fields = ('user__username', 'user__first_name', )
- 
+
 class DialectInline(admin.TabularInline):
-    
     model = Dialect
 
 class DialectAdmin(VersionAdmin):

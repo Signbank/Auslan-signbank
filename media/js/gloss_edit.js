@@ -140,10 +140,14 @@ function configure_edit() {
          type      : 'multiselect',
          data      : languages
      });
-     $('.edit_dialect').editable(edit_post_url, {
-         type      : 'multiselect',
+     $('.edit_region_dialect').editable(edit_post_url, {
+         type      : 'select',
          data      : dialects
-     });     
+     }); 
+     $('.edit_region_traditional').editable(edit_post_url, {
+         type      : 'checkbox',
+         checkbox: { trueValue: 'traditional', falseValue: 'not traditional' }
+     });
      $('.edit_check').editable(edit_post_url, {
          type      : 'checkbox',
          checkbox: { trueValue: 'Yes', falseValue: 'No' }
