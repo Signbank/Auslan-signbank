@@ -70,7 +70,7 @@ def update_gloss(request, glossid):
             
             return update_relation(gloss, field, value)
             
-        elif field.startswith('region'):
+        elif field != 'regional_template' and field.startswith('region'):
             
             return update_region(gloss, field, value)
         
