@@ -11,7 +11,9 @@
          toggle_edit();
          
          if (window.location.search.match('editrel')) {
-             $('#relations').addClass('in');
+           if (window.location.hash.length > 1) {
+             $(window.location.hash).addClass('in');
+           }
          }
          if (window.location.search.match('editdef')) {
              $('#definitions').addClass('in');
