@@ -375,7 +375,7 @@ def add_relation(request):
                 rel = Relation(source=source, target=target, role=role)
                 rel.save()
                 
-                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel')
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel#relations')
             else:
                 return HttpResponseBadRequest("Target gloss not found.", {'content-type': 'text/plain'})
         else:
