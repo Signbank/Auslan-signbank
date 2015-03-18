@@ -206,7 +206,7 @@ def update_region(gloss, field, value):
     
     if what == 'regiondelete':
         region.delete()
-        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}) + "#regions")
     elif what == 'regiondialect':
         dialect = Dialect.objects.get(name=value)
         existing_region = gloss.region_set.filter(dialect=dialect)
@@ -220,10 +220,12 @@ def update_region(gloss, field, value):
         region.frequency = value
         region.save()
     elif what == 'regiontraditional':
-        if value == True or value == "traditional":
+        if value == 1 or value == "1" or value == "traditional":
             region.traditional = True
+            value = "traditional"
         else:
             region.traditional = False
+            value = "not traditional"
         region.save()
         
     return HttpResponse(value, {'content-type': 'text/plain'})
@@ -339,14 +341,16 @@ def add_region(request, glossid):
             frequency = int(request.POST['frequency'])
         except ValueError:
             frequency = 0
-        if 'traditional' in request.POST and request.POST['traditional']:
+        if frequency < 0 or (str(frequency) != request.POST['frequency'] and request.POST['frequency'] != ""):
+            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid})+'?editrel&error=FrequencyInteger#regions')
+        if 'traditional' in request.POST and request.POST['traditional'] == "1":
             traditional = True
         else:
             traditional = False
         
         # Make sure there isn't already a dialect of this type
         if gloss.dialect.filter(name=dialect.name):
-            return HttpResponseBadRequest("Dialect already exists, alter the existing values.", {'content-type': 'text/plain'})
+            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid})+'?editrel&error=DialectExists#regions')
         
         region = Region(gloss=gloss, dialect=dialect, frequency=frequency, traditional=traditional)
         region.save()
