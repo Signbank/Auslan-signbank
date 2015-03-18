@@ -64,6 +64,7 @@ function disable_edit() {
     $('#enable_edit').addClass('btn-primary').removeClass('btn-danger');
     $('#add_definition').hide();
     $('#add_relation_form').hide();
+    $('#add_region_form').hide();
     $('.definition_delete').hide();
     $('.relation_delete').hide();
 };
@@ -77,6 +78,7 @@ function enable_edit() {
     $('#enable_edit').removeClass('btn-primary').addClass('btn-danger');
     $('#add_definition').show();
     $('#add_relation_form').show();
+    $('#add_region_form').show();
     $('.definition_delete').show();
     $('.relation_delete').show();
 };
@@ -147,8 +149,8 @@ function configure_edit() {
          data      : dialects
      }); 
      $('.edit_region_traditional').editable(edit_post_url, {
-         type      : 'checkbox',
-         checkbox: { trueValue: 'traditional', falseValue: 'not traditional' }
+         type      : 'select',
+         data      : [ 'not traditional', 'traditional' ]
      });
      $('.edit_check').editable(edit_post_url, {
          type      : 'checkbox',

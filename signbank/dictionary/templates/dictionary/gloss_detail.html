@@ -343,7 +343,15 @@
                  <td class='edit edit_region_traditional' id='regiontraditional_{{region.id}}'>{{region.traditional|yesno:"traditional,not traditional"}}</td>
             {% endfor %}
         </table>
+
+        {% if request.GET.error == "FrequencyInteger" %}
+        <div class="alert alert-danger">Frequency must be a positive whole number (or zero if there is no frequency information).</div>
+        {% endif %}
+        {% if request.GET.error == "DialectExists" %}
+        <div class="alert alert-danger">Dialect already exists, alter the existing values.</div>
+        {% endif %}
         
+        {% if perms.dictionary.change_gloss %}
         <form id='add_region_form' method='post' action='{% url 'dictionary:add_region' gloss.id %}'>
             {% csrf_token %}
             <input type='hidden' name='sourceid' value='{{gloss.pk}}'>
@@ -355,11 +363,15 @@
                       {% endfor %}
                     </select></td>
                     <td><input class='form-control edit_int' placeholder='Frequency - positive whole number' name="frequency"></td>
-                    <td>Traditional: <input class="form-control" type="checkbox" name="traditional"></td>
+                    <td><select class="form-control" name="traditional">
+                      <option value="0">not traditional</option>
+                      <option value="1">traditional</option>
+                    </select></td>
                     <td><input class='btn btn-primary' value='Add Dialect' type='submit'></td>
                 </tr>
             </table>
          </form>
+         {% endif %}
       </div>
       
     </div>
@@ -468,7 +480,6 @@
                         <td>(<a href='{% url "dictionary:admin_gloss_view" pk=rel.target.pk %}'>view</a>)</td></tr>
                    {% endfor %}
                </table>
-               
                
                {% if perms.dictionary.change_gloss %}
                <form id='add_relation_form' method='post' action='{% url 'dictionary:add_relation' %}'>
