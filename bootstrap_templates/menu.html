@@ -38,7 +38,12 @@
             <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 <li><a href="/dictionary/">Dictionary</a></li>
+                {% if perms.attachments.add_attachment %}
+                <li><a href="/regional/">Regional Signs</a></li>
+                <li><a href="/regional/numbersigns/">Number Signs</a></li>
+                {% else %}
                 <li><a href="/numbersigns.html">Number Signs</a></li>
+                {% endif %}
                 <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
                 <li id="extrafeedback"><a href="{% url 'signbank.feedback.views.generalfeedback' %}">Help build Signbank</a></li>
             </ul>
