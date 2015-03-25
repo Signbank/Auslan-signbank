@@ -134,6 +134,10 @@ def word_and_regional_view(request, keyword, n, viewname):
         regional_template_content = mark_safe(page.content)
     except:
         regional_template_content = None
+        
+    # If we asked for a regional view but there is no regional information available fall over
+    if viewname == "regional" and len(regions) == 0:
+        raise Http404
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
