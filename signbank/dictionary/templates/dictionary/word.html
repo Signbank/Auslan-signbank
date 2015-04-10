@@ -136,16 +136,23 @@
 
             <div>
                 <h4>Sign Distribution</h4>
-                <ul>
+                <table class="table table-condensed">
                   {% for region in regions %}
-                    <li>
-                      {{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }}
+                  <tr>
+                    <td>
+                      {{ region.dialect.name }}
+                    </td>
+                    <td>
+                      {{ region.traditional|yesno:" traditional," }}
+                    </td>
+                    <td>
                       {% if region.frequency > 0 %}
                          - {{ region.frequency }}
                       {% endif %}
-                    </li>
+                    </td>
+                  </tr>
                   {% endfor %}
-                </ul> 
+                </table>
             </div>
             {% endif %}
             {% endif %}
