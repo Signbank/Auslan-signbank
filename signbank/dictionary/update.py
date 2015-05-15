@@ -337,12 +337,7 @@ def add_region(request, glossid):
         # Get the data, don't use a form it just adds overhead
         gloss = get_object_or_404(Gloss, id=glossid)
         dialect = get_object_or_404(Dialect, id=request.POST['dialect'])
-        try:
-            frequency = int(request.POST['frequency'])
-        except ValueError:
-            frequency = 0
-        if frequency < 0 or (str(frequency) != request.POST['frequency'] and request.POST['frequency'] != ""):
-            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid})+'?editrel&error=FrequencyInteger#regions')
+        frequency = request.POST['frequency']
         if 'traditional' in request.POST and request.POST['traditional'] == "1":
             traditional = True
         else:

@@ -339,14 +339,11 @@
                 
                 
                  <td class='edit edit_region_dialect' id='regiondialect_{{region.id}}'>{{region.dialect.name}}</td>
-                 <td class='edit edit_int' id='regionfrequency_{{region.id}}'>{{region.frequency}}</td>
+                 <td class='edit edit_text' id='regionfrequency_{{region.id}}'>{{region.frequency}}</td>
                  <td class='edit edit_region_traditional' id='regiontraditional_{{region.id}}'>{{region.traditional|yesno:"traditional,not traditional"}}</td>
             {% endfor %}
         </table>
 
-        {% if request.GET.error == "FrequencyInteger" %}
-        <div class="alert alert-danger">Frequency must be a positive whole number (or zero if there is no frequency information).</div>
-        {% endif %}
         {% if request.GET.error == "DialectExists" %}
         <div class="alert alert-danger">Dialect already exists, alter the existing values.</div>
         {% endif %}
@@ -362,7 +359,7 @@
                         <option value="{{ dialect.id }}">{{ dialect.language.name }}/{{ dialect.name }}</option>
                       {% endfor %}
                     </select></td>
-                    <td><input class='form-control edit_int' placeholder='Frequency - positive whole number' name="frequency"></td>
+                    <td><input class='form-control edit_text' placeholder='Frequency' name="frequency"></td>
                     <td><select class="form-control" name="traditional">
                       <option value="0">not traditional</option>
                       <option value="1">traditional</option>
