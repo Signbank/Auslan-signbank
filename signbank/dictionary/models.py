@@ -164,7 +164,7 @@ class Region(models.Model):
     
     gloss = models.ForeignKey('Gloss')
     dialect = models.ForeignKey(Dialect)
-    frequency = models.IntegerField()
+    frequency = models.TextField()
     traditional = models.BooleanField(default=False)
     
 

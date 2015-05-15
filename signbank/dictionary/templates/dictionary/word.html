@@ -142,9 +142,7 @@
                       {{ region.traditional|yesno:" traditional," }}
                     </td>
                     <td>
-                      {% if region.frequency > 0 %}
-                         {{ region.frequency }}
-                      {% endif %}
+                        {{ region.frequency }}
                     </td>
                   </tr>
                   {% endfor %}
