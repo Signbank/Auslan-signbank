@@ -70,6 +70,7 @@
 
 <div id="word-info-wrapper">
 
+    {% if DEFINITION_FIELDS and gloss.published_definitions %}
     <div id="definition">
         <h2>Sign Definition</h2>
  
@@ -160,7 +161,7 @@
         {% endif %}
 
     </div>
-
+    {% endif %}
 
       {% if regions|length > 0 %}
       <div id="states">
