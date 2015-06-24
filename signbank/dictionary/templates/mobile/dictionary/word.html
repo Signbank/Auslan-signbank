@@ -58,7 +58,9 @@
 	              <a data-role="button" data-inline="true" data-icon="arrow-l" data-direction='reverse' 
                      href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
-	            <a data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></a>
+              {% if glosscount > 0 %}
+	              <a data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></a>
+              {% endfor %} 
 	            {% if navigation.next %}
 	             <a data-role="button" data-inline="true" data-icon="arrow-r" 
                     href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
