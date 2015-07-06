@@ -271,6 +271,7 @@ relOrientationChoices = (
                     ('radial', 'Radial'),
                     ('ulnar', 'Ulnar'),
                     ('fingertip(s)', 'Fingertips'),
+                    ('elbow', 'Elbow'),
                     ('0', 'N/A'),  
                         )
 
