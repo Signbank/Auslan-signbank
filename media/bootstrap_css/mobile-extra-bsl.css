@@ -1,0 +1,5 @@
+/* overloaded styles for the mobile site - use a different override by changing MOBILE_CSS in the site settings */
+
+.hideonbsl {
+  display: none;
+}

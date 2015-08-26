@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+    <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.12/video.js"></script>
+    <script>
+    $(document).ready(function(){   
+    	var setup = {
+    			"techOrder" : ['html5', 'flash'],
+    			"controls": true,
+    			"preload": "auto",
+    			"children": { 
+    				"controlBar": { 
+    					"children": { 
+    						"muteToggle": false, 
+    						"volumeControl": false // displays volume control bar atop button
+    					}
+    				}
+    			}
+    		};
+    	
+    	var myPlayer = videojs('sign', setup); 
+    	
+    	myPlayer.on('play', function(){
+    		myPlayer.userActive(false)
+    	});
+    	myPlayer.on('mouseout', function(){
+    		myPlayer.userActive(false)
+    	});
+    	
+        var aspectRatio = {{aspectRatio}}; // Make up an aspect ratio
+    
+        function resizeVideoJS(){
+            
+          // Get the parent element's actual width
+          var width = document.getElementById('signbody').offsetWidth;
+          // Set width to fill parent element, Set height
+          myPlayer.dimensions(width, width * aspectRatio);
+        }
+        
+        myPlayer.ready(function(){
+            resizeVideoJS(); // Initialize the function
+            window.onresize = resizeVideoJS; // Call the function on resize
+         });
+    });
+    </script>
+    <style>
+video-container {
+height: 100%; width: 100%; left: 0; top: 0; overflow: hidden; position: absolute; }
+
+video-container #track, #video-container #track_html5_api {
+min-height: 100%; min-width: 100%; height: auto !important; width: auto !important; position: absolute; left: 0; top: 0; }
+    </style>
+ </head> 
+ <body id='signbody'>
+
+     {% if videourl %}
+     <video id='sign' class='video-js vjs-default-skin' 
+            poster='{{posterurl}}' controls autoplay preload='auto' {{ loop|yesno:"loop," }} muted data-setup='{ "playbackRates": [0.25, 0.5, 1.0, 1.5] }'>
+         <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
+     </video>
+     {% else %}
+     <img src='{{ STATIC_URL }}images/no-video.png'>
+     {% endif %}
+    
+</body>
+</html>
