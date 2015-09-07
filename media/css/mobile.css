@@ -93,6 +93,10 @@
 	text-align: center;
 }
 
+#states img {
+  position: absolute;
+}
+
 #videocontainer { 
 	margin: auto;
 	text-align: center;
