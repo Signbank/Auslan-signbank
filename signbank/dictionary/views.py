@@ -196,7 +196,10 @@ def gloss(request, idgloss):
     # we should only be able to get a single gloss, but since the URL
     # pattern could be spoofed, we might get zero or many
     # so we filter first and raise a 404 if we don't get one
-    glosses = Gloss.objects.filter(idgloss=idgloss)
+    if request.user.has_perm('dictionary.search_gloss'):
+        glosses = Gloss.objects.filter(idgloss=idgloss)
+    else:
+        glosses = Gloss.objects.filter(inWeb__exact=True, idgloss=idgloss)
 
     if len(glosses) != 1:
         raise Http404
