@@ -464,7 +464,6 @@ minor or insignificant ways that can be ignored.""")
         """Work out the gloss that might have the video for this sign, usually the sign number but
         if we're a sense>1 then we look at the homophone with sense=1
         Return the gloss instance."""
-        
         if self.sense > 1:
             homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
             # should be only zero or one of these
