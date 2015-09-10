@@ -82,7 +82,7 @@ body {
 #videocontainer #player {
    margin: auto;
    width:320px;
-   height:240px;
+   height:270px;
    border-left: 6px solid black;
    border-right: 6px solid black;
    background-color: #000;
@@ -400,4 +400,16 @@ body {
 .tt-suggestion p {
   margin: 0;
 }
-
+#login {
+	padding: 15px;
+	padding-top: 10px;
+	line-height: 20px;
+	position: relative;
+	display: block;
+	list-style: none;
+	float: right;
+}
+#login a{
+	text-decoration: none;
+	color: lavender;
+}
