@@ -1,0 +1,17 @@
+.vjs-default-skin .vjs-control-bar { 
+	background: rgba(0,0,0,0);
+	}
+.vjs-default-skin .vjs-slider { 
+	background: rgba(0,0,0,0.5) 
+	}
+/* Always show control bar */
+.video-js.vjs-static-controls .vjs-control-bar {
+	display:block;
+	bottom: -40px;
+	}
+
+/* Don't fade out controls */
+.video-js.vjs-static-controls.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+ 	opacity: 1;
+ 	visibility: visible; 
+	}
