@@ -340,7 +340,7 @@
                 
                  <td class='edit edit_region_dialect' id='regiondialect_{{region.id}}'>{{region.dialect.name}}</td>
                  <td class='edit edit_text' id='regionfrequency_{{region.id}}'>{{region.frequency}}</td>
-                 <td class='edit edit_region_traditional' id='regiontraditional_{{region.id}}'>{{region.traditional|yesno:"traditional,not traditional"}}</td>
+                 <td class='edit edit_region_traditional' id='regiontraditional_{{region.id}}'>{{region.traditional|yesno:"traditional,attested"}}</td>
             {% endfor %}
         </table>
 
@@ -361,7 +361,7 @@
                     </select></td>
                     <td><input class='form-control edit_text' placeholder='Frequency' name="frequency"></td>
                     <td><select class="form-control" name="traditional">
-                      <option value="0">not traditional</option>
+                      <option value="0">attested</option>
                       <option value="1">traditional</option>
                     </select></td>
                     <td><input class='btn btn-primary' value='Add Dialect' type='submit'></td>
