@@ -149,7 +149,10 @@ def update_gloss(request, glossid):
             
             # special value of 'notset' or -1 means remove the value
             if value == 'notset' or value == -1 or value == '':
-                gloss.__setattr__(field, None)
+                if field == 'regional_template':
+                    gloss.__setattr__(field, '')
+                else:
+                    gloss.__setattr__(field, None)
                 gloss.save()
                 newvalue = ''
             else: 
