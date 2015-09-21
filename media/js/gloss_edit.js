@@ -150,7 +150,7 @@ function configure_edit() {
      }); 
      $('.edit_region_traditional').editable(edit_post_url, {
          type      : 'select',
-         data      : [ 'not traditional', 'traditional' ]
+         data      : [ 'attested', 'traditional' ]
      });
      $('.edit_check').editable(edit_post_url, {
          type      : 'checkbox',

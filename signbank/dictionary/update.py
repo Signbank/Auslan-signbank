@@ -228,7 +228,7 @@ def update_region(gloss, field, value):
             value = "traditional"
         else:
             region.traditional = False
-            value = "not traditional"
+            value = "attested"
         region.save()
         
     return HttpResponse(value, {'content-type': 'text/plain'})
