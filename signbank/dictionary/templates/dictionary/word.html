@@ -72,12 +72,12 @@
     
         <div class='btn-group'>
            {% if perms.dictionary.search_gloss %}
-           <a id='editbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Entry View</a>
+           <a id='editbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:admin_gloss_view' pk=gloss.id %}">Detail View</a>
            {% endif %}
            {% if viewname == "words" and gloss.region_set.count > 0 %}
            <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:regional_view' keyword=translation.translation n=n %}">Regional View</a>
            {% elif viewname == "regional" %}
-           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:word_view' keyword=translation.translation n=n %}">Main View</a>
+           <a id='regionalbutton' class='btn btn-default navbar-btn' href="{% url 'dictionary:word_view' keyword=translation.translation n=n %}">Entry View</a>
            {% endif %}
         </div>
     
