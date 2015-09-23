@@ -135,9 +135,9 @@ def word_and_regional_view(request, keyword, n, viewname):
     except:
         regional_template_content = None
         
-    # If we asked for a regional view but there is no regional information available fall over
+    # If we asked for a regional view but there is no regional information available redirect to non regional view
     if viewname == "regional" and len(regions) == 0:
-        raise Http404
+        return HttpResponseRedirect('/dictionary/words/'+keyword+'-'+str(n)+'.html' )
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
