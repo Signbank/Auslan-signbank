@@ -27,10 +27,10 @@ videojs.plugin('loopbutton', function(options) {
 
 	player.ready(function(){
 		var button = new LoopButton(player,  {
-			el: vjs.Component.prototype.createEl('control', {
-				className	: 'vjs-loop-button vjs-menu-button vjs-control',
-				role: 'button',
-				text: 'loop'
+			el: vjs.Component.prototype.createEl('div', {
+				className	: 'vjs-loop-button vjs-control',
+				innerHTML: '<div class="vjs-control-content"><span class="vjs-control-text">Loop</span></div>',
+				role: 'button'
 			}) 
 		});
 		player.controlBar.addChild(button);

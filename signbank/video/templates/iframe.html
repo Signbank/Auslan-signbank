@@ -27,7 +27,7 @@ min-height: 100%; min-width: 100%; height: auto !important; width: auto !importa
      {% if videourl %}
      <video id='sign' class='video-js vjs-default-skin vjs-static-controls' 
             poster='{{posterurl}}' controls autoplay preload='auto' muted 
-            data-setup='{ "playbackRates": [0.25, 0.5, 1.0, 1.5] , "children": { 
+            data-setup='{ "techOrder": ["html5", "flash"], "playbackRates": [0.25, 0.5, 1.0, 1.5] , "children": { 
 				"controlBar": { 
 					"children": { 
 						"muteToggle": false, 
