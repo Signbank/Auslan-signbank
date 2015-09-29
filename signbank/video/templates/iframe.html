@@ -2,30 +2,16 @@
 <html>
  <head>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
-    <link href="//vjs.zencdn.net/4.5/video-js.css" rel="stylesheet">
-    <script src="//vjs.zencdn.net/4.5/video.js"></script>
-    <script>
-    $(document).ready(function(){     
-        var myPlayer = videojs('sign');
- 
-        var aspectRatio = {{aspectRatio}}; // Make up an aspect ratio
-    
-        function resizeVideoJS(){
-            
-          // Get the parent element's actual width
-          var width = document.getElementById('signbody').offsetWidth;
-          // Set width to fill parent element, Set height
-          myPlayer.width(width).height( width * aspectRatio );
-        }
-
-        myPlayer.ready(function(){
-
-          
-           resizeVideoJS(); // Initialize the function
-           window.onresize = resizeVideoJS; // Call the function on resize
-
-        });
-    
+    <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.12/video.js"></script>
+    <link href="{{ STATIC_URL }}css/custom-player.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}loopbutton/videojs.loopbutton.css" rel="stylesheet">
+	<!-- I have changed some parts of this js file -->
+	<script type="text/javascript" src="{{ STATIC_URL }}loopbutton/videojs.loopbutton.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/videoplayersetup.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	videosetup({{aspectRatio}});
     });
     </script>
     <style>
@@ -39,14 +25,25 @@ min-height: 100%; min-width: 100%; height: auto !important; width: auto !importa
  <body id='signbody'>
 
      {% if videourl %}
-     <video id='sign' class='video-js vjs-default-skin' 
-            poster='{{posterurl}}' controls autoplay preload='auto'>
+     <video id='sign' class='video-js vjs-default-skin vjs-static-controls' 
+            poster='{{posterurl}}' controls autoplay preload='auto' muted 
+            data-setup='{ "techOrder": ["html5", "flash"], "playbackRates": [0.25, 0.5, 1.0, 1.5] , "children": { 
+				"controlBar": { 
+					"children": { 
+						"muteToggle": false, 
+						"volumeControl": false
+					}
+				}
+			},
+			"plugins": {
+				"loopbutton": true
+			}
+		}'>
          <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
      </video>
      {% else %}
      <img src='{{ STATIC_URL }}images/no-video.png'>
      {% endif %}
-     
     
 </body>
 </html>

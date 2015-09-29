@@ -2,9 +2,8 @@
 
 import os
 
-BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

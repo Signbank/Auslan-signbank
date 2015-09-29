@@ -1,8 +1,10 @@
 django==1.6.1
-south
-django-tagging
-django-mobile
-django-reversion
-django-bootstrap3
-django-summernote
-unicodecsv
+south==1.0.2
+django-tagging==0.3.2
+django-mobile==0.5.0
+django-reversion==1.8.5
+django-bootstrap3==6.1.0
+django-summernote==0.6.10
+unicodecsv==0.13.0
+
+ffmpegx

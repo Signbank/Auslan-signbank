@@ -21,6 +21,7 @@
 }
  
 
+	
 #footer {
 	padding: 1em;
 	float: left;
@@ -100,9 +101,15 @@
 	padding-right: -15px;
 }
 
+#videocontainer .video{
+	margin: auto;
+	width: 290px;
+	background-color: black;
+}
+
 /* size the video frame so that it fits within the iPhone screen */
 #videocontainer iframe {
-    height: 218px;
+    height: 248px;
     width: 290px;
 }
 
