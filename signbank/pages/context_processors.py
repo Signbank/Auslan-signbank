@@ -42,6 +42,7 @@ def configuration(request):
     """
     
     return {
+       'settings_site_title': settings.SITE_TITLE,
        'settings_admin_email': settings.ADMIN_EMAIL,
        'settings_google_analytics_tracking_code': settings.GOOGLE_ANALYTICS_TRACKING_CODE,
        'settings_social_network_share_links': settings.SOCIAL_NETWORK_SHARE_LINKS,

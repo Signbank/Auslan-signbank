@@ -69,6 +69,10 @@ def update_gloss(request, glossid):
         elif field.startswith('relation'):
             
             return update_relation(gloss, field, value)
+            
+        elif field != 'regional_template' and field.startswith('region'):
+            
+            return update_region(gloss, field, value)
         
         elif field == 'language':
             # expecting possibly multiple values
@@ -145,7 +149,10 @@ def update_gloss(request, glossid):
             
             # special value of 'notset' or -1 means remove the value
             if value == 'notset' or value == -1 or value == '':
-                gloss.__setattr__(field, None)
+                if field == 'regional_template':
+                    gloss.__setattr__(field, '')
+                else:
+                    gloss.__setattr__(field, None)
                 gloss.save()
                 newvalue = ''
             else: 
@@ -186,6 +193,45 @@ def update_keywords(gloss, field, value):
     newvalue = ", ".join([t.translation.text for t in gloss.translation_set.all()])
     
     return HttpResponse(newvalue, {'content-type': 'text/plain'})
+
+def update_region(gloss, field, value):
+    """Update one of the regions for this gloss"""
+    
+    (what, regid) = field.split('_')
+    
+    try:
+        region = Region.objects.get(id=regid)
+    except:
+        return HttpResponseBadRequest("Bad Region ID '%s'" % regid, {'content-type': 'text/plain'})
+
+    if not gloss == region.gloss:
+        return HttpResponseBadRequest("Region doesn't match gloss", {'content-type': 'text/plain'})
+    
+    if what == 'regiondelete':
+        region.delete()
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}) + "#regions")
+    elif what == 'regiondialect':
+        dialect = Dialect.objects.get(name=value)
+        existing_region = gloss.region_set.filter(dialect=dialect)
+        if len(existing_region) == 0 or existing_region[0] == region:
+            region.dialect = dialect
+            region.save()
+        else:
+            # We tried to change to an existing value, ignore it
+            return HttpResponse(region.dialect.name, {'content-type': 'text/plain'})
+    elif what == 'regionfrequency':
+        region.frequency = value
+        region.save()
+    elif what == 'regiontraditional':
+        if value == 1 or value == "1" or value == "traditional":
+            region.traditional = True
+            value = "traditional"
+        else:
+            region.traditional = False
+            value = "attested"
+        region.save()
+        
+    return HttpResponse(value, {'content-type': 'text/plain'})
 
 def update_relation(gloss, field, value):
     """Update one of the relations for this gloss"""
@@ -287,13 +333,34 @@ def update_definition(request, gloss, field, value):
     return HttpResponse(newvalue, {'content-type': 'text/plain'})
 
 
+def add_region(request, glossid):
+    """Add a new region to a gloss"""
+
+    if request.method == "POST":
+        # Get the data, don't use a form it just adds overhead
+        gloss = get_object_or_404(Gloss, id=glossid)
+        dialect = get_object_or_404(Dialect, id=request.POST['dialect'])
+        frequency = request.POST['frequency']
+        if 'traditional' in request.POST and request.POST['traditional'] == "1":
+            traditional = True
+        else:
+            traditional = False
+        
+        # Make sure there isn't already a dialect of this type
+        if gloss.dialect.filter(name=dialect.name):
+            return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid})+'?editrel&error=DialectExists#regions')
+        
+        region = Region(gloss=gloss, dialect=dialect, frequency=frequency, traditional=traditional)
+        region.save()
+        
+        return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': glossid})+'?editrel#regions')
+
 def add_relation(request):
     """Add a new relation instance"""
     
     if request.method == "POST":
         
         form = RelationForm(request.POST)
-        
         if form.is_valid():
             
             role = form.cleaned_data['role']
@@ -310,7 +377,7 @@ def add_relation(request):
                 rel = Relation(source=source, target=target, role=role)
                 rel.save()
                 
-                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel')
+                return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel#relations')
             else:
                 return HttpResponseBadRequest("Target gloss not found.", {'content-type': 'text/plain'})
         else:

@@ -21,6 +21,9 @@
   <p>Activation was successful. You may now <a href="/accounts/login?next=/">login</a>
   using your email address and password.</p>
   
+{% if is_researcher == True %}<p>Thank you for requesting advanced researcher access. We will email you to inform you if/when your account has been upgraded. Note this may take up to one week, depending on demand and staff availability.</p>{% endif %}
+
+  
 <p>Your Email Address:   {{ account.email }} </p>
 
 {% endblock %}							

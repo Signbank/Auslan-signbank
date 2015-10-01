@@ -191,6 +191,7 @@ SOUTH_TESTS_MIGRATE = False
 # what do we call this signbank?
 LANGUAGE_NAME = "Auslan"
 COUNTRY_NAME = "Australia"
+SITE_TITLE = "Signbank"
 
 # Show social network links?
 SOCIAL_NETWORK_SHARE_LINKS = False

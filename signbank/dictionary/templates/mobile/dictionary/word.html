@@ -1,6 +1,6 @@
 {% extends "baselayout.html" %}
 
-{% block pagetitle %}Auslan: sign for {{ translation.translation }} {% endblock %}
+{% block pagetitle %}{{ settings_site_title }} - Sign for {{ translation.translation }} {% endblock %}
 
 {% block extrahead %}
 
@@ -58,7 +58,9 @@
 	              <a data-role="button" data-inline="true" data-icon="arrow-l" data-direction='reverse' 
                      href="{% url 'root_page' %}dictionary/gloss/{{navigation.prev.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
 	            {% endif %}
-	            <a data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></a>
+              {% if glosscount > 0 %}
+	              <a data-role='button' data-inline='true'>Sign <em>{{glossposn}}</em> of <em>{{glosscount}}</em></a>
+              {% endif %} 
 	            {% if navigation.next %}
 	             <a data-role="button" data-inline="true" data-icon="arrow-r" 
                     href="{% url 'root_page' %}dictionary/gloss/{{navigation.next.idgloss}}.html?lastmatch={{lastmatch}}">&nbsp;</a>
@@ -70,6 +72,7 @@
 
 <div id="word-info-wrapper">
 
+    {% if DEFINITION_FIELDS and gloss.published_definitions %}
     <div id="definition">
         <h2>Sign Definition</h2>
  
@@ -160,28 +163,29 @@
         {% endif %}
 
     </div>
-
-
-        <div>
-           <h4>Sign Distribution</h4> 
-                <ul>
-                {% ifequal dialect_image "images/maps/allstates.gif" %}
-                  <li>All States</li>
-                {% else %}
-	                {% for dialect in gloss.dialect.all %}
-	                  <li>{{ dialect.name }}</li>
-	                {% endfor %}
-                {% endifequal %}
-                </ul>  
-        </div>
-
-    {% if dialect_image %}
-    <div id="states">      
-        <div>
-            <img src="{{ STATIC_URL }}{{dialect_image}}" alt="States"></img>
-        </div>
-    </div> 
     {% endif %}
+
+      {% if regions|length > 0 %}
+      <div id="states">
+          <div>
+          {% for image in dialect_image %}
+              <img src="{{ STATIC_URL }}{{image}}" alt="Region">
+          {% endfor %}
+          </div>
+      </div>
+
+      <div>
+          <h4>Sign Distribution</h4>
+          <ul>
+            {% for region in regions %}
+              <li>
+                {{ region.dialect.name }}{{ region.traditional|yesno:" (traditional)," }}
+                {{ region.frequency }}
+              </li>
+            {% endfor %}
+          </ul> 
+      </div>
+      {% endif %}
 
 
 	<h2>Feedback</h2>

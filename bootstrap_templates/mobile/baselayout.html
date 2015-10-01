@@ -6,7 +6,7 @@
   
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
   
-    <title>{% block pagetitle %}Signbank{% endblock %}</title>
+    <title>{% block pagetitle %}{{ settings_site_title }}{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,7 +62,7 @@
   <div data-role="page" class="page"> 
     <div id="header" data-role="header">
       <a href="/" data-transition="pop" data-role="button" data-icon="home" data-iconpos="notext">Home</a>
-      <h1>Signbank</h1>
+      <h1>{{ settings_site_title }}</h1>
       <div data-role="navbar">
         <ul>
   	      {% for item in menu %}
@@ -100,12 +100,7 @@
     <div id="footer-info-wrapper">
         
               <div id="copyright">
-                  <!--
-                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
-                  
-                      <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />
-                      -->
-                      <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">This Signbank</span> is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.
+                      <span>No copying or linking (except to the BSL SignBank website) without the prior written permission of UCL.</span>
              
               </div>
         

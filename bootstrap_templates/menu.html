@@ -37,12 +37,15 @@
     
     <ul class='nav navbar-nav'>
         <li class='dropdown'>
-            <a class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 <li><a href="/dictionary/">Dictionary</a></li>
-                <li><a href="/numbersigns.html">Number Signs</a></li>
+                <li><a href="/regional/numbersigns/">Number Signs</a></li>
+                <li><a href="/regional/coloursigns/">Colour Signs</a></li>
+                <li><a href="/regional/countrysigns/">Country Signs</a></li>
+                <li><a href="/regional/ukplacenamesigns/">UK Place Name Signs</a></li>
                 <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
-                <li id="extrafeedback"><a href="{% url 'signbank.feedback.views.generalfeedback' %}">Provide feedback on the site</a></li>
+                <li id="extrafeedback"><a href="{% url 'signbank.feedback.views.generalfeedback' %}">Help build Signbank</a></li>
             </ul>
         </li>
     </ul>
@@ -50,13 +53,13 @@
     {% if settings_social_network_share_links %}
     <ul class='nav navbar-nav'>
         <li class='dropdown'>
-            <a class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 {% if settings_social_network_twitter_page %}
                 <li><a href="http://twitter.com/share?text={{ " #bslsignbank"|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
                 {% endif %}
                 {% if settings_social_network_facebook_page %}
-                <li><a href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/facebook.png" alt="facebook"> Like on Facebook</a></li>
+                <li><a href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/facebook.png" alt="facebook"> Share on Facebook</a></li>
                 {% endif %}
                 {% if settings_social_network_twitter_page %}
                 <li><a href="{{ settings_social_network_twitter_page }}">Follow us on Twitter</a></li>
@@ -72,10 +75,10 @@
     {% if perms.dictionary.search_gloss %}
     <ul class="nav navbar-nav">
        <li class='dropdown'>
-             <a class="dropdown-toggle" data-toggle="dropdown"
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                 {% if '/feedback/show.html' in request.path %}class="active"{% endif %}
                 {% if '/attachments/' in request.path %}class="active"{% endif %}>
-                Staff <b class="caret"></b>
+                Advanced <b class="caret"></b>
              </a>
              <ul class='dropdown-menu'> 
                 

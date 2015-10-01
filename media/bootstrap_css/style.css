@@ -38,11 +38,33 @@ body {
     margin-bottom: 0px;
 }
 
+/* Regional view overrides */
+#publicsign.view-regional #signinfo {
+  width: auto;
+}
+
+#publicsign.view-regional #definitionblock .region-left {
+  float: left;
+}
+
+#publicsign.view-regional #definitionblock .region-right {
+  float: right;
+}
+
+#states {
+  position: relative;
+  height: 310px;
+}
+
+#states img {
+  position: absolute;
+}
+
 #signinfo .navbar-text {
         color: #FFFFFF;
 }
 #signinfo #editbutton {
-    margin-right: 15px;
+  
 }
 
 
@@ -334,6 +356,16 @@ body {
     padding: 20px;
 }
 
+
+
+/* other form markup */
+.form-horizontal .control-label {
+  text-align: left;
+}
+
+textarea.form-control {
+  height: 100px;
+}
 
 
 // typeahead dropdown styling
