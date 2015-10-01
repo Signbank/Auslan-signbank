@@ -155,7 +155,19 @@ class Dialect(models.Model):
     
     def __str__(self):
         return self.language.name+"/"+self.name  
-  
+
+class Region(models.Model):
+    """Regional information for a gloss - including dialect, frequency and traditional status"""
+    
+    class Meta:
+        ordering = ['gloss', 'dialect', 'frequency', 'traditional']
+    
+    gloss = models.ForeignKey('Gloss')
+    dialect = models.ForeignKey(Dialect)
+    frequency = models.TextField()
+    traditional = models.BooleanField(default=False)
+    
+
 handshapeChoices = (('notset', 'No Value Set'),
                     ('0.0', 'N/A'),
                     ('0.1', 'Round'),
@@ -259,6 +271,7 @@ relOrientationChoices = (
                     ('radial', 'Radial'),
                     ('ulnar', 'Ulnar'),
                     ('fingertip(s)', 'Fingertips'),
+                    ('elbow', 'Elbow'),
                     ('0', 'N/A'),  
                         )
 
@@ -274,6 +287,7 @@ class Gloss(models.Model):
                        ('can_delete_unpublished', 'Can delete unpub signs or defs'),
                        ('can_delete_published', 'Can delete pub signs and defs'),
                        ('view_advanced_properties', 'Include all properties in sign detail view'),
+                       ('can_view_unpub_defs', 'Can view unpublished defs'),
                         )
 
         
@@ -336,8 +350,11 @@ minor or insignificant ways that can be ignored.""")
     ########
     
     # one or more regional dialects that this gloss is used in
-    dialect = models.ManyToManyField(Dialect)
+    dialect = models.ManyToManyField(Dialect, through='Region')
     
+    # template field for showing regional groups, should normalize this to another table
+    regional_template = models.CharField("Regional Template", max_length=50, blank=True, null=False, default="", help_text="""
+    Enter the URL of a page to display on the regional view of this gloss or blank for a standard template""")
     
     blend = models.CharField("Blend of", max_length=100, null=True, blank=True) # This field type is a guess.
     blendtf = models.NullBooleanField("Blend", null=True, blank=True)
@@ -592,6 +609,8 @@ minor or insignificant ways that can be ignored.""")
 
         return json.dumps(d)
     
+    def dialect_list(self):
+        return Dialect.objects.all()
 
 # register Gloss for tags
 try:

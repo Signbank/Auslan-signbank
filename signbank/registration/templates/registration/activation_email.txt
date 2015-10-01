@@ -6,6 +6,12 @@ into your web browser's address bar:
  
 http://{{site}}/accounts/activate/{{ activation_key }}/ 
 
+{% if is_researcher == True %}After you activate your account: We will email you to inform you
+if/when your account has been upgraded for advanced researcher access,
+if you requested this. Note this may take up to one week, depending on
+demand and staff availability. Contact us at bslsignbank@ucl.ac.uk
+with any questions about this.{% endif %}
+
 If you didn't request this, you don't need to do anything; you won't 
 receive any more email from us, and the account will expire automatically 
 in two days.

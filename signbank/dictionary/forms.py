@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview
 from signbank.video.fields import VideoUploadToFLVField
-from signbank.dictionary.models import Dialect, Gloss, Definition, Relation, defn_role_choices
+from signbank.dictionary.models import Dialect, Gloss, Definition, Relation, Region, defn_role_choices
 from django.conf import settings
 from tagging.models import Tag
 
@@ -83,7 +83,7 @@ class DefinitionForm(forms.ModelForm):
         widgets = {
                    'role': forms.Select(attrs={'class': 'form-control'}),
                    }
-        
+
 class RelationForm(forms.ModelForm):
     
     sourceid = forms.CharField(label='Source Gloss')
