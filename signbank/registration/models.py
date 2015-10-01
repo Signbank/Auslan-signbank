@@ -241,6 +241,7 @@ backgroundChoices = ((0, 'deaf community'),
                      (4, 'sign language interpreter'),
                      (5, 'school or university student'),
                      (6, t('student learning $language')),
+                     (8, 'researcher'),
                      (7, 'other'),
                      )
                      
@@ -261,7 +262,8 @@ schoolChoices = ((0, 'a deaf school (boarder)'),
 teachercommChoices = ((0, 'mostly oral'),
                       (1, 'mostly Signed English'),
                       (2, t('mostly sign language ($language)')),
-                      (3, 'mostly fingerspelling')
+                      (3, 'mostly fingerspelling'),
+                      (4, 'N/A, I am hearing')
                       )
 
 class UserProfile(models.Model):

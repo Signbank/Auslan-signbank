@@ -257,12 +257,12 @@ class RegistrationFormAuslan(RegistrationFormUniqueEmail):
         
         profile = UserProfile(user=new_user,
                               yob=self.cleaned_data['yob'],
-                              australian=self.cleaned_data['australian'],
+                              australian=self.cleaned_data['australian'] == '1',
                               postcode=self.cleaned_data['postcode'],
                               background=",".join(self.cleaned_data['background']),
-                              auslan_user=self.cleaned_data['auslan_user'],
+                              auslan_user=self.cleaned_data['auslan_user'] == '1',
                               learned=self.cleaned_data['learned'],
-                              deaf=self.cleaned_data['deaf'],
+                              deaf=self.cleaned_data['deaf'] == '1',
                               schooltype=self.cleaned_data['schooltype'],
                               school=self.cleaned_data['school'],
                               teachercomm=self.cleaned_data['teachercomm'])
