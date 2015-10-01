@@ -40,10 +40,14 @@ def page(request, url='/'):
             return HttpResponseNotFound(t.render(RequestContext(request))) 
 
     
-    # If registration is required for accessing this page, and the user isn't
-    # logged in, redirect to the login page.
+    # If registration is required for accessing this page check the group
     if f.group_required:
-        if not request.user.is_authenticated() :
+        if request.user.is_authenticated():
+            if not request.user.groups.filter(name=f.group_required.name).count():
+                f = Page(title='Permission denied', 
+                         content='<p>You do not have permission to access this page. This page is only available to users with the permission level of ' + f.group_required.name.lower() + '. If you believe you should have access to this page please send us <a href="/feedback/generalfeedback.html">feedback</a>.</p>')
+        else:
+            # Not logged in, redirect to the login page.
             from django.contrib.auth.views import redirect_to_login
             return redirect_to_login(request.path)
     
