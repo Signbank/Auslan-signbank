@@ -55,10 +55,10 @@
         <li class='dropdown'>
             <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
             <ul class='dropdown-menu'>
-                {% if settings_social_network_twitter_page %}
-                <li><a href="http://twitter.com/share?text={{ " #bslsignbank"|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
+                {% if settings_social_network_twitter_share %}
+                <li><a href="http://twitter.com/share?text={{ " #auslansignbank"|urlencode }}&url={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
                 {% endif %}
-                {% if settings_social_network_facebook_page %}
+                {% if settings_social_network_facebook_share %}
                 <li><a href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri|urlencode }}"><img src="{{ STATIC_URL }}images/social/facebook.png" alt="facebook"> Share on Facebook</a></li>
                 {% endif %}
                 {% if settings_social_network_twitter_page %}
