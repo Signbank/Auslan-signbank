@@ -73,12 +73,8 @@ def map_image_for_regions(regions):
     return images
     
 
-@login_required_config
-def word_and_regional_view(request, keyword, n, viewname):
-    """
-    Helper view that displays the word or the regional view depending on what
-    viewname is set to
-    """
+def word(request, keyword, n):
+    """View of a single keyword that may have more than one sign"""
 
     n = int(n)
 
@@ -134,14 +130,10 @@ def word_and_regional_view(request, keyword, n, viewname):
         regional_template_content = mark_safe(page.content)
     except:
         regional_template_content = None
-        
-    # If we asked for a regional view but there is no regional information available redirect to non regional view
-    if viewname == "regional" and len(regions) == 0:
-        return HttpResponseRedirect('/dictionary/words/'+keyword+'-'+str(n)+'.html' )
 
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
-                               'viewname': viewname,
+                               'viewname': 'words',
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
                                'allkwds': allkwds,
@@ -170,17 +162,7 @@ def word_and_regional_view(request, keyword, n, viewname):
                                },
                                context_instance=RequestContext(request))
 
-@login_required_config
-def word(request, keyword, n):
-    """View of a single keyword that may have more than one sign"""
-    
-    return word_and_regional_view(request, keyword, n, "words")
 
-@login_required_config
-def regional(request, keyword, n):
-    """View of a single keyword that may have more than one sign alongside regional information"""
-    
-    return word_and_regional_view(request, keyword, n, "regional")
 
 @login_required_config
 def gloss(request, idgloss):
