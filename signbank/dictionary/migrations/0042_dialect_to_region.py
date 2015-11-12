@@ -10,7 +10,7 @@ class Migration(DataMigration):
         "Convert list of regions for each gloss into a region object which also holds frequency and traditional status."
         for gloss in orm.Gloss.objects.all():
             for dialect in gloss.dialect.all():
-                region = orm.Region(gloss=gloss, dialect=dialect, frequency=1, traditional=False)
+                region = orm.Region(gloss=gloss, dialect=dialect, frequency=1, traditional=True)
                 region.save()
 
     def backwards(self, orm):

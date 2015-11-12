@@ -22,11 +22,6 @@ urlpatterns = patterns('',
     # and and alternate view for direct display of a gloss
     url(r'gloss/(?P<idgloss>.+).html$', 'signbank.dictionary.views.gloss', name='public_gloss'),
 
-    # Regional views for words and glosses
-    url(r'^regional/(?P<keyword>.+)-(?P<n>\d+).html$',
-            'signbank.dictionary.views.regional', name='regional_view'),
-
-
     url(r'^search/$', 'signbank.dictionary.views.search', name="search"),
     url(r'^update/gloss/(?P<glossid>\d+)$', 'signbank.dictionary.update.update_gloss', name='update_gloss'),
     url(r'^update/tag/(?P<glossid>\d+)$', 'signbank.dictionary.update.add_tag', name='add_tag'),

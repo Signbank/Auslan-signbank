@@ -194,10 +194,12 @@ COUNTRY_NAME = "Australia"
 SITE_TITLE = "Signbank"
 
 # Show social network links?
-SOCIAL_NETWORK_SHARE_LINKS = False
+SOCIAL_NETWORK_SHARE_LINKS = True
 # If you turn this on you should provide either your Twitter, Facebook or both urls or the Share menu will be empty
 SOCIAL_NETWORK_FACEBOOK_PAGE = None # e.g. "https://www.facebook.com/pages/whatever"
+SOCIAL_NETWORK_FACEBOOK_SHARE = True
 SOCIAL_NETWORK_TWITTER_PAGE = None # e.g. "https://www.twitter.com/whatever"
+SOCIAL_NETWORK_TWITTER_SHARE = True
 
 # Where does the analytics data go?
 # "UA-3928964-1" was the original setting or set to None to disable GA

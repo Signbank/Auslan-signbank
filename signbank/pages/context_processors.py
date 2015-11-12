@@ -47,5 +47,7 @@ def configuration(request):
        'settings_google_analytics_tracking_code': settings.GOOGLE_ANALYTICS_TRACKING_CODE,
        'settings_social_network_share_links': settings.SOCIAL_NETWORK_SHARE_LINKS,
        'settings_social_network_facebook_page': settings.SOCIAL_NETWORK_FACEBOOK_PAGE,
+       'settings_social_network_facebook_share': settings.SOCIAL_NETWORK_FACEBOOK_SHARE,
        'settings_social_network_twitter_page': settings.SOCIAL_NETWORK_TWITTER_PAGE,
+       'settings_social_network_twitter_share': settings.SOCIAL_NETWORK_TWITTER_SHARE,
     }
