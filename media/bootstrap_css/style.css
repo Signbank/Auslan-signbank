@@ -53,7 +53,7 @@ body {
 
 #states {
   position: relative;
-  height: 310px;
+  height: 150px;
 }
 
 #states img {
@@ -82,18 +82,28 @@ body {
    background-color: #FFF;
 }
 
+
+#definitionblock .col-md-8 {
+    height: auto;
+}
+
 @media  (min-width: 992px) {
 
     #definitionblock .col-md-8 {
         padding-left: 60px;
+        height: 400px;
     }
 
 }
-
+    
+table{
+	display: block;
+}
 
 #leftblock {
    float: left; 
    margin-left: 6px;
+   margin-right: 50px;
    width: 320px;
    
 }
@@ -260,7 +270,7 @@ body {
 }
 
 #fingerspellright {
-   width: 470px; /* 847 - 320 - 20 - fiddle factor */
+   width: 340px; /* 847 - 320 - 20 - fiddle factor */
    float: left;
    padding-left: 20px;or
 }

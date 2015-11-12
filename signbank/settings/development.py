@@ -15,10 +15,11 @@ PRIMARY_CSS = "bootstrap_css/auslan.css"
 # defines the aspect ratio for videos
 #VIDEO_ASPECT_RATIO = 360.0/640.0
 
+#Enable searching certain tags e.g. medical in a public (anonymous) search
+ANON_TAG_SEARCH = True
 
-# what do we call this signbank?
-LANGUAGE_NAME = "BSL"
-COUNTRY_NAME = "the UK"
+#Enable safe search in a public (anonymous) search to filter rude words
+ANON_SAFE_SEARCH = True
 
 # show/don't show sign navigation
 SIGN_NAVIGATION = False
