@@ -3,6 +3,20 @@
 
 {% block pagetitle %}{{ settings_site_title }} - Sign for {{ translation.translation }} {% endblock %}
 
+{% block extrahead %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jcarousel/jcarousel.ajax.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}zoomgallery/magnific.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}zoomgallery/zoom.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/variant.css">
+{% endblock %}
+
+{% block extrajs %}
+	<script src='{{ STATIC_URL}}jcarousel/jquery.jcarousel.min.js'></script>
+   	<script src='{{ STATIC_URL}}jcarousel/jcarousel.responsive.js'></script>
+   	<script src='{{ STATIC_URL}}zoomgallery/magnific.js'></script>
+   	<script src='{{ STATIC_URL}}zoomgallery/zoom.js'></script>
+{% endblock %}
+
 
 {% block jqueryready %}
 
@@ -97,21 +111,6 @@
                  {% endfor %}
                  </p>
             </div>
-
-            {% if viewname == "words" %}
-            <div id="feedback">
-                <ul>
-                    {% ifequal viewname "words" %}
-                    <li><a href="{% url 'root_page' %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/dictionary/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
-                    {% else %}
-                    <li><a href="{% url 'root_page' %}feedback/gloss/{{gloss.idgloss}}.html?return=/dictionary/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
-                    {% endifequal %}
-
-                    <li><a href="{% url 'root_page' %}feedback/missingsign.html">Report a missing sign</a></li>
-                    <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
-                </ul>
-            </div>
-            {% endif %}
         </div>
 
         
@@ -120,7 +119,51 @@
           {{ regional_template_content }}
         </div>
         {% endif %}
-
+		
+		{% if thumbnails %}
+		<script type="text/javascript">
+			function replay(id) {
+		    	iframe = $(id);
+		    	$('#sign_html5_api', iframe.contents())[0].play();
+		    }
+			
+			function load(idgloss){
+				$( "#variant-container" ).load( "{% url 'root_page' %}dictionary/variant/" + idgloss + ".html" );
+			}
+		</script>
+		<div  class='col-md-8'>
+	    	<p><strong>Found {{thumbnails|length}} variants for this sign:</strong></p>
+	     	<div id='thumbnailscontainer' class='jcarousel-wrapper'>
+	     		<div id='thumbnailsrow' class='jcarousel' data-jcarousel="true">
+	     			<ul style="left: 0px; top: 0px;">
+		     			{% for thumbnail in thumbnails %}
+		     				<li>
+			     				<div class='col-lg-3 col-md-4 col-xs-6 thumb'>
+			     					<a class='thumbnail popup-with-zoom-anim' target='mainvideo' 
+			     						href="#small-dialog" onclick='load("{{thumbnail.idgloss}}")'>
+			     						<iframe class='thumbnailiframe' 
+			     								id='thumbnailiframe-{{thumbnail.idgloss}}' 
+			     								scrolling="no" frameborder='0' 
+			     								src="{% url 'signbank.video.views.thumbnail' thumbnail.pk %}">
+		                  				</iframe>
+		                  				<span class="thumbnailcover"
+			     								onmouseover='replay("#thumbnailiframe-{{thumbnail.idgloss}}")'>
+		                  				</span>
+			     					</a>
+			     				</div>
+			     			</li>
+		     			{% endfor %}
+		     		</ul>
+   					<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+   						<div id='variant-container'></div>
+   					</div>
+	     		</div>
+	     		<a href="#" class="jcarousel-control-prev inactive" data-jcarouselcontrol="true">‹  </a>
+	     		<a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">  ›</a>
+	     	</div>
+	     </div>
+	    {% endif %}
+		
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
         <div  class='col-md-8'>
             <h2>Sign Definition</h2>
@@ -148,38 +191,56 @@
         </div>
         {% endif %}
         
-        {% if viewname == "words" %}
-        <div class='col-md-3 region-right'>
-            {% if regions|length > 0 %}
-            <div id="states">
-                <div>
-                {% for image in dialect_image %}
-                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
-                {% endfor %}
-                </div>
-            </div>
+        <div class='col-md-4 region-left'>
+        	
+            {% if viewname == "words" %}
+            <div id="feedback">
+                <ul>
+                    {% ifequal viewname "words" %}
+                    <li><a href="{% url 'root_page' %}feedback/sign/{{translation.translation}}-{{n}}.html?return=/dictionary/words/{{translation.translation}}-{{n}}.html">Provide feedback about this sign</a></li>
+                    {% else %}
+                    <li><a href="{% url 'root_page' %}feedback/gloss/{{gloss.idgloss}}.html?return=/dictionary/gloss/{{gloss.idgloss}}.html&lastmatch={{lastmatch}}">Provide feedback about this sign</a></li>
+                    {% endifequal %}
 
-            <div>
-                <h4>Sign Distribution</h4>
-                <table class="table table-condensed">
-                  {% for region in regions %}
-                  <tr>
-                    <td>
-                      {{ region.dialect.name }}
-                    </td>
-                    <td>
-                      {{ region.traditional|yesno:" traditional," }}
-                    </td>
-                    <td>
-                        {{ region.frequency }}
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </table>
+                    <li><a href="{% url 'root_page' %}feedback/missingsign.html">Report a missing sign</a></li>
+                    <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
+                </ul>
             </div>
             {% endif %}
+            
+            {% if viewname == "words" %}
+		        <div class='region-left'>
+		            {% if regions|length > 0 %}
+		            <div id="states">
+		                <div>
+		                {% for image in dialect_image %}
+		                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
+		                {% endfor %}
+		                </div>
+		            </div>
+		
+		            <div>
+		                <h4>Sign Distribution</h4>
+		                <table class="table table-condensed">
+		                  {% for region in regions %}
+		                  <tr>
+		                    <td>
+		                      {{ region.dialect.name }}
+		                    </td>
+		                    <td>
+		                      {{ region.traditional|yesno:" traditional," }}
+		                    </td>
+		                    <td>
+		                        {{ region.frequency }}
+		                    </td>
+		                  </tr>
+		                  {% endfor %}
+		                </table>
+		            </div>
+		            {% endif %}
+		        </div>
+		   	{% endif %}
         </div>
-        {% endif %}
     
     </div>
 

@@ -122,6 +122,34 @@ def iframe(request, videoid):
                                'aspectRatio': settings.VIDEO_ASPECT_RATIO,
                                },
                                context_instance=RequestContext(request))
+    
+def thumbnail(request, videoid):
+    """Generate a thumbnail with a player for this video"""
+    
+    try:
+        gloss = Gloss.objects.get(pk=videoid)
+        glossvideo = gloss.get_video()
+        
+        if django_mobile.get_flavour(request) == 'mobile':
+            videourl = glossvideo.get_mobile_url()
+        else:
+            videourl = glossvideo.get_absolute_url()
+                
+        posterurl = glossvideo.poster_url()
+        
+    except:
+        gloss = None
+        glossvideo = None
+        videourl = None
+        posterurl = None
+
+
+    return render_to_response("thumbnail.html",
+                              {'videourl': videourl,
+                               'posterurl': posterurl,
+                               'aspectRatio': settings.VIDEO_ASPECT_RATIO,
+                               },
+                               context_instance=RequestContext(request))
 
 
 

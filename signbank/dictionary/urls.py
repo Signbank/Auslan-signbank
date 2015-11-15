@@ -35,11 +35,13 @@ urlpatterns = patterns('',
     url(r'^ajax/gloss/(?P<prefix>.*)$', 'signbank.dictionary.adminviews.gloss_ajax_complete', name='gloss_complete'),
     
     url(r'^missingvideo.html$', 'signbank.dictionary.views.missing_video_view'),
-
+    
+    url(r'variant/(?P<idgloss>.+).html$', 'signbank.dictionary.views.variant', name='public_variant'),
+    
     # Admin views
     url(r'^list/$', permission_required('dictionary.search_gloss')(GlossListView.as_view()), name='admin_gloss_list'),
     url(r'^gloss/(?P<pk>\d+)', permission_required('dictionary.search_gloss')(GlossDetailView.as_view()), name='admin_gloss_view'),
-
+    
 )
 
 
