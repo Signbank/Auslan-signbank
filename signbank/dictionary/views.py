@@ -71,7 +71,104 @@ def map_image_for_regions(regions):
             images.append(dialect_filename)
         
     return images
+
+def variant(request, idgloss):
+
+    if request.GET.has_key('feedbackmessage'):
+        feedbackmessage = request.GET['feedbackmessage']
+    else:
+        feedbackmessage = False
+        
+    gloss = Gloss.objects.filter(idgloss=idgloss)[0]
     
+    # and all the keywords associated with this sign
+    allkwds = gloss.translation_set.all()
+
+    videourl = gloss.get_video_url()
+    if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
+        videourl = None
+
+    homophones = gloss.relation_sources.filter(role='homophone')
+
+    # work out the number of this gloss and the total number
+    
+    if gloss.sn != None:
+        if request.user.has_perm('dictionary.search_gloss'):
+            glosscount = Gloss.objects.count()
+            glossposn = Gloss.objects.filter(sn__lt=gloss.sn).count()+1
+        else:
+            glosscount = Gloss.objects.filter(inWeb__exact=True).count()
+            glossposn = Gloss.objects.filter(inWeb__exact=True, sn__lt=gloss.sn).count()+1
+    else:
+        glosscount = 0
+        glossposn = 0
+       
+        
+    thumbnails = None
+    variant_relations = list(Relation.objects.filter(target=gloss,
+                                             role="variant").all())
+    variants = [relation.source for relation in variant_relations]
+    if len(variants) > 0:
+        thumbnails = []
+        for variant in variants:
+            thumbnail = {}
+            thumbnail['pk'] = variant.pk
+            thumbnail['idgloss'] = variant.idgloss
+            thumbnails.append(thumbnail)
+    
+    # navigation gives us the next and previous signs
+    nav = gloss.navigation(request.user.has_perm('dictionary.search_gloss'))
+
+    # the gloss update form for staff
+
+    if request.user.has_perm('dictionary.search_gloss'):
+        update_form = GlossModelForm(instance=gloss)
+        video_form = VideoUploadForGlossForm(initial={'gloss_id': gloss.pk,
+                                                      'redirect': request.path})
+    else:
+        update_form = None
+        video_form = None
+
+    # Regional list (sorted by dialect name) and regional template contents if this gloss has one
+    regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
+    try:
+        page = Page.objects.get(url__exact=gloss.regional_template)
+        regional_template_content = mark_safe(page.content)
+    except:
+        regional_template_content = None
+
+    return render_to_response("dictionary/variant.html",
+                              {'translation': None,
+                               'viewname': 'words',
+                               'definitions': gloss.definitions(),
+                               'gloss': gloss,
+                               'thumbnails': thumbnails,
+                               'allkwds': allkwds,
+                               'n': 0,
+                               'total': 0,
+                               'matches': range(1, 1),
+                               'navigation': nav,
+                               'dialect_image': map_image_for_regions(gloss.region_set),
+                               'regions': regions,
+                               'regional_template_content': regional_template_content,
+                               # lastmatch is a construction of the url for this word
+                               # view that we use to pass to gloss pages
+                               # could do with being a fn call to generate this name here and elsewhere
+                               'lastmatch': None,
+                               'videofile': videourl,
+                               'update_form': update_form,
+                               'videoform': video_form,
+                               'gloss': gloss,
+                               'glosscount': glosscount,
+                               'glossposn': glossposn,
+                               'feedback' : True,
+                               'feedbackmessage': feedbackmessage,
+                               'tagform': TagUpdateForm(),
+                               'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
+                               },
+                               context_instance=RequestContext(request))
+
 
 def word(request, keyword, n):
     """View of a single keyword that may have more than one sign"""
@@ -109,7 +206,19 @@ def word(request, keyword, n):
     else:
         glosscount = 0
         glossposn = 0
-
+        
+    thumbnails = None
+    variant_relations = list(Relation.objects.filter(target=gloss,
+                                             role="variant").all())
+    variants = [relation.source for relation in variant_relations]
+    if len(variants) > 0:
+        thumbnails = []
+        for variant in variants:
+            thumbnail = {}
+            thumbnail['pk'] = variant.pk
+            thumbnail['idgloss'] = variant.idgloss
+            thumbnails.append(thumbnail)
+    
     # navigation gives us the next and previous signs
     nav = gloss.navigation(request.user.has_perm('dictionary.search_gloss'))
 
@@ -136,6 +245,7 @@ def word(request, keyword, n):
                                'viewname': 'words',
                                'definitions': trans.gloss.definitions(),
                                'gloss': trans.gloss,
+                               'thumbnails': thumbnails,
                                'allkwds': allkwds,
                                'n': n,
                                'total': total,

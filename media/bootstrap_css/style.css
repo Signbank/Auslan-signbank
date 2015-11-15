@@ -85,7 +85,7 @@ body {
 
 
 #definitionblock .col-md-8 {
-    height: auto;
+    position: inherit;
 }
 
 @media  (min-width: 992px) {
@@ -93,6 +93,7 @@ body {
     #definitionblock .col-md-8 {
         padding-left: 60px;
         height: 400px;
+        position: relative;
     }
 
 }

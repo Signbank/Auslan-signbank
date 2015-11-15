@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+    <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.12/video.js"></script>
+    <link href="{{ STATIC_URL }}css/custom-player.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}loopbutton/videojs.loopbutton.css" rel="stylesheet">
+	<!-- I have changed some parts of this js file -->
+	<script type="text/javascript" src="{{ STATIC_URL }}loopbutton/videojs.loopbutton.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/videoplayersetup.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	videosetup({{aspectRatio}});
+    });
+    </script>
+ </head> 
+ <body id='signbody'>
+
+     {% if videourl %}
+     <video id='sign' class='video-js vjs-default-skin' 
+            poster='{{posterurl}}' controls autoplay preload='auto' muted 
+            data-setup='{ "techOrder": ["html5", "flash"] , "children": { 
+				"controlBar": { 
+					"children": false
+				}
+			}
+		}'>
+         <source src='{{videourl}}' type='video/mp4' codecs='avc1.42E01E, mp4a.40.2'></source>
+     </video>
+     {% else %}
+     	<img width="100px" height="80px" id='thumbimg' src='{{ STATIC_URL }}images/no-video.png'>
+     {% endif %}
+</body>
+</html>
