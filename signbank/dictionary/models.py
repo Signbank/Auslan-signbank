@@ -84,6 +84,16 @@ class Keyword(models.Model):
         else:
             alltrans = self.translation_set.filter(gloss__inWeb__exact=True)
         
+        
+        #Remove VARIANTS
+        rewisedtrans = list(alltrans)
+        for trans in alltrans:
+            source = Relation.objects.filter(source=trans.gloss,
+                                             role="variant").all()
+            if source:
+                rewisedtrans.remove(trans)
+        alltrans = rewisedtrans
+        
         # remove crude signs for non-authenticated users if ANON_SAFE_SEARCH is on
         try:
             crudetag = tagging.models.Tag.objects.get(name='lexis:crude')
@@ -618,7 +628,7 @@ try:
 except tagging.AlreadyRegistered:
     pass
 
-RELATION_ROLE_CHOICES = (('variant', 'Variant'),
+RELATION_ROLE_CHOICES = (('variant', 'Root Sign'),
                          ('antonym', 'Antonym'),
                          ('synonym', 'Synonym'),
                          ('seealso', 'See Also'),
