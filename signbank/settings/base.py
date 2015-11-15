@@ -283,7 +283,10 @@ LOGIN_REDIRECT_URL = '/feedback/'
 
 
 # location of ffmpeg, used to convert uploaded videos
+# Mac
 FFMPEG_PROGRAM = "/Applications/ffmpegX.app/Contents/Resources/ffmpeg"
+# Windows
+#FFMPEG_PROGRAM = os.path.expanduser("~/documents/ffmpeg/bin/ffmpeg.exe")
 FFMPEG_TIMEOUT = 60
 FFMPEG_OPTIONS = ["-vcodec", "h264", "-an"]
 
