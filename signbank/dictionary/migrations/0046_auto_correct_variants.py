@@ -1,7 +1,6 @@
 from south.v2 import DataMigration
 import re
 from django.db import transaction
-import os
 
 
 class Migration(DataMigration):
@@ -27,11 +26,6 @@ class Migration(DataMigration):
                                                            role="variant")
                         if created:
                             relation.save()
-                    else:
-                        dict_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir)
-                        report_file = os.path.join(dict_directory, 'migration report.txt')
-                        with open(report_file, 'a') as report:
-                            report.write('Gloss %s has no root \n' % gloss.idgloss)
     
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
