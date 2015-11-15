@@ -120,6 +120,7 @@
         </div>
         {% endif %}
 		
+		<div  class='col-md-8'>
 		{% if thumbnails %}
 		<script type="text/javascript">
 			function replay(id) {
@@ -131,7 +132,6 @@
 				$( "#variant-container" ).load( "{% url 'root_page' %}dictionary/variant/" + idgloss + ".html" );
 			}
 		</script>
-		<div  class='col-md-8'>
 	    	<p><strong>Found {{thumbnails|length}} variants for this sign:</strong></p>
 	     	<div id='thumbnailscontainer' class='jcarousel-wrapper'>
 	     		<div id='thumbnailsrow' class='jcarousel' data-jcarousel="true">
@@ -161,11 +161,10 @@
 	     		<a href="#" class="jcarousel-control-prev inactive" data-jcarouselcontrol="true">‹  </a>
 	     		<a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">  ›</a>
 	     	</div>
-	     </div>
 	    {% endif %}
 		
         {% if DEFINITION_FIELDS and gloss.published_definitions %}
-        <div  class='col-md-8'>
+        
             <h2>Sign Definition</h2>
 
             {% for deftype in DEFINITION_FIELDS %}
@@ -188,8 +187,9 @@
                  {% endfor %}
             {% endfor %}
         
-        </div>
+
         {% endif %}
+        </div>
         
         <div class='col-md-4 region-left'>
         	

@@ -40,8 +40,9 @@
             </div>
         </div>
 			
+		<div  class='col-md-8'>
 		{% if DEFINITION_FIELDS and gloss.published_definitions %}
-        <div  class='col-md-8'>
+        
             <h2>Sign Definition</h2>
 
             {% for deftype in DEFINITION_FIELDS %}
@@ -64,10 +65,11 @@
                  {% endfor %}
             {% endfor %}
         
-        </div>
+        
         {% endif %}
+        </div>
 		
-		<div class='col-md-4 region-left'>
+		<div id='lastdiv' class='col-md-4 region-left'>
             {% if viewname == "words" %}
             <div id="feedback">
                 <ul>
