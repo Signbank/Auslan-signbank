@@ -628,7 +628,7 @@ try:
 except tagging.AlreadyRegistered:
     pass
 
-RELATION_ROLE_CHOICES = (('variant', 'Root Sign'),
+RELATION_ROLE_CHOICES = (('variant', 'Variant'),
                          ('antonym', 'Antonym'),
                          ('synonym', 'Synonym'),
                          ('seealso', 'See Also'),

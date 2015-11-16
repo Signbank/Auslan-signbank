@@ -11,7 +11,7 @@ videojs.plugin('loopbutton', function(options) {
 	LoopButton.prototype.buttonText = 'Loop';
 
 	LoopButton.prototype.buildCSSClass = function() {
-		return 'vjs-loop-button vjs-menu-button';
+		return 'vjs-loop-button vjs-control';
 	};
 
 	LoopButton.prototype.onClick = function(e){

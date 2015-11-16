@@ -193,7 +193,6 @@
         
         <div class='col-md-4 region-left'>
         	
-            {% if viewname == "words" %}
             <div id="feedback">
                 <ul>
                     {% ifequal viewname "words" %}
@@ -206,40 +205,37 @@
                     <li><a href="{% url 'root_page' %}feedback/generalfeedback.html">Provide general site feedback</a></li>
                 </ul>
             </div>
-            {% endif %}
             
-            {% if viewname == "words" %}
-		        <div class='region-left'>
-		            {% if regions|length > 0 %}
-		            <div id="states">
-		                <div>
-		                {% for image in dialect_image %}
-		                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
-		                {% endfor %}
-		                </div>
-		            </div>
-		
-		            <div>
-		                <h4>Sign Distribution</h4>
-		                <table class="table table-condensed">
-		                  {% for region in regions %}
-		                  <tr>
-		                    <td>
-		                      {{ region.dialect.name }}
-		                    </td>
-		                    <td>
-		                      {{ region.traditional|yesno:" traditional," }}
-		                    </td>
-		                    <td>
-		                        {{ region.frequency }}
-		                    </td>
-		                  </tr>
-		                  {% endfor %}
-		                </table>
-		            </div>
-		            {% endif %}
-		        </div>
-		   	{% endif %}
+	        <div class='region-left'>
+	            {% if regions|length > 0 %}
+	            <div id="states">
+	                <div>
+	                {% for image in dialect_image %}
+	                    <img src="{{ STATIC_URL }}{{image}}" alt="Region">
+	                {% endfor %}
+	                </div>
+	            </div>
+	
+	            <div>
+	                <h4>Sign Distribution</h4>
+	                <table class="table table-condensed">
+	                  {% for region in regions %}
+	                  <tr>
+	                    <td>
+	                      {{ region.dialect.name }}
+	                    </td>
+	                    <td>
+	                      {{ region.traditional|yesno:" traditional," }}
+	                    </td>
+	                    <td>
+	                        {{ region.frequency }}
+	                    </td>
+	                  </tr>
+	                  {% endfor %}
+	                </table>
+	            </div>
+	            {% endif %}
+	        </div>
         </div>
     
     </div>

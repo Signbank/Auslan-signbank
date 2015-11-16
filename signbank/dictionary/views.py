@@ -231,7 +231,7 @@ def word(request, keyword, n):
     else:
         update_form = None
         video_form = None
-
+    
     # Regional list (sorted by dialect name) and regional template contents if this gloss has one
     regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
     try:
@@ -244,7 +244,6 @@ def word(request, keyword, n):
                               {'translation': trans,
                                'viewname': 'words',
                                'definitions': trans.gloss.definitions(),
-                               'gloss': trans.gloss,
                                'thumbnails': thumbnails,
                                'allkwds': allkwds,
                                'n': n,
@@ -319,7 +318,19 @@ def gloss(request, idgloss):
     else:
         glosscount = 0
         glossposn = 0
-
+    
+    thumbnails = None
+    variant_relations = list(Relation.objects.filter(target=gloss,
+                                             role="variant").all())
+    variants = [relation.source for relation in variant_relations]
+    if len(variants) > 0:
+        thumbnails = []
+        for variant in variants:
+            thumbnail = {}
+            thumbnail['pk'] = variant.pk
+            thumbnail['idgloss'] = variant.idgloss
+            thumbnails.append(thumbnail)
+    
     # navigation gives us the next and previous signs
     nav = gloss.navigation(request.user.has_perm('dictionary.search_gloss'))
 
@@ -343,7 +354,7 @@ def gloss(request, idgloss):
             lastmatch = False
     else:
         lastmatch = False
-
+    
     # Regional list (sorted by dialect name) and regional template contents if this gloss has one
     regions = sorted(gloss.region_set.all(), key=lambda n: n.dialect.name)
     try:
@@ -355,6 +366,7 @@ def gloss(request, idgloss):
     return render_to_response("dictionary/word.html",
                               {'translation': trans,
                                'definitions': gloss.definitions(),
+                               'thumbnails': thumbnails,
                                'allkwds': allkwds,
                                'dialect_image': map_image_for_regions(gloss.region_set),
                                'regions': regions,
@@ -362,7 +374,7 @@ def gloss(request, idgloss):
                                'lastmatch': lastmatch,
                                'videofile': videourl,
                                'viewname': word,
-                               'feedback': None,
+                               'feedback': True,
                                'gloss': gloss,
                                'glosscount': glosscount,
                                'glossposn': glossposn,
