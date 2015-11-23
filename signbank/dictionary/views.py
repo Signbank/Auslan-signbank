@@ -107,7 +107,11 @@ def variant(request, idgloss):
     thumbnails = None
     variant_relations = list(Relation.objects.filter(target=gloss,
                                              role="variant").all())
-    variants = [relation.source for relation in variant_relations]
+    variants = []
+    if request.user.has_perm('dictionary.search_gloss'):
+        variants = [relation.source for relation in variant_relations]
+    else:
+        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:
@@ -210,7 +214,11 @@ def word(request, keyword, n):
     thumbnails = None
     variant_relations = list(Relation.objects.filter(target=gloss,
                                              role="variant").all())
-    variants = [relation.source for relation in variant_relations]
+    variants = []
+    if request.user.has_perm('dictionary.search_gloss'):
+        variants = [relation.source for relation in variant_relations]
+    else:
+        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:
@@ -322,7 +330,11 @@ def gloss(request, idgloss):
     thumbnails = None
     variant_relations = list(Relation.objects.filter(target=gloss,
                                              role="variant").all())
-    variants = [relation.source for relation in variant_relations]
+    variants = []
+    if request.user.has_perm('dictionary.search_gloss'):
+        variants = [relation.source for relation in variant_relations]
+    else:
+        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:
