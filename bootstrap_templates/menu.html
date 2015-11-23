@@ -40,11 +40,21 @@
             <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
             <ul class='dropdown-menu'>
                 <li><a href="/dictionary/">Dictionary</a></li>
+                {% if settings_number_signs %}
                 <li><a href="/regional/numbersigns/">Number Signs</a></li>
+                {% endif %}
+                {% if settings_colour_signs %}
                 <li><a href="/regional/coloursigns/">Colour Signs</a></li>
+                {% endif %}
+                {% if settings_country_signs %}
                 <li><a href="/regional/countrysigns/">Country Signs</a></li>
-                <li><a href="/regional/ukplacenamesigns/">UK Place Name Signs</a></li>
+                {% endif %}
+                {% if settings_place_signs %}
+                <li><a href="/regional/auplacenamesigns/">AU Place Name Signs</a></li>
+                {% endif %}
+                {% if settings_finger_signs %}
                 <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
+                {% endif %}
                 <li id="extrafeedback"><a href="{% url 'signbank.feedback.views.generalfeedback' %}">Help build Signbank</a></li>
             </ul>
         </li>

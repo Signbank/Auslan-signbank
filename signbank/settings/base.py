@@ -193,6 +193,13 @@ LANGUAGE_NAME = "Auslan"
 COUNTRY_NAME = "Australia"
 SITE_TITLE = "Signbank"
 
+# menu settings
+NUMBER_SIGNS = False
+COLOUR_SIGNS = False
+COUNTRY_SIGNS = False
+PLACE_SIGNS = False
+FINGER_SIGNS = True
+
 # Show social network links?
 SOCIAL_NETWORK_SHARE_LINKS = True
 # If you turn this on you should provide either your Twitter, Facebook or both urls or the Share menu will be empty
