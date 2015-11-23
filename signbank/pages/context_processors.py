@@ -50,4 +50,9 @@ def configuration(request):
        'settings_social_network_facebook_share': settings.SOCIAL_NETWORK_FACEBOOK_SHARE,
        'settings_social_network_twitter_page': settings.SOCIAL_NETWORK_TWITTER_PAGE,
        'settings_social_network_twitter_share': settings.SOCIAL_NETWORK_TWITTER_SHARE,
+       'settings_number_signs': settings.NUMBER_SIGNS,
+       'settings_colour_signs': settings.COLOUR_SIGNS,
+       'settings_country_signs': settings.COUNTRY_SIGNS,
+       'settings_place_signs': settings.PLACE_SIGNS,
+       'settings_finger_signs': settings.FINGER_SIGNS,
     }
