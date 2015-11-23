@@ -88,7 +88,7 @@ def variant(request, idgloss):
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
 
-    homophones = gloss.relation_sources.filter(role='homophone')
+    homophones = gloss.relation_sources.filter(role=Relationrole.objects.get(role="homophone"))
 
     # work out the number of this gloss and the total number
     
@@ -105,13 +105,13 @@ def variant(request, idgloss):
        
         
     thumbnails = None
-    variant_relations = list(Relation.objects.filter(target=gloss,
-                                             role="variant").all())
+    variant_relations = list(Relation.objects.filter(source=gloss,
+                                             role=Relationrole.objects.get(role="variant")).all())
     variants = []
     if request.user.has_perm('dictionary.search_gloss'):
-        variants = [relation.source for relation in variant_relations]
+        variants = [relation.target for relation in variant_relations]
     else:
-        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
+        variants = [relation.target for relation in variant_relations if relation.target.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:
@@ -196,7 +196,7 @@ def word(request, keyword, n):
     if not os.path.exists(os.path.join(settings.MEDIA_ROOT, videourl)):
         videourl = None
 
-    trans.homophones = trans.gloss.relation_sources.filter(role='homophone')
+    trans.homophones = trans.gloss.relation_sources.filter(role=Relationrole.objects.get(role="homophone"))
 
     # work out the number of this gloss and the total number
     gloss = trans.gloss
@@ -212,13 +212,13 @@ def word(request, keyword, n):
         glossposn = 0
         
     thumbnails = None
-    variant_relations = list(Relation.objects.filter(target=gloss,
-                                             role="variant").all())
+    variant_relations = list(Relation.objects.filter(source=gloss,
+                                             role=Relationrole.objects.get(role="variant")).all())
     variants = []
     if request.user.has_perm('dictionary.search_gloss'):
-        variants = [relation.source for relation in variant_relations]
+        variants = [relation.target for relation in variant_relations]
     else:
-        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
+        variants = [relation.target for relation in variant_relations if relation.target.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:
@@ -328,13 +328,13 @@ def gloss(request, idgloss):
         glossposn = 0
     
     thumbnails = None
-    variant_relations = list(Relation.objects.filter(target=gloss,
-                                             role="variant").all())
+    variant_relations = list(Relation.objects.filter(source=gloss,
+                                             role=Relationrole.objects.get(role="variant")).all())
     variants = []
     if request.user.has_perm('dictionary.search_gloss'):
-        variants = [relation.source for relation in variant_relations]
+        variants = [relation.target for relation in variant_relations]
     else:
-        variants = [relation.source for relation in variant_relations if relation.source.inWeb == True]
+        variants = [relation.target for relation in variant_relations if relation.target.inWeb == True]
     if len(variants) > 0:
         thumbnails = []
         for variant in variants:

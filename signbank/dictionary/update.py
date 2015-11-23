@@ -243,17 +243,29 @@ def update_relation(gloss, field, value):
     except:
         return HttpResponseBadRequest("Bad Relation ID '%s'" % defid, {'content-type': 'text/plain'})
 
-    if not rel.source == gloss:
+    """if not rel.source == gloss:
         return HttpResponseBadRequest("Relation doesn't match gloss", {'content-type': 'text/plain'})
-    
+    """
     if what == 'relationdelete':
         print "DELETE: ", rel
         rel.delete()
         return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': gloss.id}))
-    elif what == 'relationrole':
-        rel.role = value
-        rel.save()
-        newvalue = rel.get_role_display()
+    elif what == 'relationroleforward':
+        value, direction = value.split('_')
+        if direction == 'backward':
+            return HttpResponseBadRequest("Direction doesn't match", {'content-type': 'text/plain'})
+        else:
+            rel.role = Relationrole.objects.get(role=value)
+            rel.save()
+            newvalue = rel.role.forwardmessage
+    elif what == 'relationrolebackward':
+        value, direction = value.split('_')
+        if direction == 'forward':
+            return HttpResponseBadRequest("Direction doesn't match", {'content-type': 'text/plain'})
+        else:
+            rel.role = Relationrole.objects.get(role=value)
+            rel.save()
+            newvalue = rel.role.backwardmessage
     elif what == 'relationtarget':
         
         target = gloss_from_identifer(value)
@@ -364,6 +376,7 @@ def add_relation(request):
         if form.is_valid():
             
             role = form.cleaned_data['role']
+            role, direction = role.split('_')
             sourceid = form.cleaned_data['sourceid']
             targetid = form.cleaned_data['targetid']
             
@@ -374,8 +387,12 @@ def add_relation(request):
             
             target = gloss_from_identifier(targetid)
             if target:
-                rel = Relation(source=source, target=target, role=role)
-                rel.save()
+                if direction == 'backward':
+                    rel = Relation(source=target, target=source, role=Relationrole.objects.get(role=role))
+                    rel.save()
+                else:
+                    rel = Relation(source=source, target=target, role=Relationrole.objects.get(role=role))
+                    rel.save()
                 
                 return HttpResponseRedirect(reverse('dictionary:admin_gloss_view', kwargs={'pk': source.id})+'?editrel#relations')
             else:

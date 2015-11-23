@@ -3,6 +3,7 @@
 # script to refactor the database from the old schema to the new
 
 import sys, os.path
+from signbank.dictionary.models import Relationrole
 thispath = os.path.dirname( os.path.dirname( os.path.realpath(sys.argv[0])))
 sys.path.append(thispath)
 
@@ -217,7 +218,7 @@ def build_homosign_relation():
     """
     
     
-    models.Relation.objects.filter(role="homophone").delete()
+    models.Relation.objects.filter(role=Relationrole.objects.get(role="homophone")).delete()
     
     glosses = models.Gloss.objects.filter(sense__in=[1,2,3,4,5,6]).order_by("sn")
     
@@ -227,7 +228,7 @@ def build_homosign_relation():
             last_one = gloss
         elif last_one != None:
             print gloss.sn, "->", last_one.sn
-            rel = models.Relation(source=gloss, target=last_one, role="homophone")
+            rel = models.Relation(source=gloss, target=last_one, role=models.Relationrole.objects.get(role="homophone"))
             rel.save()
         else:
             print "No base homosign for gloss: ", gloss
