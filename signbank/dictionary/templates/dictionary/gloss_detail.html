@@ -452,7 +452,7 @@
                                         </div>
                                         <div class='modal-body'>
                                             
-                                            <p>This action will delete the <strong>{{rel.get_role_display}}</strong>
+                                            <p>This action will delete the <strong>{{rel.role.role}}</strong>
                                                  relation between {{rel.source}} and {{rel.target}}. It cannot be undone.</p>
                                          </div>
                                       <form action='{% url "dictionary:update_gloss" gloss.id %}' method='post'>
@@ -472,7 +472,7 @@
                         </td>
                         
                         
-                        <td class='edit edit_relation_role' id='relationrole_{{rel.id}}'>is {{rel.get_role_display}} of</td>
+                        <td class='edit edit_relation_role' id='relationroleforward_{{rel.id}}'>{{rel.role.forwardmessage}}</td>
                         <td class='edit edit_relation_target' id='relationtarget_{{rel.id}}'>{{rel.target}}</td>
                         <td>(<a href='{% url "dictionary:admin_gloss_view" pk=rel.target.pk %}'>view</a>)</td></tr>
                    {% endfor %}
@@ -489,7 +489,7 @@
                                         </div>
                                         <div class='modal-body'>
                                             
-                                            <p>This action will delete the <strong>{{rel.get_role_display}}</strong>
+                                            <p>This action will delete the <strong>{{rel.role.role}}</strong>
                                                  relation between {{rel.source}} and {{rel.target}}. It cannot be undone.</p>
                                          </div>
                                       <form action='{% url "dictionary:update_gloss" gloss.id %}' method='post'>
@@ -509,7 +509,7 @@
                         </td>
                         
                         
-                        <td class='edit edit_relation_role' id='relationrole_{{rel.id}}'>has {{rel.get_role_display}}</td>
+                        <td class='edit edit_relation_role' id='relationrolebackward_{{rel.id}}'>{{rel.role.backwardmessage}}</td>
                         <td class='edit edit_relation_target' id='relationtarget_{{rel.id}}'>{{rel.source}}</td>
                         <td>(<a href='{% url "dictionary:admin_gloss_view" pk=rel.source.pk %}'>view</a>)</td></tr>
                    {% endfor %}

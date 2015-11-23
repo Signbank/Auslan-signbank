@@ -88,9 +88,9 @@ class Keyword(models.Model):
         #Remove VARIANTS
         rewisedtrans = list(alltrans)
         for trans in alltrans:
-            source = Relation.objects.filter(source=trans.gloss,
-                                             role="variant").all()
-            if source:
+            target = Relation.objects.filter(target=trans.gloss,
+                                             role=Relationrole.objects.get(role="variant")).all()
+            if target:
                 rewisedtrans.remove(trans)
         alltrans = rewisedtrans
         
@@ -474,13 +474,13 @@ minor or insignificant ways that can be ignored.""")
         """Return the set of homophones for this gloss ordered by sense number"""
         
         if self.sense == 1:
-            relations = Relation.objects.filter(role="homophone", target__exact=self).order_by('source__sense')
+            relations = Relation.objects.filter(role=Relationrole.objects.get(role="homophone"), target__exact=self).order_by('source__sense')
             homophones = [rel.source for rel in relations]
             homophones.insert(0,self)
             return homophones
         elif self.sense > 1:
             # need to find the root and see how many senses it has
-            homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
+            homophones = self.relation_sources.filter(role=Relationrole.objects.get(role="homophone"), target__sense__exact=1)
             if len(homophones) > 0:   
                 root = homophones[0].target
                 return root.homophones()
@@ -492,7 +492,7 @@ minor or insignificant ways that can be ignored.""")
         if we're a sense>1 then we look at the homophone with sense=1
         Return the gloss instance."""
         if self.sense > 1:
-            homophones = self.relation_sources.filter(role='homophone', target__sense__exact=1)
+            homophones = self.relation_sources.filter(role=Relationrole.objects.get(role="homophone"), target__sense__exact=1)
             # should be only zero or one of these
             if len(homophones) > 0:   
                 return homophones[0].target
@@ -598,8 +598,14 @@ minor or insignificant ways that can be ignored.""")
     
     def relation_role_choices_json(self):
         """Return JSON for the relation role choice list"""
-        
-        return self.options_to_json(RELATION_ROLE_CHOICES)    
+        choices = []
+        for role in Relationrole.objects.all():
+            if role.forwardmessage == role.backwardmessage:
+                choices.append(('%s_bidirectional' % role.role, role.forwardmessage))
+            else:
+                choices.append(('%s_forward' % role.role, role.forwardmessage))
+                choices.append(('%s_backward' % role.role, role.backwardmessage))
+        return self.options_to_json(choices)    
     
     def language_choices(self):
         """Return JSON for langauge choices"""
@@ -628,19 +634,24 @@ try:
 except tagging.AlreadyRegistered:
     pass
 
-RELATION_ROLE_CHOICES = (('variant', 'Variant'),
-                         ('antonym', 'Antonym'),
-                         ('synonym', 'Synonym'),
-                         ('seealso', 'See Also'),
-                         ('homophone', 'Homophone'),
-                         )
 
+class Relationrole(models.Model):
+    """A role for relation between two glosses"""
+    
+    role = models.CharField(max_length=20)
+    forwardmessage = models.CharField(max_length=20)
+    backwardmessage = models.CharField(max_length=20)
+    
+    class Admin:
+        list_display = [ 'role', 'forwardmessage','backwardmessage']      
+        
+        
 class Relation(models.Model):
     """A relation between two glosses"""
     
     source = models.ForeignKey(Gloss, related_name="relation_sources")
     target = models.ForeignKey(Gloss, related_name="relation_targets")
-    role = models.CharField(max_length=20, choices=RELATION_ROLE_CHOICES)  
+    role = models.ForeignKey(Relationrole, related_name="relations")
                 # antonym, synonym, cf (what's this? - see also), var[b-f]
                                # (what's this - variant (XXXa is the stem, XXXb is a variant)
                        

@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.formtools.preview import FormPreview
 from signbank.video.fields import VideoUploadToFLVField
-from signbank.dictionary.models import Dialect, Gloss, Definition, Relation, Region, defn_role_choices
+from signbank.dictionary.models import Dialect, Gloss, Definition, Relation, Region, defn_role_choices,\
+    Relationrole
 from django.conf import settings
 from tagging.models import Tag
 
@@ -84,17 +85,25 @@ class DefinitionForm(forms.ModelForm):
                    'role': forms.Select(attrs={'class': 'form-control'}),
                    }
 
-class RelationForm(forms.ModelForm):
+class RelationForm(forms.Form):
     
     sourceid = forms.CharField(label='Source Gloss')
     targetid = forms.CharField(label='Target Gloss')
+    role = forms.ChoiceField(choices=[],widget=forms.Select(attrs={'class': 'form-control'})) 
+    
+    def __init__(self, *args, **kwargs):
+        super(RelationForm, self).__init__(*args, **kwargs)
+        choices = []
+        for role in Relationrole.objects.all():
+            if role.forwardmessage == role.backwardmessage:
+                choices.append(('%s_bidirectional' % role.role, role.forwardmessage))
+            else:
+                choices.append(('%s_forward' % role.role, role.forwardmessage))
+                choices.append(('%s_backward' % role.role, role.backwardmessage))
+        self.fields['role'].choices = choices
     
     class Meta:
         model = Relation
-        fields = ['role']
-        widgets = {
-                   'role': forms.Select(attrs={'class': 'form-control'}),
-                   }
         
         
 
