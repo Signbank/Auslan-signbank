@@ -92,7 +92,7 @@ body {
 
     #definitionblock .col-md-8 {
         padding-left: 60px;
-        height: 314px;
+        min-height: 314px;
         position: relative;
     }
 
