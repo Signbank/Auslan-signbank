@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         # Renaming column for 'Relation.role' to match new field type.
         db.rename_column(u'dictionary_relation', 'role', 'role_id')
         # Changing field 'Relation.role'
-        db.alter_column(u'dictionary_relation', 'role_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['dictionary.Relationrole']))
+        db.alter_column(u'dictionary_relation', 'role_id', self.gf('django.db.models.fields.related.ForeignKey')(default=1, null=True, to=orm['dictionary.Relationrole']))
         # Adding index on 'Relation', fields ['role']
         db.create_index(u'dictionary_relation', ['role_id'])
 
