@@ -14,6 +14,7 @@ class Migration(SchemaMigration):
         # Changing field 'Relation.role'
         db.add_column(u'dictionary_relation', 'role', self.gf('django.db.models.fields.related.ForeignKey')(default=1, null=True, to=orm['dictionary.Relationrole']))
         # Adding index on 'Relation', fields ['role']
+        db.delete_index(u'dictionary_relation', ['role_id'])
         db.create_index(u'dictionary_relation', ['role_id'])
 
 
