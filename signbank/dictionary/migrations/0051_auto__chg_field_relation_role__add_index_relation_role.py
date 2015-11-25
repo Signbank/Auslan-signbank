@@ -10,9 +10,9 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Renaming column for 'Relation.role' to match new field type.
-        db.rename_column(u'dictionary_relation', 'role', 'role_id')
+        db.delete_column(u'dictionary_relation', 'role')
         # Changing field 'Relation.role'
-        db.alter_column(u'dictionary_relation', 'role_id', self.gf('django.db.models.fields.related.ForeignKey')(default=1, null=True, to=orm['dictionary.Relationrole']))
+        db.add_column(u'dictionary_relation', 'role', self.gf('django.db.models.fields.related.ForeignKey')(default=1, null=True, to=orm['dictionary.Relationrole']))
         # Adding index on 'Relation', fields ['role']
         db.create_index(u'dictionary_relation', ['role_id'])
 
@@ -21,11 +21,10 @@ class Migration(SchemaMigration):
         # Removing index on 'Relation', fields ['role']
         db.delete_index(u'dictionary_relation', ['role_id'])
 
-
         # Renaming column for 'Relation.role' to match new field type.
-        db.rename_column(u'dictionary_relation', 'role_id', 'role')
+        db.delete_column(u'dictionary_relation', 'role_id')
         # Changing field 'Relation.role'
-        db.alter_column(u'dictionary_relation', 'role', self.gf('django.db.models.fields.CharField')(max_length=20))
+        db.add_column(u'dictionary_relation', 'role', self.gf('django.db.models.fields.CharField')(max_length=20))
 
     models = {
         u'dictionary.definition': {
