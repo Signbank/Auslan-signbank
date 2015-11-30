@@ -169,6 +169,8 @@ def variant(request, idgloss):
                                'feedbackmessage': feedbackmessage,
                                'tagform': TagUpdateForm(),
                                'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'SETTINGS_SHOW_TRADITIONAL' : settings.SHOW_TRADITIONAL,
+                               'SETTINGS_SHOW_FREQUENCY' : settings.SHOW_FREQUENCY,
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
@@ -275,6 +277,8 @@ def word(request, keyword, n):
                                'feedbackmessage': feedbackmessage,
                                'tagform': TagUpdateForm(),
                                'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'SETTINGS_SHOW_TRADITIONAL' : settings.SHOW_TRADITIONAL,
+                               'SETTINGS_SHOW_FREQUENCY' : settings.SHOW_FREQUENCY,
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
@@ -396,6 +400,8 @@ def gloss(request, idgloss):
                                'tagform': TagUpdateForm(),
                                'feedbackmessage': feedbackmessage,
                                'SIGN_NAVIGATION' : settings.SIGN_NAVIGATION,
+                               'SETTINGS_SHOW_TRADITIONAL' : settings.SHOW_TRADITIONAL,
+                               'SETTINGS_SHOW_FREQUENCY' : settings.SHOW_FREQUENCY,
                                'DEFINITION_FIELDS' : settings.DEFINITION_FIELDS,
                                },
                                context_instance=RequestContext(request))
