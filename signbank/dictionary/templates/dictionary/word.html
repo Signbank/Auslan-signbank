@@ -19,8 +19,19 @@
    		function topmap() {
 			var winwidth = $( window ).width();
 			if (winwidth >= 992){
-				var top = parseInt($( "#definitionblock .col-md-8" ).css("height"),10) - 350;
+				var video_height = parseInt($( "#definitionblock #videocontainer" ).css("height"),10)
+				var keywords_height = parseInt($( "#definitionblock #keywords" ).css("height"),10)
+				var top = parseInt($( "#definitionblock .col-md-8" ).css("height"),10) - video_height - keywords_height - 30;
 				$( '#definitionblock .region-left' ).css({'top' : "-" + top + 'px'});
+				
+				var video_height = parseInt($( "#variantdefinitionblock #videocontainer" ).css("height"),10)
+				var keywords_height = parseInt($( "#variantdefinitionblock #keywords" ).css("height"),10)
+				var top = parseInt($( "#variantdefinitionblock .col-md-8" ).css("height"),10) - video_height - keywords_height - 30;
+				$( '#variantdefinitionblock .region-left' ).css({'top' : "-" + top + 'px'});
+			}
+			else{
+				$( '#definitionblock .region-left' ).css({'top' : "auto"});
+				$( '#variantdefinitionblock .region-left' ).css({'top' : "auto"});
 			}
 		}
    		
