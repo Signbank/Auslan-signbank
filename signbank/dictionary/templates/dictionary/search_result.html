@@ -92,7 +92,7 @@
       <div id="searchresults">
          <table width="90%">
             <tr>
-               <td valign="top">
+               <td valign="top" style=" padding-right: 25px; ">
           {% for word in page.object_list %}
             <p>
               <a href="{% url 'root_page' %}dictionary/words/{{ word.text }}-1.html">{{ word.text }}</a>
@@ -101,7 +101,7 @@
 
             {% if forloop.counter|divisibleby:"10" %}
             </td> 
-            <td valign="top">
+            <td valign="top" style=" padding-right: 25px; ">
             {% endif %}
             
           {% endfor %}
