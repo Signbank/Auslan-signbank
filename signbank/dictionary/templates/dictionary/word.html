@@ -15,12 +15,27 @@
    	<script src='{{ STATIC_URL}}jcarousel/jcarousel.responsive.js'></script>
    	<script src='{{ STATIC_URL}}zoomgallery/magnific.js'></script>
    	<script src='{{ STATIC_URL}}zoomgallery/zoom.js'></script>
+   	<script language='javascript'>
+   		function topmap() {
+			var winwidth = $( window ).width();
+			if (winwidth >= 992){
+				var top = parseInt($( "#definitionblock .col-md-8" ).css("height"),10) - 350;
+				$( '#definitionblock .region-left' ).css({'top' : "-" + top + 'px'});
+			}
+		}
+   		
+		$( window ).resize(function() {
+			topmap();
+		});
+		
+		$( document ).ready(function() {
+			topmap();
+		});
+	</script>
 {% endblock %}
 
-
 {% block jqueryready %}
-
-
+	
 {% endblock %}
 
 {% block script %}
@@ -93,25 +108,98 @@
     </div>
 
     <div id="definitionblock">
-        <div class='col-md-4 region-left'>
-            <div id="videocontainer">
-               <div id="player">
-                  <iframe id='videoiframe' scrolling="no" frameborder='0' allowfullscreen="allowfullscreen"
-                          src="{% url 'signbank.video.views.iframe' gloss.pk %}">
-                  </iframe>
-               </div>
-               <div id="replay"></div>
-            </div>
+    	<div>
+	        <div class='col-md-4'>
+	            <div id="videocontainer">
+	               <div id="player">
+	                  <iframe id='videoiframe' scrolling="no" frameborder='0' allowfullscreen="allowfullscreen"
+	                          src="{% url 'signbank.video.views.iframe' gloss.pk %}">
+	                  </iframe>
+	               </div>
+	               <div id="replay"></div>
+	            </div>
+	        
+		        <div id="keywords">
+	                 <p><strong>Keywords:</strong>
+	                 {% for kwd in allkwds %}
+	                   {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
+	                 {% endfor %}
+	                 </p>
+	            </div>
+	        </div>
+	        
+	        <div  class='col-md-8'>
+			{% if thumbnails %}
+			<script type="text/javascript">
+				function replay(id) {
+			    	iframe = $(id);
+			    	$('#sign_html5_api', iframe.contents())[0].play();
+			    }
+				
+				function load(idgloss){
+					$( "#variant-container" ).load( "{% url 'root_page' %}dictionary/variant/" + idgloss + ".html" );
+				}
+			</script>
+		    	<p><strong>Found {{thumbnails|length}} variant{% if thumbnails|length|add:"0" > 1 %}s{% endif %} for this sign:</strong></p>
+		     	<div id='thumbnailscontainer' class='jcarousel-wrapper'>
+		     		<div id='thumbnailsrow' class='jcarousel' data-jcarousel="true">
+		     			<ul style="left: 0px; top: 0px;">
+			     			{% for thumbnail in thumbnails %}
+			     				<li>
+				     				<div class='col-lg-3 col-md-4 col-xs-6 thumb'>
+				     					<a class='thumbnail popup-with-zoom-anim' target='mainvideo' 
+				     						href="#small-dialog" onclick='load("{{thumbnail.idgloss}}")'>
+				     						<iframe class='thumbnailiframe' 
+				     								id='thumbnailiframe-{{thumbnail.idgloss}}' 
+				     								scrolling="no" frameborder='0' 
+				     								src="{% url 'signbank.video.views.thumbnail' thumbnail.pk %}">
+			                  				</iframe>
+			                  				<span class="thumbnailcover"
+				     								onmouseover='replay("#thumbnailiframe-{{thumbnail.idgloss}}")'>
+			                  				</span>
+				     					</a>
+				     				</div>
+				     			</li>
+			     			{% endfor %}
+			     		</ul>
+	   					<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+	   						<div id='variant-container'></div>
+	   					</div>
+		     		</div>
+		     		<a href="#" class="jcarousel-control-prev inactive" data-jcarouselcontrol="true">‹  </a>
+		     		<a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">  ›</a>
+		     	</div>
+		    {% endif %}
+		    
+		    {% if DEFINITION_FIELDS and gloss.published_definitions %}
         
-        
-            <div id="keywords">
-                 <p><strong>Keywords:</strong>
-                 {% for kwd in allkwds %}
-                   {% ifequal translation.translation kwd.translation %}<b>{{ kwd.translation }}</b>{% else %}{{ kwd.translation }}{% endifequal %}{% if not forloop.last %},{% endif %}
-                 {% endfor %}
-                 </p>
-            </div>
-        </div>
+	            <h2>Sign Definition</h2>
+	
+	            {% for deftype in DEFINITION_FIELDS %}
+	        
+	                 {% regroup gloss.published_definitions by role as roles %}
+	        
+	                 {% for role in roles %}
+	              
+	                      {% ifequal deftype role.grouper %}  
+	                  
+	                          <h3>{{role.list.0.get_role_display}}</h3>
+	                  
+	                          <ol>
+	                          {% for def in role.list %}     
+	                            <li>{{def.text}}</li>
+	                          {% endfor %}
+	                          </ol>
+	                  
+	                      {% endifequal %}
+	                 {% endfor %}
+	            {% endfor %}
+	        
+	
+	        {% endif %}
+	        </div>
+	    </div>       
+            
 
         
         {% if regional_template_content %}
@@ -119,77 +207,6 @@
           {{ regional_template_content }}
         </div>
         {% endif %}
-		
-		<div  class='col-md-8'>
-		{% if thumbnails %}
-		<script type="text/javascript">
-			function replay(id) {
-		    	iframe = $(id);
-		    	$('#sign_html5_api', iframe.contents())[0].play();
-		    }
-			
-			function load(idgloss){
-				$( "#variant-container" ).load( "{% url 'root_page' %}dictionary/variant/" + idgloss + ".html" );
-			}
-		</script>
-	    	<p><strong>Found {{thumbnails|length}} variant{% if thumbnails|length|add:"0" > 1 %}s{% endif %} for this sign:</strong></p>
-	     	<div id='thumbnailscontainer' class='jcarousel-wrapper'>
-	     		<div id='thumbnailsrow' class='jcarousel' data-jcarousel="true">
-	     			<ul style="left: 0px; top: 0px;">
-		     			{% for thumbnail in thumbnails %}
-		     				<li>
-			     				<div class='col-lg-3 col-md-4 col-xs-6 thumb'>
-			     					<a class='thumbnail popup-with-zoom-anim' target='mainvideo' 
-			     						href="#small-dialog" onclick='load("{{thumbnail.idgloss}}")'>
-			     						<iframe class='thumbnailiframe' 
-			     								id='thumbnailiframe-{{thumbnail.idgloss}}' 
-			     								scrolling="no" frameborder='0' 
-			     								src="{% url 'signbank.video.views.thumbnail' thumbnail.pk %}">
-		                  				</iframe>
-		                  				<span class="thumbnailcover"
-			     								onmouseover='replay("#thumbnailiframe-{{thumbnail.idgloss}}")'>
-		                  				</span>
-			     					</a>
-			     				</div>
-			     			</li>
-		     			{% endfor %}
-		     		</ul>
-   					<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
-   						<div id='variant-container'></div>
-   					</div>
-	     		</div>
-	     		<a href="#" class="jcarousel-control-prev inactive" data-jcarouselcontrol="true">‹  </a>
-	     		<a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">  ›</a>
-	     	</div>
-	    {% endif %}
-		
-        {% if DEFINITION_FIELDS and gloss.published_definitions %}
-        
-            <h2>Sign Definition</h2>
-
-            {% for deftype in DEFINITION_FIELDS %}
-        
-                 {% regroup gloss.published_definitions by role as roles %}
-        
-                 {% for role in roles %}
-              
-                      {% ifequal deftype role.grouper %}  
-                  
-                          <h3>{{role.list.0.get_role_display}}</h3>
-                  
-                          <ol>
-                          {% for def in role.list %}     
-                            <li>{{def.text}}</li>
-                          {% endfor %}
-                          </ol>
-                  
-                      {% endifequal %}
-                 {% endfor %}
-            {% endfor %}
-        
-
-        {% endif %}
-        </div>
         
         <div class='col-md-4 region-left'>
         	
@@ -206,7 +223,7 @@
                 </ul>
             </div>
             
-	        <div class='region-left'>
+	        <div>
 	            {% if regions|length > 0 %}
 	            <div id="states">
 	                <div>
