@@ -235,21 +235,27 @@
 	
 	            <div>
 	                <h4>Sign Distribution</h4>
+	                {% if perms.dictionary.search_gloss %}
 	                <table class="table table-condensed">
 	                  {% for region in regions %}
 	                  <tr>
 	                    <td>
 	                      {{ region.dialect.name }}
 	                    </td>
+	                    {% if SETTINGS_SHOW_TRADITIONAL %}
 	                    <td>
 	                      {{ region.traditional|yesno:" traditional," }}
 	                    </td>
+	                    {% endif %}
+	                    {% if SETTINGS_SHOW_FREQUENCY %}
 	                    <td>
 	                        {{ region.frequency }}
 	                    </td>
+	                    {% endif %}
 	                  </tr>
 	                  {% endfor %}
 	                </table>
+	                {% endif %}
 	            </div>
 	            {% endif %}
 	        </div>

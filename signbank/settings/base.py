@@ -224,6 +224,12 @@ ANON_TAG_SEARCH = False
 # do we display the previous/next links to signs, requires gloss.sn to be used consistently
 SIGN_NAVIGATION = True
 
+# show FREQUENCY info on sign distribution
+SHOW_FREQUENCY = False
+
+# show traditional info on sign distribution
+SHOW_TRADITIONAL = True
+
 # which definition fields do we show and in what order?
 DEFINITION_FIELDS = ['general', 'noun', 'verb', 'interact', 'diectic', 'modifier', 'question', 'augment', 'note']
 
